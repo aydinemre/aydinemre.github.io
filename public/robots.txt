@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aydinemre.github.io/sitemap.xml
