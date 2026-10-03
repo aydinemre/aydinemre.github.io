@@ -1,0 +1,38 @@
+import { readdir, readFile, stat } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import assert from 'node:assert/strict';
+const root = resolve('dist');
+async function files(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const result = await Promise.all(entries.map(e => e.isDirectory() ? files(join(dir, e.name)) : join(dir, e.name)));
+  return result.flat();
+}
+const built = await files(root);
+const html = built.filter(f => f.endsWith('.html'));
+for (const file of html) {
+  const text = await readFile(file, 'utf8');
+  assert.match(text, /<html[^>]+lang="tr"/, `Missing Turkish language: ${file}`);
+  assert.equal((text.match(/<h1[ >]/g) || []).length, 1, `Expected one h1: ${file}`);
+  assert.match(text, /<title>[^<]+<\/title>/, `Missing title: ${file}`);
+  assert.match(text, /name="description"/, `Missing description: ${file}`);
+  assert.match(text, /rel="canonical"/, `Missing canonical: ${file}`);
+  for (const match of text.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
+    const pathname = decodeURIComponent(match[1]);
+    const target = resolve(root, '.' + pathname);
+    assert.ok(target.startsWith(root), `Path escapes site: ${pathname}`);
+    try {
+      const info = await stat(target);
+      if (info.isDirectory()) await stat(join(target, 'index.html'));
+    } catch { throw new Error(`Broken local link or asset in ${file}: ${pathname}`); }
+  }
+}
+for (const f of built.filter(f => /\.(js|css|html)$/.test(f))) {
+  assert.ok((await stat(f)).size < 100_000, `Asset exceeds 100KB budget: ${f}`);
+}
+const home = await readFile(join(root, 'index.html'), 'utf8');
+assert.match(home, /matrix-canvas/, 'Matrix visual missing');
+const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
+assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
+for (const code of ['bil511', 'bil513']) await stat(join(root, `yuksek-lisans/${code}/index.html`));
+for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await stat(join(root, name));
+console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);

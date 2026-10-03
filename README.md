@@ -12,6 +12,7 @@ Node.js 22.12+ kullanın.
 npm ci
 npm run dev
 npm run build
+npm run verify
 ```
 
 ## İçerik ekleme
@@ -32,3 +33,9 @@ Eski Jekyll sitesi Git geçmişinde ve `backup/pre-personal-blog` dalında korun
 Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Animasyon duraklatılabilir ve azaltılmış hareket tercihini izler.
 
 Mevcut npm audit çıktısı Astro'nun derleme bağımlılığı `http-cache-semantics@4.2.0` için bir cache güvenlik uyarısı içerir; yayımlanan statik sitede bu paket çalışmaz. Bu projede uzak görsel veya kişiselleştirilmiş yanıt cache'i kullanılmaz. Paket için düzeltilmiş sürüm yayınlandığında bağımlılıklar güncellenmelidir.
+
+## Kalite kontrolleri
+
+Her yayında derlenen tüm sayfalarda iç bağlantılar, varlıklar, Türkçe dil tanımı, tek ana başlık, SEO metadata, taşınan yazı ve ders sayfaları doğrulanır. HTML/CSS/JS dosyaları için 100 KB üst sınır uygulanır. Kontroller geçmeden yayın yapılmaz.
+
+GitHub Pages aylık 100 GB soft bandwidth sınırına sahiptir. Çok yüksek trafik için kişisel özel alan adı üzerinden CDN ve uygun barındırma planı ayrıca yapılandırılmalıdır. Milyarlarca ziyarete dayanıklılık bu depoda doğrulanmış değildir.
