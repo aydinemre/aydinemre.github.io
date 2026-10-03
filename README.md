@@ -26,3 +26,9 @@ Yeni yazıları `.mdx` dosyası olarak ekleyebilirsiniz. MDX içinde Astro bile�
 Medium'dan taşınan yazının özgün tarihi, metni ve kaynak bağlantısı korunmuştur. Medium üzerindeki yazı silinmemiştir.
 
 Eski Jekyll sitesi Git geçmişinde ve `backup/pre-personal-blog` dalında korunur. Eski temanın MIT lisansı `LICENSE` dosyasında korunmuştur; yeni blog yazıları için yeniden kullanım izni verilmez.
+
+## Yayın güvenliği
+
+Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Animasyon duraklatılabilir ve azaltılmış hareket tercihini izler.
+
+Mevcut npm audit çıktısı Astro'nun derleme bağımlılığı `http-cache-semantics@4.2.0` için bir cache güvenlik uyarısı içerir; yayımlanan statik sitede bu paket çalışmaz. Bu projede uzak görsel veya kişiselleştirilmiş yanıt cache'i kullanılmaz. Paket için düzeltilmiş sürüm yayınlandığında bağımlılıklar güncellenmelidir.

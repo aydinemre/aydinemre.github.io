@@ -1,0 +1,28 @@
+<div class="hero-art"><div class="art-top"><span><i></i> BAĞLANTILARI KEŞFET</span><span>EA / 001</span></div><canvas id="matrix-canvas" aria-hidden="true"></canvas><div class="art-caption" aria-hidden="true"><span>01 — DÜŞÜNCE</span><span>02 — BİLGİ</span><span>03 — KEŞİF</span></div><button class="motion-toggle" type="button" aria-pressed="false">Animasyonu duraklat <span>Ⅱ</span></button><div class="coordinate" aria-hidden="true">[ ideas × connections ]</div></div>
+<style>.hero-art{position:relative;height:490px;min-width:0;border:1px solid #243a2b;border-radius:12px;background:radial-gradient(ellipse at center,#193a211f,transparent 70%),linear-gradient(#a3ff7805 1px,transparent 1px),linear-gradient(90deg,#a3ff7805 1px,transparent 1px);background-size:auto,32px 32px,32px 32px;overflow:hidden;box-shadow:0 30px 100px #0004}.art-top{position:absolute;left:22px;right:22px;top:22px;display:flex;justify-content:space-between;font:9px var(--mono);letter-spacing:1.2px;color:#8fa695;z-index:1}.art-top i{display:inline-block;width:5px;height:5px;margin-right:6px;background:#a3ff78;box-shadow:0 0 8px #a3ff78}canvas{width:100%;height:100%;display:block}.art-caption{position:absolute;bottom:95px;left:22px;right:22px;display:flex;justify-content:space-between;font:8px var(--mono);color:#92b59b;letter-spacing:.5px}.motion-toggle{position:absolute;bottom:21px;right:20px;padding:10px 12px;background:#111e15;border:1px solid #36543c;border-radius:4px;color:#b1cab5;font:9px var(--mono);cursor:pointer;z-index:2}.motion-toggle span{margin-left:10px;color:#a3ff78}.coordinate{position:absolute;bottom:33px;left:22px;font:9px var(--mono);color:#72937b}@media(max-width:600px){.hero-art{height:350px;margin-top:25px}.art-caption{font-size:7px;bottom:77px}.coordinate{bottom:62px}.art-top{font-size:8px}}</style>
+<script>
+const canvas=document.querySelector<HTMLCanvasElement>('#matrix-canvas');
+const button=document.querySelector<HTMLButtonElement>('.motion-toggle');
+if(canvas && button){
+ const context=canvas.getContext('2d');
+ if(context){
+  const ctx=context;const media=matchMedia('(prefers-reduced-motion: reduce)');let paused=media.matches;let visible=true;let frame=0;let time=0;let width=0;let height=0;let last=0;
+  const glyphs='01λΣ∂∇01';const points=Array.from({length:330},(_,i)=>{const y=1-2*i/329;const r=Math.sqrt(1-y*y);const a=Math.PI*(3-Math.sqrt(5))*i;return {x:Math.cos(a)*r,y,z:Math.sin(a)*r,g:glyphs[i%glyphs.length]}});
+  function draw(){ctx.clearRect(0,0,width,height);const radius=Math.min(width*.34,height*.31);const angle=time*.16;const cx=width/2,cy=height*.47;
+   for(let col=0;col<18;col++){const x=(col+.5)*width/18;for(let row=0;row<8;row++){const y=(row*47+time*13*(.4+(col%5)/6)+col*17)%(height-110)+25;ctx.fillStyle=`rgba(114,189,122,${.045+((col+row)%3)*.016})`;ctx.font='10px monospace';ctx.fillText(glyphs[(row+col)%glyphs.length],x,y)}}
+   const rotated=points.map(p=>{const x=p.x*Math.cos(angle)+p.z*Math.sin(angle);const z=-p.x*Math.sin(angle)+p.z*Math.cos(angle);return {...p,x,z}}).sort((a,b)=>a.z-b.z);
+   ctx.strokeStyle='#8cfc6b15';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,cy,radius*1.18,radius*.28,-.35,0,Math.PI*2);ctx.stroke();
+   for(const p of rotated){const perspective=1/(1-p.z*.18);const x=cx+p.x*radius*perspective;const y=cy+p.y*radius*perspective;const alpha=.12+(p.z+1)*.36;ctx.font=`${8+(p.z+1)*2.2}px monospace`;ctx.fillStyle=`rgba(${p.z>.65?'191,255,150':'112,217,123'},${alpha})`;ctx.fillText(p.g,x,y)}
+   ctx.strokeStyle='#a3ff7828';ctx.setLineDash([3,6]);ctx.beginPath();ctx.moveTo(22,cy);ctx.lineTo(cx-radius-15,cy);ctx.moveTo(cx+radius+15,cy);ctx.lineTo(width-22,cy);ctx.stroke();ctx.setLineDash([]);
+  }
+  function sync(){button.setAttribute('aria-pressed',String(paused));button.innerHTML=paused?'Animasyonu oynat <span>▶</span>':'Animasyonu duraklat <span>Ⅱ</span>'}
+  function loop(now:number){frame=0;if(paused||!visible||document.hidden)return;if(now-last>=40){time+=Math.min((now-last)/1000,.1);last=now;draw()}frame=requestAnimationFrame(loop)}
+  function start(){last=performance.now();if(!paused&&visible&&!document.hidden&&!frame)frame=requestAnimationFrame(loop)}
+  function resize(){width=canvas!.clientWidth;height=canvas!.clientHeight;const dpr=Math.min(devicePixelRatio||1,2);canvas!.width=width*dpr;canvas!.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw()}
+  button.addEventListener('click',()=>{paused=!paused;sync();if(paused){cancelAnimationFrame(frame);frame=0}else start()});
+  media.addEventListener('change',()=>{paused=media.matches;sync();if(paused){cancelAnimationFrame(frame);frame=0;draw()}else start()});
+  new ResizeObserver(resize).observe(canvas);new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)start();else{cancelAnimationFrame(frame);frame=0}}).observe(canvas);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0}else start()});sync();resize();start();
+ }
+}
+</script>

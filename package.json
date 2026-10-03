@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/mdx": "^8.0.2",
     "astro": "^7.3.5"
   }
