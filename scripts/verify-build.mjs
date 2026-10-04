@@ -31,6 +31,9 @@ for (const f of built.filter(f => /\.(js|css|html)$/.test(f))) {
 }
 const home = await readFile(join(root, 'index.html'), 'utf8');
 assert.match(home, /Kendini tanımak üzerine notlarım/, 'Published essay missing from homepage');
+assert.match(home, /matrix-masthead[^>]*aria-hidden="true"/, 'Accessible static Matrix motif missing');
+assert.match(home, /Data Science &amp; AI Leader/, 'Current profession missing');
+assert.doesNotMatch(home, /Yüksek lisansa başladım/, 'Removed announcement returned');
 assert.doesNotMatch(home, /<script|<canvas/, 'Homepage must remain free of decorative scripts and canvas');
 for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/yuksek-lisans/${code}/`), `Course link missing: ${code}`);
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
