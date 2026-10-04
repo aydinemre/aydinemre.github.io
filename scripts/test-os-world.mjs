@@ -31,4 +31,9 @@ missions[6].onclick();click('Parent: waitpid');assert.match(message(),/henüz bi
 missions[9].onclick();for(let i=0;i<4;i++)click('Race: sonraki işlem');assert.match(message(),/Sonuç 1, beklenen 2/);click('Lock ile iki increment');assert.match(message(),/Sonuç 2/);
 missions[10].onclick();click('alpha\\nbeta\\n gönder');for(let i=0;i<4;i++)click('Bir parça oku');assert.match(message(),/Newline sayısı = 2/);
 missions[11].onclick();click('Buffer’a yaz');click('Buffer’a yaz');click('Buffer’a yaz');assert.match(message(),/Buffer dolu/);click('Child write-end kapat');click('Buffer’dan oku');click('Buffer’dan oku');click('Buffer’dan oku');assert.match(message(),/writer hâlâ açık/);click('Parent write-end kapat');assert.equal(message(),'read → EOF');
+missions[2].onclick();click('P’yi sonlandır');click('P: x = 20');assert.match(message(),/yazma yapamaz/);
+missions[4].onclick();click('Q → P geri yükle');assert.match(message(),/P zaten/);click('P → Q context switch');assert.equal(elements.get('#cpu-metric').textContent,'Q');click('Q → P geri yükle');assert.equal(elements.get('#cpu-metric').textContent,'P');
+missions[8].onclick();click('Shutdown');click('İstek ekle');assert.match(message(),/Sunucu kapalı/);
+missions[9].onclick();click('Lock ile iki increment');click('Race: sonraki işlem');assert.match(message(),/sonuç 2/);
+missions[10].onclick();click('alpha\\nbeta\\n gönder');for(let i=0;i<4;i++)click('Bir parça oku');click('alpha\\nbeta\\n gönder');assert.match(message(),/tekrar göndermek/);
 console.log('Verified all 13 scene factories and scheduler, fork/exec, wait, race, pipe and EOF behavior.');

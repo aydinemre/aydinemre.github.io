@@ -51,4 +51,3 @@ assert.equal((lesson.match(/data-open-mission=/g)||[]).length,13);
 assert.match(lesson,/<canvas/);
 const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
-
