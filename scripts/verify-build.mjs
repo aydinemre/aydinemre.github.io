@@ -38,9 +38,15 @@ assert.doesNotMatch(home, /<script|<canvas/, 'Homepage must remain free of decor
 for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/yuksek-lisans/${code}/`), `Course link missing: ${code}`);
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
-for (const code of ['bil511', 'bil513']) {
+for (const code of ['bil511']) {
   const course = await readFile(join(root, `yuksek-lisans/${code}/index.html`), 'utf8');
   assert.match(course, /henüz yayımlanmış bir not yok/, `Missing truthful empty state: ${code}`);
 }
 for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await stat(join(root, name));
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
+
+const lesson = await readFile(join(root, "yuksek-lisans/bil513/ders-1/index.html"), "utf8");
+assert.equal((lesson.match(/class="lab"/g)||[]).length,13);
+const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
+for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
+assert.match(lesson,/prefers-reduced-motion/);

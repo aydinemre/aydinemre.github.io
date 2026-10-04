@@ -1,0 +1,7 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import slides from '../../../data/bil513-slides.json';
+const source='https://mehmetgokturk.com/cse513/materials/lecture01/CSE513-Lecture01.pdf';
+---
+<Layout title="BİL513 Ders 1 — Özgün slayt metinleri"><a class="back" href="/yuksek-lisans/bil513/ders-1/">← Animasyonlu derse dön</a><h1>65 slaytın kaynak metni</h1><p class="lead">Prof. Mehmet Göktürk’ün Processes and threads sunumunun özgün İngilizce metni. Şekiller ve düzen için <a href={source}>kaynak PDF</a>.</p>{slides.map((text,i)=><section id={`slayt-${i+1}`}><h2><a href={`${source}#page=${i+1}`}>Slayt {i+1}</a></h2><pre>{text.replace(/^www.gtu.edu.tr\n/,'')}</pre></section>)}</Layout>
+<style>section{scroll-margin-top:24px;border-top:1px solid #34463a;padding:26px 0;max-width:800px}h2{font-size:24px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:16px/1.8 system-ui;color:#b7c8ba}</style>
