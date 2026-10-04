@@ -30,7 +30,7 @@ Eski Jekyll sitesi Git geçmişinde ve `backup/pre-personal-blog` dalında korun
 
 ## Yayın güvenliği
 
-Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Animasyon duraklatılabilir ve azaltılmış hareket tercihini izler.
+Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Ana sayfa ve mevcut içerikler istemci JavaScript’i yüklemez. Gelecekte eklenecek etkileşimli anlatımlar ilgili içerik sayfasında çalışmalıdır; klavye kullanımı ve azaltılmış hareket tercihi desteklenmelidir.
 
 Mevcut npm audit çıktısı Astro'nun derleme bağımlılığı `http-cache-semantics@4.2.0` için bir cache güvenlik uyarısı içerir; yayımlanan statik sitede bu paket çalışmaz. Bu projede uzak görsel veya kişiselleştirilmiş yanıt cache'i kullanılmaz. Paket için düzeltilmiş sürüm yayınlandığında bağımlılıklar güncellenmelidir.
 

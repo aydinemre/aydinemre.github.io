@@ -30,9 +30,14 @@ for (const f of built.filter(f => /\.(js|css|html)$/.test(f))) {
   assert.ok((await stat(f)).size < 100_000, `Asset exceeds 100KB budget: ${f}`);
 }
 const home = await readFile(join(root, 'index.html'), 'utf8');
-assert.match(home, /matrix-canvas/, 'Matrix visual missing');
+assert.match(home, /Kendini tanımak üzerine notlarım/, 'Published essay missing from homepage');
+assert.doesNotMatch(home, /<script|<canvas/, 'Homepage must remain free of decorative scripts and canvas');
+for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/yuksek-lisans/${code}/`), `Course link missing: ${code}`);
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
-for (const code of ['bil511', 'bil513']) await stat(join(root, `yuksek-lisans/${code}/index.html`));
+for (const code of ['bil511', 'bil513']) {
+  const course = await readFile(join(root, `yuksek-lisans/${code}/index.html`), 'utf8');
+  assert.match(course, /henüz yayımlanmış bir not yok/, `Missing truthful empty state: ${code}`);
+}
 for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await stat(join(root, name));
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
