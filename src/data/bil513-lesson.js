@@ -37,7 +37,12 @@ export const chapters = [
     "extra": [
       "Terminale bir komut yazınca shell komutun nasıl çalıştırılacağını belirler. Harici bir program için tipik yol çocuk süreç oluşturmak, programı yüklemek ve gerektiğinde sonlanmasını beklemektir. cd gibi bazı komutlar shell’in içinde çalışır; her komut mutlaka yeni süreç oluşturmaz.",
       "Bu notlardaki PID değerleri ve bellek yerleşimleri örnektir. Amaç gerçek makinedeki numaraları tahmin etmek değil, hangi bilginin ne zaman değiştiğini izlemektir."
-    ]
+    ],
+    "study": {
+      "question": "Terminalde cd yazınca neden shell’in kendi çalışma dizini değişmelidir?",
+      "answer": "Çocuk süreç yalnızca kendi çalışma dizinini değiştirse ebeveyn shell’in dizini değişmez. Bu nedenle cd normalde shell içinde yürütülür.",
+      "misconception": "Her komut yeni süreç oluşturur."
+    }
   },
   {
     "title": "User mode, kernel mode ve sistem çağrıları",
@@ -77,7 +82,12 @@ export const chapters = [
     "extra": [
       "Örnek: strlen bir metnin uzunluğunu uygulamanın belleğinde hesaplayabilir; dosyadan read ile veri almak ise işletim sistemi hizmeti ister. “Fonksiyon çağrısı” ve “sistem çağrısı” aynı kavram değildir.",
       "Sistem çağrısının iki ayrı sonucunu düşün: CPU yetki modu değişebilir; ayrıca istek beklemeye yol açarsa başka görev seçilebilir. İkinci sonuç birincisinin zorunlu devamı değildir."
-    ]
+    ],
+    "study": {
+      "question": "Bir süreç read çağırdı, veri hazırdı ve çağrı tamamlandı. Başka süreç mutlaka çalışmış mıdır?",
+      "answer": "Hayır. Kernel hizmeti yerine getirip aynı süreci user mode’da sürdürebilir. Yetki modu geçişi ile context switch farklı olaylardır.",
+      "misconception": "Kernel’e girince PID değişir."
+    }
   },
   {
     "title": "Program, süreç ve adres alanı",
@@ -118,7 +128,12 @@ export const chapters = [
     "extra": [
       "Sanal adres, bir sürecin belleğe erişirken kullandığı adrestir. İki süreçte aynı sayısal adres bulunması aynı fiziksel hücreye eriştiklerini kanıtlamaz; adres çevrimi sürecin eşlemelerine bağlıdır.",
       "Bellek ile açık dosya aynı paylaşım kuralına sahip değildir. fork sonrasında sıradan yazılabilir değişkenler ayrıdır; miras alınan dosya tanımlayıcıları ise aynı açık dosya kaydına, dolayısıyla ortak dosya konumuna başvurabilir."
-    ]
+    ],
+    "study": {
+      "question": "P ve Q aynı sanal adresi yazdırıyor. P o adresteki sıradan değişkeni değiştirince Q da değişir mi?",
+      "answer": "Adres değerlerinin eşitliği ortak fiziksel bellek kanıtı değildir. Ayrı adres alanlarında sıradan yazılabilir değişkenler bağımsızdır; bilinçli shared mapping ayrı bir durumdur.",
+      "misconception": "Aynı pointer değeri aynı nesne demektir."
+    }
   },
   {
     "title": "Running, ready ve waiting durumları",
@@ -159,7 +174,12 @@ export const chapters = [
     "extra": [
       "Ready ile waiting’i ayırmak için şunu sor: “Şimdi CPU verilse devam edebilir mi?” Evetse ready; diskten gereken veri henüz gelmediyse waiting. CPU’nun boş olması eksik veriyi oluşturmaz.",
       "I/O tamamlandığında görev çalışabilir hâle gelir. CPU’nun hemen ona verilmesi başka bir karardır; scheduler (zamanlayıcı) o sırada çalışan görevi sürdürmeyi seçebilir."
-    ]
+    ],
+    "study": {
+      "question": "A ağ yanıtını bekliyor, CPU boş. A neden çalıştırılamıyor?",
+      "answer": "A’nın devam etmesi için yanıt gerekli. CPU tahsis etmek yanıtı üretmez. Yanıt geldiğinde A ready olur; running olması için ayrıca seçilmelidir.",
+      "misconception": "Waiting sadece uzun bir CPU kuyruğudur."
+    }
   },
   {
     "title": "Context switch: yürütme durumunu değiştirme",
@@ -200,7 +220,12 @@ export const chapters = [
     "extra": [
       "Program counter (PC), yürütmenin hangi talimatta olduğunu gösterir. Register’lar CPU’nun işlem sırasında kullandığı küçük saklama alanlarıdır. Bunlar geri yüklenince görev kaldığı yerden sürdürülebilir.",
       "Aynı sürecin iki thread’i arasında da context switch olabilir. Yürütme durumu değişir; ortak adres alanının başka bir süreç alanına çevrilmesi gerekmez."
-    ]
+    ],
+    "study": {
+      "question": "P’den aynı sürecin başka thread’ine geçerken yürütme durumu saklanmalı mı?",
+      "answer": "Evet. Thread’lerin PC ve register değerleri ayrıdır. Ortak adres alanı, yürütme durumlarının da aynı olduğu anlamına gelmez.",
+      "misconception": "Ortak bellek varsa context switch gerekmez."
+    }
   },
   {
     "title": "fork, exec ve wait: süreç oluşturma",
@@ -243,7 +268,12 @@ export const chapters = [
     "extra": [
       "fork bir kez çağrılır, başarılıysa iki süreçte döner. Ebeveyndeki pozitif sonuç çocuğun PID’sidir; çocuktaki sonuç 0’dır. Kod bu dönüş değerine bakarak ebeveyn ve çocuk işlerini ayırır.",
       "Örnekte çocuk x=20 yazar, sonra exec ile echo programına dönüşür. Ebeveynin x değeri 10 kalır. waitpid çocuğun bitişini bekler; çocuğun değişkenini ebeveyne kopyalamaz."
-    ]
+    ],
+    "study": {
+      "question": "fork öncesi x=10. Çocuk x=20 yapıyor. Ebeveyn waitpid sonrası x’i okuyor: sonuç?",
+      "answer": "10. Çocuk kendi adres alanını değiştirdi. waitpid sonlanmayı bekler ve status toplar; değişkenleri birleştirmez.",
+      "misconception": "wait çocuğun belleğini ebeveyne aktarır."
+    }
   },
   {
     "title": "Süreç sonlanması, zombie ve waitpid",
@@ -283,7 +313,12 @@ export const chapters = [
     ],
     "extra": [
       "Zombie ile orphan farklıdır: zombie sonlanmış fakat bilgisi henüz toplanmamış süreçtir; orphan, ebeveyni önce sonlanan süreçtir. Yetim süreç çalışmayı sürdürebilir ve sistem tarafından başka bir ebeveyne bağlanır."
-    ]
+    ],
+    "study": {
+      "question": "Çocuk exit yaptı ama ebeveyn henüz waitpid çağırmadı. Çocuk CPU tüketmeye devam eder mi?",
+      "answer": "Hayır. Olağan zombie durumunda program yürütülmez; ebeveynin toplayacağı sonlanma kaydı kalır. Zombie ile canlı fakat ebeveyni sonlanmış orphan farklıdır.",
+      "misconception": "Zombie arka planda çalışan bir programdır."
+    }
   },
   {
     "title": "Thread, ortak bellek ve paralellik",
@@ -324,7 +359,12 @@ export const chapters = [
     "extra": [
       "Concurrency, birden fazla işin aynı zaman aralığında ilerlemesidir; tek çekirdekte sırayla çalışarak da sağlanır. Parallelism, işlerin aynı anda yürütülmesidir. Örneğin iki çekirdek iki thread’i aynı anda çalıştırabilir.",
       "Bir thread’in stack’i ayrı olması diğer thread’lerden bellek korumasıyla yalıtıldığı anlamına gelmez. Geçerli bir pointer varsa başka thread’in canlı stack nesnesine erişilebilir; nesnenin ömrü ve eşzamanlı erişim ayrıca yönetilmelidir."
-    ]
+    ],
+    "study": {
+      "question": "Tek çekirdekte iki thread’in işleri örtüşebilir mi? Aynı anda talimat yürütürler mi?",
+      "answer": "İlerlemeleri sırayla sağlanarak zaman aralıkları örtüşebilir: concurrency. Bu tek çekirdek örneğinde aynı anda iki yürütme yoktur. Parallelism için uygun birden fazla yürütme kaynağı gerekir.",
+      "misconception": "Concurrency ve parallelism aynı şeydir."
+    }
   },
   {
     "title": "Worker pool ve iş kuyruğu",
@@ -364,7 +404,12 @@ export const chapters = [
     "extra": [
       "Kuyruğa iş eklemek ve kuyruktan iş almak ortak veriyi değiştirir. Bu işlemler korunmalı; kuyruk boşsa worker gereksiz bir döngüyle sürekli kontrol etmek yerine uygun bir bekleme mekanizması kullanmalıdır.",
       "Kapanışta önce yeni iş kabulünün ne zaman duracağı belirlenir. Bekleyen işler tamamlanacak mı, iptal mi edilecek? Bekleyen worker’lar nasıl uyandırılacak? Bu kararlar kaynakların güvenli bırakılmasını sağlar."
-    ]
+    ],
+    "study": {
+      "question": "İki worker var, kuyruk kapasitesi üç, hepsi dolu. Yeni istek için hangi karar eksik?",
+      "answer": "Kuyruk doluyken kabul politikasını belirlemek gerekir: bekletmek, reddetmek veya başka sınırlı düzen kullanmak. Sınırsız kuyruk birikmesi bellek ve gecikme sorununu büyütebilir.",
+      "misconception": "Worker sayısını sınırlamak kuyruk büyüklüğünü de kendiliğinden sınırlar."
+    }
   },
   {
     "title": "Race condition ve kayıp güncelleme",
@@ -405,7 +450,12 @@ export const chapters = [
     "extra": [
       "Mutex ile tüm okuma–artırma–yazma işlemini korursan ikinci thread ilk artışın sonucunu okur. Uygun atomic artırma da tek counter için çözüm olabilir; birden çok değişken arasındaki tutarlılık ayrıca düşünülmelidir.",
       "join bir thread’in tamamlanmasını bekler. İki worker aynı anda ortak counter’ı değiştirmeye devam ediyorsa sonradan ikisini join etmek önceki yarışmayı önlemez."
-    ]
+    ],
+    "study": {
+      "question": "İki worker counter artırdı, main ikisini join etti. Sonucun doğru olması garanti mi?",
+      "answer": "Hayır. join tamamlanmayı sıralar; worker’ların önceki korumasız ortak erişimini düzeltmez. Artırma işlemi uygun mutex veya atomic ile korunmalıdır.",
+      "misconception": "Sonradan join etmek race condition’ı giderir."
+    }
   },
   {
     "title": "Süreçler arası iletişim ve pipe",
@@ -445,7 +495,12 @@ export const chapters = [
     "extra": [
       "printf iki satır yazar; wc -l newline karakterlerini sayar. Sonuç 2’dir. Okumanın bir seferde mi, birkaç parçada mı yapıldığı bu sayıyı değiştirmez.",
       "Bir write çağrısının verisi tek read ile alınmak zorunda değildir. “Bir mesaj nerede bitti?” sorusunu pipe cevaplamaz; uygulama ayırıcı veya uzunluk bilgisi gibi bir biçim tanımlamalıdır."
-    ]
+    ],
+    "study": {
+      "question": "Üretici 11 byte’ı bir write ile gönderdi. Tüketicinin bir read ile 11 byte alması garanti mi?",
+      "answer": "Hayır. Pipe byte akışıdır; okuma uzunluğu ve koşulları veriyi farklı parçalara ayırabilir. Tüketici gerektiğinde birden çok okuma yapmalı ve uygulama biçimini kendisi çözmelidir.",
+      "misconception": "Bir write bir mesajdır ve tek read ile gelir."
+    }
   },
   {
     "title": "Pipe: bekleme, backpressure ve EOF",
@@ -487,7 +542,12 @@ export const chapters = [
     "extra": [
       "EOF bir byte veya özel karakter değildir; read’in 0 döndürmesiyle bildirilen bitiş durumudur. Boş akışta writer açıkken bekleme, writer kalmadığında EOF oluşur. Burada blocking, sıfırdan büyük uzunluk isteyen okuma anlatılıyor.",
       "fork, dosya tanımlayıcılarını miras bırakabilir. Çocuk kendi yazma ucunu kapatsa bile ebeveyn aynı pipe’ın bir yazma ucunu açık tutuyorsa okuyucu EOF alamaz. Kullanılmayan uçlar her süreçte kapatılmalıdır."
-    ]
+    ],
+    "study": {
+      "question": "Pipe boş, çocuk yazmayı bitirdi, ebeveyn yazma ucunu açık tuttu. Reader ne görür?",
+      "answer": "Blocking reader veri bekleyebilir; EOF için tüm yazma ucu referansları kapanmalı ve buffer tüketilmiş olmalıdır. Çocuğun bitmesi tek başına bu koşulu sağlamaz.",
+      "misconception": "Boş buffer her zaman EOF demektir."
+    }
   },
   {
     "title": "Tekrar soruları ve uygulama",
@@ -527,6 +587,11 @@ export const chapters = [
     "extra": [
       "Kontrol örneği: A disk bekliyor, B çalışıyor. Disk tamamlandı. A’nın durumu ready; CPU sahibi hâlâ B olabilir. “Veri geldi” ile “A çalışmaya başladı” ayrı olaylardır.",
       "Kontrol örneği: çocuk bitti, pipe boş, ebeveynde yazma ucu açık. Çocuğun bitmesi doğru olsa da pipe okuyucusu EOF göremeyebilir. Süreç sonlanması ile iletişim kanalının bitişini ayrı kontrol et."
-    ]
+    ],
+    "study": {
+      "question": "Bir örneği çözerken hangi bilgileri ayrı yazmalısın?",
+      "answer": "Her süreç için PID, program, durum ve adres alanı; ayrıca CPU sahibi, açık pipe uçları ve sonlanma bilgisini kimin topladığı. Bir bilginin değişmesinden diğerlerinin de değiştiğini çıkarma.",
+      "misconception": "Tek bir “çalışıyor/bitti” etiketi bütün durumu açıklar."
+    }
   }
 ];
