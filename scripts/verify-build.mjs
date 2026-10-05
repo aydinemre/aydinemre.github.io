@@ -46,8 +46,9 @@ for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await s
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
 
 const lesson = await readFile(join(root, "yuksek-lisans/bil513/ders-1/index.html"), "utf8");
-assert.equal((lesson.match(/data-mission=/g)||[]).length,13);
+assert.equal((lesson.match(/<option value=/g)||[]).length,13);
 assert.equal((lesson.match(/data-open-mission=/g)||[]).length,13);
-assert.match(lesson,/<canvas/);
+assert.doesNotMatch(lesson,/<canvas|WebGL|OrbitControls/,'Lesson must not load a GPU scene');
+assert.match(lesson,/id="step-next"/);
 const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
