@@ -20,11 +20,11 @@ const document={querySelector:s=>s==='.os-studio'?root:new Element(),querySelect
 let code=await readFile(new URL('../src/scripts/os-world.js',import.meta.url),'utf8');
 code=code.replace(/^import .*\n/gm,'');
 const start=code.indexOf(' try{');const end=code.indexOf(' function mat(',start);
-code=code.slice(0,start)+' renderer={};scene=new THREE.Scene();camera=new THREE.PerspectiveCamera();controls={target:new THREE.Vector3()};\n'+code.slice(end);
-vm.runInNewContext(code,{THREE,document,matchMedia:()=>({matches:true}),performance,console});
+code=code.slice(0,start)+' renderer={};scene=new THREE.Scene();debug.scene=scene;camera=new THREE.PerspectiveCamera();controls={target:new THREE.Vector3()};\n'+code.slice(end);
+const debug={};vm.runInNewContext(code,{THREE,document,matchMedia:()=>({matches:true}),performance,console,debug});const campus=debug.scene.children.find(g=>g.children.length>20);assert.ok(campus);
 const click=label=>{const b=elements.get('.actions').children.find(b=>b.textContent===label);assert.ok(b,`Missing action ${label}`);b.onclick();};
 const message=()=>elements.get('#event-text').textContent;
-for(let i=0;i<13;i++){missions[i].onclick();assert.equal(elements.get('#mission-title').textContent,chapters[i].title);assert.ok(elements.get('.actions').children.length>=3);}
+for(let i=0;i<13;i++){missions[i].onclick();assert.ok(debug.scene.children.includes(campus),'The shared world must persist between topics');assert.equal(elements.get('#mission-title').textContent,chapters[i].title);assert.ok(elements.get('.actions').children.length>=3);}
 missions[3].onclick();click('A: disk oku');assert.match(message(),/Önce A/);click('Scheduler: A’yı seç');click('A: disk oku');click('Scheduler: B’yi seç');click('A: I/O tamamlandı');assert.match(message(),/CPU hâlâ B/);assert.equal(elements.get('#cpu-metric').textContent,'B');
 missions[5].onclick();click('Child: x = 20');assert.match(message(),/Önce fork/);click('fork()');click('Child: x = 20');assert.match(message(),/Parent.x = 10/);click('exec /bin/echo');assert.match(message(),/PID 101 aynı/);
 missions[6].onclick();click('Parent: waitpid');assert.match(message(),/henüz bitmedi/);click('Child: exit(0)');click('Parent: waitpid');assert.match(message(),/temizlendi/);
