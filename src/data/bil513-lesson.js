@@ -18,7 +18,7 @@ export const chapters = [
         "Çalıştırılacak kod ve veri. Henüz bu örneğin yürütme durumu yok."
       ],
       [
-        "Process (process)",
+        "Process",
         "Programın çalışan örneği; PID, adres alanı ve kaynakları var."
       ],
       [

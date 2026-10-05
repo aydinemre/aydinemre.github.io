@@ -1,26 +1,22 @@
 ---
 import {chapters} from '../data/bil513-lesson.js';
+const {topicIndex=0}=Astro.props;
 ---
-<section id="os-studio" class="concept-reader" data-chapters={JSON.stringify(chapters)}>
-  <p class="eyebrow">BİL513 · ADIM ADIM</p>
-  <label for="concept-choice">İncelemek istediğin konu</label>
-  <select id="concept-choice">{chapters.map((c,i)=><option value={i}>{String(i+1).padStart(2,'0')} · {c.title}</option>)}</select>
-  <h2 id="concept-title">{chapters[0].title}</h2>
-  <p id="concept-intro">{chapters[0].intro}</p>
-  <div id="concept-visual" aria-label="Konunun görsel açıklaması"></div>
-  <div class="current-step" aria-live="polite"><span id="step-number"></span><h3 id="step-title"></h3><p id="step-description"></p></div>
-  <div class="step-controls"><button id="step-back">← Önceki</button><button id="step-next">Sonraki adım →</button><button id="step-play" aria-pressed="false">▶ Otomatik oynat</button><button id="step-reset">Baştan</button></div>
-  <div class="playback-status"><span id="playback-label" role="status">Otomatik oynatma kapalı</span><progress id="playback-progress" max="5" value="0" aria-label="Sonraki adıma ilerleme" hidden></progress></div><a id="concept-notes" href="#konu-1">Bu konunun ayrıntılı notları ↓</a>
+<section class="concept-reader" data-topic-index={topicIndex} data-steps={JSON.stringify(chapters[topicIndex].steps)}>
+  <p class="eyebrow">ADIM ADIM ÖRNEK</p>
+  <div class="current-step" aria-live="polite"><span data-reader="step-number"></span><h3 data-reader="step-title"></h3><p data-reader="step-description"></p></div>
+  <dl data-reader="concept-visual" aria-label="Bu adımdaki durum"></dl>
+  <div class="step-controls"><button data-reader="step-back">← Önceki</button><button data-reader="step-next">Sonraki adım →</button><button data-reader="step-play" aria-pressed="false">▶ Otomatik oynat</button><button data-reader="step-reset">Baştan</button></div>
+  <div class="playback-status" hidden><span data-reader="playback-label" role="status">Otomatik oynatma kapalı</span><progress data-reader="playback-progress" max="5" value="0" aria-label="Sonraki adıma ilerleme" hidden></progress></div>
   <noscript><p>Adımları görmek için JavaScript gerekiyor. Tüm ders notları aşağıda.</p></noscript>
 </section>
 <script>
-const root=document.querySelector('.concept-reader');
-if(root){
- const chapters=JSON.parse(root.dataset.chapters);chapters[3].steps=[['Ready','A ve B çalışabilir; CPU henüz birine verilmedi.'],['Running','Scheduler A’yı seçti. CPU A’da.'],['Waiting','A disk verisi bekliyor; scheduler B’yi çalıştırdı.'],['Ready','A’nın I/O’su tamamlandı. A ready, CPU hâlâ B’de.'],['Running → Ready','B’nin time slice’ı bitti. A ve B ready; sıradaki görevi scheduler seçer.']];let topic=0,step=0,timer=null,nextAt=0;
- function stop(message='Duraklatıldı'){find('playback-label').textContent=message;find('playback-progress').hidden=true;find('playback-progress').value=0;if(timer!==null)clearInterval(timer);timer=null;find('step-play').textContent='▶ Otomatik oynat';find('step-play').setAttribute('aria-pressed','false');}
- const find=(id)=>root.querySelector('#'+id);
- const entry=(name,value,active=false)=>{const item=document.createElement('div');item.className='concept-entry'+(active?' active':'');const heading=document.createElement('strong');heading.textContent=name;const text=document.createElement('span');text.textContent=value;item.append(heading,text);return item;};
- function render(){const c=chapters[topic],current=c.steps[step];find('concept-title').textContent=c.title;find('concept-intro').textContent=c.intro;find('step-number').textContent=`ADIM ${step+1} / ${c.steps.length}`;find('step-title').textContent=current[0];find('step-description').textContent=current[1];find('step-back').disabled=step===0;find('step-next').disabled=step===c.steps.length-1;find('concept-notes').href='#konu-'+(topic+1);const visual=find('concept-visual');visual.replaceChildren();
+document.querySelectorAll('.concept-reader').forEach(root=>{
+ const chapter={steps:JSON.parse(root.dataset.steps)};if(Number(root.dataset.topicIndex)===3)chapter.steps=[['Ready','A ve B çalışabilir; CPU henüz birine verilmedi.'],['Running','Scheduler A’yı seçti. CPU A’da.'],['Waiting','A disk verisi bekliyor; scheduler B’yi çalıştırdı.'],['Ready','A’nın I/O’su tamamlandı. A ready, CPU hâlâ B’de.'],['Running → Ready','B’nin time slice’ı bitti. A ve B ready; sıradaki görevi scheduler seçer.']];let topic=Number(root.dataset.topicIndex),step=0,timer=null,nextAt=0;
+ function stop(message='Duraklatıldı'){root.querySelector('.playback-status').hidden=false;find('playback-label').textContent=message;find('playback-progress').hidden=true;find('playback-progress').value=0;if(timer!==null)clearInterval(timer);timer=null;find('step-play').textContent='▶ Otomatik oynat';find('step-play').setAttribute('aria-pressed','false');}
+ const find=(id)=>root.querySelector('[data-reader="'+id+'"]');
+ const entry=(name,value,active=false)=>{const item=document.createElement('div');item.className='concept-entry'+(active?' active':'');const heading=document.createElement('dt');heading.textContent=name;const text=document.createElement('dd');text.textContent=value;item.append(heading,text);return item;};
+ function render(){const c=chapter,current=c.steps[step];find('step-number').textContent=`ADIM ${step+1} / ${c.steps.length}`;find('step-title').textContent=current[0];find('step-description').textContent=current[1];find('step-back').disabled=step===0;find('step-next').disabled=step===c.steps.length-1;const visual=find('concept-visual');visual.replaceChildren();
  if(topic===3){const frames=[['Ready','Ready','Boş'],['Running','Ready','A'],['Waiting','Running','B'],['Ready','Running','B'],['Ready','Ready','Boş']];const f=frames[Math.min(step,4)];visual.append(entry('Process A',f[0],f[0]==='Running'),entry('CPU',f[2],true),entry('Process B',f[1],f[1]==='Running'));}
  else if(topic===5){visual.append(entry('Parent · PID 100','x = 10',step===0));if(step>0)visual.append(entry('Child · PID 101',step===4?'Sonlandı · status 0 toplandı':step>=3?'Yeni program image':step>=2?'x = 20':'x = 10',true));}
  else if(topic===2){visual.append(entry('P · PID 101',step>=3?'x = 20':'x = 10',step===3),entry('Q · PID 202','x = 10',false));}
@@ -29,17 +25,41 @@ if(root){
  else if(topic===7){visual.append(entry('Ortak alan','Code · data · heap · files',true),entry('Thread 1','Kendi PC / register / stack’i'),entry('Thread 2','Kendi PC / register / stack’i'));}
  else if(topic===1){visual.append(entry('Process kimliği','PID 101'),entry('CPU yetki modu',step===2||step===3?'Kernel mode':'User mode',true));}
  else if(topic===10){visual.append(entry('Üretici','printf'),entry('Pipe','alpha\\nbeta\\n',step===1),entry('Tüketici',step===3?'Newline sayısı: 1 → 2':step===4?'Çıktı: 2':'wc -l',step>=2));}
- else{visual.append(entry(current[0],current[1],true));}
+ else{visual.hidden=true;}
+ if(visual.childElementCount)visual.hidden=false;
  }
- function choose(i){stop('Otomatik oynatma kapalı');topic=i;step=0;find('concept-choice').value=String(i);render();}
- find('concept-choice').onchange=e=>choose(Number(e.target.value));find('step-next').onclick=()=>{stop();if(step<chapters[topic].steps.length-1){step++;render();}};find('step-back').onclick=()=>{stop();if(step>0){step--;render();}};find('step-reset').onclick=()=>choose(topic);
- function tick(){if(document.hidden){stop();return;}const remaining=Math.max(0,nextAt-Date.now());if(remaining===0){step++;render();if(step===chapters[topic].steps.length-1){stop('Tamamlandı · son adıma ulaşıldı');return;}nextAt=Date.now()+5000;}const left=Math.max(0,nextAt-Date.now());find('playback-label').textContent=`Oynatılıyor · sonraki adım ${Math.ceil(left/1000)} saniye sonra`;find('playback-progress').value=5-left/1000;}
- find('step-play').onclick=()=>{if(timer!==null){stop();return;}if(step===chapters[topic].steps.length-1)step=0;render();find('step-play').textContent='Ⅱ Duraklat';find('step-play').setAttribute('aria-pressed','true');find('playback-progress').hidden=false;nextAt=Date.now()+5000;tick();timer=setInterval(tick,200);};document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',()=>stop());
- document.querySelectorAll('[data-open-mission]').forEach(b=>b.onclick=()=>{choose(Number(b.dataset.openMission));root.scrollIntoView({behavior:'instant'});});render();
-}
+ function choose(i){stop('Otomatik oynatma kapalı');topic=i;step=0;render();}
+ find('step-next').onclick=()=>{stop();if(step<chapter.steps.length-1){step++;render();}};find('step-back').onclick=()=>{stop();if(step>0){step--;render();}};find('step-reset').onclick=()=>choose(topic);
+ function tick(){if(document.hidden){stop();return;}const remaining=Math.max(0,nextAt-Date.now());if(remaining===0){step++;render();if(step===chapter.steps.length-1){stop('Tamamlandı · son adıma ulaşıldı');return;}nextAt=Date.now()+5000;}const left=Math.max(0,nextAt-Date.now());find('playback-label').textContent=`Oynatılıyor · sonraki adım ${Math.ceil(left/1000)} saniye sonra`;find('playback-progress').value=5-left/1000;}
+ find('step-play').onclick=()=>{if(timer!==null){stop();return;}root.querySelector('.playback-status').hidden=false;document.dispatchEvent(new CustomEvent('reader-play',{detail:root}));if(step===chapter.steps.length-1)step=0;render();find('step-play').textContent='Ⅱ Duraklat';find('step-play').setAttribute('aria-pressed','true');find('playback-progress').hidden=false;nextAt=Date.now()+5000;tick();timer=setInterval(tick,200);};document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',()=>stop());
+ document.addEventListener('reader-play',e=>{if(e.detail!==root&&timer!==null)stop();});render();
+});
 </script>
 <style>
-.concept-reader{border:1px solid #34463a;border-radius:16px;padding:28px;margin:0 0 55px;background:#101b13;scroll-margin-top:20px}.eyebrow{font:12px var(--mono);color:#8fcf79}.concept-reader label{display:block;font-size:13px;margin-bottom:8px;color:#a7b5a8}select{width:100%;max-width:680px;padding:13px;background:#090e0b;border:1px solid #46694b;color:#dce6dc;border-radius:8px;font:15px system-ui;margin-bottom:28px}.concept-reader h2{font-size:28px;margin-bottom:12px}#concept-intro{color:#a7b5a8;font-size:16px;line-height:1.8;max-width:760px}#concept-visual{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0}.concept-reader :global(.concept-entry){flex:1;min-width:160px;padding:20px;border:1px solid #34463a;border-radius:10px;background:#090e0b}.concept-reader :global(.concept-entry strong){display:block;font:14px var(--mono);margin-bottom:12px;color:#a7b5a8}.concept-reader :global(.concept-entry span){display:block;font-size:19px;line-height:1.5;color:#dce6dc;overflow-wrap:anywhere}.concept-reader :global(.concept-entry.active){border-color:#8fcf79;background:#182b1d}.current-step{border-left:3px solid #8fcf79;padding:10px 20px;min-height:140px}.current-step span{font:12px var(--mono);color:#8fcf79}.current-step h3{font:600 20px system-ui;margin:14px 0 10px}.current-step p{font-size:17px;line-height:1.8;margin:0;color:#dce6dc}.step-controls{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}button{padding:12px 16px;min-height:44px;background:#213b29;color:#dce6dc;border:1px solid #49644d;border-radius:8px;cursor:pointer;font-size:14px}button:disabled{opacity:.35;cursor:default}button:focus-visible,select:focus-visible{outline:2px solid #8fcf79;outline-offset:3px}.concept-reader>a{font-size:14px}@media(max-width:500px){.concept-reader{padding:18px}.concept-reader :global(.concept-entry){min-width:100%;padding:15px}.concept-reader h2{font-size:24px}.current-step{padding-left:14px}}
-.playback-status{margin:-8px 0 24px;color:#8fcf79;font:13px var(--mono);min-height:38px}.playback-status progress{display:block;width:100%;max-width:440px;height:7px;margin-top:12px;accent-color:#8fcf79}.playback-status progress[hidden]{display:none}
-.concept-reader{border:0;border-radius:0;background:none;padding:24px 0}.concept-reader :global(.concept-entry){border:0;border-radius:0;background:none;padding:10px 0;min-width:160px}.concept-reader :global(.concept-entry.active){border:0;background:none}.concept-reader :global(.concept-entry.active strong){color:#b7ee91}.concept-reader :global(.concept-entry.active strong)::before{content:'→ ';color:#8fcf79}.current-step{border:0;padding:12px 0}.concept-reader :global(.concept-entry span){font-size:20px}#concept-visual{gap:32px;border-bottom:1px solid #34463a;padding-bottom:18px}@media(max-width:500px){.concept-reader{padding:20px 0}.concept-reader :global(.concept-entry){min-width:100%;padding:6px 0}#concept-visual{gap:14px}}
+.concept-reader{margin:16px 0 64px;padding:24px 0 28px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);scroll-margin-top:24px;max-width:800px}
+.eyebrow{font:12px var(--mono);letter-spacing:.06em;color:var(--accent);margin:0 0 24px}
+.current-step{min-height:172px}
+[data-reader="step-number"]{display:block;font:12px var(--mono);color:var(--accent);margin-bottom:12px}
+.current-step h3{font:600 clamp(24px,3vw,32px)/1.3 var(--serif);margin:0 0 12px;color:#dce6dc}
+.current-step p{font:18px/1.8 system-ui;max-width:650px;margin:0;color:#dce6dc}
+[data-reader="concept-visual"]{margin:20px 0 28px;padding:0}
+[data-reader="concept-visual"][hidden]{display:none}
+.concept-reader :global(.concept-entry){display:grid;grid-template-columns:minmax(140px,32%) 1fr;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid #24352a}
+.concept-reader :global(.concept-entry dt){font:13px/1.6 var(--mono);color:var(--muted)}
+.concept-reader :global(.concept-entry dd){margin:0;font:17px/1.6 system-ui;color:#dce6dc;overflow-wrap:anywhere}
+.concept-reader :global(.concept-entry.active dd){color:#b7ee91}
+.step-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:24px 0 16px}
+button{border:0;border-radius:0;border-bottom:1px solid transparent;background:none;color:var(--accent);padding:10px 0;min-height:44px;cursor:pointer;font:14px/1.5 system-ui}
+button:hover:not(:disabled){border-bottom-color:var(--accent);color:#b7ee91}
+button:disabled{color:var(--muted);opacity:.4;cursor:default}
+[data-reader="step-play"]{margin-left:auto;font-weight:600}
+[data-reader="step-reset"]{color:var(--muted)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.playback-status{font:12px/1.6 var(--mono);color:var(--muted);min-height:44px;margin-bottom:16px}
+.playback-status progress{display:block;width:100%;height:3px;margin-top:12px;accent-color:var(--accent);border:0;background:#24352a}
+.playback-status progress[hidden]{display:none}
+.playback-status progress::-webkit-progress-bar{background:#24352a}
+.playback-status progress::-webkit-progress-value{background:var(--accent)}
+.concept-reader>a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;text-underline-offset:5px}
+@media(max-width:500px){.concept-reader{margin-bottom:40px}.current-step{min-height:190px}.concept-reader :global(.concept-entry){grid-template-columns:112px 1fr;gap:12px}.step-controls{gap:10px 18px}[data-reader="step-play"]{margin-left:0}.current-step p{font-size:17px}}
 </style>
