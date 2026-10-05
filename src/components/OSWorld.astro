@@ -9,14 +9,15 @@ import {chapters} from '../data/bil513-lesson.js';
   <p id="concept-intro">{chapters[0].intro}</p>
   <div id="concept-visual" aria-label="Konunun görsel açıklaması"></div>
   <div class="current-step" aria-live="polite"><span id="step-number"></span><h3 id="step-title"></h3><p id="step-description"></p></div>
-  <div class="step-controls"><button id="step-back">← Önceki</button><button id="step-next">Sonraki adım →</button><button id="step-reset">Baştan</button></div>
+  <div class="step-controls"><button id="step-back">← Önceki</button><button id="step-next">Sonraki adım →</button><button id="step-play" aria-pressed="false">▶ Otomatik oynat</button><button id="step-reset">Baştan</button></div>
   <a id="concept-notes" href="#konu-1">Bu konunun ayrıntılı notları ↓</a>
   <noscript><p>Adımları görmek için JavaScript gerekiyor. Tüm ders notları aşağıda.</p></noscript>
 </section>
 <script>
 const root=document.querySelector('.concept-reader');
 if(root){
- const chapters=JSON.parse(root.dataset.chapters);chapters[3].steps=[['Ready','A ve B çalışabilir; CPU henüz birine verilmedi.'],['Running','Scheduler A’yı seçti. CPU A’da.'],['Waiting','A disk verisi bekliyor; scheduler B’yi çalıştırdı.'],['Ready','A’nın I/O’su tamamlandı. A ready, CPU hâlâ B’de.'],['Running → Ready','B’nin time slice’ı bitti. A ve B ready; sıradaki görevi scheduler seçer.']];let topic=0,step=0;
+ const chapters=JSON.parse(root.dataset.chapters);chapters[3].steps=[['Ready','A ve B çalışabilir; CPU henüz birine verilmedi.'],['Running','Scheduler A’yı seçti. CPU A’da.'],['Waiting','A disk verisi bekliyor; scheduler B’yi çalıştırdı.'],['Ready','A’nın I/O’su tamamlandı. A ready, CPU hâlâ B’de.'],['Running → Ready','B’nin time slice’ı bitti. A ve B ready; sıradaki görevi scheduler seçer.']];let topic=0,step=0,timer=null;
+ function stop(){if(timer!==null)clearInterval(timer);timer=null;find('step-play').textContent='▶ Otomatik oynat';find('step-play').setAttribute('aria-pressed','false');}
  const find=(id)=>root.querySelector('#'+id);
  const card=(name,value,active=false)=>{const item=document.createElement('div');item.className='concept-card'+(active?' active':'');const heading=document.createElement('strong');heading.textContent=name;const text=document.createElement('span');text.textContent=value;item.append(heading,text);return item;};
  function render(){const c=chapters[topic],current=c.steps[step];find('concept-title').textContent=c.title;find('concept-intro').textContent=c.intro;find('step-number').textContent=`ADIM ${step+1} / ${c.steps.length}`;find('step-title').textContent=current[0];find('step-description').textContent=current[1];find('step-back').disabled=step===0;find('step-next').disabled=step===c.steps.length-1;find('concept-notes').href='#konu-'+(topic+1);const visual=find('concept-visual');visual.replaceChildren();
@@ -30,8 +31,9 @@ if(root){
  else if(topic===10){visual.append(card('Üretici','printf'),card('Pipe','alpha\\nbeta\\n',step===1),card('Tüketici',step===3?'Newline sayısı: 1 → 2':step===4?'Çıktı: 2':'wc -l',step>=2));}
  else{visual.append(card(current[0],current[1],true));}
  }
- function choose(i){topic=i;step=0;find('concept-choice').value=String(i);render();}
- find('concept-choice').onchange=e=>choose(Number(e.target.value));find('step-next').onclick=()=>{if(step<chapters[topic].steps.length-1){step++;render();}};find('step-back').onclick=()=>{if(step>0){step--;render();}};find('step-reset').onclick=()=>choose(topic);
+ function choose(i){stop();topic=i;step=0;find('concept-choice').value=String(i);render();}
+ find('concept-choice').onchange=e=>choose(Number(e.target.value));find('step-next').onclick=()=>{stop();if(step<chapters[topic].steps.length-1){step++;render();}};find('step-back').onclick=()=>{stop();if(step>0){step--;render();}};find('step-reset').onclick=()=>choose(topic);
+ find('step-play').onclick=()=>{if(timer!==null){stop();return;}if(step===chapters[topic].steps.length-1)step=0;render();find('step-play').textContent='Ⅱ Duraklat';find('step-play').setAttribute('aria-pressed','true');timer=setInterval(()=>{if(document.hidden){stop();return;}step++;render();if(step===chapters[topic].steps.length-1)stop();},5000);};document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);
  document.querySelectorAll('[data-open-mission]').forEach(b=>b.onclick=()=>{choose(Number(b.dataset.openMission));root.scrollIntoView({behavior:'instant'});});render();
 }
 </script>
