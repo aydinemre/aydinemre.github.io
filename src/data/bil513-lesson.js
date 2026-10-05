@@ -6,7 +6,7 @@ export const chapters = [
       5
     ],
     "type": "overview",
-    "intro": "Bu bölüm işletim sisteminin CPU, bellek ve dosyaları nasıl yönettiğini açıklar. Önce program, süreç (process) ve yürütme akışı (thread) kavramlarını ayıracağız; ardından bunların nasıl çalıştığını inceleyeceğiz.",
+    "intro": "Bu bölüm işletim sisteminin CPU, bellek ve dosyaları nasıl yönettiğini açıklar. Önce program, process ve yürütme akışı (thread) kavramlarını ayıracağız; ardından bunların nasıl çalıştığını inceleyeceğiz.",
     "notes": [
       "Dersler 1–6 ve 8–10. haftalarda iki bölüm halinde; 7. hafta ara sınav, ders yok. 11–14. haftalarda İngilizce, 15 dakikalık makale sunumları var.",
       "Değerlendirme: ara sınav %30, final %40, sunum %15, ödev %15. Final sorularının yarısı sunumlardan. Yaklaşık iki haftada bir Ubuntu odaklı ödev; AI desteğine izin veriliyor, ayrıntılı yönergeler ayrıca açıklanacak.",
@@ -18,7 +18,7 @@ export const chapters = [
         "Çalıştırılacak kod ve veri. Henüz bu örneğin yürütme durumu yok."
       ],
       [
-        "Süreç (process)",
+        "Process (process)",
         "Programın çalışan örneği; PID, adres alanı ve kaynakları var."
       ],
       [
@@ -27,21 +27,21 @@ export const chapters = [
       ],
       [
         "Thread",
-        "Süreç içindeki yürütme akışı; PC, register ve stack ile izlenir."
+        "Process içindeki yürütme akışı; PC, register ve stack ile izlenir."
       ],
       [
         "İletişim",
-        "Ayrı süreçler örneğin pipe kullanarak veri aktarabilir."
+        "Ayrı process’ler örneğin pipe kullanarak veri aktarabilir."
       ]
     ],
     "extra": [
-      "Terminale bir komut yazınca shell komutun nasıl çalıştırılacağını belirler. Harici bir program için tipik yol çocuk süreç oluşturmak, programı yüklemek ve gerektiğinde sonlanmasını beklemektir. cd gibi bazı komutlar shell’in içinde çalışır; her komut mutlaka yeni süreç oluşturmaz.",
+      "Terminale bir komut yazınca shell komutun nasıl çalıştırılacağını belirler. Harici bir program için tipik yol child process oluşturmak, programı yüklemek ve gerektiğinde sonlanmasını beklemektir. cd gibi bazı komutlar shell’in içinde çalışır; her komut mutlaka yeni process oluşturmaz.",
       "Bu notlardaki PID değerleri ve bellek yerleşimleri örnektir. Amaç gerçek makinedeki numaraları tahmin etmek değil, hangi bilginin ne zaman değiştiğini izlemektir."
     ],
     "study": {
       "question": "Terminalde cd yazınca neden shell’in kendi çalışma dizini değişmelidir?",
-      "answer": "Çocuk süreç yalnızca kendi çalışma dizinini değiştirse ebeveyn shell’in dizini değişmez. Bu nedenle cd normalde shell içinde yürütülür.",
-      "misconception": "Her komut yeni süreç oluşturur."
+      "answer": "Child process yalnızca kendi çalışma dizinini değiştirse parent process shell’in dizini değişmez. Bu nedenle cd normalde shell içinde yürütülür.",
+      "misconception": "Her komut yeni process oluşturur."
     }
   },
   {
@@ -51,7 +51,7 @@ export const chapters = [
       9
     ],
     "type": "kernel",
-    "intro": "Normal uygulama kodu user mode’da çalışır. Dosya okuma gibi ayrıcalıklı bir işlem gerektiğinde sistem çağrısı yapar; CPU kernel mode’a geçer ve işletim sistemi isteği işler. Bu geçişte süreç kimliği değişmek zorunda değildir.",
+    "intro": "Normal uygulama kodu user mode’da çalışır. Dosya okuma gibi ayrıcalıklı bir işlem gerektiğinde sistem çağrısı yapar; CPU kernel mode’a geçer ve işletim sistemi isteği işler. Bu geçişte process kimliği değişmek zorunda değildir.",
     "notes": [
       "Process yürütme bağlamı, sanal bellek adres alanı, dosya ve socket veri/iletişim arayüzü sağlar. Shell user-space programıdır; kütüphaneler kernel’e girmeden iş yapabilir.",
       "Üç giriş nedeni: system call, exception (ör. page fault), device interrupt (ör. I/O tamamlanması). Interrupt her zaman process değiştirmez.",
@@ -84,19 +84,19 @@ export const chapters = [
       "Sistem çağrısının iki ayrı sonucunu düşün: CPU yetki modu değişebilir; ayrıca istek beklemeye yol açarsa başka görev seçilebilir. İkinci sonuç birincisinin zorunlu devamı değildir."
     ],
     "study": {
-      "question": "Bir süreç read çağırdı, veri hazırdı ve çağrı tamamlandı. Başka süreç mutlaka çalışmış mıdır?",
-      "answer": "Hayır. Kernel hizmeti yerine getirip aynı süreci user mode’da sürdürebilir. Yetki modu geçişi ile context switch farklı olaylardır.",
+      "question": "Bir process read çağırdı, veri hazırdı ve çağrı tamamlandı. Başka process mutlaka çalışmış mıdır?",
+      "answer": "Hayır. Kernel hizmeti yerine getirip aynı process’i user mode’da sürdürebilir. Yetki modu geçişi ile context switch farklı olaylardır.",
       "misconception": "Kernel’e girince PID değişir."
     }
   },
   {
-    "title": "Program, süreç ve adres alanı",
+    "title": "Program, process ve adres alanı",
     "range": [
       10,
       15
     ],
     "type": "memory",
-    "intro": "Program, çalıştırılacak kod ve veridir. Süreç, bu programın çalışan örneğidir: kendi kimliği, yürütme durumu ve sanal adres alanı vardır. Aynı programın iki süreci, sıradan değişkenlerini birbirinden bağımsız değiştirebilir.",
+    "intro": "Program, çalıştırılacak kod ve veridir. Process, bu programın çalışan örneğidir: kendi kimliği, yürütme durumu ve sanal adres alanı vardır. Aynı programın iki process’i, sıradan değişkenlerini birbirinden bağımsız değiştirebilir.",
     "notes": [
       "Bir editör input beklerken diğeri dosya kaydedebilir. Salt okunur kodun fiziksel sayfaları paylaşılabilir; bu, sıradan yazılabilir değişkenleri ortak yapmaz. Birinin çökmesi normalde diğerini sonlandırmaz; ortak harici dosya/hizmet bağımlılıkları yine olabilir.",
       "Sanal adres alanı kavramsal olarak code, static data, heap ve stack içerir. Register ve program counter bellek bölgesi değil yürütme durumudur. Gerçek yerleşim; mappings, libraries ve guard regions içerir, büyüme yönleri evrensel değildir.",
@@ -126,7 +126,7 @@ export const chapters = [
       ]
     ],
     "extra": [
-      "Sanal adres, bir sürecin belleğe erişirken kullandığı adrestir. İki süreçte aynı sayısal adres bulunması aynı fiziksel hücreye eriştiklerini kanıtlamaz; adres çevrimi sürecin eşlemelerine bağlıdır.",
+      "Sanal adres, bir process’in belleğe erişirken kullandığı adrestir. İki process’te aynı sayısal adres bulunması aynı fiziksel hücreye eriştiklerini kanıtlamaz; adres çevrimi process’in eşlemelerine bağlıdır.",
       "Bellek ile açık dosya aynı paylaşım kuralına sahip değildir. fork sonrasında sıradan yazılabilir değişkenler ayrıdır; miras alınan dosya tanımlayıcıları ise aynı açık dosya kaydına, dolayısıyla ortak dosya konumuna başvurabilir."
     ],
     "study": {
@@ -219,25 +219,25 @@ export const chapters = [
     ],
     "extra": [
       "Program counter (PC), yürütmenin hangi talimatta olduğunu gösterir. Register’lar CPU’nun işlem sırasında kullandığı küçük saklama alanlarıdır. Bunlar geri yüklenince görev kaldığı yerden sürdürülebilir.",
-      "Aynı sürecin iki thread’i arasında da context switch olabilir. Yürütme durumu değişir; ortak adres alanının başka bir süreç alanına çevrilmesi gerekmez."
+      "Aynı process’in iki thread’i arasında da context switch olabilir. Yürütme durumu değişir; ortak adres alanının başka bir process alanına çevrilmesi gerekmez."
     ],
     "study": {
-      "question": "P’den aynı sürecin başka thread’ine geçerken yürütme durumu saklanmalı mı?",
+      "question": "P’den aynı process’in başka thread’ine geçerken yürütme durumu saklanmalı mı?",
       "answer": "Evet. Thread’lerin PC ve register değerleri ayrıdır. Ortak adres alanı, yürütme durumlarının da aynı olduğu anlamına gelmez.",
       "misconception": "Ortak bellek varsa context switch gerekmez."
     }
   },
   {
-    "title": "fork, exec ve wait: süreç oluşturma",
+    "title": "fork, exec ve wait: process oluşturma",
     "range": [
       28,
       37
     ],
     "type": "fork",
-    "intro": "fork yeni bir çocuk süreç oluşturur. exec, çağıran sürecin programını değiştirir; yeni süreç oluşturmaz. wait veya waitpid, çocuğun sonlanmasını bekleyebilir ve sonlanma bilgisini toplar.",
+    "intro": "fork yeni bir child process oluşturur. exec, çağıran process’in programını değiştirir; yeni process oluşturmaz. wait veya waitpid, child process’in sonlanmasını bekleyebilir ve sonlanma bilgisini toplar.",
     "notes": [
-      "Process tree ebeveyn/çocuk ilişkisidir; CPU sahipliği, iletişim veya bitiş sırası değildir. PID’ler örnektir, ortamına göre değişir.",
-      "Başarılı fork: parent pozitif child PID alır; child 0 alır. Başarısız fork −1 döndürür ve çocuk yaratılmaz. Hangisinin önce çalışacağı garanti değildir; sıra gerekiyorsa synchronization kur.",
+      "Process tree parent process/child process ilişkisidir; CPU sahipliği, iletişim veya bitiş sırası değildir. PID’ler örnektir, ortamına göre değişir.",
+      "Başarılı fork: parent pozitif child PID alır; child 0 alır. Başarısız fork −1 döndürür ve child process yaratılmaz. Hangisinin önce çalışacağı garanti değildir; sıra gerekiyorsa synchronization kur.",
       "Copy-on-write: ayrı mantıksal yazılabilir alanlar başlangıçta aynı fiziksel sayfaya eşlenebilir. Yazma gerektiğinde private copy oluşturulur. Child değişikliği parent’ın sıradan değişkenini değiştirmez.",
       "exec code/data/stack’i değiştirir, PID’yi korur. Başarıda eski programa dönmez; hata durumunda döner. File descriptors genellikle close-on-exec değilse kalır; shell pipe bağlantısını önce kurabilir, yanlış inheritance bug yaratabilir.",
       "Başarılı örnekte /bin/echo önce “child” yazar; waitpid sonrasında parent exit status 0 yazar. Tam kod fork hatası, EINTR retry ve WIFEXITED/WEXITSTATUS kontrolü içerir.",
@@ -266,25 +266,25 @@ export const chapters = [
       ]
     ],
     "extra": [
-      "fork bir kez çağrılır, başarılıysa iki süreçte döner. Ebeveyndeki pozitif sonuç çocuğun PID’sidir; çocuktaki sonuç 0’dır. Kod bu dönüş değerine bakarak ebeveyn ve çocuk işlerini ayırır.",
-      "Örnekte çocuk x=20 yazar, sonra exec ile echo programına dönüşür. Ebeveynin x değeri 10 kalır. waitpid çocuğun bitişini bekler; çocuğun değişkenini ebeveyne kopyalamaz."
+      "fork bir kez çağrılır, başarılıysa iki process’te döner. Parent processdeki pozitif sonuç child process’in PID’sidir; child process’teki sonuç 0’dır. Kod bu dönüş değerine bakarak parent process ve child process işlerini ayırır.",
+      "Örnekte child process x=20 yazar, sonra exec ile echo programına dönüşür. Parent process’in x değeri 10 kalır. waitpid child process’in bitişini bekler; child process’in değişkenini parent process’e kopyalamaz."
     ],
     "study": {
-      "question": "fork öncesi x=10. Çocuk x=20 yapıyor. Ebeveyn waitpid sonrası x’i okuyor: sonuç?",
-      "answer": "10. Çocuk kendi adres alanını değiştirdi. waitpid sonlanmayı bekler ve status toplar; değişkenleri birleştirmez.",
-      "misconception": "wait çocuğun belleğini ebeveyne aktarır."
+      "question": "fork öncesi x=10. Child process x=20 yapıyor. Parent process waitpid sonrası x’i okuyor: sonuç?",
+      "answer": "10. Child process kendi adres alanını değiştirdi. waitpid sonlanmayı bekler ve status toplar; değişkenleri birleştirmez.",
+      "misconception": "wait child process’in belleğini parent process’e aktarır."
     }
   },
   {
-    "title": "Süreç sonlanması, zombie ve waitpid",
+    "title": "Process sonlanması, zombie ve waitpid",
     "range": [
       38,
       41
     ],
     "type": "zombie",
-    "intro": "Bir süreç sonlandığında artık talimat yürütmez. Olağan wait düzeninde ebeveyn sonlanma bilgisini toplayana kadar kernel’de küçük bir kayıt kalır; bu duruma zombie denir. Zombie, hâlâ çalışan bir program değildir.",
+    "intro": "Bir process sonlandığında artık talimat yürütmez. Olağan wait düzeninde parent process sonlanma bilgisini toplayana kadar kernel’de küçük bir kayıt kalır; bu duruma zombie denir. Zombie, hâlâ çalışan bir program değildir.",
     "notes": [
-      "Parent çocuk çalışırken başka iş yapabilir. waitpid, belirli child bitene kadar bloklayabilir. Background çalışma, status collection sorumluluğunu ortadan kaldırmaz.",
+      "Parent child process çalışırken başka iş yapabilir. waitpid, belirli child bitene kadar bloklayabilir. Background çalışma, status collection sorumluluğunu ortadan kaldırmaz.",
       "Parent’ın önce sonlanması zombie’den farklıdır. Unix-like sistemler reparenting ve eventual reaping düzenler; sorumlu process ortama bağlıdır.",
       "Ubuntu deneyi: sleep 20 &; demo_pid=$!; ps -o pid,ppid,stat,comm -p \"$demo_pid\"; wait \"$demo_pid\". Gerçek makinede çalıştır ve gözlemlediğin çıktıyı kaydet.",
       "PID kimlik, PPID parent, STAT durum/flags, COMM komut adıdır. Linux R hem running hem runnable olabilir. Sleeping tek başına eksik olayı açıklamaz. Snapshot tüm trace değildir; sleep bitmişse kayıp satır launch hatası kanıtı değildir."
@@ -312,11 +312,11 @@ export const chapters = [
       ]
     ],
     "extra": [
-      "Zombie ile orphan farklıdır: zombie sonlanmış fakat bilgisi henüz toplanmamış süreçtir; orphan, ebeveyni önce sonlanan süreçtir. Yetim süreç çalışmayı sürdürebilir ve sistem tarafından başka bir ebeveyne bağlanır."
+      "Zombie ile orphan farklıdır: zombie sonlanmış fakat bilgisi henüz toplanmamış processtir; orphan, parent processi önce sonlanan processtir. Yetim process çalışmayı sürdürebilir ve sistem tarafından başka bir parent process’e bağlanır."
     ],
     "study": {
-      "question": "Çocuk exit yaptı ama ebeveyn henüz waitpid çağırmadı. Çocuk CPU tüketmeye devam eder mi?",
-      "answer": "Hayır. Olağan zombie durumunda program yürütülmez; ebeveynin toplayacağı sonlanma kaydı kalır. Zombie ile canlı fakat ebeveyni sonlanmış orphan farklıdır.",
+      "question": "Child process exit yaptı ama parent process henüz waitpid çağırmadı. Child process CPU tüketmeye devam eder mi?",
+      "answer": "Hayır. Olağan zombie durumunda program yürütülmez; parent process’in toplayacağı sonlanma kaydı kalır. Zombie ile canlı fakat parent processi sonlanmış orphan farklıdır.",
       "misconception": "Zombie arka planda çalışan bir programdır."
     }
   },
@@ -327,7 +327,7 @@ export const chapters = [
       46
     ],
     "type": "threads",
-    "intro": "Thread, bir sürecin içindeki yürütme akışıdır. Aynı sürecin thread’leri ortak adres alanına erişir; her thread’in kendi talimat konumu, register değerleri ve stack’i vardır. Aynı anda çalışmaları ise birden fazla CPU çekirdeği gerektirir.",
+    "intro": "Thread, bir process’in içindeki yürütme akışıdır. Aynı process’in thread’leri ortak adres alanına erişir; her thread’in kendi talimat konumu, register değerleri ve stack’i vardır. Aynı anda çalışmaları ise birden fazla CPU çekirdeği gerektirir.",
     "notes": [
       "Process sınırı ayrı sanal adres alanıdır; iletişim explicit mechanism gerektirir. Thread’ler code/data/heap ve açık dosyaları paylaşabilir; pointer ile diğer thread’in canlı stack nesnesine erişebilir.",
       "Hatalı thread ortak belleği bozabilir. Kolay iletişim synchronization ve nesne ömrü sorumluluğu getirir.",
@@ -458,13 +458,13 @@ export const chapters = [
     }
   },
   {
-    "title": "Süreçler arası iletişim ve pipe",
+    "title": "Process’ler arası iletişim ve pipe",
     "range": [
       53,
       56
     ],
     "type": "pipe",
-    "intro": "Ayrı süreçler veri paylaşmak için bir iletişim mekanizması kullanır. Shared memory’de aynı bellek alanına erişirler; pipe’ta biri byte yazar, diğeri okur. Pipe bir mesaj listesi değil, sıralı byte akışıdır.",
+    "intro": "Ayrı process’ler veri paylaşmak için bir iletişim mekanizması kullanır. Shared memory’de aynı bellek alanına erişirler; pipe’ta biri byte yazar, diğeri okur. Pipe bir mesaj listesi değil, sıralı byte akışıdır.",
     "notes": [
       "Shared memory layout, ownership ve readiness kuralları ister; ortak flag tek başına synchronization sağlamaz. Message passing de error handling, order ve framing ister. Gönderen durursa alıcının ne yapacağı belirlenmeli.",
       "printf 'alpha\\nbeta\\n' | wc -l: üretici iki newline içeren byte stream gönderir, tüketici sayar: 2. Sonuç scheduling sırasından değil girdiden çıkar; whitespace gösterimi değişebilir.",
@@ -541,11 +541,11 @@ export const chapters = [
     ],
     "extra": [
       "EOF bir byte veya özel karakter değildir; read’in 0 döndürmesiyle bildirilen bitiş durumudur. Boş akışta writer açıkken bekleme, writer kalmadığında EOF oluşur. Burada blocking, sıfırdan büyük uzunluk isteyen okuma anlatılıyor.",
-      "fork, dosya tanımlayıcılarını miras bırakabilir. Çocuk kendi yazma ucunu kapatsa bile ebeveyn aynı pipe’ın bir yazma ucunu açık tutuyorsa okuyucu EOF alamaz. Kullanılmayan uçlar her süreçte kapatılmalıdır."
+      "fork, dosya tanımlayıcılarını miras bırakabilir. Child process kendi yazma ucunu kapatsa bile parent process aynı pipe’ın bir yazma ucunu açık tutuyorsa okuyucu EOF alamaz. Kullanılmayan uçlar her process’te kapatılmalıdır."
     ],
     "study": {
-      "question": "Pipe boş, çocuk yazmayı bitirdi, ebeveyn yazma ucunu açık tuttu. Reader ne görür?",
-      "answer": "Blocking reader veri bekleyebilir; EOF için tüm yazma ucu referansları kapanmalı ve buffer tüketilmiş olmalıdır. Çocuğun bitmesi tek başına bu koşulu sağlamaz.",
+      "question": "Pipe boş, child process yazmayı bitirdi, parent process yazma ucunu açık tuttu. Reader ne görür?",
+      "answer": "Blocking reader veri bekleyebilir; EOF için tüm yazma ucu referansları kapanmalı ve buffer tüketilmiş olmalıdır. Child process’in bitmesi tek başına bu koşulu sağlamaz.",
       "misconception": "Boş buffer her zaman EOF demektir."
     }
   },
@@ -556,7 +556,7 @@ export const chapters = [
       65
     ],
     "type": "review",
-    "intro": "Bir örneği açıklarken şu bilgileri ayrı takip et: süreç kimliği, çalışan program, görev durumu, CPU sahibi, paylaşılan kaynaklar ve bitiş koşulu. Aşağıdaki sorular bunları birbirine karıştırıp karıştırmadığını kontrol eder.",
+    "intro": "Bir örneği açıklarken şu bilgileri ayrı takip et: process kimliği, çalışan program, görev durumu, CPU sahibi, paylaşılan kaynaklar ve bitiş koşulu. Aşağıdaki sorular bunları birbirine karıştırıp karıştırmadığını kontrol eder.",
     "notes": [
       "Kısa background process gözlemle; launch ve thread örneklerini derleyip çalıştır; önce sonucu tahmin et, farkları açıkla. CPU sharing/waiting hakkında bir soru hazırla. Bunlar practice; burada graded deadline yok.",
       "Ayırt et: program/process, process/thread, ready/running/waiting, kernel entry/task switch, fork/exec/wait, concurrency/parallelism, shared memory/pipe.",
@@ -586,11 +586,11 @@ export const chapters = [
     ],
     "extra": [
       "Kontrol örneği: A disk bekliyor, B çalışıyor. Disk tamamlandı. A’nın durumu ready; CPU sahibi hâlâ B olabilir. “Veri geldi” ile “A çalışmaya başladı” ayrı olaylardır.",
-      "Kontrol örneği: çocuk bitti, pipe boş, ebeveynde yazma ucu açık. Çocuğun bitmesi doğru olsa da pipe okuyucusu EOF göremeyebilir. Süreç sonlanması ile iletişim kanalının bitişini ayrı kontrol et."
+      "Kontrol örneği: child process bitti, pipe boş, parent processde yazma ucu açık. Child process’in bitmesi doğru olsa da pipe okuyucusu EOF göremeyebilir. Process sonlanması ile iletişim kanalının bitişini ayrı kontrol et."
     ],
     "study": {
       "question": "Bir örneği çözerken hangi bilgileri ayrı yazmalısın?",
-      "answer": "Her süreç için PID, program, durum ve adres alanı; ayrıca CPU sahibi, açık pipe uçları ve sonlanma bilgisini kimin topladığı. Bir bilginin değişmesinden diğerlerinin de değiştiğini çıkarma.",
+      "answer": "Her process için PID, program, durum ve adres alanı; ayrıca CPU sahibi, açık pipe uçları ve sonlanma bilgisini kimin topladığı. Bir bilginin değişmesinden diğerlerinin de değiştiğini çıkarma.",
       "misconception": "Tek bir “çalışıyor/bitti” etiketi bütün durumu açıklar."
     }
   }
