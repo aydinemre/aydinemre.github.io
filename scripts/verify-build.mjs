@@ -15,6 +15,8 @@ for (const file of html) {
   assert.equal((text.match(/<h1[ >]/g) || []).length, 1, `Expected one h1: ${file}`);
   assert.match(text, /<title>[^<]+<\/title>/, `Missing title: ${file}`);
   assert.match(text, /name="description"/, `Missing description: ${file}`);
+  assert.match(text,/data-theme-controls/,'Theme control missing');
+  assert.match(text,/data-theme-init/,'Early theme initialization missing');
   assert.match(text, /rel="canonical"/, `Missing canonical: ${file}`);
   for (const match of text.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const pathname = decodeURIComponent(match[1]);
@@ -34,7 +36,9 @@ assert.match(home, /Kendini tanımak üzerine notlarım/, 'Published essay missi
 assert.match(home, /matrix-masthead[^>]*aria-hidden="true"/, 'Accessible static Matrix motif missing');
 assert.match(home, /Data Science &amp; AI Leader/, 'Current profession missing');
 assert.doesNotMatch(home, /Yüksek lisansa başladım/, 'Removed announcement returned');
-assert.doesNotMatch(home, /<script|<canvas/, 'Homepage must remain free of decorative scripts and canvas');
+assert.doesNotMatch(home, /<canvas/, 'Homepage must remain free of decorative scripts and canvas');
+assert.equal((home.match(/<script\b/g)||[]).length,2,'Only functional theme scripts belong on homepage');
+assert.match(home,/src="\/site\/theme.js/,'Theme script missing');
 for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/yuksek-lisans/${code}/`), `Course link missing: ${code}`);
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
@@ -68,12 +72,12 @@ for(const week of animatedWeeks)for(const slot of ['primary','secondary']){
  const animation=animations[week][slot];assert.equal(animation.index,++animationIndex);
  for(const language of ['tr','en']){
   const localized=animation.languages[language];assert.ok(localized.frames>1);
-  for(const variant of ['desktop','mobile']){
-   const asset=localized[variant],gif=await readFile(join(root,asset.gif.slice(1)));
+  for(const theme of ['light','dark'])for(const variant of ['desktop','mobile']){
+   const asset=localized.themes[theme][variant],gif=await readFile(join(root,asset.gif.slice(1)));
    assert.match(gif.subarray(0,6).toString(),/^GIF8[79]a$/,'Animation must be a real GIF');
    assert.equal(gif.readUInt16LE(6),asset.width);assert.equal(gif.readUInt16LE(8),asset.height);
    assert.equal(gif.length,asset.bytes);await stat(join(root,asset.poster.slice(1)));
   }
  }
 }
-console.log('Verified 18 numbered animations in Turkish/English and desktop/mobile GIF formats.');
+console.log('Verified 18 numbered animations in Turkish/English and desktop/mobile light/dark GIF formats.');

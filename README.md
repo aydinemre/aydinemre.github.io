@@ -30,7 +30,7 @@ Eski Jekyll sitesi Git geçmişinde ve `backup/pre-personal-blog` dalında korun
 
 ## Yayın güvenliği
 
-Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Ana sayfa istemci JavaScript’i yüklemez. Yüksek lisans sayfalarında dil seçimi, derslerde deneyler ve tarayıcıya yerel kişisel notlar için JavaScript çalışır. Etkileşimli anlatımlar ilgili içerik sayfasında çalışır; klavye kullanımı ve azaltılmış hareket tercihi desteklenmelidir.
+Site statik HTML/CSS/JavaScript yayınlar; sunucu, kullanıcı hesabı, çerez veya analitik izleyici içermez. Bütün sayfalar sistem/açık/koyu tema seçimi için küçük bir istemci betiği yükler. Yüksek lisans sayfalarında dil seçimi, derslerde deneyler ve tarayıcıya yerel kişisel notlar için JavaScript çalışır. Etkileşimli anlatımlar ilgili içerik sayfasında çalışır; klavye kullanımı ve azaltılmış hareket tercihi desteklenmelidir.
 
 Mevcut npm audit çıktısı Astro'nun derleme bağımlılığı `http-cache-semantics@4.2.0` için bir cache güvenlik uyarısı içerir; yayımlanan statik sitede bu paket çalışmaz. Bu projede uzak görsel veya kişiselleştirilmiş yanıt cache'i kullanılmaz. Paket için düzeltilmiş sürüm yayınlandığında bağımlılıklar güncellenmelidir.
 
@@ -47,3 +47,7 @@ GitHub Pages aylık 100 GB soft bandwidth sınırına sahiptir. Çok yüksek tra
 Yayınlanan içerik ve dil verisi `src/data/cse513/` ile `public/study/cse513/data/` içinde tutulur. Görseller, sunumlar ve offline laboratuvar kaynakları `public/study/cse513/` altında bulunur. Ders metni JavaScript kapalıyken Türkçe okunabilir. TR/EN seçimi ve deney durumu tarayıcıda yönetilir. Kişisel notlar yalnız localStorage’da saklanır, sunucuya veya GitHub’a gönderilmez.
 
 18 görsel anlatım gerçek, döngülü GIF dosyalarıyla otomatik oynar. Her GIF’te sağ üstte görselin dönem içindeki sırası ve mevcut kare/toplam kare bilgisi yer alır. Türkçe/İngilizce ve mobil/masaüstü sürümleri `public/study/cse513/animations/` altında, dosya boyutları ve kare sayıları `manifest.json` içindedir. Durdurma başlangıç görseline döner; yeniden oynatma GIF’i baştan başlatır. Azaltılmış hareket tercihi etkinse kullanıcı oynatmayı seçene kadar sabit görsel gösterilir. Metinler ve özgün deneyler her animasyonun altında açılabilir.
+
+## Matrix teması
+
+Bütün site aynı Matrix renkleri, serif başlıklar, monospace etiketler ve statik binary şeridi kullanır. Ortak renkler `public/site/theme.css` içinde, tema başlangıcı `ThemeHead.astro`, kullanıcı seçimi `ThemeControl.astro` ve `public/site/theme.js` ile yönetilir. Varsayılan sistem tercihidir; arayüzden Açık/Koyu/Sistem seçilebilir. Tercih `emre-theme` anahtarında yerel saklanır. JavaScript kapalıyken CSS sistem temasını izler. GIF ve poster dosyalarının açık ve koyu sürümleri vardır.

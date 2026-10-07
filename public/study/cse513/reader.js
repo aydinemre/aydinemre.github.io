@@ -1,6 +1,6 @@
 const CONFIG=JSON.parse(document.querySelector('#study-config').textContent);
 try {
-const [dataResponse,extraResponse,animationResponse]=await Promise.all([fetch(CONFIG.data),fetch(CONFIG.extra),fetch('/study/cse513/animations/manifest.json')]);
+const [dataResponse,extraResponse,animationResponse]=await Promise.all([fetch(CONFIG.data),fetch(CONFIG.extra),fetch('/study/cse513/animations/manifest.json?v=20261008-matrix')]);
 if(!dataResponse.ok||!extraResponse.ok||!animationResponse.ok)throw Error('Study data could not be loaded');
 const DATA=await dataResponse.json();DATA.week=CONFIG.week;DATA.materialWeek=CONFIG.materialWeek;
 const ANIMATIONS=await animationResponse.json();
@@ -190,6 +190,7 @@ document.addEventListener('click',event=>{
  if(!actions[id])return;actions[id]();renderExtendedExperiments();
 });
 
+const animationVersion='20261008-matrix';
 const animationCapture=new URLSearchParams(location.search).has('capture');
 const animationMotion=matchMedia('(prefers-reduced-motion: reduce)');
 let animationObserver;
@@ -198,25 +199,109 @@ function mountAnimations(){
  animationObserver?.disconnect();
  animationObserver=new IntersectionObserver(entries=>{for(const e of entries){const box=e.target;box.dataset.inView=String(e.isIntersecting);updateAnimationImage(box)}},{rootMargin:'100px'});
  for(const slot of ['primary','secondary']){
-  const lab=$('#experiment-'+slot),record=ANIMATIONS[String(DATA.week)]?.[slot],asset=record?.languages[lang];
+  const lab=$('#experiment-'+slot),record=ANIMATIONS[String(DATA.week)]?.[slot],asset=themedAnimationAsset(record);
   if(!lab||!asset)continue;
   const box=document.createElement('div');box.className='animation-card';box.dataset.animation=slot;box.dataset.playing=String(!animationMotion.matches);box.dataset.inView='false';
   const title=lab.querySelector('h3')?.textContent||L('Kavramsal deney','Conceptual experiment');
-  box.innerHTML=`<div class="animation-toolbar"><button class="subtle" data-animation-toggle>${L('Durdur ve başa dön','Stop and reset')}</button><button class="subtle" data-animation-replay>${L('Yeniden oynat','Replay')}</button><span class="animation-number">${L('Görsel','Visual')} ${record.index}/18</span></div><figure><picture><source media="(max-width:600px)" srcset="${asset.mobile.poster}" width="${asset.mobile.width}" height="${asset.mobile.height}"><img src="${asset.desktop.poster}" width="${asset.desktop.width}" height="${asset.desktop.height}" loading="lazy" decoding="async" alt="${esc(title)} — ${asset.frames} ${L('adımlık animasyon','step animation')}"></picture><figcaption class="small">${L('Adımlar otomatik ilerler ve tekrar eder. Sağ üstte görsel ve adım sırası görünür.','Steps advance automatically and loop. The visual number and current step appear at the top right.')} · <a href="${asset.desktop.gif}" download>${L('GIF indir','Download GIF')}</a></figcaption></figure><details class="animation-lab"><summary>${L('Metni oku veya kendin dene','Read the text or try it yourself')}</summary></details>`;
-  lab.before(box);box.querySelector('details').append(lab);box.animationAsset=asset;
+  box.innerHTML=`<div class="animation-toolbar"><button class="subtle" data-animation-toggle>${L('Durdur ve başa dön','Stop and reset')}</button><button class="subtle" data-animation-replay>${L('Yeniden oynat','Replay')}</button><span class="animation-number">${L('Görsel','Visual')} ${record.index}/18</span></div><figure><picture><source media="(max-width:600px)" srcset="${asset.mobile.poster}" width="${asset.mobile.width}" height="${asset.mobile.height}"><img src="${asset.desktop.poster}" width="${asset.desktop.width}" height="${asset.desktop.height}" loading="lazy" decoding="async" alt="${esc(title)} — ${asset.frames} ${L('adımlık animasyon','step animation')}"></picture><figcaption class="small">${L('Adımlar otomatik ilerler ve tekrar eder. Sağ üstte görsel ve adım sırası görünür.','Steps advance automatically and loop. The visual number and current step appear at the top right.')} · <a href="${asset.desktop.gif}?v=${animationVersion}" data-animation-download download>${L('GIF indir','Download GIF')}</a></figcaption></figure><details class="animation-lab"><summary>${L('Metni oku veya kendin dene','Read the text or try it yourself')}</summary></details>`;
+  lab.before(box);box.querySelector('details').append(lab);box.animationAsset=asset;box.animationRecord=record;
   box.querySelector('[data-animation-toggle]').addEventListener('click',()=>{box.dataset.playing=String(box.dataset.playing!=='true');updateAnimationImage(box)});
   box.querySelector('[data-animation-replay]').addEventListener('click',()=>{box.dataset.playing='true';box.dataset.replay=String(Date.now());updateAnimationImage(box)});
   animationObserver.observe(box);updateAnimationImage(box);
  }
 }
+function themedAnimationAsset(record){const localized=record?.languages[lang];if(!localized)return null;const theme=document.documentElement.dataset.theme||'light';return {...localized,...localized.themes?.[theme]};}
 function updateAnimationImage(box){
  const asset=box.animationAsset;if(!asset)return;
- const playing=box.dataset.playing==='true',visible=box.dataset.inView==='true',kind=playing&&visible?'gif':'poster',suffix=kind==='gif'&&box.dataset.replay?'?replay='+box.dataset.replay:'';
- const img=box.querySelector('img'),source=box.querySelector('source'),src=asset.desktop[kind]+suffix,mobile=asset.mobile[kind]+suffix;
+ const playing=box.dataset.playing==='true',visible=box.dataset.inView==='true',kind=playing&&visible?'gif':'poster',suffix='?v='+animationVersion+(kind==='gif'&&box.dataset.replay?'&replay='+box.dataset.replay:'');
+ const img=box.querySelector('img'),source=box.querySelector('source');img.width=asset.desktop.width;img.height=asset.desktop.height;source.setAttribute('width',asset.mobile.width);source.setAttribute('height',asset.mobile.height);const src=asset.desktop[kind]+suffix,mobile=asset.mobile[kind]+suffix;
+ box.querySelector('[data-animation-download]').href=asset.desktop.gif+'?v='+animationVersion;
  if(img.getAttribute('src')!==src)img.src=src;if(source.getAttribute('srcset')!==mobile)source.srcset=mobile;
  const button=box.querySelector('[data-animation-toggle]');button.textContent=playing?L('Durdur ve başa dön','Stop and reset'):L('Oynat','Play');button.setAttribute('aria-pressed',String(playing));
 }
 animationMotion.addEventListener('change',e=>{for(const box of document.querySelectorAll('.animation-card')){box.dataset.playing=String(!e.matches);updateAnimationImage(box)}});
 
-render();document.body.dataset.studyReady='true';
+document.addEventListener('site-theme-change',()=>{for(const box of document.querySelectorAll('.animation-card')){box.animationAsset=themedAnimationAsset(box.animationRecord);updateAnimationImage(box)}});
+
+// Preserve keyboard focus when an experiment replaces its controls while rendering.
+(() => {
+ const controlSelector='button[data-act],button[data-extra-act],select,input';
+ const enabled=el=>el&&!el.disabled&&el.getAttribute('aria-disabled')!=='true'&&el.tabIndex>=0&&el.getClientRects().length>0;
+ function preserveExperimentFocus(event){
+  const target=event.target instanceof Element?event.target:null;
+  const control=target?.closest(controlSelector);
+  const experiment=control?.closest('.experiment');
+  if(!experiment?.id||document.activeElement!==control)return;
+  if(event.type==='click'&&!control.matches('button[data-act],button[data-extra-act]'))return;
+  if(event.type!=='click'&&!control.matches('select,input'))return;
+  const identity={id:control.id,act:control.dataset.act,extra:control.dataset.extraAct};
+  const original=[...experiment.querySelectorAll(controlSelector)];
+  const position=original.indexOf(control);
+  // A timer runs after target and bubbling handlers have finished replacing HTML.
+  setTimeout(()=>{
+   if(control.isConnected)return;
+   const active=document.activeElement;
+   // Respect focus explicitly moved by another handler or by the user.
+   if(active&&active!==document.body&&active!==document.documentElement)return;
+   const replacement=document.getElementById(experiment.id);
+   if(!replacement)return;
+   const controls=[...replacement.querySelectorAll(controlSelector)];
+   let next=controls.find(el=>identity.id?el.id===identity.id:identity.act?el.dataset.act===identity.act:identity.extra?el.dataset.extraAct===identity.extra:false);
+   if(!enabled(next)){
+    // At the end of a trace, prefer a nearby previous/reset action in this lab.
+    const pivot=Math.max(0,controls.indexOf(next)>=0?controls.indexOf(next):position);
+    next=null;
+    for(let distance=1;distance<=controls.length;distance++){
+     const before=controls[pivot-distance],after=controls[pivot+distance];
+     if(enabled(before)){next=before;break;}
+     if(enabled(after)){next=after;break;}
+    }
+    if(!next)next=controls.find(enabled);
+   }
+   next?.focus({preventScroll:true});
+  },0);
+ }
+ for(const name of ['click','change','input'])document.addEventListener(name,preserveExperimentFocus,true);
+})();
+
+// Restore deep links after the reader replaces its server-rendered sections.
+// This fragment shares the reader's DATA and active() bindings.
+function restoreStudyHash() {
+  if (new URLSearchParams(location.search).has('capture')) return;
+
+  const hash = location.hash;
+  let section;
+  if (hash === '#footer') {
+    section = DATA.slides.length;
+  } else {
+    const match = /^#s([1-9]\d*)$/.exec(hash);
+    if (!match) return;
+    section = Number(match[1]);
+    if (!Number.isSafeInteger(section) || section > DATA.slides.length) return;
+  }
+
+  const target = document.getElementById(hash.slice(1));
+  if (!target) return;
+  const align = () => {
+    if (location.hash !== hash || !target.isConnected) return;
+    target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    active(section);
+  };
+  align();
+
+  // A newly inserted illustration above the target can acquire its height
+  // after the first alignment. Restore the same anchor once those images load.
+  const pending = [...document.querySelectorAll('#sections img')].filter(image =>
+    !image.complete && (image.compareDocumentPosition(target) & 4)
+  );
+  if (pending.length) {
+    Promise.all(pending.map(image => image.decode().catch(() => {}))).then(() => {
+      requestAnimationFrame(align);
+    });
+  }
+}
+
+window.addEventListener('hashchange', restoreStudyHash);
+
+render();restoreStudyHash();document.body.dataset.studyReady='true';
 }catch(error){console.error(error);document.querySelector('#intro').insertAdjacentHTML('beforeend','<p class=boundary>Deney verileri yüklenemedi. Sayfayı yenileyebilirsin. / Experiment data could not load. Please reload.</p>');}

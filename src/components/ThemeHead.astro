@@ -1,0 +1,5 @@
+<link rel="stylesheet" href="/site/theme.css?v=20261008-matrix"/>
+<script is:inline data-theme-init>
+(function(){var choice='system';try{choice=localStorage.getItem('emre-theme')||'system'}catch(e){}if(!['system','light','dark'].includes(choice))choice='system';var media=matchMedia('(prefers-color-scheme: dark)');function apply(value){choice=value;var theme=value==='system'?(media.matches?'dark':'light'):value;document.documentElement.dataset.theme=theme;document.documentElement.dataset.themeChoice=value;document.dispatchEvent(new CustomEvent('site-theme-change',{detail:{theme:theme,choice:value}}))}window.__emreTheme={apply:apply,media:media};apply(choice)})();
+</script>
+<script is:inline type="module" src="/site/theme.js?v=20261008-matrix"></script>
