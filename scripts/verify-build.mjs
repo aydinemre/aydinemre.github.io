@@ -60,3 +60,20 @@ const course=await readFile(join(root,'yuksek-lisans/bil513/index.html'),'utf8')
 for(let week=1;week<=14;week++)assert.ok(course.includes(`/yuksek-lisans/bil513/hafta-${week}/`),`Missing week ${week}`);
 const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
+
+const animations=JSON.parse(await readFile(join(root,'study/cse513/animations/manifest.json'),'utf8'));
+const animatedWeeks=[1,2,3,4,5,6,8,9,10];let animationIndex=0;
+assert.deepEqual(Object.keys(animations).map(Number).sort((a,b)=>a-b),animatedWeeks);
+for(const week of animatedWeeks)for(const slot of ['primary','secondary']){
+ const animation=animations[week][slot];assert.equal(animation.index,++animationIndex);
+ for(const language of ['tr','en']){
+  const localized=animation.languages[language];assert.ok(localized.frames>1);
+  for(const variant of ['desktop','mobile']){
+   const asset=localized[variant],gif=await readFile(join(root,asset.gif.slice(1)));
+   assert.match(gif.subarray(0,6).toString(),/^GIF8[79]a$/,'Animation must be a real GIF');
+   assert.equal(gif.readUInt16LE(6),asset.width);assert.equal(gif.readUInt16LE(8),asset.height);
+   assert.equal(gif.length,asset.bytes);await stat(join(root,asset.poster.slice(1)));
+  }
+ }
+}
+console.log('Verified 18 numbered animations in Turkish/English and desktop/mobile GIF formats.');

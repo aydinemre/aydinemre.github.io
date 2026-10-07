@@ -1,8 +1,9 @@
 const CONFIG=JSON.parse(document.querySelector('#study-config').textContent);
 try {
-const [dataResponse,extraResponse]=await Promise.all([fetch(CONFIG.data),fetch(CONFIG.extra)]);
-if(!dataResponse.ok||!extraResponse.ok)throw Error('Study data could not be loaded');
+const [dataResponse,extraResponse,animationResponse]=await Promise.all([fetch(CONFIG.data),fetch(CONFIG.extra),fetch('/study/cse513/animations/manifest.json')]);
+if(!dataResponse.ok||!extraResponse.ok||!animationResponse.ok)throw Error('Study data could not be loaded');
 const DATA=await dataResponse.json();DATA.week=CONFIG.week;DATA.materialWeek=CONFIG.materialWeek;
+const ANIMATIONS=await animationResponse.json();
 const EXTRA=await extraResponse.json(),HERO=CONFIG.hero,SCHED=DATA.week===2?EXTRA.jobs:[];
 const $=q=>document.querySelector(q), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let lang='tr',current=1;try{lang=localStorage.getItem('cse513-language')||'tr'}catch{}if(!['tr','en'].includes(lang))lang='tr';
@@ -16,7 +17,7 @@ function render(){
  $('#skip').textContent=L('İçeriğe geç','Skip to content');$('#contents-label').textContent=L('ÖĞRENME ROTASI','LEARNING ROUTE');$('#jump-label').textContent=L('Bölüm','Section');
  $('#nav').innerHTML=DATA.slides.map((s,i)=>`<a href="#s${i+1}" data-slide="${i+1}"><span>${String(i+1).padStart(2,'0')}</span>${esc(s[lang].title)}</a>`).join('');
  $('#jump').innerHTML=DATA.slides.map((s,i)=>`<option value="${i+1}">${String(i+1).padStart(2,'0')} · ${esc(s[lang].title)}</option>`).join('');
- $('#intro').innerHTML=`<p class="eyebrow">${L('KENDİ HIZINDA ÇALIŞ','LEARN AT YOUR OWN PACE')}</p><p>${L('Önce tahminini yaz. Deneyi adım adım ilerlet, sonra cevabın gerekçesini karşılaştır. Dil değiştirince notların ve deney durumun korunur.','Write your prediction first. Step through the experiment, then compare your reasoning with the answer. Notes and experiment state survive language changes.')}</p><p class="small">${L('Sunum Türkçe. Bu çalışma sayfasının tamamı Türkçe ve İngilizce kullanılabilir.','The slide deck is in Turkish. This entire study page is available in Turkish and English.')}</p>${DATA.sourceStatus==='scope-adaptation-pdf-forthcoming'?'<p class="boundary">'+L('Bu haftanın PDF’si kaynak sayfada henüz yayımlanmamıştı. Bu çalışma, yayımlanan haftalık kapsamın birincil kaynaklarla geliştirilmiş özgün anlatımıdır.','This week’s PDF was not yet published on the source page. This study independently develops the published scope using primary references.')+'</p>':''}`;
+ $('#intro').innerHTML=`<p class="eyebrow">${L('KENDİ HIZINDA ÇALIŞ','LEARN AT YOUR OWN PACE')}</p><p>${L('Önce tahminini yaz. GIF’te adımların nasıl ilerlediğini izle, sonra cevabın gerekçesini karşılaştır. Dil değiştirince notların ve deney durumun korunur.','Write your prediction first. Watch the steps unfold in the GIF, then compare your reasoning with the answer. Notes and experiment state survive language changes.')}</p><p class="small">${L('Sunum Türkçe. Bu çalışma sayfasının tamamı Türkçe ve İngilizce kullanılabilir.','The slide deck is in Turkish. This entire study page is available in Turkish and English.')}</p>${DATA.sourceStatus==='scope-adaptation-pdf-forthcoming'?'<p class="boundary">'+L('Bu haftanın PDF’si kaynak sayfada henüz yayımlanmamıştı. Bu çalışma, yayımlanan haftalık kapsamın birincil kaynaklarla geliştirilmiş özgün anlatımıdır.','This week’s PDF was not yet published on the source page. This study independently develops the published scope using primary references.')+'</p>':''}`;
  $('#sections').innerHTML=DATA.slides.map((s,i)=>{
   const d=s[lang],n=i+1;
   let out=`<section id="s${n}" class="slide"><p class="eyebrow">${String(n).padStart(2,'0')} / ${DATA.slides.length}</p><h2>${esc(d.title)}</h2>`;
@@ -39,7 +40,7 @@ function render(){
  $('#footer').innerHTML=`<h2>${L('Dosyalar ve çalışma sırası','Files and study sequence')}</h2><p>${L('Soruların sonucunu ve teknik gerekçesini kendi sözcüklerinle açıkla. Anlamadığın ayrım için ilgili deneye ve anlatıma dön.','Explain the result and mechanism in your own words. Revisit the relevant experiment and explanation for any unclear distinction.')}</p><p><a href="/study/cse513/downloads/week-${String(DATA.materialWeek).padStart(2,'0')}.pptx">${L('PowerPoint sunumu','PowerPoint deck')}</a> ${[1,2,3,4,5,6,8,9,10].includes(DATA.week)?`· <a href="/study/cse513/labs/week-${String(DATA.materialWeek).padStart(2,'0')}/README.md">${L('Laboratuvar rehberi','Lab guide')}</a>`:''} · <a href="/yuksek-lisans/bil513/">${L('Bütün haftalar','All weeks')}</a></p><p class="small">${L('Notların yalnız bu tarayıcıda saklanır. Başka cihaza otomatik taşınmaz. Depolamayı engelleyen bir tarayıcıda notlarını ayrıca kopyala. Deneyler öğretim modelleridir, gerçek sistem performans ölçümü değildir.','Notes stay in this browser and do not transfer automatically to another device. Copy notes separately if storage is blocked. Experiments are teaching models, not measurements of a real system.')}</p>${HERO?`<p><a href="/study/cse513/assets/week-${String(DATA.materialWeek).padStart(2,'0')}-provenance.json">${L('Görsel kökeni ve üretim istemi','Image provenance and generation prompt')}</a></p>`:''}<p><a href="https://mehmetgokturk.com/cse513/index.html">${L('Resmî ders sayfası','Official course page')}</a></p>`;
  document.querySelectorAll('[data-note]').forEach(t=>{const id=t.dataset.note;let v=saved[id];if(v===undefined)try{v=localStorage.getItem(`cse513-w${DATA.week}-note${id}`)||''}catch{v=''}t.value=v;t.addEventListener('input',()=>{saved[id]=t.value;try{localStorage.setItem(`cse513-w${DATA.week}-note${id}`,t.value)}catch{}})});
  document.querySelectorAll('[data-detail]').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)openDetails.add(d.dataset.detail);else openDetails.delete(d.dataset.detail)}));
- renderExperiments();active(current);
+ renderExperiments();mountAnimations();active(current);
 }
 function experimentPosition(which){const positions={1:[10,22],5:[11,16],6:[14,17],8:[19,8],9:[17,15],10:[7,13]};if(positions[DATA.week])return positions[DATA.week][which];if(DATA.week===3&&!which)return 3;const targets=DATA.week===2?[/round robin|round-robin|RR:/i,/real.time|gerçek zaman/i]:DATA.week===3?[/kayıp|lost update|interleav/i,/producer.consumer|üretici.*tüketici|bounded/i]:[/wait.for|bekleme graf|resource.*graph|kaynak.*graf/i,/Banker|bankacı/i];const found=DATA.slides.findIndex(s=>targets[which].test(s.tr.title+' '+s.en.title));return found>=0?found+1:(which?20:10)}
 function active(n){current=Math.max(1,Math.min(DATA.slides.length,n));document.querySelectorAll('#nav a').forEach(a=>a.setAttribute('aria-current',String(+a.dataset.slide===current)));$('#jump').value=current;$('#prev').href='#s'+Math.max(1,current-1);$('#next').href=current===DATA.slides.length?'#footer':'#s'+(current+1);$('#prev').textContent=current===1?L('Başlangıç','Start'):L('Önceki','Previous');$('#next').textContent=current===DATA.slides.length?L('Dosyalar','Files'):L('Sonraki','Next');$('.progress').style.width=current/DATA.slides.length*100+'%'}
@@ -188,6 +189,34 @@ document.addEventListener('click',event=>{
  };
  if(!actions[id])return;actions[id]();renderExtendedExperiments();
 });
+
+const animationCapture=new URLSearchParams(location.search).has('capture');
+const animationMotion=matchMedia('(prefers-reduced-motion: reduce)');
+let animationObserver;
+function mountAnimations(){
+ if(animationCapture)return;
+ animationObserver?.disconnect();
+ animationObserver=new IntersectionObserver(entries=>{for(const e of entries){const box=e.target;box.dataset.inView=String(e.isIntersecting);updateAnimationImage(box)}},{rootMargin:'100px'});
+ for(const slot of ['primary','secondary']){
+  const lab=$('#experiment-'+slot),record=ANIMATIONS[String(DATA.week)]?.[slot],asset=record?.languages[lang];
+  if(!lab||!asset)continue;
+  const box=document.createElement('div');box.className='animation-card';box.dataset.animation=slot;box.dataset.playing=String(!animationMotion.matches);box.dataset.inView='false';
+  const title=lab.querySelector('h3')?.textContent||L('Kavramsal deney','Conceptual experiment');
+  box.innerHTML=`<div class="animation-toolbar"><button class="subtle" data-animation-toggle>${L('Durdur ve başa dön','Stop and reset')}</button><button class="subtle" data-animation-replay>${L('Yeniden oynat','Replay')}</button><span class="animation-number">${L('Görsel','Visual')} ${record.index}/18</span></div><figure><picture><source media="(max-width:600px)" srcset="${asset.mobile.poster}" width="${asset.mobile.width}" height="${asset.mobile.height}"><img src="${asset.desktop.poster}" width="${asset.desktop.width}" height="${asset.desktop.height}" loading="lazy" decoding="async" alt="${esc(title)} — ${asset.frames} ${L('adımlık animasyon','step animation')}"></picture><figcaption class="small">${L('Adımlar otomatik ilerler ve tekrar eder. Sağ üstte görsel ve adım sırası görünür.','Steps advance automatically and loop. The visual number and current step appear at the top right.')} · <a href="${asset.desktop.gif}" download>${L('GIF indir','Download GIF')}</a></figcaption></figure><details class="animation-lab"><summary>${L('Metni oku veya kendin dene','Read the text or try it yourself')}</summary></details>`;
+  lab.before(box);box.querySelector('details').append(lab);box.animationAsset=asset;
+  box.querySelector('[data-animation-toggle]').addEventListener('click',()=>{box.dataset.playing=String(box.dataset.playing!=='true');updateAnimationImage(box)});
+  box.querySelector('[data-animation-replay]').addEventListener('click',()=>{box.dataset.playing='true';box.dataset.replay=String(Date.now());updateAnimationImage(box)});
+  animationObserver.observe(box);updateAnimationImage(box);
+ }
+}
+function updateAnimationImage(box){
+ const asset=box.animationAsset;if(!asset)return;
+ const playing=box.dataset.playing==='true',visible=box.dataset.inView==='true',kind=playing&&visible?'gif':'poster',suffix=kind==='gif'&&box.dataset.replay?'?replay='+box.dataset.replay:'';
+ const img=box.querySelector('img'),source=box.querySelector('source'),src=asset.desktop[kind]+suffix,mobile=asset.mobile[kind]+suffix;
+ if(img.getAttribute('src')!==src)img.src=src;if(source.getAttribute('srcset')!==mobile)source.srcset=mobile;
+ const button=box.querySelector('[data-animation-toggle]');button.textContent=playing?L('Durdur ve başa dön','Stop and reset'):L('Oynat','Play');button.setAttribute('aria-pressed',String(playing));
+}
+animationMotion.addEventListener('change',e=>{for(const box of document.querySelectorAll('.animation-card')){box.dataset.playing=String(!e.matches);updateAnimationImage(box)}});
 
 render();document.body.dataset.studyReady='true';
 }catch(error){console.error(error);document.querySelector('#intro').insertAdjacentHTML('beforeend','<p class=boundary>Deney verileri yüklenemedi. Sayfayı yenileyebilirsin. / Experiment data could not load. Please reload.</p>');}
