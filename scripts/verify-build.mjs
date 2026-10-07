@@ -15,8 +15,17 @@ for (const file of html) {
   assert.equal((text.match(/<h1[ >]/g) || []).length, 1, `Expected one h1: ${file}`);
   assert.match(text, /<title>[^<]+<\/title>/, `Missing title: ${file}`);
   assert.match(text, /name="description"/, `Missing description: ${file}`);
-  assert.match(text,/data-theme-controls/,'Theme control missing');
-  assert.match(text,/data-theme-init/,'Early theme initialization missing');
+  if (!text.includes('data-legacy-redirect')) {
+    assert.match(text,/data-theme-controls/,'Theme control missing');
+    assert.match(text,/data-theme-init/,'Early theme initialization missing');
+    assert.doesNotMatch(text,/href="\/yuksek-lisans\//,'Navigation must use the master route');
+  } else {
+    assert.match(text,/http-equiv="refresh"/,'Legacy redirect missing');
+    assert.match(text,/name="robots" content="noindex, follow"/,'Redirect must not duplicate indexed content');
+    const relative = file.slice(root.length).replace(/index\.html$/, '');
+    const expected = 'https://aydinemre.github.io' + relative.replace('/yuksek-lisans/', '/master/');
+    assert.ok(text.includes(`rel="canonical" href="${expected}"`),`Wrong redirect canonical: ${file}`);
+  }
   assert.match(text, /rel="canonical"/, `Missing canonical: ${file}`);
   for (const match of text.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const pathname = decodeURIComponent(match[1]);
@@ -32,6 +41,9 @@ for (const f of built.filter(f => /\.(js|css|html)$/.test(f))) {
   assert.ok((await stat(f)).size < (f.includes('/_astro/OSWorld.') ? 650_000 : 100_000), `Asset exceeds its size budget: ${f}`);
 }
 const home = await readFile(join(root, 'index.html'), 'utf8');
+assert.equal(html.filter(f=>f.includes('/yuksek-lisans/')).length,19,'All 19 legacy routes must redirect');
+const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');
+assert.doesNotMatch(sitemap,/yuksek-lisans/,'Sitemap must list canonical master routes');
 assert.match(home, /Kendini tanımak üzerine notlarım/, 'Published essay missing from homepage');
 assert.match(home, /matrix-masthead[^>]*aria-hidden="true"/, 'Accessible static Matrix motif missing');
 assert.match(home, /Data Science &amp; AI Leader/, 'Current profession missing');
@@ -39,30 +51,30 @@ assert.doesNotMatch(home, /Yüksek lisansa başladım/, 'Removed announcement re
 assert.doesNotMatch(home, /<canvas/, 'Homepage must remain free of decorative scripts and canvas');
 assert.equal((home.match(/<script\b/g)||[]).length,2,'Only functional theme scripts belong on homepage');
 assert.match(home,/src="\/site\/theme.js/,'Theme script missing');
-for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/yuksek-lisans/${code}/`), `Course link missing: ${code}`);
+for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/master/${code}/`), `Course link missing: ${code}`);
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
 for (const code of ['bil511']) {
-  const course = await readFile(join(root, `yuksek-lisans/${code}/index.html`), 'utf8');
+  const course = await readFile(join(root, `master/${code}/index.html`), 'utf8');
   assert.match(course, /henüz yayımlanmış bir not yok/, `Missing truthful empty state: ${code}`);
 }
 for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await stat(join(root, name));
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
 
-const lesson = await readFile(join(root, "yuksek-lisans/bil513/ders-1/index.html"), "utf8");
+const lesson = await readFile(join(root, "master/bil513/ders-1/index.html"), "utf8");
 assert.equal((lesson.match(/class="slide"/g)||[]).length,28,'First week must retain 28 study sections');
 assert.match(lesson,/id="language"/,'Bilingual control missing');
 assert.doesNotMatch(lesson,/MatrixIntro|data-reader="step-play"|WebGL/,'Old lesson design must not load');
 for(let week=1;week<=14;week++){
- const page=await readFile(join(root,`yuksek-lisans/bil513/hafta-${week}/index.html`),'utf8');
+ const page=await readFile(join(root,`master/bil513/hafta-${week}/index.html`),'utf8');
  assert.match(page,/study-config/,'Study data configuration missing');
  assert.match(page,/id="language"/,'Language control missing');
  assert.match(page,/id="sections"/,'Server rendered reading missing');
  assert.ok((page.match(/class="slide"/g)||[]).length>=14,`Incomplete week ${week}`);
 }
-const course=await readFile(join(root,'yuksek-lisans/bil513/index.html'),'utf8');
-for(let week=1;week<=14;week++)assert.ok(course.includes(`/yuksek-lisans/bil513/hafta-${week}/`),`Missing week ${week}`);
-const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
+const course=await readFile(join(root,'master/bil513/index.html'),'utf8');
+for(let week=1;week<=14;week++)assert.ok(course.includes(`/master/bil513/hafta-${week}/`),`Missing week ${week}`);
+const sourceText=await readFile(join(root,"master/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
 
 const animations=JSON.parse(await readFile(join(root,'study/cse513/animations/manifest.json'),'utf8'));

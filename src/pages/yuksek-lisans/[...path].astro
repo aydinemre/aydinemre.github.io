@@ -1,0 +1,31 @@
+---
+export function getStaticPaths() {
+  const paths = ['', 'bil511', 'bil513', 'bil513/ders-1', 'bil513/ders-1-kaynak',
+    ...Array.from({ length: 14 }, (_, i) => `bil513/hafta-${i + 1}`)];
+  return paths.map(path => ({
+    params: { path: path || undefined },
+    props: { target: `/master/${path ? path + '/' : ''}` },
+  }));
+}
+const { target } = Astro.props;
+---
+<!doctype html>
+<html lang="tr"><head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Yeni adrese yönlendiriliyor · Emre Aydın</title>
+  <meta name="description" content="Yüksek lisans notları artık /master/ adresinde."/>
+  <link rel="canonical" href={new URL(target, Astro.site)}/>
+  <meta name="robots" content="noindex, follow"/>
+  <meta http-equiv="refresh" content={`0;url=${target}`}/>
+</head><body>
+  <main data-legacy-redirect><h1>Yeni adres: master</h1>
+    <p><a id="redirect-target" href={target}>Ders notlarını aç</a></p>
+  </main>
+  <script is:inline>
+    const target = new URL(document.querySelector('#redirect-target').href);
+    target.search = location.search;
+    target.hash = location.hash;
+    location.replace(target.href);
+  </script>
+</body></html>

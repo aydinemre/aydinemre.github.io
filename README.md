@@ -18,8 +18,8 @@ npm run verify
 ## İçerik ekleme
 
 - Kişisel notlar: `src/pages/kisisel-notlarim/`
-- BİL511: `src/pages/yuksek-lisans/bil511/`
-- BİL513/CSE513: `src/pages/yuksek-lisans/bil513/` ve `src/data/cse513/`
+- BİL511: `src/pages/master/bil511/`
+- BİL513/CSE513: `src/pages/master/bil513/` ve `src/data/cse513/`
 - Ortak tasarım: `src/layouts/Layout.astro`
 
 Yeni yazıları `.mdx` dosyası olarak ekleyebilirsiniz. MDX içinde Astro bileşenlerini ve JavaScript ile hazırlanan etkileşimli görselleri kullanabilirsiniz. Yeni yazının bağlantısını ilgili liste sayfasına ekleyin.
@@ -51,3 +51,5 @@ Yayınlanan içerik ve dil verisi `src/data/cse513/` ile `public/study/cse513/da
 ## Matrix teması
 
 Bütün site aynı Matrix renkleri, serif başlıklar, monospace etiketler ve statik binary şeridi kullanır. Ortak renkler `public/site/theme.css` içinde, tema başlangıcı `ThemeHead.astro`, kullanıcı seçimi `ThemeControl.astro` ve `public/site/theme.js` ile yönetilir. Varsayılan sistem tercihidir; arayüzden Açık/Koyu/Sistem seçilebilir. Tercih `emre-theme` anahtarında yerel saklanır. JavaScript kapalıyken CSS sistem temasını izler. GIF ve poster dosyalarının açık ve koyu sürümleri vardır.
+
+Yüksek lisans bölümü `/master/` altında yayımlanır. Eski `/yuksek-lisans/` adresleri karşılık gelen yeni sayfaya yönlendirilir; JavaScript açıkken query ve bölüm bağlantıları da korunur. GitHub Pages üzerinde bunlar statik yönlendirme sayfalarıdır.
