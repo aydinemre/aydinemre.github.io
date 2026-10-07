@@ -46,9 +46,17 @@ for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await s
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
 
 const lesson = await readFile(join(root, "yuksek-lisans/bil513/ders-1/index.html"), "utf8");
-assert.equal((lesson.match(/data-topic-index=/g)||[]).length,13);
-assert.doesNotMatch(lesson,/data-open-mission=|id="concept-choice"/,'No duplicate topic navigation');
-assert.doesNotMatch(lesson,/<canvas|WebGL|OrbitControls/,'Lesson must not load a GPU scene');
-assert.equal((lesson.match(/data-reader="step-next"/g)||[]).length,13);
+assert.equal((lesson.match(/class="slide"/g)||[]).length,28,'First week must retain 28 study sections');
+assert.match(lesson,/id="language"/,'Bilingual control missing');
+assert.doesNotMatch(lesson,/MatrixIntro|data-reader="step-play"|WebGL/,'Old lesson design must not load');
+for(let week=1;week<=14;week++){
+ const page=await readFile(join(root,`yuksek-lisans/bil513/hafta-${week}/index.html`),'utf8');
+ assert.match(page,/study-config/,'Study data configuration missing');
+ assert.match(page,/id="language"/,'Language control missing');
+ assert.match(page,/id="sections"/,'Server rendered reading missing');
+ assert.ok((page.match(/class="slide"/g)||[]).length>=14,`Incomplete week ${week}`);
+}
+const course=await readFile(join(root,'yuksek-lisans/bil513/index.html'),'utf8');
+for(let week=1;week<=14;week++)assert.ok(course.includes(`/yuksek-lisans/bil513/hafta-${week}/`),`Missing week ${week}`);
 const sourceText=await readFile(join(root,"yuksek-lisans/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);

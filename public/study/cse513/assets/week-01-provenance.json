@@ -1,0 +1,26 @@
+{
+  "tool": "OpenAI ImageGen",
+  "generated": "2026-10-07",
+  "assets": [
+    {
+      "path": "hero.png",
+      "prompt": "Use case: illustration-story. Asset: lecture cover illustration, landscape 3:2. A beautiful editorial gouache and fine pencil illustration of ONE chef in a small open professional kitchen juggling exactly two cooking orders with two recipe cards on the counter, one pan being actively prepared, a second pot simmering unattended. Palette warm ivory, burnt orange, deep navy, muted teal. Adult educational publishing style, sophisticated not cartoonish or childish. Clean generous negative space, no words, no numbers, no logos. This is a metaphor for a CPU making progress on overlapping tasks, not a literal computer diagram. No additional chefs."
+    },
+    {
+      "path": "states.png",
+      "prompt": "Use case: scientific-educational. Asset: clean educational state diagram for an operating systems lecture, landscape 3:2 on ivory background. Draw exactly three large simple circles aligned triangle: upper left labeled 'READY', upper right 'RUNNING', bottom center 'WAITING'. Dark navy lettering, muted teal ready, warm orange running, gray blue waiting. Exactly five straight directional arrows with small labels: READY to RUNNING labeled 'dispatch'; RUNNING to READY labeled 'preempt'; RUNNING to WAITING labeled 'block'; WAITING to READY labeled 'event'. READY to RUNNING and reverse should be visually separated two distinct horizontal arrows. NO WAITING to RUNNING arrow. The fifth instruction is not fifth arrow: total exactly FOUR arrows. No people, icons, textures or extra text. Elegant legible textbook schematic, generous spacing. Model excludes new and terminated states."
+    },
+    {
+      "path": "memory.png",
+      "prompt": "Use case: scientific-educational. Asset: accurate operating system process/thread address space comparison, landscape 3:2 ivory background. Left half show two clearly separate rectangular virtual-address-space containers labeled 'Process P' and 'Process Q'. Each contains a Code block, a Data block, and a Stack block. Right half show ONE container labeled 'Process R'. Inside shared single Code block and shared single Data / Heap block, plus two smaller separate blocks 'Stack T1' and 'Stack T2'. Outside but near bottom of right container two small labels 'T1: PC + registers' and 'T2: PC + registers'. Label left side heading 'Separate address spaces', right side heading 'Shared address space'. Minimal navy, teal and orange textbook diagram. No arrows between address spaces. Stacks T1/T2 both INSIDE same process R container, not protection boundaries. No chefs, no kitchen."
+    },
+    {
+      "path": "concurrency.png",
+      "prompt": "Use case: scientific-educational. Asset: accurate operating systems execution timeline infographic, landscape 3:2 on ivory background. Top heading 'CONCURRENCY'. One horizontal lane labeled 'CPU 0' with six equally sized adjacent blocks: A orange, B teal, A orange, B teal, A orange, B teal, progressing left to right. No gaps, no simultaneous overlapping blocks in this lane. Bottom heading 'PARALLELISM'. Two aligned horizontal lanes labeled 'CPU 0' and 'CPU 1'. CPU0 shows three adjacent orange blocks labeled A, A, A. CPU1 shows three adjacent teal blocks labeled B, B, B aligned in time with CPU0. Simple right pointing horizontal time axis under each diagram labeled 'time'. Navy text, large readable labels, no other words, no icons or decorative assets. Both bottom lanes share the exact same horizontal time range. Conceptual model assumes logical CPUs."
+    },
+    {
+      "path": "pipe.png",
+      "prompt": "Use case: scientific-educational. Asset: clean OS pipe byte stream and EOF diagram landscape 3:2 on ivory. Three horizontal stages left to right: Producer, finite pipe buffer, Consumer. Producer a minimal navy rectangle labeled 'writer'; center a short teal outlined tube with six cells containing 'a', 'l', 'p', 'h', 'a', '\\n'; right a navy rectangle labeled 'reader'. Arrows left to center and center to right. At bottom two compact conceptual cases, side by side: left shows empty tube and an OPEN tap icon, label 'empty + writer open = WAIT'; right shows empty tube and a CLOSED tap icon, label 'empty + all writers closed = EOF'. Large legible English labels, sophisticated textbook schematic. No numbers, no people. Buffer cells only for metaphor, not measured capacity."
+    }
+  ]
+}

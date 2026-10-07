@@ -1,0 +1,7 @@
+---
+import StudyLesson from '../../../components/StudyLesson.astro';
+import {allWeeks} from '../../../lib/study.js';
+export function getStaticPaths(){return allWeeks.map(week=>({params:{week:String(week)},props:{week}}));}
+const {week}=Astro.props;
+---
+<StudyLesson week={week}/>
