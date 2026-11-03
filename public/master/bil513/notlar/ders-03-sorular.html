@@ -1,0 +1,1756 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 Ders 3: Soru bankası ve cevap anahtarı</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 Ders 3: Soru bankası ve cevap anahtarı">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-03-sorular.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-03.html">Anlatım</a> <a href="ders-03-ozet.html">Özet</a> <a href="ders-03-sorular.html" aria-current="page">Soru bankası</a> <a href="ders-03-deneme.html">Deneme sınavı</a> <a href="ders-03-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a><ul><li><a href="#a1-merkez-sl-34-64-ve-6768deki-karstlklar">A.1 Merkez: sl. 34, 64 ve 67–68'deki karşıtlıklar</a></li><li><a href="#a2-bolum-bolum-harita">A.2 Bölüm bölüm harita</a></li><li><a href="#a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar</a></li></ul></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a><ul><li><a href="#seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap</a></li><li><a href="#seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz</a></li><li><a href="#seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma</a></li><li><a href="#seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak</a></li><li><a href="#soru-bankas-ozeti">Soru bankası özeti</a></li></ul></li><li><a href="#d-bolum-sonu-kontrol-sorular">D) Bölüm sonu kontrol soruları</a></li><li><a href="#moderatore-notlar">Moderatöre notlar</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-3-soru-bankas-ve-cevap-anahtar">CSE 513 Ders 3: Soru bankası ve cevap anahtarı<a class="headerlink" href="#cse-513-ders-3-soru-bankas-ve-cevap-anahtar" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a></li><li><a href="#d-bolum-sonu-kontrol-sorular">D) Bölüm sonu kontrol soruları</a></li><li><a href="#moderatore-notlar">Moderatöre notlar</a></li></ul></details>
+<p>Kaynak: sınav/pedagoji uzman ajanının notu, denetçi raporuna göre düzeltildi (2026-11-03). Düzeltilenler: <code>[S-N]</code> etiketleri yalnızca okumanın §17'sindeki altı review sorusuna ayrıldı, satır içi kutular <code>[Okuma §N]</code> oldu (D-01); Q31(a) livelock değil, meşgul beklemeli deadlock (D-02); Q46(b) gerekçesi (D-04); Q52(1) çok üretici koşulları (D-05); Q39 sayısı (D-06); D bölümü Bölüm 6 sorusu (D-07); deneme sınavı atıfları (D-10); ara sınav kapsamı ve dili varsayım olarak işaretlendi (D-11); Q2'deki OSC kitap cümlesi ek bilgi (D-15); işaretsiz ek bilgiler <code>(ek bilgi: …)</code> biçimine getirildi.</p>
+<p>Okunan kaynaklar: <code>CSE513-Lecture03.pdf</code> (86 slayt; 70–86 "Textbook supplement", pypdf ile metin), <code>_site-kopyasi/lecture-03-reading.html</code> (okuma kitapçığı, 19 bölüm), <code>lecture-03.html</code> (öğrenme hedefleri: "trace an interleaving that causes a race condition", "explain how synchronization controls access to shared state"), <code>kod/counter.c</code>, <code>kod/queue.c</code>, OSC-10 ch6 ve ch7 slayt metinleri, OSTEP threads-locks / threads-cv / threads-sema.</p>
+<p>Kısaltmalar: "sl. N" = hocanın slaytı; "Okuma §N" = okuma kitapçığının bölümü (1 Shared state, 2 Lost update, 3 Model vs C, 4 Invariants/CS, 5 Bathroom key, 6 Software algorithms, 7 Atomic primitives, 8 Using a mutex, 9 Magic Crossroads/semaphore, 10 POSIX semaphores, 11 Monitors/CV, 12 Truck/conveyor, 13 Queue with CV and closure, 14 Dining philosophers, 15 Fairness/RW/priority inversion, 16 Optional practice, 17 Review, 18 Textbook figures); "OSC ch6 sl. N" = Silberschatz slaytı; "<span class="ek">ek bilgi</span>" = hocanın materyalinde yok.</p>
+<p><strong>Okumadaki çalışılmış sorular ve etiketleri.</strong> <code>[S-N]</code> etiketi <strong>yalnızca</strong> okumanın §17'sindeki altı review sorusu içindir (bütün Ders 3 dosyalarında aynı anlam). Okumanın bölümlerinin içindeki "Predict / Discuss / Diagnose / Worked answer" kutuları bulundukları bölümün etiketiyle, <code>[Okuma §N]</code> diye anılır. Deneme sınavının soruları "deneme S5" diye yazılır; <code>[S-N]</code> ile karışmasın.</p>
+<table>
+<thead>
+<tr>
+<th>Etiket</th>
+<th>Yer</th>
+<th>Soru (özet)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="src">S-1</span></td>
+<td>Okuma §17, review 1</td>
+<td>"Why does one CPU not eliminate races?" (preemption, okuma ile ona bağlı yazma arasında)</td>
+</tr>
+<tr>
+<td><span class="src">S-2</span></td>
+<td>Okuma §17, review 2</td>
+<td>"What does strict alternation get wrong?" (dışlama var, progress yok)</td>
+</tr>
+<tr>
+<td><span class="src">S-3</span></td>
+<td>Okuma §17, review 3</td>
+<td>Semaphore wait ile condition wait farkı (permit saklanır, bildirim saklanmaz)</td>
+</tr>
+<tr>
+<td><span class="src">S-4</span></td>
+<td>Okuma §17, review 4</td>
+<td>Tuvalet kancası neden adalet garantisi değil (bounded waiting için kabul kuralı gerekir)</td>
+</tr>
+<tr>
+<td><span class="src">S-5</span></td>
+<td>Okuma §17, review 5</td>
+<td>Condition signal neden predicate'in yerini tutamaz</td>
+</tr>
+<tr>
+<td><span class="src">S-6</span></td>
+<td>Okuma §17, review 6</td>
+<td>Chopstick sıralaması neyi kanıtlar, neyi kanıtlamaz</td>
+</tr>
+<tr>
+<td><span class="src">Okuma §2</span></td>
+<td>§2 içindeki kutu</td>
+<td>"Predict: would making the final write atomic solve the lost update?"</td>
+</tr>
+<tr>
+<td><span class="src">Okuma §5</span></td>
+<td>§5 içindeki kutu</td>
+<td>"Discuss: can a friend return the mutex on behalf of its owner?"</td>
+</tr>
+<tr>
+<td><span class="src">Okuma §10</span></td>
+<td>§10 içindeki kutu</td>
+<td>Üç aletlik semaphore, bir iade için iki post: ne bozulur?</td>
+</tr>
+<tr>
+<td><span class="src">Okuma §12</span></td>
+<td>§12 içindeki kutu</td>
+<td>"Diagnose: a consumer locks the buffer and then waits for full while the queue is empty."</td>
+</tr>
+<tr>
+<td><span class="src">Okuma §16</span></td>
+<td>§16 içindeki üç kutu</td>
+<td>main'in son okuması neden ek kilit istemez (join); <code>in == out</code> ise kuyruk boş mudur; kapanışta neden broadcast</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Simülasyonla doğrulama.</strong> Şu izler küçük bir Python durum uzayı tarayıcısıyla (sıralı tutarlılık modeli, her okuma/yazma atomik) doğrulandı: iki-adımlı artırma izlerinin bütün sonuç kümeleri ve çizelge sayıları (Q13–Q15, Q28, deneme S4, deneme S5), Peterson varyantları ve basit bayrak protokolleri (Q29–Q31), check-then-set kilit, TAS'ın karşılıklı dışlaması, semaphore bounded buffer'ın doğru sırası, yanlış sıraları, post'ların yer değiştirmesi ve yanlış ilk değer (Q37–Q39), readers–writers'ta korunmasız <code>read_count</code> (Q44), dining philosophers'ın dört varyantı (Q45 a–d), "kapasite varsa rezerve et" yarışı (Q33), transfer okuyucusunun görebileceği toplamlar (Q24). Denetçi bu izlerin hepsini kendi bağımsız modeliyle (SC; mutex ve condition variable Mesa semantiğiyle, <code>signal</code>'in seçimi belirsiz, sahte uyanma isteğe bağlı) yeniden taradı; ayrıca Q40, Q41, Q43, Q46 ve Q48'i de modelledi. Sonuçlar birebir tuttu. Öncelik terselmesi (Q26) elle izlendi. Denetçi <code>counter.c</code> ve <code>queue.c</code>'yi macOS arm64'te (Apple clang) derleyip çalıştırdı: <code>counter</code> mutex 200000, atomic 200000, split 1; <code>queue</code> ve tek kapasiteli sürümü 10000 öğe, toplam 50005000. Ubuntu'da koşulmadı.</p>
+<hr />
+<h2 id="0-hocann-soru-uslubu">0. Hocanın soru üslubu<a class="headerlink" href="#0-hocann-soru-uslubu" title="Permanent link">#</a></h2>
+<p>Slaytlar 7–9, 22, 34, 46–47, 52, 59–60, 67–68, 81, 84 ve okumadaki çalışılmış sorular (bölüm içi kutular ile §17'deki altı review sorusu <span class="src">S-1</span>–<span class="src">S-6</span>) şu kalıpları izliyor:</p>
+<ol>
+<li><strong>Önce tahmin et, sonra izle</strong> ("Predict an interleaving" <span class="src">sl. 8</span>, okumanın ilk cümlesi "Predict each interleaving before opening a worked answer"). Soru bir izi listelemeni ve her izin sonucunu yazmanı ister. Cevap tablo ya da adım listesi olmalı: kim, hangi adımı, paylaşılan değer ne oldu.</li>
+<li><strong>Model ile gerçek C'yi ayır.</strong> Hoca neredeyse her izin yanına bir sınır cümlesi koyuyor: "this is not a promise about racy C" <span class="src">sl. 5</span>, "six abstract schedules, not six equally likely executions" <span class="src">sl. 9</span>, "a conceptual failure scenario, not evidence that current Linux fork() allocates duplicate live PIDs" <span class="src">sl. 10</span>, "reasoning pseudocode, not a safe copy-and-paste C implementation" <span class="src">sl. 17</span>. Cevapta model varsayımlarını (atomik okuma/yazma, sequential consistency, iki thread, kritik bölge biter) yazmak tam puanın parçası. "Kilitsiz C programı kesin 1 basar" demek hata.</li>
+<li><strong>Checkpoint: tek cümlelik "neden" soruları</strong> <span class="src">sl. 34</span>. "Why can a single CPU still have a race?", "Why is volatile insufficient?", "Why can atomic accesses still produce a wrong result?", "What does a mutex protect?" Cevap mekanizma terimiyle tek cümle: preemption, mutual exclusion, compound operation, invariant + protocol.</li>
+<li><strong>"Diagnose the protocol"</strong> <span class="src">sl. 67</span>. Bozuk bir durum verilir, evet/hayır sorusu sorulur: "Is the increment indivisible? No…", "Can the producer satisfy the predicate? Not if it needs that mutex", "Is starvation impossible? No: fairness is a separate property." Cevap kalıbı: <strong>"No, because …" + hangi özelliğin (safety, progress, fairness) bozulduğu.</strong></li>
+<li><strong>"Justify a correct design"</strong> <span class="src">sl. 68</span>. Üç başlıkla gerekçe: <strong>Safety</strong> (tüm alanlar aynı mutex, 0 ≤ count ≤ N, her dequeue geçerli bir enqueue'yu izler), <strong>Waiting</strong> (condition wait mutex'i bırakır, while yeniden kontrol eder), <strong>Completion</strong> (producer her şeyi koyduktan sonra kapatır; consumer boşaltır, sonra durur). Ve kapanış cümlesi: "Testing samples executions. Invariants and ordering explain why…"</li>
+<li><strong>Ders kitabı kodunda hatayı bul</strong> <span class="src">sl. 77–78, 81, 84</span>. Hoca OSC'nin Java örneklerini eleştiriyor: release'i finally'de yapan semaphore (fazladan permit), <code>if</code> ile await (spurious wakeup), boş catch (interruption yutulur), notify yerine notifyAll gereği. Sınavda bir OSC parçası verilip "what is wrong?" sorulması çok olası.</li>
+<li><strong>"X, Y'yi kanıtlamaz" cümleleri.</strong> Exclusion ≠ fairness <span class="src">sl. 15, 24</span>; deadlock'tan kaçınmak ≠ açlıktan kaçınmak <span class="src">sl. 60–61, 67</span>; atomik değişken ≠ atomik bileşik işlem <span class="src">sl. 22</span>; notification ≠ predicate <span class="src">sl. 44, 48</span>; tek başarılı koşu ≠ doğruluk <span class="src">sl. 7, 33</span>; kilit adı ≠ uygulama detayı <span class="src">sl. 30</span>; priority inheritance ≠ deadlock çaresi <span class="src">sl. 63</span>.</li>
+<li><strong>Benzetmenin varsayımlarını sorgula</strong> <span class="src">sl. 24</span>. Tuvalet anahtarı (mutex sahipliği), Magic Crossroads mandalı (permit ve bekleme), karpuz konveyörü (bounded buffer), filozoflar (çoklu kaynak). Soru "what does the analogy assume / not guarantee?" biçiminde gelebilir. Cevap: atomik alma, tüm erişimin protokole uyması, adil sıra garantisi yok.</li>
+</ol>
+<p>Sınavın dili henüz duyurulmadı; materyaller İngilizce olduğu için cevaplar İngilizce çalışılıyor (varsayım). İşe yarayan kalıp cümleler: "one successful schedule does not prove correctness for every allowed interleaving", "the defect is the unprotected read–modify–write sequence", "atomic accesses are not an atomic operation", "a wakeup is not a reservation", "a semaphore remembers permits; a condition-variable notification does not", "mutual exclusion holds, progress fails", "deadlock-free does not imply starvation-free", "state the scheduler and termination assumptions".</p>
+<p>Not: ara sınav 7. haftada; kesin tarih, kapsam ve dil henüz duyurulmadı (syllabus: "Exact date and coverage will be announced"). Varsayım: kapsam 1–6. dersler, materyal İngilizce; Ders 3 bunların üçüncüsü. Ders 4 (deadlock) bu dersin filozof çevrimine ve "exclusion vs progress" ayrımına dayanıyor <span class="src">sl. 69</span>; Q45 ve Q53 köprü sorular.</p>
+<p><strong>Öncelik.</strong> Ana gövde (sl. 1–69) çekirdek. "Textbook supplement" (sl. 70–86) slayt destesinde var ama hoca bunları "optional comparison material" diye niteliyor <span class="src">Okuma §18</span>. Oradan en olası sorular sl. 71 (atomic aritmetik), sl. 81 (permit hatası) ve sl. 84 (if → while). Java sözdizimi ezberi beklenmez.</p>
+<hr />
+<h2 id="a-kapsam-haritas">A) Kapsam haritası<a class="headerlink" href="#a-kapsam-haritas" title="Permanent link">#</a></h2>
+<h3 id="a1-merkez-sl-34-64-ve-6768deki-karstlklar">A.1 Merkez: sl. 34, 64 ve 67–68'deki karşıtlıklar<a class="headerlink" href="#a1-merkez-sl-34-64-ve-6768deki-karstlklar" title="Permanent link">#</a></h3>
+<p>Dersin omurgası checkpoint <span class="src">sl. 34</span>, araç seçimi <span class="src">sl. 64</span> ve iki review slaytıdır <span class="src">sl. 67–68</span>. Sınav büyük olasılıkla bu karşıtlıkların birini bir iz ya da bozuk kodla sınar.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Karşıtlık</th>
+<th>Çekirdek ayrım (tek cümle)</th>
+<th>Kanıt slaytları</th>
+<th>En olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Race condition vs C data race</td>
+<td>Race: zamanlamaya bağlı doğruluk hatası, atomik erişimlerle de olur. Data race: C'de en az biri atomik olmayan, sıralanmamış çakışan erişim → undefined behaviour.</td>
+<td>11; Okuma §3</td>
+<td>Tanım; "atomik erişimli kod race'siz midir?"</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Atomik erişim vs atomik işlem</td>
+<td>Atomic load + atomic store iki işlemdir; fetch-add tek read–modify–write'tır.</td>
+<td>20–22, 32, 67</td>
+<td>counter.c split modu; "kapasite varsa rezerve et"</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Mutex (kim erişir) vs predicate (devam edebilir mi)</td>
+<td>Mutex sahipliği düzenler; beklemek için paylaşılan durumun bir koşulu gerekir.</td>
+<td>35, 43</td>
+<td>Araç seçimi; CV protokolü</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Semaphore permit vs CV notification</td>
+<td>Permit saklanır (kimse beklemese de); notification saklanmaz, rezervasyon da değildir.</td>
+<td>39, 44, 47, 74</td>
+<td>Lost wakeup izi; "signal'ı semaphore ile değiştir"</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Mutual exclusion vs progress vs bounded waiting</td>
+<td>Dışlama güvenliktir; ilerleme ve sınırlı bekleme ayrı canlılık/adalet özellikleri.</td>
+<td>14–16, 24, 60–61, 67</td>
+<td>Strict alternation; TAS; filozof açlığı</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Deadlock vs starvation vs livelock</td>
+<td>Bekleyenlerin beklediği olayı yalnızca yine bekleyenler yapabilir (uyuyarak ya da dönerek) / biri sürekli reddedilirken diğerleri ilerliyor / katılımcılar tepki verip yeniden deniyor ama iş bitmiyor. Sınıflandırma CPU kullanımına değil bağımlılığa bakar.</td>
+<td>59, 62, 67</td>
+<td>Senaryo sınıflandırma</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Bir başarılı koşu vs gerekçe</td>
+<td>Test yürütmeleri örnekler; invariant ve sıralama argümanı izin verilen bütün yürütmeleri kapsar.</td>
+<td>7, 9, 33, 68</td>
+<td>"1000 kez geçti, doğru mu?"</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Soyut model vs çalıştırılabilir C</td>
+<td>İzler SC + atomik okuma/yazma modelindedir; C'de volatile ya da düz değişkenle bu model yoktur.</td>
+<td>5, 11, 17, 19</td>
+<td>Peterson'u C'ye kopyalamak; volatile bayrak</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Araç seçimi</td>
+<td>Çok işlemli invariant → mutex; sayılı permit → counting semaphore; predicate bekleme → CV + mutex; tek sayısal güncelleme → atomic.</td>
+<td>64</td>
+<td>Tasarım senaryoları</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-bolum-bolum-harita">A.2 Bölüm bölüm harita<a class="headerlink" href="#a2-bolum-bolum-harita" title="Permanent link">#</a></h3>
+<p>Vurgu ölçütü: <strong>Yüksek</strong> = checkpoint/review/"predict" slaytında geçiyor ya da okumada çalışılmış soru var, ya da lecture-03.html öğrenme hedefinde. <strong>Orta</strong> = slaytta açıkça anlatılmış, ayrıca sorulmamış. <strong>Düşük</strong> = tek cümle, benzetme görseli ya da "Textbook supplement".</p>
+<p><strong>Ana gövde (sl. 1–69)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Kavram</th>
+<th>Vurgu</th>
+<th>Gerekçe / olası soru</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Paylaşılan durum, lost update, interleaving</td>
+<td>1–2</td>
+<td>Dersin iki yarısı; "explain why an execution is correct, rather than relying on one successful run"</td>
+<td>Orta</td>
+<td>Dersin felsefesi; her cevapta gerekçe istenir</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td>Scheduler invariant'ı bilmez; time slice kritik bölge değildir; tek CPU'da preemption, çok CPU'da gerçek örtüşme</td>
+<td>Yüksek</td>
+<td>Checkpoint 1 <span class="src">sl. 34</span>; <span class="src">S-1</span></td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>Thread'ler adres alanını paylaşır, stack/execution state ayrı; yerel pointer paylaşılan nesneyi gösterebilir</td>
+<td>Orta</td>
+<td>"Yerel değişken = özel mi?"</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>Sayaç örneği (2 × 100.000); soyut makine: atomik okuma/yazma + SC; "not a promise about racy C"</td>
+<td>Yüksek</td>
+<td>Model varsayımı yazdırılır</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td>Lost update izi: A oku 0, B oku 0, A yaz 1, B yaz 1 → 1</td>
+<td>Yüksek</td>
+<td>İz sorusu; "defect is RMW, not arithmetic"</td>
+</tr>
+<tr>
+<td></td>
+<td>7</td>
+<td>Serileştirilmiş iz → 2; bir doğru koşu doğruluğu kanıtlamaz</td>
+<td>Yüksek</td>
+<td>"Test geçti" tuzağı</td>
+</tr>
+<tr>
+<td></td>
+<td>8–9</td>
+<td>Altı interleaving: AABB, BBAA → 2; ABAB, ABBA, BAAB, BABA → 1; olasılık çıkarılmaz</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Hocanın kendi soru kalıbı; Q13</td>
+</tr>
+<tr>
+<td></td>
+<td>10</td>
+<td>next_available_pid yarışı; kontrol + rezervasyon birlikte olmalı; atomik okuma rezerve etmez</td>
+<td>Orta</td>
+<td>Check-then-act; Linux iddiası değil</td>
+</tr>
+<tr>
+<td>2 Race, data race, invariant, CS, üç şart</td>
+<td>11</td>
+<td>Race condition vs C data race; volatile senkronizasyon değildir</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Checkpoint 2; tanım ayrımı</td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td>Invariant (0 ≤ count ≤ capacity; transfer toplamı korur); bütün işlem kritik bölge; sadece son yazmayı kilitlemek yetmez; okuyucular da protokole uyar</td>
+<td>Yüksek</td>
+<td>Q23, Q24; "what does a mutex protect"</td>
+</tr>
+<tr>
+<td></td>
+<td>13</td>
+<td>Entry / CS / exit / remainder; çakışmayı korunan kaynak belirler, ayrı kaynaklar ayrı kilit</td>
+<td>Orta</td>
+<td>Yapı çizimi</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td>Mutual exclusion, progress, bounded waiting tanımları</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Klasik tanım + varyantların hangi şartı bozduğu</td>
+</tr>
+<tr>
+<td></td>
+<td>15</td>
+<td>Safety vs liveness; herkesi sonsuza dek bloklamak güvenli ama işe yaramaz; varsayımları belirt</td>
+<td>Yüksek</td>
+<td>Sınıflandırma</td>
+</tr>
+<tr>
+<td>3 Yazılım çözümleri</td>
+<td>16</td>
+<td>Strict alternation: dışlama var, progress yok</td>
+<td>Yüksek</td>
+<td><span class="src">S-2</span>; Q21</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td>Peterson kodu; varsayımlar (atomik R/W, SC, iki thread, CS biter); kopyala-yapıştır C değil</td>
+<td>Yüksek</td>
+<td>Kod hatırlama + varyant izleri</td>
+</tr>
+<tr>
+<td></td>
+<td>18</td>
+<td>Tie-breaking argümanı: iki bayrak da true iken turn'e son yazan bekler</td>
+<td>Yüksek</td>
+<td>"Neden iki thread birden giremez?"</td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td>Sıra değişimi kanıtı bozar; derleyici/işlemci SC uygulamak zorunda değil; volatile onarmaz</td>
+<td>Yüksek</td>
+<td>Q29, Q49</td>
+</tr>
+<tr>
+<td>4 Donanım atomikleri</td>
+<td>20</td>
+<td>TAS, CAS; atomiklik + bellek sıralaması birlikte gerekir</td>
+<td>Yüksek</td>
+<td>Tanım; Q9</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>CAS izi; basit retry döngüsü bounded waiting vermez; pseudocode CAS eski değeri döner</td>
+<td>Yüksek</td>
+<td>Q16, Q57</td>
+</tr>
+<tr>
+<td></td>
+<td>22</td>
+<td>fetch-add vs load+store; "kapasite varsa rezerve et" bileşik protokoldür</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Checkpoint 3 ve review 1 <span class="src">sl. 34, 67</span>; Q32, Q33</td>
+</tr>
+<tr>
+<td>5 Mutex, kapsam, spin/block, sayaç deneyi</td>
+<td>23–24</td>
+<td>Benzincideki tuvalet anahtarı: atomik alma, ziyaret boyunca tutma, sopanın garanti etmedikleri</td>
+<td>Orta</td>
+<td>"What does the analogy assume?"</td>
+</tr>
+<tr>
+<td></td>
+<td>25</td>
+<td>Mutex sahipliği; semaphore sahiplik yerine geçmez; hangi mutex hangi durumu korur, herkes anlaşmalı</td>
+<td>Yüksek</td>
+<td><span class="src">Okuma §5</span>; Q7, Q34</td>
+</tr>
+<tr>
+<td></td>
+<td>26</td>
+<td>Init bir kez, kullanıcılar bitince destroy, kopyalanmaz</td>
+<td>Orta</td>
+<td>Q34 (kopyalanan mutex)</td>
+</tr>
+<tr>
+<td></td>
+<td>27</td>
+<td>Korunan artırma; join'den sonra oku</td>
+<td>Orta</td>
+<td>counter.c mutex modu</td>
+</tr>
+<tr>
+<td></td>
+<td>28</td>
+<td>İki değişkenli transfer (100/50 → 90/60, toplam 150); okuyucu ara durumu görebilir</td>
+<td>Yüksek</td>
+<td>Q24, Q53</td>
+</tr>
+<tr>
+<td></td>
+<td>29</td>
+<td>Kaba vs ince kilit; bağımsız hesap dışarıda; kilitliyken uzun I/O yok</td>
+<td>Orta</td>
+<td>Tasarım</td>
+</tr>
+<tr>
+<td></td>
+<td>30</td>
+<td>Spin vs block; POSIX mutex her zaman spin değil</td>
+<td>Orta</td>
+<td>Q50</td>
+</tr>
+<tr>
+<td></td>
+<td>31</td>
+<td>Kesme kapatmak diğer CPU'yu durdurmaz; PREEMPT_RT; kernel kilitleri bu dersin konusu değil</td>
+<td>Orta</td>
+<td>Q50; OSC ch6 sl. 9 sorusu</td>
+</tr>
+<tr>
+<td></td>
+<td>32–33</td>
+<td>counter.c tahminleri: mutex 200.000, atomic 200.000, split 1 (data race'siz)</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Okuma §16 "predict"; Q22</td>
+</tr>
+<tr>
+<td></td>
+<td>34</td>
+<td>First-half checkpoint (4 soru, 4 cevap)</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Birebir sorulabilir</td>
+</tr>
+<tr>
+<td>6 Semaphore</td>
+<td>35</td>
+<td>Dışlamanın ötesinde koordinasyon; mutex "kim", predicate "devam edebilir mi"</td>
+<td>Yüksek</td>
+<td>A.1 #3</td>
+</tr>
+<tr>
+<td></td>
+<td>36</td>
+<td>Counting semaphore = permit; havuz 3 → init 3; bekleme sırası ayrı politika</td>
+<td>Yüksek</td>
+<td>Değer izi</td>
+</tr>
+<tr>
+<td></td>
+<td>37</td>
+<td>Magic Crossroads mandalı (benzetme)</td>
+<td>Düşük</td>
+<td>Benzetme sorusu</td>
+</tr>
+<tr>
+<td></td>
+<td>38</td>
+<td>S = 2 izi; post eden sonraki sahibi seçmez; S = 0 negatif sayımla karıştırılmaz</td>
+<td>Yüksek</td>
+<td>Q17</td>
+</tr>
+<tr>
+<td></td>
+<td>39</td>
+<td>sem(1) dışlama yapar ama sahip tanımaz; ready = 0 ile sıra; permit saklanır, notification saklanmaz</td>
+<td><strong>Çok yüksek</strong></td>
+<td><span class="src">S-3</span>; Q42</td>
+</tr>
+<tr>
+<td></td>
+<td>40</td>
+<td>sem_wait EINTR; başarısız bekleyişten sonra post etme</td>
+<td>Yüksek</td>
+<td>Q36</td>
+</tr>
+<tr>
+<td></td>
+<td>41</td>
+<td>pshared = 0; pshared ≠ 0 + paylaşılan bellek; "unnamed ≠ süreçler arası imkânsız"</td>
+<td>Orta</td>
+<td>Q11 (OSC ch7 sl. 23 düzeltmesi)</td>
+</tr>
+<tr>
+<td>7 Monitor ve CV</td>
+<td>42</td>
+<td>Monitor: korunan durum + işlemler; entry queue</td>
+<td>Orta</td>
+<td>Tanım</td>
+</tr>
+<tr>
+<td></td>
+<td>43</td>
+<td>CV predicate'i taşımaz; predicate uygulama durumunda; wait mutex'i bırakır</td>
+<td>Yüksek</td>
+<td>Q10</td>
+</tr>
+<tr>
+<td></td>
+<td>44</td>
+<td>Lock → check → wait while false → operate → unlock; cond_wait atomik bırak-bekle; spurious wakeup</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Protokol yazdırma</td>
+</tr>
+<tr>
+<td></td>
+<td>45</td>
+<td>Mesa/POSIX: uyanan yeniden kilit almalı; Hoare tarzı doğrudan devirden farklı</td>
+<td>Yüksek</td>
+<td>"Mesa vs Hoare" (adlar OSTEP'te)</td>
+</tr>
+<tr>
+<td></td>
+<td>46</td>
+<td>Neden while: C1, C2 bekliyor, üçüncü tüketici öğeyi kapar</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q40</td>
+</tr>
+<tr>
+<td></td>
+<td>47</td>
+<td>Lost wakeup: predicate'i kilitsiz kontrol</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q41</td>
+</tr>
+<tr>
+<td></td>
+<td>48</td>
+<td>Java entry set vs wait set</td>
+<td>Orta</td>
+<td>Q10</td>
+</tr>
+<tr>
+<td>8 Bounded buffer ve kapanış</td>
+<td>49</td>
+<td>Karpuz kamyonu–konveyör benzetmesi</td>
+<td>Düşük</td>
+<td>Benzetme</td>
+</tr>
+<tr>
+<td></td>
+<td>50</td>
+<td>0 ≤ count ≤ N; tam bir kez, FIFO; in/out mod N; count boşu doluyu ayırır</td>
+<td>Yüksek</td>
+<td><span class="src">Okuma §16</span></td>
+</tr>
+<tr>
+<td></td>
+<td>51</td>
+<td>empty = N, full = 0, mutex = 1; permit sayısı geçici olarak doluluktan farklı olabilir</td>
+<td>Yüksek</td>
+<td>Q18</td>
+</tr>
+<tr>
+<td></td>
+<td>52</td>
+<td>Önce permit, sonra mutex; tersi deadlock</td>
+<td><strong>Çok yüksek</strong></td>
+<td><span class="src">Okuma §12</span>; Q37</td>
+</tr>
+<tr>
+<td></td>
+<td>53</td>
+<td>Kapasite-iki izi</td>
+<td>Yüksek</td>
+<td>Q18</td>
+</tr>
+<tr>
+<td></td>
+<td>54</td>
+<td>CV'li bounded buffer: not_full, not_empty</td>
+<td>Yüksek</td>
+<td>Kod yazdırma</td>
+</tr>
+<tr>
+<td></td>
+<td>55</td>
+<td>Kapanış: closed mutex altında, "count == 0 &amp;&amp; !closed" bekle, boşalt, broadcast</td>
+<td>Yüksek</td>
+<td><span class="src">Okuma §16</span>; Q43</td>
+</tr>
+<tr>
+<td>9 Readers–writers, filozoflar</td>
+<td>56</td>
+<td>Okuyucu önceliği yazarı aç bırakabilir; politika belirt; "read-mostly ≠ otomatik hızlı"</td>
+<td>Yüksek</td>
+<td>Q25, Q44</td>
+</tr>
+<tr>
+<td></td>
+<td>57–58</td>
+<td>Filozoflar; tekil kaynak dışlaması küresel ilerlemeyi sağlamaz</td>
+<td>Orta</td>
+<td>Tanım</td>
+</tr>
+<tr>
+<td></td>
+<td>59</td>
+<td>Beşi de solu alır → kimse bırakmaz; dışlama çalışıyor, sorun döngüsel bağımlılık</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q45</td>
+</tr>
+<tr>
+<td></td>
+<td>60</td>
+<td>Numaralandırma: önce küçük numara; döngü imkânsız; adalet kanıtlamaz</td>
+<td><strong>Çok yüksek</strong></td>
+<td><span class="src">S-6</span>; Q45</td>
+</tr>
+<tr>
+<td></td>
+<td>61</td>
+<td>Monitor çözümü: THINKING/HUNGRY/EATING; deadlock yok, adalet ayrı</td>
+<td>Yüksek</td>
+<td>Q46; review 3 <span class="src">sl. 67</span></td>
+</tr>
+<tr>
+<td>10 Liveness, priority inversion, araç seçimi, queue.c, review</td>
+<td>62</td>
+<td>Deadlock, starvation, livelock</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q8</td>
+</tr>
+<tr>
+<td></td>
+<td>63</td>
+<td>Priority inversion, priority inheritance; her deadlock'un çaresi değil, varsayılan mutex özelliği değil</td>
+<td>Yüksek</td>
+<td>Q26</td>
+</tr>
+<tr>
+<td></td>
+<td>64</td>
+<td>Araç seçimi</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q20</td>
+</tr>
+<tr>
+<td></td>
+<td>65–66</td>
+<td>queue.c: 10.000 öğe, toplam 50.005.000, kapasite 4 → 1; gözle, açıkla, AI ile ters iz iste</td>
+<td>Yüksek</td>
+<td>Q27, Q51</td>
+</tr>
+<tr>
+<td></td>
+<td>67</td>
+<td>Review: protokolü teşhis et (3 soru)</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Birebir sorulabilir</td>
+</tr>
+<tr>
+<td></td>
+<td>68</td>
+<td>Review: doğru kuyruğu gerekçelendir (safety/waiting/completion)</td>
+<td><strong>Çok yüksek</strong></td>
+<td>Q51</td>
+</tr>
+<tr>
+<td></td>
+<td>69</td>
+<td>Kaynaklar; sonraki ders deadlock</td>
+<td>Düşük</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Textbook supplement (sl. 70–86).</strong> Hepsi OSC ch7 şekilleri ve hocanın düzeltme notları. Genel vurgu <strong>düşük–orta</strong>; okuma bunları "optional comparison material" sayıyor <span class="src">Okuma §18</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Slayt</th>
+<th>Kavram</th>
+<th>Vurgu</th>
+<th>Gerekçe / olası soru</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>70</td>
+<td>Windows mutex: signaled = müsait, nonsignaled = alınmış; oklar FIFO değil</td>
+<td>Düşük</td>
+<td>Tanım</td>
+</tr>
+<tr>
+<td>71</td>
+<td>Linux kernel atomic_t: set 5, add 10, sub 4, inc → 12; tek sayaç çok değişkenli invariant'ı korumaz</td>
+<td><strong>Orta</strong></td>
+<td>Sayısal soru (Q19)</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Named semaphore: ilk değer yalnızca yaratılırken; <code>/ad</code>, SEM_FAILED, sem_close/sem_unlink</td>
+<td>Düşük–orta</td>
+<td>Q56</td>
+</tr>
+<tr>
+<td>73</td>
+<td>Named semaphore kullanımı; başarısız beklemeden sonra post etme</td>
+<td>Düşük</td>
+<td>Q36 ile aynı ders</td>
+</tr>
+<tr>
+<td>74</td>
+<td>CV init; destroy en son; CV permit saklamaz</td>
+<td>Düşük</td>
+<td>—</td>
+</tr>
+<tr>
+<td>75</td>
+<td>Java bounded buffer durumu (5 öğe, count, in, out)</td>
+<td>Düşük</td>
+<td>—</td>
+</tr>
+<tr>
+<td>76</td>
+<td>Java entry set</td>
+<td>Düşük</td>
+<td>Q10</td>
+</tr>
+<tr>
+<td>77</td>
+<td>Java producer: while + wait; notify yerine çoklu durumda notifyAll</td>
+<td>Orta</td>
+<td>Q48</td>
+</tr>
+<tr>
+<td>78</td>
+<td>Java consumer; kapanış protokolü yok, interruption atılıyor</td>
+<td>Düşük</td>
+<td>—</td>
+</tr>
+<tr>
+<td>79</td>
+<td>ReentrantLock: lock() try'dan önce, finally'de unlock</td>
+<td>Orta</td>
+<td>Hata bulma</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Java Semaphore kurucusu; tek argümanlı kurucu FIFO garantisi vermez</td>
+<td>Düşük</td>
+<td>—</td>
+</tr>
+<tr>
+<td>81</td>
+<td><strong>"Find the permit bug":</strong> acquire istisna atarsa finally yine release eder → fazladan permit</td>
+<td><strong>Orta–yüksek</strong></td>
+<td>Hoca açıkça "find the bug" diyor; Q36</td>
+</tr>
+<tr>
+<td>82</td>
+<td>Java Condition: await kilidi bırakır, while ile bekle</td>
+<td>Orta</td>
+<td>—</td>
+</tr>
+<tr>
+<td>83</td>
+<td>Her sıra için bir condition; turn ayrı değişken; takılan thread protokolü durdurur</td>
+<td>Orta</td>
+<td>Q47</td>
+</tr>
+<tr>
+<td>84</td>
+<td>Figürde <code>if (threadNumber != turn)</code> → while olmalı; boş catch</td>
+<td><strong>Orta–yüksek</strong></td>
+<td>Hata bulma (Q47)</td>
+</tr>
+<tr>
+<td>85</td>
+<td>Kilitle korunan update; hata yolunda kilit açık kalmamalı</td>
+<td>Düşük</td>
+<td>Q35</td>
+</tr>
+<tr>
+<td>86</td>
+<td>Transactional memory <code>atomic{}</code> gösterimi; standart C/Java değil; atomik tamsayıyla karıştırma</td>
+<td>Düşük</td>
+<td>Q12</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar<a class="headerlink" href="#a3-oscde-olup-hoca-slaytnda-olmayanlar" title="Permanent link">#</a></h3>
+<p>Düşük öncelik. Hoca bazılarını bilerek almamış, bazılarını açıkça düzeltmiş.</p>
+<table>
+<thead>
+<tr>
+<th>Konu</th>
+<th>Kaynak</th>
+<th>Not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory barrier, strongly/weakly ordered bellek modeli, <code>flag</code>/<code>x = 100</code> yeniden sıralama örneği</td>
+<td><span class="src">OSC ch6 sl. 16–22</span></td>
+<td>Hoca sadece "ordering assumptions matter" diyor <span class="src">sl. 19</span> ve okumada uyarıyor: barrier'ı "her şeyi anında tutarlı yapan sihirli işlem" diye öğretmek yanıltıcı <span class="src">Okuma §6</span>. Q49'da kullanıldı.</td>
+</tr>
+<tr>
+<td>Interrupt-based çözüm soruları ("bir saat süren CS?", "iki CPU?")</td>
+<td><span class="src">OSC ch6 sl. 9</span></td>
+<td>Hoca sl. 31'de cevabını veriyor.</td>
+</tr>
+<tr>
+<td>Bounded-waiting CAS algoritması (<code>waiting[]</code> dizisi, döngüsel tarama)</td>
+<td><span class="src">OSC ch6 sl. 29</span></td>
+<td>Q57'de anahtar fikir olarak.</td>
+</tr>
+<tr>
+<td>Atomik değişkenin CAS döngüsüyle <code>increment()</code> uygulaması</td>
+<td><span class="src">OSC ch6 sl. 31</span></td>
+<td>Q32'nin doğru sürümü.</td>
+</tr>
+<tr>
+<td>Semaphore'un bekleme kuyruklu uygulaması (value negatif olabilir, block/wakeup)</td>
+<td><span class="src">OSC ch6 sl. 38–40</span></td>
+<td>Hoca sl. 38'de "textbooks may use an internal negative count" diye anıyor. Q17(b).</td>
+</tr>
+<tr>
+<td>"Binary semaphore … same as a mutex lock"</td>
+<td><span class="src">OSC ch6 sl. 35</span></td>
+<td><strong>Hoca düzeltiyor:</strong> semaphore sahip tanımaz <span class="src">sl. 25, 39</span>. Yanılgı B4.</td>
+</tr>
+<tr>
+<td>Monitor'ün semaphore ile uygulanması (<code>next</code>, <code>next_count</code>, <code>x_sem</code>)</td>
+<td><span class="src">OSC ch6 sl. 44, 48–50</span></td>
+<td>Hocada yok.</td>
+</tr>
+<tr>
+<td>Conditional wait <code>x.wait(c)</code>, ResourceAllocator monitörü</td>
+<td><span class="src">OSC ch6 sl. 51–55</span></td>
+<td>Hocada yok. Not: ResourceAllocator <code>if (busy) x.wait(time)</code> kullanıyor (Hoare semantiği).</td>
+</tr>
+<tr>
+<td>Deadlock örneği S, Q semaphore'ları ters sırayla</td>
+<td><span class="src">OSC ch6 sl. 57</span></td>
+<td>Hoca filozoflarla anlatıyor; Ders 4 konusu.</td>
+</tr>
+<tr>
+<td>Readers–writers semaphore kodu (<code>rw_mutex</code>, <code>mutex</code>, <code>read_count</code>), first/second problem</td>
+<td><span class="src">OSC ch7 sl. 8–11</span></td>
+<td>Hoca yalnızca politika düzeyinde <span class="src">sl. 56</span>. Q25, Q44 bu kodu kullanıyor (kod OSC'den).</td>
+</tr>
+<tr>
+<td>Filozofların semaphore kodu ve monitor kodu (<code>pickup</code>, <code>putdown</code>, <code>test</code>)</td>
+<td><span class="src">OSC ch7 sl. 13–16</span></td>
+<td>Hoca sözle anlatıyor <span class="src">sl. 61</span>. Q46 OSC kodunu kullanıyor.</td>
+</tr>
+<tr>
+<td>Windows dispatcher objects, events, kernel spinlock'ları</td>
+<td><span class="src">OSC ch7 sl. 17</span></td>
+<td>Hocada yalnız sl. 70.</td>
+</tr>
+<tr>
+<td>Linux 2.6 öncesi kesme kapatma, tek CPU'da spinlock yerine preemption kapatma</td>
+<td><span class="src">OSC ch7 sl. 19</span></td>
+<td>Hoca "textbook's platform snapshots as background" diyor <span class="src">Okuma §7</span>.</td>
+</tr>
+<tr>
+<td>"Named semaphores can be used by unrelated processes, unnamed cannot"</td>
+<td><span class="src">OSC ch7 sl. 23</span></td>
+<td><strong>Hoca düzeltiyor</strong> <span class="src">sl. 41</span>. Yanılgı B17.</td>
+</tr>
+<tr>
+<td>OpenMP <code>#pragma omp critical</code>, fonksiyonel diller</td>
+<td><span class="src">OSC ch7 sl. 43–44</span></td>
+<td>Hocada yok.</td>
+</tr>
+<tr>
+<td>Ticket lock (fetch-and-add ile FIFO), two-phase lock, Mesa/Hoare adları, covering condition, Zemaphore, throttling</td>
+<td><span class="src">OSTEP 28.11, 28.16, 30.2–30.3, 31.7</span></td>
+<td>Ek okuma. Mesa adı sl. 45'te geçiyor ("POSIX/Mesa-style").</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="b-kavram-yanlglar">B) Kavram yanılgıları<a class="headerlink" href="#b-kavram-yanlglar" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Yanılgı</th>
+<th>Doğrusu</th>
+<th>Kaynak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"Değişken atomik ise üzerindeki artırma da atomiktir."</td>
+<td>Atomic load + atomic store iki ayrı işlemdir; iki thread aynı değeri okuyup üstüne yazabilir. Bölünmez artırma için tek bir read–modify–write (fetch-add, CAS döngüsü) ya da mutex gerekir. counter.c split modu data race olmadan 1 üretir.</td>
+<td><span class="src">sl. 22, 32, 34, 67; Okuma §3</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>"Tek CPU'da race olmaz, çünkü aynı anda iki şey çalışmaz."</td>
+<td>Preemption, okuma ile ona bağlı yazma arasında thread'i kesebilir; diğer thread o aralıkta aynı nesneyi değiştirir. Fiziksel eşzamanlılık gerekmez.</td>
+<td><span class="src">sl. 3, 34; S-1</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>"volatile senkronizasyon sağlar" ya da "Peterson'a volatile eklersem düzelir."</td>
+<td>volatile mutual exclusion sağlamaz, thread'ler arası gerekli senkronizasyonu (happens-before) kurmaz. Peterson'un SC varsayımını da geri getirmez.</td>
+<td><span class="src">sl. 11, 19, 34; Okuma §3</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td>"Semaphore(1) bir mutex'tir."</td>
+<td>Dışlama için kullanılabilir ama sahip tanımaz: başka bir thread post edebilir, fazladan bir post iki thread'i birden içeri alır. Mutex'te kilidi alan açar. OSC ch6 sl. 35'teki "same as a mutex lock" ifadesini hoca düzeltiyor.</td>
+<td><span class="src">sl. 25, 39; Okuma §5; OSC ch6 sl. 35</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>"Signal kaybolmaz; bekleyen yoksa sonra gelen bekleyici onu alır."</td>
+<td>Condition variable bildirimi saklanmaz, permit değildir. Kimse beklemiyorsa etkisizdir. Semaphore ise post'u saklar. Uyuyup uyumama kararını paylaşılan durum verir.</td>
+<td><span class="src">sl. 39, 47, 74; S-5; OSC ch6 sl. 45</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>"cond_wait döndüyse predicate doğrudur; <code>if</code> yeterli."</td>
+<td>Uyanma rezervasyon değildir: başka bir thread kilidi önce alıp durumu değiştirebilir, spurious wakeup da izinlidir. Predicate <code>while</code> ile yeniden kontrol edilir.</td>
+<td><span class="src">sl. 44, 46, 48, 82, 84</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>"Peterson modern CPU'da düz C değişkenleriyle çalışır."</td>
+<td>Kanıt atomik okuma/yazma ve sequential consistency varsayar. Derleyici ve işlemci bağımsız load/store'ları yeniden sıralayabilir; iki thread birden girebilir. Gerçek kodda senkronizasyon API'si kullanılır.</td>
+<td><span class="src">sl. 17, 19; OSC ch6 sl. 16–19</span></td>
+</tr>
+<tr>
+<td>8</td>
+<td>"Deadlock yoksa starvation da yoktur" ya da "deadlock = starvation."</td>
+<td>Deadlock: bloklananların sağlaması gereken olayı bekleme. Starvation: biri sürekli reddedilirken diğerleri ilerler. Filozofların monitor çözümünde deadlock yok ama açlık mümkün.</td>
+<td><span class="src">sl. 60–62, 67; OSC ch7 sl. 16</span></td>
+</tr>
+<tr>
+<td>9</td>
+<td>"Mutual exclusion varsa adalet de vardır."</td>
+<td>Dışlama yalnızca güvenliktir. Bounded waiting ayrı bir adalet şartıdır. Tuvalet kancası kimin sonra alacağını belirlemez.</td>
+<td><span class="src">sl. 14–15, 24; S-4</span></td>
+</tr>
+<tr>
+<td>10</td>
+<td>"Program 1000 kez doğru sonuç verdi, öyleyse doğru."</td>
+<td>Testler yürütmeleri örnekler. Doğruluk, izin verilen her interleaving'de invariant'ın korunduğunu gösteren argümanla kurulur.</td>
+<td><span class="src">sl. 7, 33, 68</span></td>
+</tr>
+<tr>
+<td>11</td>
+<td>"6 interleaving'den 4'ü hatalı, demek ki hata olasılığı 2/3."</td>
+<td>Altı soyut çizelge eşit olasılıklı yürütmeler değildir; sayım olasılık vermez, yalnızca mümkün sonuçları gösterir.</td>
+<td><span class="src">sl. 9; Okuma §2</span></td>
+</tr>
+<tr>
+<td>12</td>
+<td>"Son yazmayı kilitlemek yeter" ya da "yazanları kilitlerim, okuyucular serbest okur."</td>
+<td>Kritik bölge invariant'ı geri kuran bütün işlemdir (oku–hesapla–yaz). Tutarlı görüntü isteyen okuyucular da aynı protokole girer, yoksa yarım transferi görürler.</td>
+<td><span class="src">sl. 12, 28; Okuma §2</span></td>
+</tr>
+<tr>
+<td>13</td>
+<td>"Programda bir yerde kilit var, o halde nesne korunuyor."</td>
+<td>Her erişim yolu <strong>aynı</strong> mutex'i kullanmalı. Thread başına yerel mutex, kopyalanmış mutex ya da iki farklı mutex hiçbir şeyi korumaz.</td>
+<td><span class="src">sl. 12, 25–26; Okuma §8</span></td>
+</tr>
+<tr>
+<td>14</td>
+<td>"Time slice'ı büyütürsem ya da sleep eklersem race kalkar."</td>
+<td>Scheduler invariant'ı bilmez; time slice kritik bölge değildir. Gecikme bir koşulun gerçekleştiğini kanıtlamaz.</td>
+<td><span class="src">sl. 3; Okuma §1, §3</span></td>
+</tr>
+<tr>
+<td>15</td>
+<td>"Mutex her zaman spin eder" ya da "spinlock her zaman kötüdür."</td>
+<td>POSIX mutex her zaman spin etmek üzere tanımlanmamıştır; uygulamalar karıştırabilir. Spin, sahip başka CPU'da çalışırken çok kısa beklemede mantıklı olabilir.</td>
+<td><span class="src">sl. 30; Okuma §7</span></td>
+</tr>
+<tr>
+<td>16</td>
+<td>"Kesmeleri kapatmak genel bir kilittir."</td>
+<td>Bir CPU'da kesme kapatmak başka CPU'nun erişimini durdurmaz; uygulamalar bunu genel mutex olarak kullanamaz.</td>
+<td><span class="src">sl. 31; OSC ch6 sl. 9</span></td>
+</tr>
+<tr>
+<td>17</td>
+<td>"Unnamed semaphore yalnızca thread'ler için, named süreçler için."</td>
+<td>pshared ≠ 0 olan ve süreçlerin gerçekten paylaştığı bellekte duran unnamed semaphore süreçler arasında çalışır. Named olan ad ile bulma arayüzüdür. OSC ch7 sl. 23'teki ifade düzeltiliyor.</td>
+<td><span class="src">sl. 41; Okuma §10; OSC ch7 sl. 23</span></td>
+</tr>
+<tr>
+<td>18</td>
+<td>"Semaphore değerleri her an tampondaki öğe sayısını verir (empty + full = N)."</td>
+<td>Bu eşitlik yalnızca tamamlanmış işlem sınırlarında ve bekleyen rezervasyon yokken geçerli. Bir işçi permit'i almış ama öğeyi henüz yayınlamamış olabilir.</td>
+<td><span class="src">sl. 51, 53; Okuma §12</span></td>
+</tr>
+<tr>
+<td>19</td>
+<td>"Post eden thread sıradaki sahibi seçer" ya da "semaphore FIFO'dur."</td>
+<td>Post bir permit sağlar; bekleyenlerden hangisinin alacağı ayrı bir politika. Java'nın tek argümanlı Semaphore kurucusu FIFO garanti etmez.</td>
+<td><span class="src">sl. 36, 38, 80</span></td>
+</tr>
+<tr>
+<td>20</td>
+<td>"Condition variable koşulu (true/false) tutar" ya da "sıra bilgisi condition nesnelerindedir."</td>
+<td>Predicate uygulama alanlarındadır (count, turn). CV yalnızca bekleme yeridir.</td>
+<td><span class="src">sl. 43, 83; Okuma §11</span></td>
+</tr>
+<tr>
+<td>21</td>
+<td>"Mutex'i tutarken beklemek sorun değil, nasılsa uyuyorum."</td>
+<td>cond_wait mutex'i atomik olarak bırakır. Ama mutex'i tutarken sem_wait(full) gibi başka bir beklemeye girmek, durumu değiştirecek thread'i dışarıda bırakır: deadlock.</td>
+<td><span class="src">sl. 44, 52, 67; Okuma §12</span></td>
+</tr>
+<tr>
+<td>22</td>
+<td>"sem_wait başarısız olsa da sonunda post etmek zararsız."</td>
+<td>Edinilmemiş bir permit'i geri vermek fazladan permit icat eder; semaphore gerçek kaynaktan fazla kullanıcı kabul eder. Java'da finally'de release aynı hatadır.</td>
+<td><span class="src">sl. 40, 73, 81; Okuma §10</span></td>
+</tr>
+<tr>
+<td>23</td>
+<td>"Priority inheritance deadlock'u çözer" ya da "her mutex'te varsayılan olarak vardır."</td>
+<td>Priority inheritance belirli bir protokoldür; düşük öncelikli sahibin işini bitirip bırakmasını hızlandırır. Döngüsel beklemeyi çözmez, varsayılan mutex özelliği varsayılamaz.</td>
+<td><span class="src">sl. 63; Okuma §15</span></td>
+</tr>
+<tr>
+<td>24</td>
+<td>"Okuma ağırlıklı iş yükünde reader–writer lock otomatik olarak daha hızlıdır."</td>
+<td>Hoca açıkça hayır diyor. Ayrıca kabul politikası (okuyucu/yazar önceliği) belirtilmeli; biri ötekini aç bırakabilir.</td>
+<td><span class="src">sl. 56</span></td>
+</tr>
+<tr>
+<td>25</td>
+<td>"Strict alternation karşılıklı dışlamayı bozar."</td>
+<td>Hayır: dışlama modelde korunur. Bozulan progress'tir: ilgilenmeyen eş, tek ilgili thread'i bekletir.</td>
+<td><span class="src">sl. 16; S-2</span></td>
+</tr>
+<tr>
+<td>26</td>
+<td>"Race condition için atomik olmayan erişim gerekir."</td>
+<td>Race condition zamanlamaya bağlı doğruluk hatasıdır; tüm erişimler atomikken de olur (split modu). Atomik olmayan erişim şartı C'deki <strong>data race</strong> tanımına aittir.</td>
+<td><span class="src">sl. 11, 32</span></td>
+</tr>
+<tr>
+<td>27</td>
+<td>"in == out ise kuyruk boştur."</td>
+<td>Sarmadan sonra hem boş hem dolu kuyrukta indisler eşit olabilir; ayırt eden count'tur.</td>
+<td><span class="src">sl. 50; Okuma §16</span></td>
+</tr>
+<tr>
+<td>28</td>
+<td>"Memory barrier bütün belleği anında her yerde tutarlı yapar."</td>
+<td>Barrier'lar ve atomik işlemler belirli sıralama garantileri verir, güçleri ve bağlamları farklıdır. Hoca "sihirli işlem" anlatımını yanıltıcı buluyor.</td>
+<td><span class="src">Okuma §6; OSC ch6 sl. 20–21 ile karşılaştır</span></td>
+</tr>
+<tr>
+<td>29</td>
+<td>"closed görülünce consumer hemen çıkar."</td>
+<td>closed ama boş değilse consumer kalanları boşaltır; yalnızca closed <strong>ve</strong> boşsa çıkar. Aksi halde öğeler sessizce kaybolur.</td>
+<td><span class="src">sl. 55, 68; Okuma §13</span></td>
+</tr>
+<tr>
+<td>30</td>
+<td>"pthread_join kuyruğun son değerlerini okumak için kilit gerektirir" ya da tersi, "join olmadan da okuyabilirim."</td>
+<td>Join, işçinin bittiğini kurar; sonra okuma güvenli, ek kilit gerekmez. Join'den önce okumak başka bir protokol ister.</td>
+<td><span class="src">sl. 27; Okuma §16</span></td>
+</tr>
+<tr>
+<td>31</td>
+<td>"Thread'ler dönüyor ve CPU dolu, o halde livelock; deadlock'ta herkes uyur."</td>
+<td>Sınıflandırma bağımlılığa göre yapılır. Bekleyenlerin beklediği olayı yalnızca yine bekleyenler yapabiliyorsa deadlock'tur, dönerek bekleseler de (Q31(a), spinlock'larla kurulmuş filozoflar). Livelock'ta katılımcılar durumu değiştirip yeniden dener ama iş bitmez (Q8(c), Q45(e)). CPU kullanımı yalnızca ipucudur.</td>
+<td><span class="src">sl. 62</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-soru-bankas">C) Soru bankası<a class="headerlink" href="#c-soru-bankas" title="Permanent link">#</a></h2>
+<p>Biçim: soru metni Türkçe, kod ve anahtar terimler İngilizce; <strong>Cevap</strong> İngilizce (materyal İngilizce; sınav dili henüz duyurulmadı). <strong>Zorluk</strong> 1 (tanım) → 4 (sentez/tasarım/ince tuzak). <strong>Bölüm</strong> 1–11 (anlatım planındaki numaralama). <strong>Ölçüt</strong> = tam puan için şart. Aksi söylenmedikçe izler hocanın soyut modelindedir: her okuma ve her yazma atomik, sequential consistency, her thread kendi program sırasını korur <span class="src">sl. 5, 8</span>.</p>
+<h3 id="seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap<a class="headerlink" href="#seviye-1-tanm-ve-ksa-cevap" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q1.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım ayrımı · Kaynak: sl. 11; Okuma §3</em></p>
+<p>Race condition ile C'deki data race arasındaki farkı tanımlayın. Bütün paylaşılan erişimleri <code>atomic_load</code>/<code>atomic_store</code> ile yapılan bir programda race condition olabilir mi? Data race olabilir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A race condition is a correctness failure whose occurrence depends on timing or ordering; it can occur even when every individual access is atomic. A C data race is a language-level notion: two conflicting accesses (same location, at least one a write) in different threads, at least one non-atomic, without the required happens-before ordering; its behaviour is undefined. A program that uses only atomic loads and stores on the shared counter has no data race, but it can still have a race condition: counter.c split mode loads 0 in both threads and stores 1 in both, losing an update with well-defined atomic accesses <span class="src">sl. 32</span>.</p>
+<p><strong>Ölçüt.</strong> (1) Race = zamanlamaya bağlı doğruluk hatası, (2) data race = C tanımı + undefined behaviour, (3) "evet race olabilir, data race olmaz" + split örneği. "Data race = race condition" diyen yarım puandan fazla alamaz.</p>
+</details><hr />
+<p><strong>Q2.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım · Kaynak: sl. 14; OSC ch6 sl. 8</em></p>
+<p>Kritik bölge problemine bir çözümün sağlaması gereken üç şartı tanımlayın. Hangisi bir adalet (fairness) özelliğidir ve neden karşılıklı dışlamadan çıkmaz?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) Mutual exclusion: no two participants execute conflicting critical sections at the same time. (2) Progress: if the critical section is free and some participants want to enter, the choice of the next entrant cannot be postponed indefinitely; only participants that are not executing in their remainder sections take part in that decision <span class="ek">ek bilgi: OSC kitap metni; ne sl. 14'te ne OSC ch6 sl. 8'de var</span>. (3) Bounded waiting: after a participant requests entry, there is a bound on how many times others may enter before it does. Bounded waiting is the fairness property. Exclusion only says "at most one inside"; it says nothing about who enters next, so the same thread could win every time while another waits forever.</p>
+<p><strong>Ölçüt.</strong> Üç tanım doğru + bounded waiting'i adalet olarak seçmek + "exclusion says nothing about who enters next". Progress'i "herkes sonunda girer" diye tanımlamak hatadır (o bounded waiting'e yakın). Remainder cümlesi zorunlu değil, kitap ayrıntısıdır <span class="ek">ek bilgi</span>.</p>
+</details><hr />
+<p><strong>Q3.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım + örnek · Kaynak: sl. 15</em></p>
+<p>Safety ve liveness özelliklerini tanımlayın. Safety'yi kusursuz sağlayan ama işe yaramayan bir "çözüm" örneği verin. Bir çözümü değerlendirirken hangi varsayımları yazmalısınız?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Safety: something bad never happens (e.g., two owners never modify the protected queue together). Liveness: something useful eventually happens (threads eventually enter, items are eventually consumed). A protocol that blocks every thread forever, e.g., an entry section that never lets anyone in, protects the data perfectly but provides no progress. When evaluating a solution, state the scheduler assumptions (every thread eventually runs, non-zero speed) and termination assumptions (critical sections finish); mutual exclusion alone does not establish fairness.</p>
+<p><strong>Ölçüt.</strong> İki tanım + örnek + en az bir varsayım (scheduler veya CS'in bitmesi).</p>
+</details><hr />
+<p><strong>Q4.</strong> <em>Zorluk 1 · Bölüm 1 · Kısa cevap · Kaynak: sl. 3, 34; S-1</em></p>
+<p>"Makinede tek CPU varsa iki thread aynı anda çalışamaz, bu yüzden race condition olamaz." Bu ifadeyi düzeltin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> False. On one CPU, preemption can stop a thread between reading a shared value and writing the dependent result; another thread then runs and updates the same object, so the steps of the two updates interleave. Physical simultaneity is not required: the scheduler does not know the application invariant, and a time slice is not a critical section. On several CPUs the updates may additionally overlap in real time, but the correctness problem is the same.</p>
+<p><strong>Ölçüt.</strong> "Preemption interleaves steps of a shared update" cümlesi (sl. 34'ün cevabı). "Time slice is not a critical section" artı puan.</p>
+</details><hr />
+<p><strong>Q5.</strong> <em>Zorluk 1 · Bölüm 5 · Kısa cevap · Kaynak: sl. 11, 19, 34</em></p>
+<p>Paylaşılan bir sayacı <code>volatile long counter;</code> diye tanımlamak neden yeterli değildir? İki ayrı neden verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) volatile does not provide mutual exclusion: <code>counter++</code> is still a separate read, add and write, so two threads can read the same old value and lose an update. (2) volatile does not establish the synchronization (happens-before ordering) required between threads; in C, unsynchronized conflicting non-atomic accesses remain a data race with undefined behaviour, and volatile does not restore the sequentially consistent model that proofs such as Peterson's assume. Use a mutex or C atomics instead.</p>
+<p><strong>Ölçüt.</strong> Dışlama yok + thread'ler arası sıralama/senkronizasyon yok. Yalnızca "derleyici optimizasyonunu kapatır ama atomik değil" demek yarım puan.</p>
+</details><hr />
+<p><strong>Q6.</strong> <em>Zorluk 1 · Bölüm 6 · Karşılaştırma · Kaynak: sl. 39, 44; S-3</em></p>
+<p>Semaphore wait ile condition wait arasındaki farkı açıklayın. Hangisi "hafızalıdır"?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A successful semaphore wait consumes a stored permit; if no permit is available it blocks. A semaphore remembers posted permits even when nobody is waiting. A condition wait is always used with an associated mutex: the caller holds the mutex and has found the predicate false; the wait atomically releases the mutex and sleeps, and returns with the mutex reacquired. A condition-variable notification is not a stored permit: if nobody is waiting it has no effect, and a wakeup does not guarantee the predicate is true. The semaphore is the one with memory.</p>
+<p><strong>Ölçüt.</strong> (1) permit tüketme/saklama, (2) cond_wait'in mutex'i bırakıp geri alması, (3) notification'ın saklanmadığı. Üçü de gerekli.</p>
+</details><hr />
+<p><strong>Q7.</strong> <em>Zorluk 1 · Bölüm 5 · Karşılaştırma · Kaynak: sl. 25, 39; Okuma §5</em></p>
+<p>Benzincide tuvalet anahtarını alan müşteri yerine arkadaşı anahtarı geri getirebilir mi? Bunu POSIX mutex ve counting semaphore için ayrı ayrı yanıtlayın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> For an ordinary POSIX mutex, no: a mutex has ownership; the thread that acquired it is responsible for unlocking it, and the program must respect ownership and mutex-type rules. For a counting semaphore, yes: a semaphore does not identify an owner, and one participant can post a permit that a different participant consumes (as in producer–consumer). The analogy must not erase this distinction; a semaphore is not an ownership substitute.</p>
+<p><strong>Ölçüt.</strong> Mutex: hayır + sahiplik; semaphore: evet + producer–consumer örneği.</p>
+</details><hr />
+<p><strong>Q8.</strong> <em>Zorluk 1 · Bölüm 10 · Sınıflandırma · Kaynak: sl. 59, 62, 56, 63</em></p>
+<p>Her senaryoyu deadlock, starvation, livelock ya da priority inversion olarak sınıflandırın ve tek cümleyle gerekçelendirin.
+(a) Beş filozofun beşi de sol çubuğu tutuyor ve sağı bekliyor.
+(b) Okuyucular birbirine bindirerek sürekli geliyor; yazar hiç yazamıyor, okuyucular okumaya devam ediyor.
+(c) İki thread birer kilit alıyor, ikinci kilidi <code>trylock</code> ile deniyor, alamayınca ilkini bırakıp aynı anda yeniden deniyor; ikisi de sürekli çalışıyor ama hiç bitirmiyor.
+(d) Yüksek öncelikli H, düşük öncelikli L'nin tuttuğu kilidi bekliyor; orta öncelikli M sürekli çalıştığı için L hiç ilerleyemiyor.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Deadlock: every philosopher waits for an event (a release) that only another blocked philosopher could cause. (b) Starvation: the writer is perpetually denied progress while readers continue. (c) Livelock: participants keep reacting and retrying without completing useful work; each releases its lock and tries again, so the state keeps changing, yet nobody finishes. (d) Priority inversion: medium-priority work delays the low-priority owner and therefore the high-priority waiter; if M never stops, H is effectively starved. Priority inheritance would raise L's effective priority so it can finish and release.</p>
+<p><strong>Ölçüt.</strong> Dört etiket doğru + her birinde "kim bekliyor, kim ilerliyor". (c) için "deadlock" yanlış: thread'ler bir bekleyenin yapacağı olayı beklemiyor, kilidi bırakıp yeniden deniyor. Gerekçe "CPU dolu" olmamalı; sınıflandırma bağımlılığa bakar (karşılaştır: Q31(a)'da thread'ler döner ama durum deadlock'tur) <span class="src">sl. 62</span>.</p>
+</details><hr />
+<p><strong>Q9.</strong> <em>Zorluk 1 · Bölüm 4 · Tanım · Kaynak: sl. 20–21; OSC ch6 sl. 25, 27</em></p>
+<p>Test-and-set ve compare-and-swap işlemlerini sözde kodla tanımlayın. Her ikisinin ortak özelliği nedir ve CAS'ın dönüş değeri hakkında hoca hangi uyarıyı yapıyor?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> test_and_set(target): atomically { old = <em>target; </em>target = true; return old; }. compare_and_swap(value, expected, new): atomically { old = <em>value; if (</em>value == expected) *value = new; return old; }. Both are atomic read–modify–write operations that return the old value, so two contenders cannot both change a lock from free to held in the same logical instant. The lecture's pseudocode CAS returns the old value; library interfaces may report success differently (for example, as a boolean) (ek bilgi: C11'in <code>atomic_compare_exchange_strong</code> işlevi bool döner ve gözlenen değeri <code>expected</code>'a yazar).</p>
+<p><strong>Ölçüt.</strong> İki tanım + "atomic RMW returning the old value" + dönüş değeri uyarısı.</p>
+</details><hr />
+<p><strong>Q10.</strong> <em>Zorluk 1 · Bölüm 7 · Tanım · Kaynak: sl. 48, 76; OSC ch7 sl. 31–33</em></p>
+<p>Java nesne monitöründe entry set ile wait set arasındaki farkı açıklayın. <code>notify()</code> bir thread'i nereden nereye taşır ve bu, predicate'in doğru olduğu anlamına gelir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The entry set holds threads waiting to acquire the object's lock (they have not entered the synchronized region). The wait set holds threads that owned the lock, found their condition false, called wait(), and released the lock. notify() moves one arbitrary thread from the wait set to the entry set; it must then compete to reacquire the lock. A notification only permits competition for the lock; it does not guarantee the predicate is true, so the thread must recheck it in a while loop. Neither drawing promises FIFO admission.</p>
+<p><strong>Ölçüt.</strong> İki kümenin bekleme nedeni (kilit vs koşul) + notify'ın wait set → entry set taşıması + "predicate garanti değil".</p>
+</details><hr />
+<p><strong>Q11.</strong> <em>Zorluk 1 · Bölüm 6 · Doğru/yanlış + gerekçe · Kaynak: sl. 41; Okuma §10; OSC ch7 sl. 23</em></p>
+<p>"Unnamed POSIX semaphore'lar yalnızca aynı süreçteki thread'ler arasında kullanılabilir; ilgisiz süreçler için named semaphore şarttır." Doğru mu? <code>sem_init</code>'in ikinci argümanının rolünü açıklayın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> False as stated. <code>sem_init(&amp;s, pshared, value)</code>: pshared = 0 is the usual setup for threads of one process. A process-shared unnamed semaphore requires pshared ≠ 0 and the semaphore must reside in memory actually shared by the processes (e.g., a shared-memory mapping). Named semaphores offer a different, name-based way to find the same semaphore. "Unnamed" does not mean "impossible between unrelated processes". The textbook slide's statement is corrected by the lecture.</p>
+<p><strong>Ölçüt.</strong> "Yanlış" + pshared ≠ 0 + paylaşılan bellekte durma şartı.</p>
+</details><hr />
+<p><strong>Q12.</strong> <em>Zorluk 1 · Bölüm 11 · Kısa cevap · Kaynak: sl. 70, 86</em></p>
+<p>(a) Windows mutex dispatcher nesnesinde "signaled" durumu ne anlama gelir? (b) Transactional memory'deki <code>atomic { S }</code> gösterimi ile tek bir atomik tamsayı komutu arasındaki fark nedir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Signaled means the mutex is available; acquisition makes it nonsignaled, and the owner's release makes it signaled again. The arrows are state transitions, not a FIFO queue guarantee. (b) <code>atomic { S }</code> is conceptual textbook notation for a transaction over all the reads and writes in S: they commit as a unit, or a conflict is handled by the supporting system. It is not standard C or Java syntax. A single atomic integer instruction updates one location; it does not make a multi-operation sequence atomic.</p>
+<p><strong>Ölçüt.</strong> (a) signaled = müsait; (b) çok işlemli işlem vs tek konum + "standart sözdizimi değil".</p>
+</details><hr />
+<h3 id="seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz<a class="headerlink" href="#seviye-2-uygulama-snflandrma-basit-iz" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q13.</strong> <em>Zorluk 2 · Bölüm 1 · İz · Kaynak: sl. 8–9; Okuma §2</em></p>
+<p>Her artırmayı iki atomik adım olarak modelleyin: sayacı özel bir register'a oku (R); register + 1'i yaz (W). Sayaç 0'dan başlıyor, A ve B birer artırma yapıyor, her thread kendi R-önce-W sırasını koruyor. (a) Bütün interleaving'leri listeleyin ve her birinin son değerini yazın. (b) "Altıdan dördü hatalı, demek ki gerçek bir sistemde hata olasılığı 2/3" çıkarımını değerlendirin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Six interleavings (letters name whose next step runs):</p>
+<table>
+<thead>
+<tr>
+<th>Schedule</th>
+<th>Steps</th>
+<th>Final</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AABB</td>
+<td>A:R0, A:W1, B:R1, B:W2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>BBAA</td>
+<td>B:R0, B:W1, A:R1, A:W2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>ABAB</td>
+<td>A:R0, B:R0, A:W1, B:W1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ABBA</td>
+<td>A:R0, B:R0, B:W1, A:W1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>BAAB</td>
+<td>B:R0, A:R0, A:W1, B:W1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>BABA</td>
+<td>B:R0, A:R0, B:W1, A:W1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Only the two serialized schedules finish with 2; in the other four both threads read 0 before either writes. (b) Invalid. These are six abstract schedules, not six equally likely executions of a real scheduler; the enumeration shows which outcomes are possible in the model, not a failure probability.</p>
+<p><strong>Ölçüt.</strong> Altı çizelge + doğru sonuçlar (simülasyonla doğrulandı: 2 → 2 kez, 1 → 4 kez) + (b) "not equally likely". Sayının C(4,2) = 6 olduğunu söylemek artı.</p>
+</details><hr />
+<p><strong>Q14.</strong> <em>Zorluk 2 · Bölüm 1 · İz · Kaynak: sl. 8 (genelleme)</em></p>
+<p><code>x = 0</code>. A thread'i <code>x = x + 1</code>, B thread'i <code>x = x * 2</code> yapıyor; her biri iki adım: oku, sonra yaz. Bütün interleaving'lerin sonuçlarını bulun. Sonuç kümesi nedir ve hangi sonuç hiçbir seri yürütmede görülmez?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Six schedules (simülasyonla doğrulandı):</p>
+<table>
+<thead>
+<tr>
+<th>Schedule</th>
+<th>Trace</th>
+<th>Final x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AABB</td>
+<td>A reads 0, writes 1; B reads 1, writes 2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>BBAA</td>
+<td>B reads 0, writes 0; A reads 0, writes 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ABAB</td>
+<td>A reads 0, B reads 0, A writes 1, B writes 0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ABBA</td>
+<td>A reads 0, B reads 0, B writes 0, A writes 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>BAAB</td>
+<td>B reads 0, A reads 0, A writes 1, B writes 0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BABA</td>
+<td>B reads 0, A reads 0, B writes 0, A writes 1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Possible results: {0, 1, 2}. The serial executions give 2 (A then B) or 1 (B then A). The result 0 occurs only when B's write, computed from the stale value 0, overwrites A's update: a lost update.</p>
+<p><strong>Ölçüt.</strong> Küme {0, 1, 2} + 0'ın yalnızca interleaving ile çıktığı + bir 0 izi.</p>
+</details><hr />
+<p><strong>Q15.</strong> <em>Zorluk 2 · Bölüm 1 · İz · Kaynak: sl. 6–8 (genelleme)</em></p>
+<p><code>balance = 0</code>. A <code>balance++</code>, B <code>balance--</code> yapıyor (her biri oku + yaz). Mümkün son değerleri ve her biri için bir çizelge verin. Doğru sonuç hangisidir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Possible results: {−1, 0, 1} (simülasyon: her biri 2 çizelgede). 0 is correct (AABB or BBAA). ABAB/BAAB-style: both read 0, A writes 1, B writes −1 → −1 (A's update lost). ABBA/BABA-style: both read 0, B writes −1, A writes 1 → 1 (B's update lost). The arithmetic is right in each thread; the defect is the unprotected read–modify–write.</p>
+<p><strong>Ölçüt.</strong> Üç değer + her birine bir iz + "kaybolan güncelleme kimin".</p>
+</details><hr />
+<p><strong>Q16.</strong> <em>Zorluk 2 · Bölüm 4 · İz · Kaynak: sl. 21; OSC ch6 sl. 28</em></p>
+<p><code>lock = 0</code>. A, B, C thread'leri <code>while (CAS(&amp;lock, 0, 1) != 0) ;</code> ile kilidi almaya çalışıyor (CAS eski değeri döner). Sıra: A'nın CAS'ı, B'nin CAS'ı, C'nin CAS'ı, A'nın <code>lock = 0</code>'ı, sonra B ve C yeniden deniyor. (a) Her CAS'ın dönüş değerini ve <code>lock</code>'un değerini yazın. (b) A kilidi bıraktıktan sonra kim girer? (c) Bu döngü bounded waiting sağlar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) A: CAS returns 0, lock becomes 1 → A owns the lock. B: returns 1 (mismatch), lock stays 1 → B does not acquire. C: returns 1, lock stays 1. A releases: lock = 0. (b) Whichever retry executes first: its CAS returns 0 and sets lock to 1; the other's CAS returns 1 and it keeps spinning. The posting/releasing thread does not choose; A itself could even re-acquire if it loops back first. (c) No. A simple retry loop does not itself guarantee bounded waiting: an unlucky thread can lose the race every time.</p>
+<p><strong>Ölçüt.</strong> Dönüş değerleri 0/1/1 + "kazanan belirsiz" + "bounded waiting yok". Kaybedenin "denedim, demek ki sahibim" sanması hatası artı.</p>
+</details><hr />
+<p><strong>Q17.</strong> <em>Zorluk 2 · Bölüm 6 · Değer izi · Kaynak: sl. 36, 38; OSC ch6 sl. 40</em></p>
+<p>Counting semaphore <code>S = 2</code>. Sırayla: A wait, B wait, C wait, D wait, A post, B post, sonra iki yeni sahip de işini bitirip post ediyor.
+(a) Hocanın uygulama modelinde (S ≥ 0, mevcut permit sayısı) her adımdan sonra S'yi ve kimin bloklu olduğunu yazın.
+(b) Ders kitabının iç modelinde (wait: <code>value--; if (value &lt; 0) block</code>; signal: <code>value++; if (value &lt;= 0) wakeup</code>) aynı izi yazın. Negatif değer neyi gösterir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Start 2. A wait → 1. B wait → 0. C wait → blocks (S = 0). D wait → blocks (S = 0). A post → a permit becomes available and one waiter (C or D; not chosen by A, no FIFO assumed) acquires it: S stays 0. B post → the other waiter acquires: S = 0. The two new owners post: S = 1, then 2. Final S = 2, matching the initial pool.
+(b) 2 → 1 (A) → 0 (B) → −1 (C blocks) → −2 (D blocks) → A signal: −1, wake one → B signal: 0, wake the other → posts: 1, 2. A negative value's magnitude is the number of blocked waiters; this is the textbook's internal representation, not the application model's "S = 0 means no available permit".</p>
+<p><strong>Ölçüt.</strong> (a) ve (b) dizileri doğru + "post eden sıradakini seçmez" + negatif değerin anlamı. İki modeli karıştırmak (uygulama modelinde S = −2 yazmak) puan kırar.</p>
+</details><hr />
+<p><strong>Q18.</strong> <em>Zorluk 2 · Bölüm 8 · Değer izi · Kaynak: sl. 51, 53; Okuma §12</em></p>
+<p>Semaphore'lu bounded buffer, N = 3: <code>empty = 3, full = 0, mutex = 1</code>. Tamamlanan işlemler: P1 üretir (X), P2 üretir (Y), C1 tüketir. Sonra P3 <code>wait(empty)</code>'yi geçmiş ama henüz <code>wait(mutex)</code>'e gelmemiş; ve C2 <code>wait(full)</code>'u geçmiş ama henüz kilidi almamış.
+(a) Her tamamlanan işlemden sonra kuyruk, empty, full değerlerini yazın.
+(b) Son anda empty, full ve fiziksel doluluk nedir? empty + full = N eşitliği neden bozuldu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Start [] e=3 f=0. P1 done: [X] e=2 f=1. P2 done: [X, Y] e=1 f=2. C1 done: [Y] e=2 f=1.
+(b) P3's wait(empty): e=1. C2's wait(full): f=0. The buffer still physically holds one item [Y]. empty + full = 1 ≠ 3, because two workers hold reservations: P3 holds a free slot it has not filled, C2 holds a full slot it has not emptied. At completed-operation boundaries with no outstanding reservation, empty + full = N; mid-operation the permit counts can differ transiently from physical occupancy, so a trace must say which point it describes.</p>
+<p><strong>Ölçüt.</strong> (a) üç durum doğru + (b) e=1, f=0, doluluk 1 + "outstanding reservations" açıklaması.</p>
+</details><hr />
+<p><strong>Q19.</strong> <em>Zorluk 2 · Bölüm 11 · Hesap · Kaynak: sl. 71, 22</em></p>
+<p>Linux kernel <code>atomic_t</code> arayüzü:</p>
+<pre><code class="language-c">atomic_t c; int v;
+atomic_set(&amp;c, 5); atomic_add(10, &amp;c); atomic_sub(4, &amp;c); atomic_inc(&amp;c);
+v = atomic_read(&amp;c);        /* (a) v = ? */
+atomic_set(&amp;c, 8); atomic_add(7, &amp;c); atomic_sub(3, &amp;c); atomic_inc(&amp;c); atomic_inc(&amp;c);
+v = atomic_read(&amp;c);        /* (b) v = ? */
+</code></pre>
+<p>Başka güncelleme olmadığını varsayın. (c) İki CPU aynı anda <code>v = atomic_read(&amp;c); atomic_set(&amp;c, v + 1);</code> yaparsa sonuç her zaman +2 midir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 5 + 10 − 4 + 1 = 12. (b) 8 + 7 − 3 + 1 + 1 = 14. (c) No. atomic_read followed by atomic_set is two atomic operations, not one read–modify–write; both CPUs can read the same value and both set v + 1, losing an increment. Use atomic_inc (or a CAS loop). And atomicity of one counter does not protect a multi-variable invariant.</p>
+<p><strong>Ölçüt.</strong> 12, 14 + (c) "hayır, iki işlem" gerekçesi.</p>
+</details><hr />
+<p><strong>Q20.</strong> <em>Zorluk 2 · Bölüm 10 · Tasarım/araç seçimi · Kaynak: sl. 64</em></p>
+<p>Her durum için en uygun senkronizasyon aracını seçin ve tek cümleyle gerekçelendirin: (a) Bir web sunucusu en fazla 10 veritabanı bağlantısını aynı anda kullanabilir. (b) Bütün thread'lerin artırdığı tek bir "istek sayısı" istatistiği. (c) İki hesap arasında transfer ve tutarlı toplam bakiye raporu. (d) İşçi thread'leri iş kuyruğu boş değilken iş almalı, boşken uyumalı. (e) Bir thread başlatma (initialization) bitmeden kaynağı kullanmamalı. (f) Nadiren değişen, sık okunan bir yapılandırma tablosu.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Counting semaphore initialized to 10: a limited number of interchangeable permits. (b) An atomic fetch-add: one independent numeric update. (c) A mutex (one lock, or both account locks in a fixed order) around the whole debit+credit and around readers that need a consistent snapshot: one invariant across several operations. (d) Condition variable plus mutex: waiting for shared state (count &gt; 0) to satisfy a predicate. (e) A semaphore initialized to 0 (initializer posts, user waits) — or a ready flag under a mutex with a condition variable. (f) A reader–writer lock may help, but state the admission policy (reader preference can starve writers) and do not assume it is automatically faster; a plain mutex is a valid starting point. Overall: minimize shared mutable state, then specify the remaining protocol.</p>
+<p><strong>Ölçüt.</strong> (a)–(e) sl. 64 eşlemesi; (f)'de politika ve "otomatik hızlı değil" uyarısı <span class="src">sl. 56</span>.</p>
+</details><hr />
+<p><strong>Q21.</strong> <em>Zorluk 2 · Bölüm 3 · İz · Kaynak: sl. 16; S-2; OSC ch6 sl. 11–12</em></p>
+<p>Strict alternation: <code>turn</code> 0 ya da 1; thread i <code>while (turn != i) ;</code> ile bekler, kritik bölgeden çıkarken <code>turn = 1 - i</code> yapar. <code>turn = 0</code> ile başlayıp, T1'in uzun, ilgisiz bir iş yaptığı ve hiç girmek istemediği bir iz verin. Hangi şart bozulur? Karşılıklı dışlama bozulur mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> T0 enters (turn = 0), leaves and sets turn = 1, goes to its remainder. T0 wants to enter again: it spins while turn != 0. T1 is in its remainder doing unrelated work and never requests entry, so it never sets turn back to 0. The critical section is free and T0 is the only interested thread, yet T0 cannot enter: progress fails (simülasyonda bulundu). Mutual exclusion holds in the abstract model: a thread enters only when turn equals its id, and turn has one value. The protocol does not distinguish interest in entry from the tie-breaking rule.</p>
+<p><strong>Ölçüt.</strong> İz + "progress fails, mutual exclusion holds". "Dışlama bozulur" diyen sıfır.</p>
+</details><hr />
+<p><strong>Q22.</strong> <em>Zorluk 2 · Bölüm 5 · Kod okuma/tahmin · Kaynak: sl. 32–33; Okuma §3, §16; kod/counter.c</em></p>
+<p><code>counter.c</code>'yi üç modda çalıştırmadan önce tahmin edin: <code>./counter mutex</code>, <code>./counter atomic</code>, <code>./counter split</code>. split modundaki <code>arrived</code> rendezvous'u ne işe yarar ve sonuç neden data race olmadan yanlıştır? Rendezvous kaldırılırsa split modu hangi sonuçları verebilir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> mutex: 200,000 (the mutex encloses the entire increment; main joins both workers before reading). atomic: 200,000 (atomic_fetch_add is one atomic read–modify–write per increment). split: 1. In split mode each worker does <code>old = atomic_load(&amp;acounter)</code> first, then enters a mutex-protected rendezvous: it increments <code>arrived</code>, broadcasts when arrived == 2, and waits <code>while (arrived &lt; 2)</code>. So neither worker can store until both have loaded 0; then both <code>atomic_store(&amp;acounter, old + 1)</code> store 1. All accesses to acounter are atomic and arrived is mutex-protected, so there is no C data race, yet the compound increment is wrong: atomic fields are not an atomic operation. Without the rendezvous, each worker still does one load and one store, so the result could be 1 or 2 depending on the interleaving (the six schedules of sl. 9); one run would not tell you which.</p>
+<p><strong>Ölçüt.</strong> Üç tahmin + rendezvous'un "iki load'u iki store'dan önceye zorladığı" + "no data race, still wrong" + rendezvous'suz {1, 2}.</p>
+</details><hr />
+<p><strong>Q23.</strong> <em>Zorluk 2 · Bölüm 2 · Bu kod doğru mu? · Kaynak: sl. 12; Okuma §2</em></p>
+<pre><code class="language-c">void increment(void) {
+    long v = counter;          /* read outside the lock */
+    v = v + 1;
+    pthread_mutex_lock(&amp;m);
+    counter = v;               /* only the write is protected */
+    pthread_mutex_unlock(&amp;m);
+}
+</code></pre>
+<p>İki thread bunu çağırıyor. Doğru mu? Bir iz verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No. The required indivisible operation is the whole read–modify–write; protecting only the final write leaves the earlier decision exposed. Trace: A reads 0 into v; B reads 0 into v; A locks, writes 1, unlocks; B locks, writes 1, unlocks → final 1 after two increments. Even making the final write atomic would not help (the model already treats each write as atomic). In C, the unlocked read also conflicts with the other thread's write: a data race. Fix: put the read, the addition and the write inside the same lock, or use atomic_fetch_add.</p>
+<p><strong>Ölçüt.</strong> "Hayır" + lost update izi + "kritik bölge bütün işlem". Data race notu artı.</p>
+</details><hr />
+<p><strong>Q24.</strong> <em>Zorluk 2 · Bölüm 5 · İz/hesap · Kaynak: sl. 28</em></p>
+<p><code>A = 100, B = 50</code>. Transfer thread'i önce <code>A = A - 10</code>, sonra <code>B = B + 10</code> yapıyor (her biri atomik bir yazma, kilit yok). Bir rapor thread'i önce A'yı, sonra B'yi okuyup toplar. (a) Rapor hangi toplamları görebilir? (b) Transfer sırası ters olsaydı (önce kredi)? (c) Doğru protokol nedir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) {140, 150, 160} (simülasyonla doğrulandı). 140: reader reads A = 90 after the debit and B = 50 before the credit. 160: reader reads A = 100 before the debit and B = 60 after the credit (the reader's two reads straddle the whole transfer). 150 when both reads fall on the same side. (b) {150, 160} (simülasyonla doğrulandı): e.g., the reader reads A = 100, then the transfer credits B and debits A, then the reader reads B = 60 → 160. The intermediate state itself (A = 100, B = 60) is inconsistent, and a reader that reads B before A could see 140. Changing the order does not remove the problem. (c) Two independent atomic stores do not prevent a reader from seeing a partially completed transfer. Lock both the debit and the credit as one transaction, and make the reader take the same lock(s) for its snapshot.</p>
+<p><strong>Ölçüt.</strong> (a) üç değer + 140 ve 160 için birer iz; (c) "okuyucu da kilit alır". 160'ı atlamak (yalnız 140 demek) yarım puan.</p>
+</details><hr />
+<p><strong>Q25.</strong> <em>Zorluk 2 · Bölüm 9 · İz · Kaynak: sl. 56; OSC ch7 sl. 8–11</em></p>
+<p>Ders kitabının ilk readers–writers çözümü:</p>
+<pre><code class="language-c">/* writer */  wait(rw_mutex); /* write */ signal(rw_mutex);
+/* reader */  wait(mutex); read_count++; if (read_count == 1) wait(rw_mutex); signal(mutex);
+              /* read */
+              wait(mutex); read_count--; if (read_count == 0) signal(rw_mutex); signal(mutex);
+</code></pre>
+<p>Yazarın hiç yazamadığı bir iz verin. Bu hangi canlılık hatasıdır ve politika nasıl adlandırılır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> R1 arrives: read_count = 1, R1 waits on rw_mutex and gets it, reads. W arrives: wait(rw_mutex) blocks. R2 arrives: read_count = 2, does not touch rw_mutex, reads. R1 leaves: read_count = 1, no signal. R3 arrives: read_count = 2. R2 leaves: 1. R4 arrives: 2 … As long as new readers keep arriving before the last one leaves, read_count never returns to 0, rw_mutex is never signaled, and W waits indefinitely while readers continue: starvation of the writer. The policy is reader preference ("first readers–writers problem"). Writer preference fixes this but can disadvantage readers; the admission policy must be chosen and stated.</p>
+<p><strong>Ölçüt.</strong> read_count'un 0'a hiç düşmediği iz + "starvation" (deadlock değil) + politika adı.</p>
+</details><hr />
+<p><strong>Q26.</strong> <em>Zorluk 2 · Bölüm 10 · Zaman çizelgesi · Kaynak: sl. 63; OSC ch6 sl. 58</em></p>
+<p>Tek CPU, öncelik tabanlı kesintili zamanlama. t = 0'da düşük öncelikli L bir kilidi tutuyor ve kritik bölgesinin 2 ms'si kaldı. t = 0'da yüksek öncelikli H aynı kilidi istiyor ve bloklanıyor; aynı anda orta öncelikli, 50 ms CPU isteyen ve kilide ihtiyacı olmayan M hazır oluyor. (a) Priority inheritance yokken H en erken ne zaman kilidi alır? (b) Varken? (c) Priority inheritance filozofların deadlock'unu çözer mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) M has higher priority than L, so M runs first for 50 ms; then L runs its remaining 2 ms and releases; H gets the lock at t = 52 ms. H is delayed by unrelated medium-priority work: priority inversion. (b) With priority inheritance, L temporarily runs at H's priority, so it preempts M, finishes in 2 ms and releases; H gets the lock at t = 2 ms (M runs after H). (c) No. Priority inheritance is a specific protocol that helps the owner finish and release; it is not a cure for circular waiting, and it is not an assumed property of default mutexes.</p>
+<p><strong>Ölçüt.</strong> 52 ms / 2 ms + (c) "hayır". Sayılar ve tek CPU'lu senaryo bu bankaya ait <span class="ek">ek bilgi</span>; mekanizma sl. 63'ten.</p>
+</details><hr />
+<p><strong>Q27.</strong> <em>Zorluk 2 · Bölüm 8 · Kod okuma · Kaynak: sl. 50, 65; Okuma §16; kod/queue.c</em></p>
+<p><code>queue.c</code> 1'den 10.000'e kadar tamsayıları gönderiyor. (a) Beklenen <code>consumed</code> ve <code>sum</code> nedir? (b) Tüketici neden yalnızca toplamı değil, her öğenin <code>consumed + 1</code> olduğunu da kontrol ediyor? Count ve sum'ı değiştirmeyen iki farklı hata örneği verin. (c) <code>in == out</code> olduğunda kuyruk boş mudur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) consumed = 10,000; sum = 10,000 × 10,001 / 2 = 50,005,000. (b) Count and sum can hide errors. Example 1: a reordering (items 5 and 6 delivered as 6, 5) keeps both count and sum but violates FIFO. Example 2: duplicates of 4 and 6 together with missing 3 and 7 keep the count at 10,000 and the sum unchanged (4 + 6 = 3 + 7). The per-item sequence check catches both. (c) Not necessarily: after wraparound, both an empty queue and a full queue can have equal indices. The protected count distinguishes them; replacing the predicate by an index comparison changes the representation invariant.</p>
+<p><strong>Ölçüt.</strong> 50.005.000 + iki gizli hata örneği (biri sıra, biri çift/eksik) + "count ayırır".</p>
+</details><hr />
+<h3 id="seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma<a class="headerlink" href="#seviye-3-cok-adml-iz-hesap-hata-bulma" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q28.</strong> <em>Zorluk 3 · Bölüm 1 · Hesap + iz · Kaynak: sl. 8–9 (genelleme)</em></p>
+<p>İki-adımlı modelde (oku R, yaz W) A ve B <strong>üçer</strong> artırma yapıyor, sayaç 0'dan başlıyor. (a) Kaç farklı interleaving var? (b) Mümkün en büyük ve en küçük son değer nedir? (c) En küçük değere ulaşan bir çizelge verin. (d) 1'in neden imkânsız olduğunu kanıtlayın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Each thread has 6 steps: C(12, 6) = 924 schedules. (b) Max 6 (fully serialized), min 2; every value 2…6 is possible (simülasyon: 2 → 8, 3 → 300, 4 → 416, 5 → 180, 6 → 20 çizelge; bu sayılar olasılık değildir <span class="src">sl. 9</span>).
+(c) A reads 0 (holds it). B performs two complete increments: counter = 2. A writes 1 (overwrites 2). B reads 1 for its third increment (holds it). A performs its remaining two complete increments: counter = 3. B writes 2. Final 2.
+(d) The final value is written by the last store of some thread, which is that thread's k-th store with k ≥ 2. Every store writes (value read) + 1 ≥ 1, so after a thread's first store every value in memory is ≥ 1 (all stores write ≥ 1). The thread's second and later reads happen after its own first store, so they read ≥ 1 and the corresponding stores write ≥ 2. Hence the final value is ≥ 2.</p>
+<p><strong>Ölçüt.</strong> 924 + {2…6} + çalışan bir min-2 izi. (d) Seviye 4'e yakın; kanıt yoksa tam puan yok ama iz yeterince ikna edici olabilir. "Min 3" ya da "min 1" tipik hata.</p>
+</details><hr />
+<p><strong>Q29.</strong> <em>Zorluk 3 · Bölüm 3 · Bu kod doğru mu? · Kaynak: sl. 17–19</em></p>
+<p>Bir öğrenci Peterson'daki iki satırın sırasını değiştiriyor:</p>
+<pre><code class="language-c">turn = j;            /* swapped */
+flag[i] = true;
+while (flag[j] &amp;&amp; turn == j) { }
+/* critical section */
+flag[i] = false;
+</code></pre>
+<p>Hocanın soyut modelinde (atomik okuma/yazma, sequential consistency) bu protokol karşılıklı dışlamayı sağlar mı? İz verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No. Trace (simülasyonla doğrulandı): T0: turn = 1. T1: turn = 0. T1: flag[1] = true. T1 tests flag[0] &amp;&amp; turn == 0: flag[0] is false → T1 enters the critical section. T0: flag[0] = true. T0 tests flag[1] &amp;&amp; turn == 1: turn is 0 → false → T0 enters. Both are inside. The proof needs each thread to announce interest <strong>before</strong> yielding the tie; here the last write to turn happened while the other thread's flag was still false, so it no longer selects a waiter. Ordering assumptions matter even in the abstract model, and on real hardware reordering can produce the same effect for the original code.</p>
+<p><strong>Ölçüt.</strong> "Hayır" + iki thread'in de girdiği adım adım iz. Yalnızca "sıra önemli" demek yarım puan.</p>
+</details><hr />
+<p><strong>Q30.</strong> <em>Zorluk 3 · Bölüm 3 · Bu kod doğru mu? · Kaynak: sl. 17–18</em></p>
+<p>Başka bir öğrenci önceliği kendine veriyor: <code>flag[i] = true; turn = i; while (flag[j] &amp;&amp; turn == j) { }</code>. Soyut modelde karşılıklı dışlama korunur mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No. Trace (simülasyonla doğrulandı): T0: flag[0] = true; turn = 0; tests flag[1] (false) → enters. T1: flag[1] = true; turn = 1; tests flag[0] &amp;&amp; turn == 0: turn is 1 → false → T1 enters while T0 is inside. In the correct protocol each thread gives its peer priority in a tie (turn = j), so the last writer of turn is the one that waits. With turn = i the last writer favours itself, and the loop condition no longer forces anyone to wait.</p>
+<p><strong>Ölçüt.</strong> "Hayır" + iz + "son yazan bekler" argümanının neden çöktüğü.</p>
+</details><hr />
+<p><strong>Q31.</strong> <em>Zorluk 3 · Bölüm 3 · Karşılaştırma/iz · Kaynak: sl. 14, 16–18, 62</em></p>
+<p>Peterson'dan önceki iki "deneme" protokolünü değerlendirin. Her biri için mutual exclusion ve progress'i ayrı ayrı inceleyin, bozulan şart için iz verin.
+(a) <code>flag[i] = true; while (flag[j]) { } /* CS */ flag[i] = false;</code>
+(b) <code>while (flag[j]) { } flag[i] = true; /* CS */ flag[i] = false;</code></p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Mutual exclusion holds: a thread enters only after setting its own flag and seeing the peer's flag false, so two threads cannot both pass. Progress fails: T0 sets flag[0] = true, T1 sets flag[1] = true, then each spins forever on the other's flag; nobody can ever enter although the section is free (simülasyon: bu durumdan hiçbir CS durumuna ulaşılamıyor). Each thread spins forever waiting for an event (the peer clearing its flag) that only the other, equally stuck, thread could cause: in the lecture's terms a (busy-waiting) deadlock <span class="src">sl. 62</span>, and progress fails. It is not livelock: nobody reacts or retries, and the state never changes.
+(b) Mutual exclusion fails: T0 sees flag[1] false and leaves the loop; T1 sees flag[0] false and leaves the loop; both set their flags and both enter. Progress holds (a lone interested thread enters immediately). The check and the claim are separate competing steps, exactly the "check the hook, then take the key" gap <span class="src">sl. 24</span>.
+Peterson combines the interest flag of (a) with a tie-breaking turn variable to get both properties.</p>
+<p><strong>Ölçüt.</strong> (a) ME var / progress yok + iz; (b) ME yok + iz / progress var. İkisini karıştırmak yaygın hata. (a)'ya "livelock" demek etiket hatası: thread'lerin dönmesi (CPU'yu doldurması) onu livelock yapmaz; beklenen olayı yalnızca yine bekleyen eş yapabildiği için deadlock'tur <span class="src">sl. 62</span>. Sınavda deadlock/livelock ayrımı ayrıca sorulursa puan kaybettirir.</p>
+</details><hr />
+<p><strong>Q32.</strong> <em>Zorluk 3 · Bölüm 4 · Bu kod doğru mu? · Kaynak: sl. 21–22; OSC ch6 sl. 31</em></p>
+<p><code>CAS(v, expected, new)</code> eski değeri döndürüyor. Üç <code>increment</code> sürümünü değerlendirin; iki thread aynı anda çağırıyor:</p>
+<pre><code class="language-c">/* V1 */ int old; do { old = *v; } while (CAS(v, old, old + 1) != old);
+/* V2 */ int old = *v; CAS(v, old, old + 1);
+/* V3 */ int old = *v; while (CAS(v, old, old + 1) != old) { }
+</code></pre>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> V1 is correct (this is the textbook's atomic increment): if the CAS fails because another thread changed <em>v, it reloads old and retries; the successful CAS is the single indivisible read–modify–write. It does not by itself bound how many retries an unlucky thread needs.
+V2 loses updates: A reads 0, B reads 0, A's CAS(0→1) succeeds (returns 0), B's CAS(v, 0, 1) finds 1, returns 1, changes nothing, and B ignores the failure → final 1 after two increments.
+V3 can hang: same start, A succeeds (v = 1), B's CAS(v, 0, 1) fails and B retries with the </em><em>stale</em>* old = 0 forever; since the counter only increases it never equals 0 again. Safety is preserved but B never finishes: a liveness failure.</p>
+<p><strong>Ölçüt.</strong> V1 doğru; V2 iz + "lost update"; V3 iz + "stale expected → sonsuz döngü".</p>
+</details><hr />
+<p><strong>Q33.</strong> <em>Zorluk 3 · Bölüm 4 · Bu kod doğru mu? · Kaynak: sl. 22, 10</em></p>
+<p>Bir havuzda <code>CAP = 1</code> slot var; <code>used</code> bir <code>atomic_int</code>:</p>
+<pre><code class="language-c">bool reserve(void) {
+    if (atomic_load(&amp;used) &lt; CAP) {   /* capacity remains? */
+        atomic_fetch_add(&amp;used, 1);   /* reserve */
+        return true;
+    }
+    return false;
+}
+</code></pre>
+<p>(a) Doğru mu? İz verin. (b) <code>CAP = 2</code> ve üç thread ile <code>used</code> en çok kaç olabilir? (c) İki düzeltme önerin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) No. "If capacity remains, reserve a slot" is a compound protocol; atomic variables alone do not make the whole decision atomic. Trace: A loads 0 (&lt; 1); B loads 0 (&lt; 1); A fetch_add → 1; B fetch_add → 2. Both return true: two holders of one slot. Same pattern as two fork() requests observing the same next PID <span class="src">sl. 10</span>. (b) 3 (simülasyonla doğrulandı: all three load a value &lt; 2 before any adds). (c) Make the check and the update one atomic step: a CAS loop (<code>do { u = atomic_load(&amp;used); if (u &gt;= CAP) return false; } while (!CAS(&amp;used, u, u + 1));</code>) or do both under a mutex; or use a counting semaphore initialized to CAP (sem_trywait / sem_wait), which is exactly a limited number of permits <span class="src">sl. 64</span>.</p>
+<p><strong>Ölçüt.</strong> İz + (b) 3 + en az bir doğru düzeltme (CAS döngüsü, mutex ya da semaphore).</p>
+</details><hr />
+<p><strong>Q34.</strong> <em>Zorluk 3 · Bölüm 5 · Bu kod doğru mu? · Kaynak: sl. 25–26; Okuma §8</em></p>
+<p>İki parça kodu değerlendirin:</p>
+<pre><code class="language-c">/* (a) */
+void *worker(void *arg) {
+    pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
+    for (int i = 0; i &lt; 100000; i++) {
+        pthread_mutex_lock(&amp;m); counter++; pthread_mutex_unlock(&amp;m);
+    }
+    return NULL;
+}
+/* (b) */
+struct account { pthread_mutex_t m; long balance; };
+void deposit(struct account a, long x) {
+    pthread_mutex_lock(&amp;a.m); a.balance += x; pthread_mutex_unlock(&amp;a.m);
+}
+</code></pre>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Wrong. Each thread initializes its own local mutex on its own stack, so the two workers never contend for the same mutex; every participant must agree on which mutex protects which state. The increments of the shared counter are unprotected: lost updates are possible (and it is a C data race). Fix: one shared mutex (static or passed by pointer), initialized once before the workers start.
+(b) Wrong. The struct is passed by value: the function locks a copy of the mutex and updates a copy of the balance. The original balance is never changed, and the lock protects nothing shared. Never copy an initialized mutex as though it were ordinary data; pass <code>struct account *</code>.</p>
+<p><strong>Ölçüt.</strong> (a) "her thread kendi mutex'i" + düzeltme; (b) "değerle geçiş → kopya mutex, kopya bakiye" + pointer düzeltmesi.</p>
+</details><hr />
+<p><strong>Q35.</strong> <em>Zorluk 3 · Bölüm 5 · Bu kod doğru mu? · Kaynak: sl. 24, 85; Okuma §8</em></p>
+<pre><code class="language-c">int dequeue(int *out) {
+    pthread_mutex_lock(&amp;m);
+    if (count == 0)
+        return -1;                       /* empty */
+    *out = buffer[o]; o = (o + 1) % N; count--;
+    pthread_mutex_unlock(&amp;m);
+    return 0;
+}
+</code></pre>
+<p>Kuyruk bir kez boşken çağrıldıktan sonra ne olur? Tuvalet anahtarı benzetmesinde bu neye karşılık gelir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The empty path returns while still holding the mutex. The next caller of any queue operation (including a producer) blocks forever on pthread_mutex_lock; if the same thread calls again, a default mutex relocked by its owner may deadlock <span class="ek">ek bilgi: the exact result, deadlock, an error or undefined behaviour, depends on the mutex type</span>. This is "forgetting the key": a missing release prevents later access <span class="src">sl. 24</span>. Real code needs a defined cleanup path so that an error cannot leave the lock held <span class="src">sl. 85</span>: unlock before <code>return -1</code>, or use a single exit point.</p>
+<p><strong>Ölçüt.</strong> "Erken dönüşte unlock yok → herkes sonsuza dek bekler" + düzeltme + benzetme.</p>
+</details><hr />
+<p><strong>Q36.</strong> <em>Zorluk 3 · Bölüm 6 · Hatayı bul · Kaynak: sl. 40, 73, 81; Okuma §10</em></p>
+<p>(a) Üç aleti koruyan <code>sem_t tools</code> (ilk değer 3):</p>
+<pre><code class="language-c">if (sem_wait(&amp;tools) == -1) perror(&quot;sem_wait&quot;);   /* EINTR possible */
+use_tool();
+sem_post(&amp;tools);
+</code></pre>
+<p>(b) Ders kitabının Java örneği:</p>
+<pre><code class="language-java">Semaphore sem = new Semaphore(1);
+try {
+    sem.acquire();
+    /* critical section */
+} catch (InterruptedException ie) { }
+finally {
+    sem.release();
+}
+</code></pre>
+<p>Her birinde hata nedir, hangi iz onu gösterir, nasıl düzeltilir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) If sem_wait is interrupted by a signal it returns −1 with errno = EINTR without consuming a permit. The code prints a message and continues: it uses a tool it does not hold and then posts, inventing a permit. Trace with 3 permits: three threads acquire (0 left); a fourth's wait is interrupted, it uses a tool anyway (4 users of 3 tools) and posts (value 1 while 3 tools are still in use), so a fifth thread is admitted too. Fix: <code>while (sem_wait(&amp;tools) == -1) { if (errno != EINTR) { handle error; return; } }</code>, and post only after a successful wait.
+(b) acquire can throw InterruptedException before obtaining a permit, but the finally block still releases one: that path creates an extra permit (with initial 1, two threads can then be inside the critical section). The empty catch also silently discards the interruption. Fix: acquire before entering the try whose finally releases, or track successful acquisition, and define an interruption policy.</p>
+<p><strong>Ölçüt.</strong> İki hatanın ortak adı: "post/release without a matching successful acquisition invents a permit" + birer iz + düzeltme. Boş catch notu artı.</p>
+</details><hr />
+<p><strong>Q37.</strong> <em>Zorluk 3 · Bölüm 8 · Hatayı bul + iz · Kaynak: sl. 52; Okuma §12; OSC ch7 sl. 5–6</em></p>
+<p>Semaphore'lu bounded buffer (N = 2, <code>empty = 2, full = 0, mutex = 1</code>). Tüketici şöyle yazılmış:</p>
+<pre><code class="language-c">consumer: wait(mutex); wait(full); remove(); post(mutex); post(empty);
+producer: wait(empty); wait(mutex); insert(); post(mutex); post(full);
+</code></pre>
+<p>Kuyruk boşken bir deadlock izi verin. Üreticide aynı hata (<code>wait(mutex)</code> önce) yapılırsa hangi durumda deadlock olur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Consumer first (simülasyonla doğrulandı): C: wait(mutex) succeeds (mutex = 0). C: wait(full) blocks (full = 0) while holding mutex. P: wait(empty) succeeds (empty = 1). P: wait(mutex) blocks. The consumer waits for an item that only the producer can create, and the producer needs the mutex the consumer holds: neither reaches its post. Fix: reserve the permit (full) before taking the buffer mutex.
+Producer with the same mistake deadlocks when the buffer is full (simülasyon: üretici iki öğe koyduktan sonra): P: wait(mutex), wait(empty) blocks with empty = 0 while holding mutex; the consumer's wait(full) succeeds, then wait(mutex) blocks. Rule: never hold the queue mutex while waiting for the item or space the other participant must create.</p>
+<p><strong>Ölçüt.</strong> Adım adım iz + "mutex'i tutarken bekliyor" + üretici için "tampon doluyken".</p>
+</details><hr />
+<p><strong>Q38.</strong> <em>Zorluk 3 · Bölüm 8 · Bu kod doğru mu? (tuzak) · Kaynak: sl. 52</em></p>
+<p>Bu kez yalnızca <strong>post</strong> sıraları değiştirilmiş:</p>
+<pre><code class="language-c">producer: wait(empty); wait(mutex); insert(); post(full);  post(mutex);
+consumer: wait(full);  wait(mutex); remove(); post(empty); post(mutex);
+</code></pre>
+<p>Deadlock olur mu? Güvenlik bozulur mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No deadlock and no safety violation (simülasyon: 2 üretici + 2 tüketici, N = 2, deadlock ve sınır ihlali yok). A post never blocks, so the order of the two releases cannot create a wait cycle. Posting full before releasing the mutex lets a consumer pass wait(full) early, but it then blocks briefly on wait(mutex) until the producer's next post, after the item is fully inserted. The dangerous ordering is on the <strong>wait</strong> side: reserving a permit while holding the mutex.</p>
+<p><strong>Ölçüt.</strong> "Doğru" + "post bloklamaz" gerekçesi. "Deadlock olur" diyen öğrenci wait/post simetrisini yanlış kurmuştur.</p>
+</details><hr />
+<p><strong>Q39.</strong> <em>Zorluk 3 · Bölüm 8 · Hatayı bul · Kaynak: sl. 51, 50</em></p>
+<p>Bounded buffer N = 2 için semaphore'lar yanlışlıkla <code>empty = 0, full = 2, mutex = 1</code> diye başlatılmış, kuyruk gerçekte boş. Bir üretici ve bir tüketici çalışıyor. Ne olur? Hangi invariant bozulur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The producer blocks immediately on wait(empty). The consumer passes wait(full) twice and removes two "items" from an empty buffer (simülasyon: tüketici iki çıkarımı üretici araya girmeden yaparsa count −2'ye kadar iner), reading garbage slots and advancing out; a third removal must wait for a real post(full). The invariant 0 ≤ count ≤ N and "each dequeue follows a valid enqueue" are violated: a safety failure, not just a performance problem. The initial permit counts must correspond to the real resources: empty = N free slots, full = 0 items.</p>
+<p><strong>Ölçüt.</strong> "Tüketici var olmayan öğe çıkarır" + bozulan invariant'ın adı. count'un −2'ye kadar inebildiğini (iki sahte çıkarım) söylemek artı.</p>
+</details><hr />
+<p><strong>Q40.</strong> <em>Zorluk 3 · Bölüm 7 · İz (if vs while) · Kaynak: sl. 44, 46</em></p>
+<pre><code class="language-c">/* consumer */
+pthread_mutex_lock(&amp;m);
+if (count == 0)
+    pthread_cond_wait(&amp;not_empty, &amp;m);
+item = buffer[out]; out = (out + 1) % N; count--;
+pthread_mutex_unlock(&amp;m);
+</code></pre>
+<p>Kuyruk boş; C1 ve C2 bekliyor. Bir üretici bir öğe koyup <code>pthread_cond_signal(&amp;not_empty)</code> yapıyor. Tutarsız duruma götüren bir iz verin. <code>while</code> neden yeter? İkinci, bağımsız bir neden söyleyin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Trace: count = 0, C1 and C2 wait (each released m). P locks, inserts, count = 1, signals (C1 is chosen), unlocks. Before C1 reacquires m, a third consumer C3 (just arriving) locks m, sees count = 1, removes the item, count = 0, unlocks. C1 now reacquires m and returns from wait; with <code>if</code> it does not recheck and removes a nonexistent item: count becomes −1, out advances past real data. With <code>while (count == 0)</code> C1 rechecks after reacquiring, finds the queue empty and waits again safely. Second reason: spurious wakeups are permitted, so a waiter may return without any signal. A wakeup is not a reservation; this POSIX/Mesa-style discipline differs from a model that hands the monitor directly to the signaled thread.</p>
+<p><strong>Ölçüt.</strong> Üçüncü tüketicinin kaptığı iz + count = −1 sonucu + while + spurious wakeup.</p>
+</details><hr />
+<p><strong>Q41.</strong> <em>Zorluk 3 · Bölüm 7 · İz (lost wakeup) · Kaynak: sl. 47; S-5</em></p>
+<pre><code class="language-c">/* consumer */
+if (count == 0) {                     /* checked without the mutex */
+    pthread_mutex_lock(&amp;m);
+    pthread_cond_wait(&amp;not_empty, &amp;m);
+    pthread_mutex_unlock(&amp;m);
+}
+/* producer */
+pthread_mutex_lock(&amp;m); insert(); count++; pthread_cond_signal(&amp;not_empty); pthread_mutex_unlock(&amp;m);
+</code></pre>
+<p>Tüketicinin iş varken uyuduğu bir iz verin ve düzeltin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Consumer reads count == 0 (without the mutex) and is preempted before calling wait. The producer locks, inserts, count = 1, signals: nobody is waiting, so the signal has no effect; unlocks. The consumer resumes, locks and calls cond_wait: it sleeps although work is available. If the producer has nothing more to send, the consumer sleeps forever. The signal was not a stored permit. (The unlocked read of count is also a C data race.) Fix: lock m, then <code>while (count == 0) pthread_cond_wait(&amp;not_empty, &amp;m);</code>, then remove, then unlock. The predicate is tested under the same mutex, and cond_wait's atomic release-and-wait closes the gap; the state, not a remembered signal, decides whether to sleep.</p>
+<p><strong>Ölçüt.</strong> "Kontrol ile bekleme arasında sinyal kaçtı" izi + düzeltilmiş kod (kilit altında while).</p>
+</details><hr />
+<p><strong>Q42.</strong> <em>Zorluk 3 · Bölüm 6 · Bu kod doğru mu? · Kaynak: sl. 39, 47</em></p>
+<p>"Kullanmadan önce başlat" sıralaması için iki tasarım:</p>
+<pre><code class="language-c">/* Design 1 (cond var only) */
+init_thread: initialize(); pthread_cond_signal(&amp;cv);
+use_thread:  pthread_mutex_lock(&amp;m); pthread_cond_wait(&amp;cv, &amp;m); pthread_mutex_unlock(&amp;m); use();
+
+/* Design 2 (semaphore) */
+sem_init(&amp;ready, 0, 0);
+init_thread: initialize(); sem_post(&amp;ready);
+use_thread:  sem_wait(&amp;ready); use();
+</code></pre>
+<p>Hangisi doğru? Yanlış olanı iki ayrı izle çürütün ve bir CV'li doğru sürüm verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Design 2 is correct: ready starts at 0; if the initializer posts first, the permit is remembered and the user's wait returns immediately; if the user waits first, it blocks until the post. Design 1 is wrong. Trace 1: init_thread runs first and signals while nobody waits; the notification is lost; use_thread then waits forever. Trace 2: use_thread waits, a spurious wakeup returns it before initialize() finishes, and it uses an uninitialized object. Correct CV version: a shared flag as the predicate: init_thread: initialize(); lock; ready = 1; signal (or broadcast); unlock. use_thread: lock; <code>while (!ready) cond_wait(&amp;cv, &amp;m);</code> unlock; use().</p>
+<p><strong>Ölçüt.</strong> Design 2 doğru + Design 1 için iki iz (kayıp sinyal, spurious wakeup) + bayraklı düzeltme.</p>
+</details><hr />
+<p><strong>Q43.</strong> <em>Zorluk 3 · Bölüm 8 · Hatayı bul (kapanış) · Kaynak: sl. 55, 68; Okuma §13, §16; kod/queue.c</em></p>
+<p><code>queue.c</code>'nin kapanış protokolünde dört değişiklik öneriliyor. Her biri için ne ters gider?
+(a) Tüketici: <code>while (count == 0) pthread_cond_wait(&amp;not_empty, &amp;m);</code> (closed kontrolü yok).
+(b) Tüketici, kilidi aldıktan hemen sonra: <code>if (closed) { unlock; break; }</code> (count'a bakmadan).
+(c) Üretici: <code>closed = 1; pthread_cond_broadcast(&amp;not_empty);</code> mutex almadan.
+(d) Birden çok tüketici varken kapanışta <code>broadcast</code> yerine <code>signal</code>.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) After the last item is consumed, the consumer locks, sees count == 0 and waits; the producer has finished and nothing will ever signal (even the closing broadcast only makes it recheck count == 0 and sleep again). main's pthread_join(c) hangs: a termination failure.
+(b) Items can be lost: the producer may insert its last items and set closed while the buffer still holds up to CAPACITY items; the consumer sees closed and exits without draining, so consumed &lt; 10,000 and main reports failure. Correct rule: wait while count == 0 &amp;&amp; !closed; if closed and empty, exit; otherwise drain.
+(c) Lost wakeup: the consumer holds m and evaluates <code>count == 0 &amp;&amp; !closed</code> as true; because the producer does not take m, it can set closed = 1 and broadcast before the consumer starts waiting; the broadcast finds no waiter and the consumer then sleeps forever. It is also a C data race on closed. Closure must be set under the queue mutex.
+(d) Closure is a persistent state change relevant to all waiting consumers; signal may wake only one, and the others can then stay asleep forever (unless each exiting consumer re-signals). Broadcast lets every sleeper recheck the termination predicate. With the supplied single consumer, signal would happen to work.</p>
+<p><strong>Ölçüt.</strong> Dört maddenin her biri için somut sonuç (hang / kayıp öğe / kayıp uyanma / uyumaya devam). (c)'de "mutex'i tutan tüketici üreticiyi durdurmaz çünkü üretici kilide hiç uğramıyor" gerekçesi şart.</p>
+</details><hr />
+<p><strong>Q44.</strong> <em>Zorluk 3 · Bölüm 9 · Hatayı bul + iz · Kaynak: sl. 56; OSC ch7 sl. 10</em></p>
+<p>Readers–writers okuyucusunda biri <code>mutex</code> semaphore'unu "gereksiz" diye silmiş:</p>
+<pre><code class="language-c">/* reader */  read_count++; if (read_count == 1) wait(rw_mutex);
+              /* read */
+              read_count--; if (read_count == 0) signal(rw_mutex);
+/* writer */  wait(rw_mutex); /* write */ signal(rw_mutex);
+</code></pre>
+<p><code>read_count++</code>'ı oku + yaz olarak modelleyin. Bir yazarın bir okuyucuyla aynı anda içeride olduğu bir iz verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Trace (simülasyonla doğrulandı): R1 reads read_count = 0, writes 1. R2 reads 1, writes 2. R1 tests read_count == 1: it is 2, so R1 skips wait(rw_mutex) and starts reading. R2 tests: 2, skips too and may read. Nobody holds rw_mutex. W: wait(rw_mutex) succeeds → the writer writes while R1 (and R2) read: the exclusion invariant "a writer requires exclusive access" is violated. Other interleavings lose an update to read_count (it stays 1 with two readers), so the first leaving reader signals rw_mutex while another is still reading, or the count never returns to 0 and writers block forever (simülasyonda bu tür deadlock durumları da var). read_count is shared state whose check and update must be one protected operation.</p>
+<p><strong>Ölçüt.</strong> "İki okuyucu da rw_mutex'i atlar" izi + yazar içeri girer + read_count'un kendisinin kritik bölge olduğu.</p>
+</details><hr />
+<p><strong>Q45.</strong> <em>Zorluk 3 · Bölüm 9 · Karşılaştırma/iz · Kaynak: sl. 59–60; S-6; OSTEP 31.6</em></p>
+<p>Beş filozof; filozof i'nin ihtiyacı çubuk i ve (i+1) mod 5; her çubuk değeri 1 olan bir semaphore. Her varyantta deadlock mümkün mü? Mümkünse iz, değilse gerekçe verin.
+(a) Herkes önce i, sonra (i+1) mod 5.
+(b) Herkes önce küçük numaralı çubuğu alır.
+(c) (a) gibi, ama masaya aynı anda en fazla 4 filozof oturabilir (<code>room = 4</code> semaphore'u).
+(d) Çift numaralılar önce i'yi, tekler önce (i+1)'i alır.
+(e) Önce sol; sağ meşgulse solu bırak ve hemen yeniden dene.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Deadlock possible (simülasyon: tek deadlock durumu): each philosopher takes chopstick i; all five are held; each waits for (i+1) mod 5 held by the next philosopher; nobody reaches the release step. Mutual exclusion works; the failure is a circular dependency.
+(b) No deadlock (doğrulandı). Only philosopher 4 changes: it needs 4 and 0 and takes 0 first. Every waiting chain follows strictly increasing chopstick numbers; a cycle would need the numbers to increase all the way around back to the start, which is impossible. It does not by itself prove bounded waiting or fair eating opportunities.
+(c) No deadlock <span class="ek">ek bilgi: OSC kitap metnindeki çare; simülasyonla doğrulandı</span>. With at most four seated, by pigeonhole at least one seated philosopher can obtain both chopsticks, eat and release.
+(d) No deadlock <span class="ek">ek bilgi: OSC kitap metnindeki asimetrik çözüm; simülasyonla doğrulandı</span>: philosophers 1 and 2 both reach for chopstick 2 first, and 3 and 4 both reach for chopstick 4 first; the loser of each such race holds nothing while it waits, and a wait cycle around the table needs all five to hold one chopstick, so it cannot close.
+(e) No deadlock in the strict sense (nobody holds a chopstick while blocked), but livelock is possible: all five take left, all see right busy, all put left down and retry in lockstep, forever busy without eating <span class="ek">ek bilgi: örnek bu bankaya ait; livelock tanımı sl. 62'de</span>. Starvation of an individual philosopher is also possible.</p>
+<p><strong>Ölçüt.</strong> (a) iz, (b) "artan numara → döngü imkânsız" + "adalet kanıtlamaz", (e) "livelock". (c) ve (d) bonus (hoca slaytında yok).</p>
+</details><hr />
+<p><strong>Q46.</strong> <em>Zorluk 3 · Bölüm 9 · İz (açlık) · Kaynak: sl. 61, 67; OSC ch7 sl. 14–16</em></p>
+<p>Ders kitabının monitor çözümü:</p>
+<pre><code class="language-c">void pickup(int i)  { state[i] = HUNGRY; test(i); if (state[i] != EATING) self[i].wait(); }
+void putdown(int i) { state[i] = THINKING; test((i + 4) % 5); test((i + 1) % 5); }
+void test(int i) {
+    if (state[(i + 4) % 5] != EATING &amp;&amp; state[i] == HUNGRY &amp;&amp; state[(i + 1) % 5] != EATING) {
+        state[i] = EATING; self[i].signal();
+    }
+}
+</code></pre>
+<p>(a) Filozof 1'in sonsuza dek aç kaldığı bir iz verin. (b) Bu çözüm POSIX (Mesa) koşul değişkenleriyle yazılırsa <code>if</code> neden <code>while</code> olmalı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) P0 picks up: neighbours 4 and 1 not eating → EATING. P2 picks up → EATING. P1 picks up: HUNGRY; test(1) fails (P0 eating) → P1 waits. P0 puts down: THINKING; test(4) does nothing; test(1): P2 is EATING → fails. P0 picks up again: test(0): P4 thinking, P1 only HUNGRY (not EATING) → P0 EATING. P2 puts down: test(1): P0 EATING → fails. P2 picks up again → EATING. Repeating, P0 and P2 alternate so that at every test(1) one of them is eating: P1 starves although there is no deadlock. Neighbour exclusion prevents deadlock, yet fairness needs a separate argument (review 3 <span class="src">sl. 67</span>: "Is starvation impossible? No").
+(b) With POSIX condition variables a waiter may return spuriously, while state[i] is still HUNGRY; with <code>if</code>, P_i would then return from pickup and eat without recorded permission, possibly next to an eating neighbour. A real signal is safe in this monitor: test() records state[i] = EATING before signalling, and only putdown(i), i.e. P_i itself, can clear it, so no other thread can invalidate the permission between the signal and P_i's return. The only danger is the spurious wakeup. Use <code>while (state[i] != EATING) wait;</code> — eating happens only after permission has been recorded.</p>
+<p><strong>Ölçüt.</strong> (a) P0 ve P2'nin dönüşümlü yediği iz + "deadlock yok, starvation var"; (b) sahte uyanma (spurious wakeup) gerekçesi + gerçek sinyalin bu monitörde neden güvenli olduğu (EATING sinyalden önce yazılır, yalnız putdown(i) siler). "Araya başka thread girip durumu değiştirir" gerekçesi Q40'taki kuyruk için doğru, bu monitör için değil. Denetçinin modeli: <code>if</code> + sahte uyanma yokken komşular hiç aynı anda yemiyor; sahte uyanma açılınca <code>if</code> bozuluyor, <code>while</code> bozulmuyor.</p>
+</details><hr />
+<p><strong>Q47.</strong> <em>Zorluk 3 · Bölüm 11 · Hatayı bul · Kaynak: sl. 83–84; OSC ch7 sl. 39–40</em></p>
+<p>Ders kitabının "sıra kimde" örneği (beş thread, tek ReentrantLock, beş Condition):</p>
+<pre><code class="language-java">public void doWork(int threadNumber) {
+    lock.lock();
+    try {
+        if (threadNumber != turn)
+            condVars[threadNumber].await();
+        /* do some work */
+        turn = (turn + 1) % 5;
+        condVars[turn].signal();
+    } catch (InterruptedException ie) { }
+    finally { lock.unlock(); }
+}
+</code></pre>
+<p>Hocanın bu figürde gördüğü üç sorunu yazın. Sıra kendisine gelen thread hiç <code>doWork</code> çağırmazsa ne olur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) <code>if</code> before await: a spurious wakeup (or any unexpected return) lets the wrong thread do work out of turn; general condition code must use <code>while (threadNumber != turn) await();</code>. (2) The empty catch hides interruption: define cancellation behaviour instead of continuing as if the wait succeeded. (3) The condition objects do not store whose turn it is; turn must be initialized and protected by the lock, and turn updates/signaling stay under the lock. If the designated thread stalls or never calls doWork, nobody else may work: this strict-turn protocol, like strict alternation, lets an uninterested or stalled participant block all others (progress failure); the next turn must correspond to a participating thread.</p>
+<p><strong>Ölçüt.</strong> Üç sorun (if, boş catch, turn'ün korunması/condition'ın sıra tutmaması) + takılan thread → progress yok.</p>
+</details><hr />
+<h3 id="seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak<a class="headerlink" href="#seviye-4-sentez-tasarm-ince-tuzak" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q48.</strong> <em>Zorluk 4 · Bölüm 7 · İz + tasarım · Kaynak: sl. 54, 77; OSTEP 30.2 (Fig. 30.11)</em></p>
+<p>Tek kapasiteli bir tampon (N = 1), iki tüketici (C1, C2), bir üretici (P). Herkes <strong>tek</strong> bir condition variable <code>cv</code> kullanıyor, <code>while</code> ile bekliyor ve <code>pthread_cond_signal(&amp;cv)</code> yapıyor (Java'da: tek wait set + <code>notify()</code>). Herkesin uyuduğu bir iz verin. İki düzeltme önerin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Trace: C1 locks, count = 0, waits on cv. C2 locks, count = 0, waits on cv. P locks, inserts (count = 1), signals → wakes C1 (C1 becomes runnable, must reacquire), unlocks. P loops, locks, count == 1 → waits on cv. C1 reacquires, rechecks count == 1, removes (count = 0), signals: the one waiter woken is <strong>C2</strong> (allowed: the queue order is not specified), unlocks. C2 reacquires, count == 0 → waits again. Now C1 loops, locks, count == 0 → waits. P, C1 and C2 are all asleep although P could produce: no thread will ever signal. The while loop preserved safety, but one shared wait set let a consumer wake another consumer instead of the producer. Fixes: (1) two condition variables, not_full for producers and not_empty for consumers (the lecture's design <span class="src">sl. 54</span>); (2) broadcast/notifyAll so that every waiter rechecks, which is what sl. 77 recommends for a general multi-producer/multi-consumer version with one wait set.</p>
+<p><strong>Ölçüt.</strong> "Yanlış türü uyandırma" izi (P'nin uyuduğu an + C2'nin uyandırıldığı an) + iki düzeltme. Bu iz OSTEP Fig. 30.11 ile aynı.</p>
+</details><hr />
+<p><strong>Q49.</strong> <em>Zorluk 4 · Bölüm 3 · Sentez · Kaynak: sl. 17, 19; Okuma §6; OSC ch6 sl. 16–19</em></p>
+<pre><code class="language-c">/* shared */ bool flag = false; int x = 0;
+/* T1 */ while (!flag) ;  print(x);
+/* T2 */ x = 100;  flag = true;
+</code></pre>
+<p>(a) Hocanın soyut modelinde T1 ne basar? (b) Modern bir derleyici/işlemcide neden 0 basabilir? (c) Aynı olgu Peterson'u nasıl bozar? (d) <code>volatile</code> eklemek ya da "bir memory barrier koymak" konusunda hoca ne diyor? Doğru araç nedir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 100: under sequential consistency T2's write of x precedes its write of flag, and T1 reads x after seeing flag true. (b) x and flag are independent, so the compiler or processor may reorder T2's stores (or T1's loads); T1 can observe flag == true before x == 100 and print 0. In C this program is a data race on both variables: behaviour is undefined, so even the "0 or 100" reasoning is not guaranteed. (c) Peterson's proof assumes each thread's write flag[i] = true is visible before it reads flag[j]; if the write is delayed past the read <span class="ek">ek bilgi: store buffer</span>, both threads read the other's flag as false and both enter. OSC calls this "not guaranteed to work on modern architectures". (d) volatile does not repair this <span class="src">sl. 19</span>. Barriers and atomic operations provide particular ordering guarantees of different strengths; teaching a barrier as a magic operation that makes all memory consistent everywhere is misleading <span class="src">Okuma §6</span>. Use synchronization APIs (mutex + condition variable, or a semaphore ready = 0) or a correctly specified atomic algorithm <span class="ek">ek bilgi: e.g., C11 atomics with suitable ordering</span>.</p>
+<p><strong>Ölçüt.</strong> (a) 100, (b) yeniden sıralama + data race/UB, (c) iki thread birden girer, (d) volatile yetmez + API. OSC'nin barrier tanımını hocanın uyarısı olmadan "her şeyi görünür yapar" diye tekrar etmek kısmi puan.</p>
+</details><hr />
+<p><strong>Q50.</strong> <em>Zorluk 4 · Bölüm 5 · Tasarım/karşılaştırma · Kaynak: sl. 30–31; OSC ch6 sl. 9, 23</em></p>
+<p>(a) Spinlock ile blocking mutex'i karşılaştırın: hangi koşulda spin mantıklıdır? Tek CPU'lu bir makinede, sahibi preempt edilmiş bir kilit için spin etmek neden kötüdür? (b) Bir öğrenci "kritik bölgede kesmeleri kapatırım, kilit gerekmez" diyor. Bu çok çekirdekli bir makinede ve kullanıcı programında neden olmaz? (c) "Kodumuzda adı <code>spin_</code> ile başlayan bir kilit var, demek ki spin ediyor" çıkarımını değerlendirin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) A spinlock repeatedly tests availability and consumes CPU time; a blocking mutex can suspend the waiter. Spinning may suit a very short wait when the owner can run on another CPU, since it avoids sleep/wake cost. On one CPU the owner cannot run while the waiter spins, so the spinner wastes its whole time slice until it is preempted <span class="ek">ek bilgi: tek CPU vurgusu</span>; blocking avoids wasting a CPU during a longer wait. Implementations may combine strategies (e.g., spin briefly, then block: OSTEP's two-phase lock <span class="src">OSTEP 28.16</span>). (b) Disabling interrupts on one CPU does not stop another CPU from accessing the same data, and applications cannot use this as a general mutex (it is a privileged operation; a long critical section with interrupts off would also delay the whole system, OSC ch6 sl. 9). (c) Invalid: lock names do not prove implementation details; a POSIX mutex is not defined to always spin, and kernel lock semantics depend on configuration (PREEMPT_RT changes some Linux lock types).</p>
+<p><strong>Ölçüt.</strong> (a) "sahip başka CPU'da + kısa bekleme" şartı + tek CPU israfı; (b) "diğer CPU durmaz" + kullanıcı modu; (c) "ad uygulamayı kanıtlamaz".</p>
+</details><hr />
+<p><strong>Q51.</strong> <em>Zorluk 4 · Bölüm 10 · Gerekçelendirme · Kaynak: sl. 65–68; kod/queue.c</em></p>
+<p><code>queue.c</code>'nin doğru olduğunu hocanın üç başlığıyla (safety, waiting, completion) gerekçelendirin. Sonra CAPACITY 4'ten 1'e indirildiğinde neden doğruluğun değişmemesi gerektiğini ve neyin değiştiğini açıklayın. Son olarak <code>main</code>'in <code>consumed</code> ve <code>sum</code>'ı kilitsiz okumasının neden güvenli olduğunu söyleyin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Safety: buffer, in, out, count and closed are all accessed only under the one mutex m; the producer inserts only when count &lt; CAPACITY and the consumer removes only when count &gt; 0, so 0 ≤ count ≤ CAPACITY; in and out advance modulo CAPACITY, so each dequeue follows a valid enqueue in FIFO order; the consumer checks every item equals consumed + 1. Waiting: both waits are pthread_cond_wait calls that release m and reacquire it before returning, inside while loops that recheck count == CAPACITY (producer) and count == 0 &amp;&amp; !closed (consumer); the producer signals not_empty after inserting, the consumer signals not_full after removing, so each predicate is changed by the operation that can make it true. Completion: the producer sets closed under m only after inserting all 10,000 items and broadcasts; the consumer drains while items remain and stops only when closed and empty. Capacity 1 forces a handoff after every item (more waits and context switches), but the invariants and predicates are the same, so order, count (10,000) and sum (50,005,000) must not change. consumed and sum are written only by the consumer; main reads them only after pthread_join has established that the consumer terminated, so no further synchronization is needed. Testing samples executions; the invariant and ordering argument covers all permitted executions.</p>
+<p><strong>Ölçüt.</strong> Üç başlığın her biri somut alan/predicate adıyla + kapasite-1 "bloklanma deseni değişir, doğruluk değişmez" + join gerekçesi.</p>
+</details><hr />
+<p><strong>Q52.</strong> <em>Zorluk 4 · Bölüm 10 · Tasarım · Kaynak: sl. 55; Okuma §13; kod/queue.c</em></p>
+<p><code>queue.c</code>'yi iki üretici (her biri 1–10.000'i göndersin) ve iki tüketiciye genişletmek istiyorsunuz. Hangi dört şey değişmek zorunda? Her biri için, değiştirilmezse ne ters gider?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) Closing: each producer currently sets closed when it finishes. With two producers the first one to finish closes while the other is still sending. A consumer that then finds the queue empty exits early. If the remaining producer still has more than CAPACITY items to send, it fills the buffer and can block forever on not_full, so main's join hangs; if no more than CAPACITY items remain, the program ends but those items are silently lost. Keep an active-producer count under m; only the last producer to finish sets closed and broadcasts. (2) Result accounting: consumed and sum are "written only by the consumer; main reads after join". Two consumers updating them would race (lost updates). Give each consumer its own local totals and combine after join, or update them under m. (3) The FIFO check <code>item != consumed + 1</code> assumes one producer and one consumer. With two producers the global stream interleaves two sequences; with two consumers each sees only a subset. Check per-producer order (e.g., tag items with a producer id) and check totals globally (count 20,000, sum 2 × 50,005,000 = 100,010,000). (4) Wakeups: the closing broadcast is now essential (signal may wake only one consumer, Q43(d)); the per-item signals can stay because there are separate not_full/not_empty conditions and while loops. Do not extend the number of threads without revisiting completion accounting <span class="src">sl. 55</span>.</p>
+<p><strong>Ölçüt.</strong> Kapanış sayacı + sonuç değişkenleri + FIFO kontrolü + broadcast. Dördünden üçü ve "son üretici kapatır" fikri tam puana yakın. (1)'de "her zaman kilitlenir" demek fazla kesin: kilitlenme yalnızca kalan öğe CAPACITY'yi aşarsa olur, aşmazsa öğeler kaybolur. Okuma da bu küçük örneklerin "production queue shutdown with many producers" uygulamadığını söylüyor <span class="src">Okuma §16</span>. Denetçinin macOS deneyi: <code>queue.c</code>'ye yalnızca ikinci bir üretici eklenince program kilitlenmeden önce tüketicinin FIFO kontrolünde (<code>FIFO violation</code>, çıkış 1) düşer, yani önce madde (3) görünür; FIFO kontrolü kaldırılınca CAPACITY = 4, 2 × 10.000 ile program askıda kaldı, CAPACITY = 20.000 ile kalmadı.</p>
+</details><hr />
+<p><strong>Q53.</strong> <em>Zorluk 4 · Bölüm 5 + 9 · Tasarım (Ders 4 köprüsü) · Kaynak: sl. 28–29, 58–60</em></p>
+<p>Her hesabın kendi mutex'i var (ince taneli kilit). <code>transfer(from, to, amt)</code>: <code>lock(from-&gt;m); lock(to-&gt;m); from-&gt;bal -= amt; to-&gt;bal += amt; unlock(to-&gt;m); unlock(from-&gt;m);</code>. (a) T1 <code>transfer(A, B)</code> ve T2 <code>transfer(B, A)</code> yaparken bir deadlock izi verin; filozoflarla bağlantısını kurun. (b) Düzeltin. (c) "Toplam bakiye" raporu ne yapmalı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) T1 locks A; T2 locks B; T1 waits for B (held by T2); T2 waits for A (held by T1). Each waits for a release that only the other blocked thread could perform: deadlock. Exclusion on each account works; the failure is a circular dependency between several acquisitions, the same pattern as philosophers holding their left chopstick <span class="src">sl. 58–59</span>. (b) Impose a global order: number the accounts (e.g., by id) and always lock the lower-numbered one first, regardless of transfer direction. A wait cycle would need strictly increasing numbers around back to the start, impossible <span class="src">sl. 60</span>. (Alternative: one coarse lock for all accounts: easier to reason about, serializes more work <span class="src">sl. 29</span>.) (c) The reader needs a consistent combined view, so it must follow the same protocol: lock all involved accounts in the same global order (or take the coarse lock) before summing; otherwise it can see a partially completed transfer <span class="src">sl. 28</span>.</p>
+<p><strong>Ölçüt.</strong> İz + filozof bağlantısı + sıralı kilit + okuyucunun da aynı sırayla kilit alması.</p>
+</details><hr />
+<p><strong>Q54.</strong> <em>Zorluk 4 · Bölüm 6 · İnce tuzak · Kaynak: sl. 25, 39; Okuma §10</em></p>
+<p>Bir modül kritik bölgeyi <code>sem_t s</code> (ilk değer 1) ile koruyor. Bir hata yolunda <code>sem_post(&amp;s)</code> iki kez çağrılıyor. (a) Sonra ne olabilir? İz verin. (b) Aynı hata <code>pthread_mutex_unlock</code> iki kez çağrılarak yapılsaydı farkı ne olurdu? (c) Bu, hocanın "semaphore is not an ownership substitute" cümlesini nasıl açıklar?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) A waits (s = 0), enters, takes the error path and posts twice: s = 2. Now B and C can both pass sem_wait and be inside the critical section together: mutual exclusion is silently broken, and every later round admits two. Each post is individually atomic and the semaphore implementation is correct; the application protocol lost the correspondence between permits and the single resource. (b) A mutex has an owner: unlocking a mutex the caller does not hold is an error <span class="ek">ek bilgi: undefined for the default type; an error-checking mutex returns EPERM</span>. The mutex never "counts up" to admit two owners. (c) A semaphore records only a number of permits, not who holds them, so it cannot detect a release by a non-holder or an extra release. A mutex's ownership rule makes such misuse a detectable bug rather than a hidden extra permit.</p>
+<p><strong>Ölçüt.</strong> (a) s = 2 → iki thread içeride; (b) sahiplik; (c) "permit sayısı kimin tuttuğunu bilmez".</p>
+</details><hr />
+<p><strong>Q55.</strong> <em>Zorluk 4 · Bölüm 10 · Gerekçe/yöntem · Kaynak: sl. 7, 9, 33, 66, 68; Okuma §16</em></p>
+<p>Bir ekip arkadaşı: "Kilitsiz sayaç kodumu 1000 kez çalıştırdım, her seferinde 200.000 çıktı; demek ki thread-safe." Hocanın yaklaşımıyla bu iddiayı değerlendirin. Bir yapay zekâ asistanı "bu kod thread-safe" derse ne istemelisiniz?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Repeated correct outputs are evidence about the sampled executions only; one (or 1000) successful schedules do not prove correctness for every allowed interleaving <span class="src">sl. 7</span>. The failing interleaving (both threads read the same old value) is permitted by the code; scheduling, CPU count, load and compiler options decide how often it appears, and the abstract enumeration gives no probability <span class="src">sl. 9</span>. Moreover, unsynchronized conflicting accesses in C are a data race with undefined behaviour, so no output is promised. A correctness claim needs: the shared state, its invariant, the atomic or locked transitions, the reasons a thread may wait, and an argument that every permitted execution preserves the invariant <span class="src">sl. 68; Okuma §17</span>. Record compiler, OS, command and output for the experiment <span class="src">sl. 33</span>. From an AI assistant, ask for an adverse interleaving, then check each step against the actual lock ownership and predicate checks; do not accept "thread-safe" without a protocol, and require it to say whether it discusses the abstract model, C semantics or an observed execution <span class="src">sl. 66; Okuma §16</span>.</p>
+<p><strong>Ölçüt.</strong> "Test örnekler, argüman kapsar" + data race/UB + istenen dört satır (durum, invariant, geçişler, bekleme nedenleri) + AI'dan ters iz istemek.</p>
+</details><hr />
+<p><strong>Q56.</strong> <em>Zorluk 4 · Bölüm 11 · İnce tuzak · Kaynak: sl. 72–73</em></p>
+<p>Süreç P1: <code>s = sem_open("/cse513_demo", O_CREAT, 0600, 1); sem_wait(s);</code> ve kritik bölgede uzun süre kalıyor. Bu sırada P2: <code>s = sem_open("/cse513_demo", O_CREAT, 0600, 5); sem_wait(s);</code>. (a) P2 hemen girer mi? (b) Ad neden <code>/</code> ile başlıyor, hangi dönüş değerini kontrol etmelisiniz? (c) sem_close ile sem_unlink farkı nedir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) No. The initial value applies only when a new semaphore is created, not every time an existing one is opened; the semaphore already exists with value 0 (P1 holds the permit), so P2's 5 is ignored and P2 blocks until P1 posts. (b) A leading-slash name such as /cse513_demo is the portable form; check for SEM_FAILED (and choose permissions deliberately). (c) sem_close releases this process's handle; sem_unlink removes the name so the semaphore is destroyed once all handles are closed <span class="ek">ek bilgi: ayrıntı POSIX'ten</span>; plan both as cleanup, otherwise a stale semaphore with a leftover value can survive into the next run.</p>
+<p><strong>Ölçüt.</strong> (a) "hayır, mevcut değer 0 kalır" + gerekçe; (b) <code>/ad</code> + SEM_FAILED; (c) close vs unlink.</p>
+</details><hr />
+<p><strong>Q57.</strong> <em>Zorluk 4 · Bölüm 4 · Kanıt/iz · Kaynak: sl. 14, 20–21; OSC ch6 sl. 26, 29; OSTEP 28.11</em></p>
+<p>Ders kitabının TAS kilidi: <code>while (test_and_set(&amp;lock)) ; /* CS */ lock = false;</code>. Üç şartın her birini değerlendirin; bozulan için iz verin. Bounded waiting'i sağlamak için bir fikir verin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Mutual exclusion: holds. test_and_set atomically returns the old value and sets true, so exactly one contender observes false while the lock is free (simülasyonla doğrulandı). Progress: holds. If the lock is free and threads are trying, the next test_and_set by any of them returns false; the decision is not postponed by threads in their remainder. Bounded waiting: fails. Trace: T0 holds the lock; T1 spins. T0 sets lock = false, loops back and executes test_and_set before T1's next test_and_set; T0 wins again. Nothing bounds how many times this repeats, so T1 can wait indefinitely (a simple retry loop does not itself guarantee bounded waiting <span class="src">sl. 21</span>). Idea: hand the lock off in a fixed order. OSC's algorithm keeps waiting[i]; on exit the owner scans i+1, i+2, … for the next waiting thread and passes the lock directly to it (waiting[j] = false) instead of freeing it, which bounds the wait at n − 1 entries. OSTEP's ticket lock <span class="src">OSTEP 28.11</span> uses fetch-and-add to issue tickets and serves them in FIFO order.</p>
+<p><strong>Ölçüt.</strong> ME ve progress var, bounded waiting yok + iz + bir sıralı devir fikri (OSC waiting[] ya da ticket lock).</p>
+</details><hr />
+<h3 id="soru-bankas-ozeti">Soru bankası özeti<a class="headerlink" href="#soru-bankas-ozeti" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Seviye</th>
+<th>Sorular</th>
+<th>Adet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Tanım ve kısa cevap</td>
+<td>Q1–Q12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2 — Uygulama, sınıflandırma, basit iz</td>
+<td>Q13–Q27</td>
+<td>15</td>
+</tr>
+<tr>
+<td>3 — Çok adımlı iz, hesap, hata bulma</td>
+<td>Q28–Q47</td>
+<td>20</td>
+</tr>
+<tr>
+<td>4 — Sentez, tasarım, ince tuzak</td>
+<td>Q48–Q57</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Toplam</td>
+<td></td>
+<td>57</td>
+</tr>
+</tbody>
+</table>
+<p>Bölüm dağılımı (birincil + ikincil): B1: Q4, Q13–Q15, Q28 · B2: Q1–Q3, Q23 · B3: Q21, Q29–Q31, Q49 · B4: Q9, Q16, Q32, Q33, Q57 · B5: Q5, Q7, Q22, Q24, Q34, Q35, Q50, Q53 · B6: Q6, Q11, Q17, Q36, Q42, Q54 · B7: Q10, Q40, Q41, Q48 · B8: Q18, Q27, Q37–Q39, Q43 · B9: Q25, Q44–Q46, Q53 · B10: Q8, Q20, Q26, Q51, Q52, Q55 · B11: Q12, Q19, Q47, Q56.</p>
+<p>Tür dağılımı: <strong>interleaving izi</strong> Q13–Q17, Q21, Q24, Q25, Q28, Q40, Q41, Q44, Q46, Q48 · <strong>"bu kod doğru mu? / hatayı bul"</strong> Q23, Q29–Q39, Q42–Q45, Q47, Q54 · kısa cevap/tanım Q1–Q12 · tasarım/karşılaştırma Q20, Q50, Q52, Q53, Q55 · sayısal Q17–Q19, Q26–Q28 · gerekçelendirme Q51, Q57.</p>
+<hr />
+<h2 id="d-bolum-sonu-kontrol-sorular">D) Bölüm sonu kontrol soruları<a class="headerlink" href="#d-bolum-sonu-kontrol-sorular" title="Permanent link">#</a></h2>
+<p>Her bölümün anlatımı bitince sorulacak ikişer soru (kolay–orta). Cevap kısa tutuldu; tam hali C'deki ilgili sorudadır.</p>
+<p><strong>Bölüm 1 — Paylaşılan durum, lost update, interleaving (sl. 1–10)</strong></p>
+<ol>
+<li><em>Two threads each increment a counter from 0 once (read, then write). Which schedules end with 1?</em> → ABAB, ABBA, BAAB, BABA: ikisi de yazmadan önce 0 okuyor (Q13, sl. 9).</li>
+<li><em>A thread's pointer variable is declared locally. Is the object it points to private?</em> → Gerekmiyor; pointer'ın nerede tanımlandığı hedefe kimin erişebileceğini belirlemez (sl. 4).</li>
+</ol>
+<p><strong>Bölüm 2 — Race, data race, invariant, CS, üç şart, safety/liveness (sl. 11–15)</strong></p>
+<ol>
+<li><em>Can a race condition occur when every access is atomic?</em> → Evet; race zamanlamaya bağlı doğruluk hatası, data race ayrı C tanımı (Q1, sl. 11).</li>
+<li><em>A design blocks every thread forever. Which property does it satisfy and which does it violate?</em> → Safety (dışlama) var, liveness/progress yok (Q3, sl. 15).</li>
+</ol>
+<p><strong>Bölüm 3 — Strict alternation, Peterson, sıralama (sl. 16–19)</strong></p>
+<ol>
+<li><em>Strict alternation: which requirement fails, and does mutual exclusion hold?</em> → Progress bozulur; dışlama modelde korunur (Q21) <span class="src">S-2</span>.</li>
+<li><em>In Peterson, both flags are true. Who waits?</em> → turn'e en son yazan; turn tek değer taşıdığı için ikisi birden kazanamaz (sl. 18).</li>
+</ol>
+<p><strong>Bölüm 4 — TAS, CAS, fetch-add (sl. 20–22)</strong></p>
+<ol>
+<li><em>Lock = 0; A and B both do CAS(lock, 0, 1), A first. What does each return?</em> → A 0 alır (sahip), B 1 alır (sahip değil) (Q16, sl. 21).</li>
+<li><em>An atomic counter is updated by atomic load then atomic store. Is the increment indivisible?</em> → Hayır; read–modify–write gerekir (sl. 22, 67).</li>
+</ol>
+<p><strong>Bölüm 5 — Mutex, kapsam, spin/block, kesme, sayaç deneyi (sl. 23–34)</strong></p>
+<ol>
+<li><em>Predict ./counter mutex, atomic, split.</em> → 200.000, 200.000, 1 (Q22, sl. 32).</li>
+<li><em>Why does disabling interrupts not work as a lock on a multicore machine?</em> → Bir CPU'da kesme kapatmak diğer CPU'nun erişimini durdurmaz (sl. 31).</li>
+</ol>
+<p><strong>Bölüm 6 — Semaphore (sl. 35–41)</strong></p>
+<ol>
+<li><em>S = 2; A, B, C wait; then A posts. Who gets the permit and what is S?</em> → Başka bir thread o arada wait yapmıyorsa C alır ve S = 0 kalır. Sırayı post eden belirlemez; araya yeni gelen bir thread izni kapabilir (sl. 38, Q17).</li>
+<li><em>A semaphore is posted while nobody waits. Is the post lost? And a condition-variable signal?</em> → Permit saklanır; CV bildirimi saklanmaz (sl. 39, Q6).</li>
+</ol>
+<p><strong>Bölüm 7 — Monitor ve condition variable (sl. 42–48)</strong></p>
+<ol>
+<li><em>Write the condition-wait protocol in five steps.</em> → Lock; check predicate; while false wait; operate; unlock (sl. 44).</li>
+<li><em>Give two reasons why a waiter must use while.</em> → Uyanma rezervasyon değil (başka thread önce alabilir); spurious wakeup izinli (sl. 44, 46).</li>
+</ol>
+<p><strong>Bölüm 8 — Bounded buffer ve kapanış (sl. 49–55)</strong></p>
+<ol>
+<li><em>Give the semaphore initial values and the consumer's order of operations.</em> → empty = N, full = 0, mutex = 1; wait(full); wait(mutex); remove; post(mutex); post(empty) (sl. 51–52).</li>
+<li><em>The queue is closed but not empty. What does the consumer do?</em> → Boşaltmaya devam eder; yalnızca closed ve boşsa çıkar (sl. 55).</li>
+</ol>
+<p><strong>Bölüm 9 — Readers–writers, dining philosophers (sl. 56–61)</strong></p>
+<ol>
+<li><em>Under reader preference, how can a writer starve?</em> → Okuyucular üst üste geldikçe read_count 0'a düşmez, yazar hiç girmez (Q25, sl. 56).</li>
+<li><em>Chopstick ordering removes deadlock. Does it prove every philosopher eventually eats?</em> → Hayır; bounded waiting/adalet ayrı argüman ister <span class="src">sl. 60; S-6</span>.</li>
+</ol>
+<p><strong>Bölüm 10 — Liveness, priority inversion, araç seçimi, queue.c, review (sl. 62–69)</strong></p>
+<ol>
+<li><em>Which tool for "at most 10 concurrent connections"? For "wait until the queue is non-empty"?</em> → Counting semaphore (10); CV + mutex (sl. 64).</li>
+<li><em>queue.c with capacity 1: what changes, what stays the same?</em> → Bloklanma deseni değişir (her öğede devir); sıra, sayı (10.000) ve toplam (50.005.000) aynı (sl. 65).</li>
+</ol>
+<p><strong>Bölüm 11 — Ders kitabı ekleri (sl. 70–86)</strong></p>
+<ol>
+<li><em>atomic_set 5, add 10, sub 4, inc: value?</em> → 12 (sl. 71).</li>
+<li><em>What is the permit bug in the Java semaphore snippet?</em> → acquire istisna atarsa finally yine release eder → fazladan permit (sl. 81).</li>
+</ol>
+<hr />
+<h2 id="moderatore-notlar">Moderatöre notlar<a class="headerlink" href="#moderatore-notlar" title="Permanent link">#</a></h2>
+<p><strong>Sorma sırası.</strong></p>
+<ol>
+<li>Anlatım sırasında yalnızca D'deki bölüm sonu soruları. Bölüm 1'in ilk sorusu hocanın kendi sorusu (sl. 8): Emre'den tabloyu kendisinin çizmesini iste, cevabı söyleme.</li>
+<li>Anlatım bitince C'yi şu sırayla çalıştır: önce Q13 → Q14 → Q28 (interleaving kası), sonra sl. 34 checkpoint'i karşılayan Q4, Q5, Q1, Q23; sonra hata bulma bloğu Q29–Q31, Q37, Q38, Q40, Q41, Q43; en son sentez Q48, Q51, Q53, Q55. Q38 (post'ların sırası) Q37'den hemen sonra sorulmalı: simetri tuzağını yakalar.</li>
+<li>sl. 67–68'i bire bir sor (review slaytları). Cevap sl. 68'in üç başlığını (safety, waiting, completion) içermiyorsa Q51'e git.</li>
+<li>Supplement'ten yalnızca Q19 (sl. 71), Q36(b) (sl. 81) ve Q47 (sl. 84) çekirdek sayılsın. Q12, Q56 bonus.</li>
+</ol>
+<p><strong>Zayıflık belirtileri ve geri dönülecek yer.</strong></p>
+<ul>
+<li>İz sorusunda kesin olasılık ya da "genelde 2 çıkar" demek → sl. 9 ve Q55 (model vs ölçüm).</li>
+<li>Atomik değişkeni atomik işlem sanmak (Q19c, Q32 V2, Q33'te "doğru" demek) → Bölüm 4, sl. 22.</li>
+<li><code>if</code>/<code>while</code> ayrımında yalnızca "spurious wakeup" demek, üçüncü tüketici izini kuramamak → Q40, sl. 46. İki neden de istenmeli.</li>
+<li>Lost wakeup ile "if yerine while" hatasını karıştırmak (ikisi farklı: biri kilitsiz kontrol, öteki yeniden kontrol eksikliği) → Q40 ve Q41'i yan yana çöz.</li>
+<li>Semaphore değer izinde S'yi negatife indirmek (uygulama modeli sorulmuşken) ya da post edenin sıradakini seçtiğini varsaymak → Q17.</li>
+<li>Deadlock / starvation / livelock'u karıştırmak, özellikle Q45(e)'ye "deadlock" demek → Q8, sl. 62.</li>
+<li>"Thread'ler dönüyor, CPU dolu, demek ki livelock" refleksi (Q31(a)'ya livelock demek) → B31, sl. 62: sınıflandırma bağımlılığa bakar, CPU kullanımına değil.</li>
+<li>Q37'de deadlock'u bulup Q38'de de "deadlock" demek → wait ile post simetrisi yok; post bloklamaz.</li>
+<li>Peterson varyantlarında yalnızca "sıra önemli" deyip iz kuramamak → Q29–Q31'i adım adım tablo olarak yazdır.</li>
+<li>"Mutex var, korunuyor" refleksi (Q34, Q24c) → sl. 12, 25: "all conflicting access paths must follow the same protocol".</li>
+</ul>
+<p><strong>Kaynak notları (denetçi için).</strong></p>
+<ul>
+<li>Q45(c) ve (d) OSC kitap metnindeki çareler; hocanın slaytında yalnızca numaralandırma (sl. 60) ve monitor (sl. 61) var. (e)'deki livelock örneği ek bilgi niteliğinde bir uygulama.</li>
+<li>Q26'daki sayılar ve tek CPU'lu öncelik zamanlayıcısı senaryosu bana ait; mekanizma sl. 63'ten.</li>
+<li>Q48'in izi OSTEP Fig. 30.11'den; hoca sl. 77'de notifyAll önerisiyle aynı sonuca işaret ediyor ama izi vermiyor.</li>
+<li>Q49(c)'deki "store buffer" açıklaması ve C11 bellek sıralaması ek bilgi; OSC ch6 sl. 16–19 yalnızca "yeniden sıralama" diyor.</li>
+<li>Q50(a)'daki "tek CPU'da spin israfı" vurgusu ek bilgi (OSTEP 28'de var); sl. 30 yalnızca "owner can run on another CPU" şartını veriyor.</li>
+<li>Q56(c)'deki sem_close/sem_unlink ayrıntısı ve Q35, Q54'teki POSIX mutex tipi davranışları (EPERM, relock) ek bilgi.</li>
+<li>Q9'daki C11 <code>atomic_compare_exchange_strong</code> notu ek bilgi.</li>
+<li><code>counter.c</code> ve <code>queue.c</code>'yi denetçi macOS arm64'te derleyip çalıştırdı; çıktılar Q22, Q27 ve Q51'deki beklenen değerlerle aynı. Ubuntu'da koşulmadı; okuma da kodun yalnızca macOS'ta denendiğini söylüyor <span class="src">Okuma §16</span>.</li>
+<li>Q52(1)'deki çok üretici davranışı (FIFO kontrolünde düşme, kalan öğe CAPACITY'yi aşınca askı, aşmayınca kayıp) denetçinin <code>queue.c</code> türevleriyle ölçüldü ve modellendi.</li>
+</ul></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

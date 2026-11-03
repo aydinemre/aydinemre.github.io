@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210" role="img" aria-label="Banker safety izi: Work (3,3,2) ile başlar; T1 biter ve Allocation'ı (2,0,0) eklenir, Work (5,3,2); T3 ile (7,4,3); T4 ile (7,4,5); T2 ile (10,4,7); T0 ile (10,5,7), yani toplam vektör." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04bw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600">Work (A, B, C) her bitişte bitenin Allocation'ı kadar büyür [sl. 49–50]</text>
+
+  <rect class="box-plain" x="14" y="80" width="96" height="46" rx="8"/>
+  <text x="62" y="101" text-anchor="middle" font-weight="600">3 3 2</text>
+  <text x="62" y="118" text-anchor="middle" font-size="11" class="t-mut">Available</text>
+
+  <rect class="box" x="140" y="80" width="96" height="46" rx="8"/>
+  <text x="188" y="108" text-anchor="middle" font-weight="600">5 3 2</text>
+  <rect class="box" x="266" y="80" width="96" height="46" rx="8"/>
+  <text x="314" y="108" text-anchor="middle" font-weight="600">7 4 3</text>
+  <rect class="box" x="392" y="80" width="96" height="46" rx="8"/>
+  <text x="440" y="108" text-anchor="middle" font-weight="600">7 4 5</text>
+  <rect class="box" x="518" y="80" width="96" height="46" rx="8"/>
+  <text x="566" y="108" text-anchor="middle" font-weight="600">10 4 7</text>
+  <rect class="box-acc" x="644" y="80" width="104" height="46" rx="8"/>
+  <text x="696" y="101" text-anchor="middle" font-weight="600" class="t-acc">10 5 7</text>
+  <text x="696" y="118" text-anchor="middle" font-size="11" class="t-acc">= toplam ✓</text>
+
+  <line class="ln" x1="110" y1="103" x2="138" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="236" y1="103" x2="264" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="362" y1="103" x2="390" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="488" y1="103" x2="516" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="614" y1="103" x2="642" y2="103" marker-end="url(#d04bw-a)"/>
+
+  <text x="124" y="52" text-anchor="middle" font-weight="600">T1</text>
+  <text x="124" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 1 2 2</text>
+  <text x="124" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 2 0 0</text>
+  <text x="250" y="52" text-anchor="middle" font-weight="600">T3</text>
+  <text x="250" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 0 1 1</text>
+  <text x="250" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 2 1 1</text>
+  <text x="376" y="52" text-anchor="middle" font-weight="600">T4</text>
+  <text x="376" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 4 3 1</text>
+  <text x="376" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 0 0 2</text>
+  <text x="502" y="52" text-anchor="middle" font-weight="600">T2</text>
+  <text x="502" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 6 0 0</text>
+  <text x="502" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 3 0 2</text>
+  <text x="628" y="52" text-anchor="middle" font-weight="600">T0</text>
+  <text x="628" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 7 4 3</text>
+  <text x="628" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 0 1 0</text>
+
+  <text x="380" y="182" text-anchor="middle" font-size="12">Üstte: karşılaştırılan Need (bileşen bileşen ≤ Work). Altta: Work'e eklenen Allocation, Max değil.</text>
+  <text x="380" y="200" text-anchor="middle" font-size="12" class="t-mut">Bu sıra 16 geçerli tanıktan biri; banker.c T1 T3 T4 T0 T2 basar [sl. 56].</text>
+</svg>

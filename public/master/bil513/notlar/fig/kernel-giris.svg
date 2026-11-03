@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 280" role="img" aria-label="Kernel'e üç yoldan girilir: P'nin kendi komutu (system call ya da exception) ya da donanımdan gelen interrupt. Kernel'den iki çıkış vardır: aynı göreve dönmek ya da başka bir görev seçmek." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="kg-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="kg-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <line class="faint" x1="20" y1="152" x2="636" y2="152"/>
+  <line class="faint" x1="652" y1="16" x2="652" y2="270"/>
+  <text x="20" y="28" class="t-mut" font-size="12" font-style="italic">user mode</text>
+  <text x="20" y="178" class="t-mut" font-size="12" font-style="italic">kernel mode</text>
+  <text x="740" y="28" text-anchor="middle" class="t-mut" font-size="12" font-style="italic">donanım</text>
+  <rect class="box" x="120" y="50" width="160" height="50" rx="6"/>
+  <text x="200" y="80" text-anchor="middle" font-weight="600">Process P</text>
+  <rect class="box" x="460" y="50" width="160" height="50" rx="6"/>
+  <text x="540" y="80" text-anchor="middle" font-weight="600">Process Q</text>
+  <rect class="box" x="120" y="200" width="500" height="56" rx="6"/>
+  <text x="370" y="224" text-anchor="middle" font-weight="600">Kernel: kaydet → işle → karar ver</text>
+  <text x="370" y="243" text-anchor="middle" class="t-mut" font-size="12">(handler, sonra gerekirse scheduler)</text>
+  <rect class="box" x="680" y="200" width="120" height="56" rx="6"/>
+  <text x="740" y="232" text-anchor="middle" font-weight="600">Cihaz / timer</text>
+  <line class="ln" x1="150" y1="100" x2="150" y2="197" marker-end="url(#kg-a)"/>
+  <text x="142" y="124" text-anchor="end" font-size="12">① system call</text>
+  <text x="142" y="140" text-anchor="end" font-size="12">② exception</text>
+  <line class="ln" x1="678" y1="228" x2="624" y2="228" marker-end="url(#kg-a)"/>
+  <text x="740" y="190" text-anchor="middle" font-size="12">③ interrupt</text>
+  <line class="ln-acc" x1="250" y1="200" x2="250" y2="104" marker-end="url(#kg-b)"/>
+  <text x="258" y="124" font-size="12" class="t-acc" font-weight="600">aynı göreve dön</text>
+  <text x="258" y="140" font-size="12" class="t-acc">(Case A)</text>
+  <line class="ln" x1="500" y1="200" x2="500" y2="104" marker-end="url(#kg-a)"/>
+  <text x="492" y="124" text-anchor="end" font-size="12">başka görev seç</text>
+  <text x="492" y="140" text-anchor="end" font-size="12">(Case B, belki C)</text>
+</svg>

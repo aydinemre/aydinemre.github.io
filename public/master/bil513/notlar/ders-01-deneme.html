@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 1: Deneme sınavı (15 soru)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 1: Deneme sınavı (15 soru)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-01-deneme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-01.html">Anlatım</a> <a href="ders-01-ozet.html">Özet</a> <a href="ders-01-sorular.html">Soru bankası</a> <a href="ders-01-deneme.html" aria-current="page">Deneme sınavı</a> <a href="ders-01-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#s1-ksa-cevap-kolay-sl-7">S1 (kısa cevap, kolay) — sl. 7</a></li><li><a href="#s2-ksa-cevap-kolay-sl-1011">S2 (kısa cevap, kolay) — sl. 10–11</a></li><li><a href="#s3-dogruyanls-gerekce-sl-9-okuma-2">S3 (doğru/yanlış + gerekçe) — sl. 9, Okuma §2</a></li><li><a href="#s4-dogruyanls-gerekce-sl-1415-2223">S4 (doğru/yanlış + gerekçe) — sl. 14–15, 22–23</a></li><li><a href="#s5-snflandrma-sl-8-2425-okuma-2-tablosu">S5 (sınıflandırma) — sl. 8, 24–25, Okuma §2 tablosu</a></li><li><a href="#s6-iz-surme-durum-gecisleri-sl-1819-okuma-4-tablosu">S6 (iz sürme: durum geçişleri) — sl. 18–19, Okuma §4 tablosu</a></li><li><a href="#s7-checkpoint-acklama-sl-17-2627">S7 (checkpoint, açıklama) — sl. 17, 26–27</a></li><li><a href="#s8-kod-okuma-fork-ve-bellek-sl-3032-60">S8 (kod okuma: fork ve bellek) — sl. 30–32, 60</a></li><li><a href="#s9-iz-surme-fork-says-ve-sra-sl-31-osc-33-alstrmalar-ek-bilgi">S9 (iz sürme: fork sayısı ve sıra) — sl. 31; OSC §3.3 alıştırmaları (ek bilgi)</a></li><li><a href="#s10-kod-okuma-launchc-sl-3537-kodlaunchc">S10 (kod okuma: launch.c) — sl. 35–37, kod/launch.c</a></li><li><a href="#s11-acklama-exec-ve-fd-sl-3334-28">S11 (açıklama: exec ve fd) — sl. 33–34, 28</a></li><li><a href="#s12-acklama-linux-gozlemi-sl-3841">S12 (açıklama + Linux gözlemi) — sl. 38–41</a></li><li><a href="#s13-kod-okuma-karslastrma-threadler-sl-4243-4952-kodthread_joinc">S13 (kod okuma + karşılaştırma: thread'ler) — sl. 42–43, 49–52, kod/thread_join.c</a></li><li><a href="#s14-tasarmkarslastrma-sl-4448-okuma-8">S14 (tasarım/karşılaştırma) — sl. 44–48, Okuma §8</a></li><li><a href="#s15-tasarm-hata-ayklama-pipe-ve-ipc-sl-5358-6162-okuma-10">S15 (tasarım + hata ayıklama: pipe ve IPC) — sl. 53–58, 61–62, Okuma §10</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-1-deneme-snav-15-soru">CSE 513 · Ders 1: Deneme sınavı (15 soru)<a class="headerlink" href="#cse-513-ders-1-deneme-snav-15-soru" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#s1-ksa-cevap-kolay-sl-7">S1 (kısa cevap, kolay) — sl. 7</a></li><li><a href="#s2-ksa-cevap-kolay-sl-1011">S2 (kısa cevap, kolay) — sl. 10–11</a></li><li><a href="#s3-dogruyanls-gerekce-sl-9-okuma-2">S3 (doğru/yanlış + gerekçe) — sl. 9, Okuma §2</a></li><li><a href="#s4-dogruyanls-gerekce-sl-1415-2223">S4 (doğru/yanlış + gerekçe) — sl. 14–15, 22–23</a></li><li><a href="#s5-snflandrma-sl-8-2425-okuma-2-tablosu">S5 (sınıflandırma) — sl. 8, 24–25, Okuma §2 tablosu</a></li><li><a href="#s6-iz-surme-durum-gecisleri-sl-1819-okuma-4-tablosu">S6 (iz sürme: durum geçişleri) — sl. 18–19, Okuma §4 tablosu</a></li><li><a href="#s7-checkpoint-acklama-sl-17-2627">S7 (checkpoint, açıklama) — sl. 17, 26–27</a></li><li><a href="#s8-kod-okuma-fork-ve-bellek-sl-3032-60">S8 (kod okuma: fork ve bellek) — sl. 30–32, 60</a></li><li><a href="#s9-iz-surme-fork-says-ve-sra-sl-31-osc-33-alstrmalar-ek-bilgi">S9 (iz sürme: fork sayısı ve sıra) — sl. 31; OSC §3.3 alıştırmaları (ek bilgi)</a></li><li><a href="#s10-kod-okuma-launchc-sl-3537-kodlaunchc">S10 (kod okuma: launch.c) — sl. 35–37, kod/launch.c</a></li><li><a href="#s11-acklama-exec-ve-fd-sl-3334-28">S11 (açıklama: exec ve fd) — sl. 33–34, 28</a></li><li><a href="#s12-acklama-linux-gozlemi-sl-3841">S12 (açıklama + Linux gözlemi) — sl. 38–41</a></li><li><a href="#s13-kod-okuma-karslastrma-threadler-sl-4243-4952-kodthread_joinc">S13 (kod okuma + karşılaştırma: thread'ler) — sl. 42–43, 49–52, kod/thread_join.c</a></li><li><a href="#s14-tasarmkarslastrma-sl-4448-okuma-8">S14 (tasarım/karşılaştırma) — sl. 44–48, Okuma §8</a></li><li><a href="#s15-tasarm-hata-ayklama-pipe-ve-ipc-sl-5358-6162-okuma-10">S15 (tasarım + hata ayıklama: pipe ve IPC) — sl. 53–58, 61–62, Okuma §10</a></li></ul></details>
+<p>Bu sınavı notlara bakmadan, 60 dakikada çöz. Cevapları kâğıda yaz, sonra her sorunun altındaki "Cevabı ve ölçütü göster"e tıklayıp karşılaştır.</p>
+<p>Sorular slaytlar, okuma kitapçığı ve <code>kod/*.c</code> kullanılarak, notlara bakılmadan yazıldı (2026-11-03, sınav simülasyonu uzmanı). Soru metinleri Türkçe; gerçek sınav İngilizce olacak, cevabı İngilizce yazmayı dene. Kolaydan zora sıralı. S9 fork sayma sorusu hocanın tarzı dışında, bonus say.</p>
+<p>Puanlama önerisi: her soru 1 puan; varsayımını yazmayan ya da "hep, kesin" diyen cevaba en fazla yarım puan.</p>
+<hr />
+<h2 id="s1-ksa-cevap-kolay-sl-7">S1 (kısa cevap, kolay) — sl. 7<a class="headerlink" href="#s1-ksa-cevap-kolay-sl-7" title="Permanent link">#</a></h2>
+<p>"Root olarak çalışan bir süreç kernel mode'da çalışır." Bu ifade neden yanlış? Root ile kernel mode arasındaki farkı açıklayın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Root bir kullanıcı kimliğidir (user identity); kernel'in izin (permission) kararlarını etkiler.
+Kernel mode ise CPU'nun ayrıcalıklı yürütme modudur (privileged execution mode). Root'un süreci de kendi
+uygulama komutlarını user mode'da çalıştırır; korumalı bir işe ihtiyaç duyunca o da system call ile
+kontrollü biçimde kernel'e girer. Root yalnızca kernel'in o istek için vereceği izin kararını değiştirir.</p>
+</details><h2 id="s2-ksa-cevap-kolay-sl-1011">S2 (kısa cevap, kolay) — sl. 10–11<a class="headerlink" href="#s2-ksa-cevap-kolay-sl-1011" title="Permanent link">#</a></h2>
+<p>İki kullanıcı aynı editör çalıştırılabilir dosyasını (executable) başlatıyor. (a) Kaç süreç vardır, neleri ayrıdır?
+(b) Kernel salt okunur kod sayfalarını fiziksel olarak paylaşıyorsa, değişkenler de paylaşılmış olur mu?
+(c) Biri çökerse diğeri de sonlanmak zorunda mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) İki süreç: her birinin kendi PID'i, program sayacı/komut konumu (PC), register'ları,
+yazılabilir verisi ve durumu vardır (biri klavye beklerken diğeri dosya kaydediyor olabilir). Program = pasif
+tanım; süreç = durumu ve kaynakları olan çalışan örnek. (b) Hayır. Fiziksel sayfa paylaşımı bir uygulama
+tercihidir (implementation choice); adres alanı soyutlaması (address-space abstraction) ayrı görünümleri korur,
+sıradan yazılabilir değişkenler paylaşılmaz. (c) Normalde hayır: süreç yalıtımı (process isolation) doğrudan
+etkileşimi sınırlar. Ama ikisi aynı dış dosyaya, servise ya da makineye bağlı olabilir.</p>
+</details><h2 id="s3-dogruyanls-gerekce-sl-9-okuma-2">S3 (doğru/yanlış + gerekçe) — sl. 9, Okuma §2<a class="headerlink" href="#s3-dogruyanls-gerekce-sl-9-okuma-2" title="Permanent link">#</a></h2>
+<p>"C kaynağında <code>printf</code> 3 kez çağrılıyorsa <code>strace</code> çıktısında 3 <code>write</code> system call'ı görülür."</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Yanlış (genel olarak). <code>printf</code> bir kütüphane fonksiyonudur (library function); biçimlendirme
+tamamen user space'te yapılır. stdio tamponlaması (buffering) birkaç <code>printf</code>'i tek bir <code>write</code>'ta birleştirebilir
+(ör. çıktı bir pipe ya da dosyaya gidiyorsa tam tamponlama). Kaynak kod ile tracer farklı düzeyleri gösterir: API
+adları ve sayıları system call'larla bire bir eşleşmek zorunda değildir. Her fonksiyon çağrısı system call değildir;
+bir wrapper kernel servisi isteyebilir.</p>
+</details><h2 id="s4-dogruyanls-gerekce-sl-1415-2223">S4 (doğru/yanlış + gerekçe) — sl. 14–15, 22–23<a class="headerlink" href="#s4-dogruyanls-gerekce-sl-1415-2223" title="Permanent link">#</a></h2>
+<p>"Bağlam değişiminde (context switch) kernel, giden sürecin bütün adres alanını PCB'ye kopyalar ve her
+seferinde bütün cache'leri boşaltır (flush)."</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Yanlış. PCB bir bellek görüntüsü (memory snapshot) değildir. Kaydedilen şey yürütme bağlamıdır
+(execution context): program sayacı ve canlı register'lar; ayrıca kimlik/durum/scheduling bilgisi ve kaynak
+referansları (bellek eşlemeleri (memory mappings), açık dosyalar) kayıtta tutulur. Adres alanı bellek
+eşlemeleri ve bellek/yedek depolamada (backing storage) zaten durur; P ile Q farklı adres alanı kullanıyorsa
+yalnızca doğru eşlemeler seçilir. Cache/TLB'nin tamamen boşaltılması evrensel bir kural değildir, mimari ve
+kernel'e bağlıdır. Maliyet iki parçalıdır: doğrudan save/restore işi ve dolaylı working-set/cache/çeviri
+(translation) etkileri. Aynı süreçteki iki thread arasında geçişte de bağlam kaydedilmelidir.</p>
+</details><h2 id="s5-snflandrma-sl-8-2425-okuma-2-tablosu">S5 (sınıflandırma) — sl. 8, 24–25, Okuma §2 tablosu<a class="headerlink" href="#s5-snflandrma-sl-8-2425-okuma-2-tablosu" title="Permanent link">#</a></h2>
+<p>Aşağıdaki her olayda iki soruyu ayrı cevaplayın: (i) ayrıcalık modu değişti mi? (ii) çalışan görev değişti mi?
+(a) P, <code>read</code> çağırıyor; veri zaten hazır. (b) P, henüz gelmemiş girdi için <code>read</code> çağırıyor. (c) P çalışırken
+timer interrupt geliyor. (d) P'nin bir komutu kurtarılabilir bir page fault üretiyor.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Evet kernel'e girildi (system call), görev değişimi gerekmez; kernel P'ye döner (Case A).
+(b) Evet; P bloke olur (running → waiting), artık çalışabilir değil; başka hazır görev Q seçilebilir, yoksa
+CPU boşta kalabilir (Case B). (c) Evet (interrupt); scheduler P'yi tutabilir ya da Q'yu seçebilir. Interrupt bir
+olayın kanıtıdır, Q'nun çalıştığının kanıtı değildir (Case C). Timer, kernel'e kontrolü geri alma <em>fırsatı</em>
+verir; "iki süreç arasında sırayla geçiş" emri değildir. (d) Evet (exception); kernel eşlemeyi sağlayıp komutu
+yeniden deneyebilir → görev değişmeyebilir. Sayfayı getirmek bekleme gerektiriyorsa başka görev çalışabilir;
+geçersiz erişimse hata. "Page fault" tek başına ne programın hatalı olduğunu ne de switch olduğunu söyler.
+Genel ilke: kernel girişi (kernel entry) ≠ bağlam değişimi.</p>
+</details><h2 id="s6-iz-surme-durum-gecisleri-sl-1819-okuma-4-tablosu">S6 (iz sürme: durum geçişleri) — sl. 18–19, Okuma §4 tablosu<a class="headerlink" href="#s6-iz-surme-durum-gecisleri-sl-1819-okuma-4-tablosu" title="Permanent link">#</a></h2>
+<p>Tek CPU. t0'da A çalışıyor, B hazır. Olaylar: (1) A, mevcut olmayan disk verisi ister. (2) B seçilir.
+(3) B çalışırken A'nın I/O'su tamamlanır. (4) B klavye girdisi ister, girdi yok. (5) A seçilir ve biter.
+Her adımdan sonra A ve B'nin durumunu yazın. Adım 3'te A hemen çalışır mı? Adım 5'ten sonra CPU ne yapar?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong></p>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>running</td>
+<td>ready</td>
+</tr>
+<tr>
+<td>1–2</td>
+<td>waiting</td>
+<td>running (ready → running)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ready (waiting → ready)</td>
+<td>running</td>
+</tr>
+<tr>
+<td>4</td>
+<td>ready → running</td>
+<td>waiting</td>
+</tr>
+<tr>
+<td>5</td>
+<td>terminated</td>
+<td>waiting</td>
+</tr>
+</tbody>
+</table>
+<p>Adım 3'te A yalnızca uygun (eligible) hale gelir; B, bir scheduling kararı A'yı seçene kadar devam edebilir.
+I/O tamamlanması anında switch kanıtı değildir. Her adımda iki ayrı olgu izlenir: çalışmaya uygunluk ve CPU
+sahipliği. Adım 5'ten sonra başka çalışabilir iş yoksa CPU boşta kalır (idle); scheduler eksik bir dış olayı
+"daha agresif seçerek" çözemez. Bu bir olası yürütme sırasıdır, ölçülmüş iz değil.</p>
+</details><h2 id="s7-checkpoint-acklama-sl-17-2627">S7 (checkpoint, açıklama) — sl. 17, 26–27<a class="headerlink" href="#s7-checkpoint-acklama-sl-17-2627" title="Permanent link">#</a></h2>
+<p>Her birini durum, mod ya da CPU sahipliği ile açıklayın:
+(a) Ağ yanıtı bekleyen bir süreç var; boş bir CPU yardımcı olur mu? Ya ready bir hesaplama için?
+(b) Bir <code>read</code> hemen tamamlanıyor; başka süreç çalışmak zorunda mı?
+(c) İki program "aynı anda" bitiyor; bu paralelliği kanıtlar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Hayır: waiting süreçte eksik olan bir olaydır, CPU zamanı değil; ancak yanıt gelip ready
+olduktan sonra CPU seçimi yardımcı olur. Ready hesaplamanın engeli işlemci tahsisidir; ona boş CPU/scheduling
+politikası doğrudan yardım eder. "Çalışmıyor" tek başına eksik bir teşhistir. (b) Hayır; P adına kernel
+yürütmesi başka bir görevin scheduling'iyle karıştırılmamalı, aynı göreve dönülebilir. (c) Hayır; tek çekirdek
+interleaving ile birden çok etkinliği örtüşen sürelerde ilerletebilir (concurrency). Paralellik iddiası için
+farklı çekirdeklerde eşzamanlı yürütme kanıtı gerekir.</p>
+</details><h2 id="s8-kod-okuma-fork-ve-bellek-sl-3032-60">S8 (kod okuma: fork ve bellek) — sl. 30–32, 60<a class="headerlink" href="#s8-kod-okuma-fork-ve-bellek-sl-3032-60" title="Permanent link">#</a></h2>
+<pre><code class="language-c">int x = 10;
+pid_t p = fork();
+if (p == 0) { x = 20; _exit(0); }
+waitpid(p, NULL, 0);
+printf(&quot;%d\n&quot;, x);
+</code></pre>
+<p>Ebeveyn ne yazar? Linux'un copy-on-write (CoW) kullanması cevabı değiştirir mi? <code>waitpid</code> neyi garanti eder?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> 10 (açık bir paylaşılan bellek (explicit shared memory) olmadığı varsayımıyla). fork sonrası
+sıradan yazılabilir bellek mantıksal olarak bağımsızdır; çocuğun ataması ebeveynin değişkenini güncellemez.
+CoW yalnızca kopyalama semantiğinin bir optimizasyonudur: sayfalar yazılana kadar fiziksel olarak paylaşılır,
+yazmada özel kopya oluşturulur; gözlenen kural değişmez, CoW bir iletişim kanalı değildir. <code>waitpid</code> yalnızca
+tamamlanma sırasını kurar (ebeveyn çocuk bittikten sonra yazar); adres alanlarını birleştirmez. Değeri aktarmak
+için pipe ya da paylaşılan eşleme gibi bir iletişim mekanizması gerekir. Not: dosya tanımlayıcıları farklıdır;
+miras alınan bir fd aynı açık dosya tanımına (open file description) işaret edip ofseti paylaşabilir.</p>
+</details><h2 id="s9-iz-surme-fork-says-ve-sra-sl-31-osc-33-alstrmalar-ek-bilgi">S9 (iz sürme: fork sayısı ve sıra) — sl. 31; OSC §3.3 alıştırmaları <span class="ek">ek bilgi</span><a class="headerlink" href="#s9-iz-surme-fork-says-ve-sra-sl-31-osc-33-alstrmalar-ek-bilgi" title="Permanent link">#</a></h2>
+<pre><code class="language-c">int main(void) { fork(); fork(); printf(&quot;hi\n&quot;); return 0; }
+</code></pre>
+<p>Kaç "hi" basılır? Sıra belirli midir? Bir fork başarısız olursa ne döner, kod bunu nasıl ele almalı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> 4 (her fork'tan sonra iki dal devam eder: 2² süreç). Sıra garanti değildir: fork'tan sonra
+ebeveyn mi çocuk mu önce ilerler, arayüz bunu vaat etmez; sıra önemliyse wait gibi senkronizasyonla
+kurulmalıdır, sabit <code>sleep</code> kanıt değildir. fork dönüş değerleri: ebeveyne çocuğun PID'i (&gt;0), çocuğa 0,
+başarısızlıkta −1 ve çocuk oluşmaz. Sonucu PID olarak kullanmadan önce −1 kontrol edilmelidir.</p>
+</details><h2 id="s10-kod-okuma-launchc-sl-3537-kodlaunchc">S10 (kod okuma: launch.c) — sl. 35–37, <code>kod/launch.c</code><a class="headerlink" href="#s10-kod-okuma-launchc-sl-3537-kodlaunchc" title="Permanent link">#</a></h2>
+<p>(a) Başarılı çıktıyı yazın ve sıralamanın neden garanti olduğunu açıklayın. (b) <code>/bin/echo</code> var olmayan bir
+yolla değiştirilirse çıktı ne olur; <code>waitpid</code> başarısız olmuş mudur? (c) Çocuk neden <code>exit</code> değil <code>_exit(127)</code>
+kullanıyor? (d) <code>do { … } while (result == -1 &amp;&amp; errno == EINTR)</code> döngüsü ve <code>WIFEXITED/WEXITSTATUS</code> neden var?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) <code>child</code>, sonra <code>parent: child exit status = 0</code>. Ebeveyn yalnızca waitpid çocuğun
+sonlanmasını topladıktan sonra yazar; sıra CPU'yu kimin önce aldığına bağlı değildir, bekleme kurar.
+(b) execl döner, çocuk <code>perror</code> ile hata mesajı yazar (ör. <code>execl: No such file or directory</code>) ve 127 ile çıkar;
+ebeveyn <code>parent: child exit status = 127</code> yazar ve başarısızlık döner. waitpid başarılıdır: programı
+başlatamama ile beklemenin başarısızlığı ayrı şeylerdir; başarılı wait, çocuğun işini başardığının kanıtı
+değildir. 127 örneğin seçtiği konvansiyondur, exec'in dönüş değeri değil. (c) Tek thread'li bu örnekte miras
+alınan stdio tamponlarının ikinci kez boşaltılmasını (flush) önlemek için. (d) Sinyalle kesilen bekleme (EINTR)
+aynı çocuk için yeniden denenir; status bir kodlanmış değerdir, doğrudan çıkış kodu değildir: normal çıkış ile
+sinyalle sonlanma (WIFSIGNALED/WTERMSIG) ayrılmalıdır.</p>
+</details><h2 id="s11-acklama-exec-ve-fd-sl-3334-28">S11 (açıklama: exec ve fd) — sl. 33–34, 28<a class="headerlink" href="#s11-acklama-exec-ve-fd-sl-3334-28" title="Permanent link">#</a></h2>
+<p>(a) Başarılı bir exec sonrası PID, kod/veri/yığın ve açık dosya tanımlayıcıları ne olur? (b) Başarılı exec neden
+dönmez? (c) Shell neden fork ile exec'i ayrı tutar; <code>ls &gt; out.txt</code> örneğiyle açıklayın. (d) İstenmeyen fd
+mirası nasıl bir hataya yol açabilir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) PID aynı kalır, aynı süreç; kod, veri ve yürütme yığını yeni program görüntüsüyle (program
+image) değişir. Açık fd'ler close-on-exec işaretli değilse genellikle korunur; bazı öznitelikler korunur, bazıları
+sıfırlanır. exec yeni süreç oluşturmaz, ek katılımcı yaratmaz. (b) Eski programın kodu artık yoktur; dönülecek
+yer kalmamıştır. Dönüyorsa exec başarısız olmuştur ve hata ele alınmalıdır. (c) fork ile exec arasında çocuğun
+ortamı hazırlanabilir: çocuk stdout'unu <code>out.txt</code>'ye (ya da bir pipe'a) yönlendirir, sonra exec eder; fd'ler
+exec'ten sağ çıktığı için yeni program farkında olmadan dosyaya yazar. Gerçek shell'ler <code>posix_spawn</code> gibi
+optimize mekanizmalar kullanabilir; bu kavramsal modeldir. (d) Örn. bir pipe'ın yazma ucunu miras alan ve
+kapatmayan program, okuyucunun EOF görmesini engeller.</p>
+</details><h2 id="s12-acklama-linux-gozlemi-sl-3841">S12 (açıklama + Linux gözlemi) — sl. 38–41<a class="headerlink" href="#s12-acklama-linux-gozlemi-sl-3841" title="Permanent link">#</a></h2>
+<p>(a) Zombie nedir, hâlâ çalışıyor mu? Ebeveyni ölen (orphan) bir süreçten farkı nedir? (b)
+<code>sleep 20 &amp; ; ps -o pid,ppid,stat,comm -p $!</code> çıktısında STAT <code>S</code> görülüyor. Bundan ne çıkarılabilir, ne
+çıkarılamaz? <code>R</code> görseydiniz running mi ready mi olduğunu söyleyebilir miydiniz? (c) ps hiç satır döndürmezse
+bu başlatmanın başarısız olduğunu kanıtlar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Zombie sonlanmış bir süreçtir; programı çalışmaz, yalnızca PID ve sonlanma bilgisini
+tutan küçük bir kernel kaydı ebeveyn status'u toplayana (reap) kadar kalır. Orphan ise ebeveyni çıkmış (ölmüş
+olması gerekmez, hâlâ çalışıyor olabilir) bir süreçtir; Unix benzeri sistemler onu yeniden ebeveynlendirir
+(reparenting) ve sonunda toplar (sorumlu süreç ortama bağlı: init/systemd ya da subreaper). İkisi de yalnızca
+"çalışmıyor" gözleminden çıkarılamaz. Arka planda çalıştırmak toplama sorumluluğunu kaldırmaz. (b) S bir tür
+bekleme (uyku) gösterir; hangi olayın eksik olduğunu kesin söylemez (her S disk I/O değildir). Snapshot tek
+bir anı gösterir, yürütme izini değil. Linux'ta R = running ya da runnable; ders kitabındaki ready/running
+ayrımını doğrudan göstermez. (c) Hayır; sleep ps'ten önce bitmiş olabilir, bu bir zamanlama sonucudur.</p>
+</details><h2 id="s13-kod-okuma-karslastrma-threadler-sl-4243-4952-kodthread_joinc">S13 (kod okuma + karşılaştırma: thread'ler) — sl. 42–43, 49–52, <code>kod/thread_join.c</code><a class="headerlink" href="#s13-kod-okuma-karslastrma-threadler-sl-4243-4952-kodthread_joinc" title="Permanent link">#</a></h2>
+<p>(a) Bir süreçteki thread'lerin her birine özel olanlar ve paylaştıkları neler? Ayrı yığınlar (stack) yerel
+değişkenleri diğer thread'lerden korur mu? (b) <code>thread_join.c</code>'de <code>pthread_join</code> kaldırılırsa ne bozulur?
+(c) İki worker aynı sayacı korumasız artırıyor, main ikisini de join ediyor. Join yarışı (race) düzeltir mi?
+Sayaç 0'dan başlayıp iki artırımda 1 kalabilen interleaving'i adım adım yazın. Tek çekirdekli makinede bu sorun
+ortadan kalkar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Özel: komut konumu (PC), register'lar, yığın. Paylaşılan: adres alanı (kod, veri, heap),
+açık dosyalar ve birçok süreç kaynağı. Ayrı yığınlar yürütmeyi düzenler, bellek koruma sınırı koymaz: geçerli bir
+pointer'ı olan başka thread canlı bir yığın nesnesine erişebilir. Bedeli hata yalıtımı (fault containment):
+hatalı bir thread paylaşılan belleği bozabilir; süreç sınırı ise adres alanı yalıtımı sağlar ama açık bir
+iletişim mekanizması gerektirir. (b) main, worker bitmeden <code>job.result</code>'ı okuyabilir (0 ya da tanımsız
+davranış); ayrıca <code>job</code> main'in yığınında olduğundan ömür garantisi join'e dayanır. Join tamamlanma sırasını
+kurar. (c) Hayır; join tamamlanma sırası kurar, karşılıklı dışlama (mutual exclusion) değil; worker'lar
+aktifken olan çakışan erişimleri geriye dönük düzeltemez. İz: A 0 okur; B 0 okur; A 1 yazar; B 1 yazar → 1
+(kayıp güncelleme, lost update). Tek çekirdek çok adımlı bir işlemi bölünmez (indivisible) yapmaz; interleaving
+yine olur. Çözüm: işlemin tamamını korumak (lock) ya da uygun atomik işlem. Not: bu kavramsal bir izdir;
+C'de senkronize olmayan çakışan erişim tanımsız davranıştır (undefined behavior), "kesin 1 çıkar" denemez.</p>
+</details><h2 id="s14-tasarmkarslastrma-sl-4448-okuma-8">S14 (tasarım/karşılaştırma) — sl. 44–48, Okuma §8<a class="headerlink" href="#s14-tasarmkarslastrma-sl-4448-okuma-8" title="Permanent link">#</a></h2>
+<p>Bir sunucu tasarlıyorsunuz. (a) İstek başına süreç, istek başına thread, sınırlı worker havuzu (bounded worker
+pool) ve olay güdümlü (event-driven) tasarımı koruma, iletişim maliyeti ve kaynak kullanımı açısından
+karşılaştırın. (b) Bir işte 2 birimlik kaçınılmaz seri aşama ve 8 birimlik tamamen bölünebilir paralel iş var.
+Ek yük yok sayılırsa 4 worker ile süre ve hızlanma (speedup) nedir? (c) Thread sayısını artırmak neden her zaman
+hızlandırmaz? (d) Worker havuzunun tasarımında hangi kurallar açıkça belirlenmelidir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Süreç: güçlü yalıtım, bir çökme diğerlerini doğrudan etkilemez; veri paylaşımı açık mekanizma
+ister, oluşturma pahalıdır. Thread: paylaşılan adres alanı, iletişim kolay; ama hata yalıtımı yok,
+senkronizasyon ve nesne ömrü sorumluluğu gelir. Bloke olan bir istek diğerlerini durdurmaz. Sınırsız thread:
+bellek, oluşturma, scheduling ve çekişme maliyeti. Havuz: kuyruk varışı servisten ayırır, aktif akış sayısını
+sınırlar. Event-driven: bekleyen işlemleri thread'siz örtüştürebilir; uygun model işe bağlıdır. (b) 2 + 8/4 =
+4 birim; tek worker 10 birim; hızlanma 10/4 = 2,5 (4 değil). Bu varsayımlı bir modeldir, ölçüm değil.
+(c) Seri bağımlılık kaldırılamaz; paylaşılan kilit, bellek bant genişliği ya da yavaş depolama sınırlayıcı
+kaynak olur; fazla çalışabilir thread çoğunlukla çekişme ve geçiş ekler. Eşzamanlılık potansiyeli ile ölçülmüş
+hızlanma ayrı iddialardır; adil karşılaştırma iş yükü, ortam ve ölçüm yöntemi ister. (d) Her isteğin sahibi kim,
+kuyruğu kim değiştirebilir, kuyruk dolunca ne olur, kapanışta bekleyen worker'lar nasıl uyandırılır;
+paylaşılan önbellekler/kuyruklar koordinasyon gerektirir.</p>
+</details><h2 id="s15-tasarm-hata-ayklama-pipe-ve-ipc-sl-5358-6162-okuma-10">S15 (tasarım + hata ayıklama: pipe ve IPC) — sl. 53–58, 61–62, Okuma §10<a class="headerlink" href="#s15-tasarm-hata-ayklama-pipe-ve-ipc-sl-5358-6162-okuma-10" title="Permanent link">#</a></h2>
+<p>Ebeveyn <code>pipe(fd)</code> sonra <code>fork()</code> yapıyor. Çocuk <code>fd[1]</code>'e iki kayıt yazıp kapatıyor ve çıkıyor. Ebeveyn
+<code>fd[0]</code>'dan okuyor: tüm baytları alıyor ama sonra sonsuza dek bekliyor.
+(a) Neden takıldı, nasıl düzeltilir? (b) "Boş pipe" ile EOF farkı nedir? (c) Üretici tüketiciden hızlıysa
+üretici hangi durumdadır (ready mi waiting mi)? (d) Ebeveyn her <code>read</code>'in tam bir kayıt döndüreceğini varsayıyor;
+neden yanlış, ne yapılmalı? (e) Aynı veri alışverişi paylaşılan bellekle yapılsaydı protokol sorunları ortadan
+kalkar mıydı? (f) <code>printf 'alpha\nbeta\n' | wc -l</code> ne yazar; bu komut tam olarak iki yeni dış süreç yaratır mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Ebeveyn kendi kullanmadığı yazma ucunu (<code>fd[1]</code>) açık tuttu. Bir yazma ucu referansı kaldığı
+sürece EOF gelemez; read boş pipe'ta bloke olur. Düzeltme: her katılımcı kullanmadığı ucu kapatır (ebeveyn fork
+sonrası <code>fd[1]</code>'i, çocuk <code>fd[0]</code>'ı); sleep eklemek değil, kalan yazma ucu referanslarını çizmek. (b) Boş pipe +
+hâlâ bir yazıcı varsa bloklayan read bekleyebilir (geçici boşluk); hiçbir yazıcı kalmamışsa ve tamponlanmış
+baytlar okunduysa read EOF (0) döner. (c) Sonlu pipe tamponu dolar; bloklayan yazıcı yer açılmasını bekler →
+waiting, "sadece daha fazla CPU bekleyen" ready değil (backpressure). Tersinde hızlı tüketici, yazıcılar varken
+veri bekler. Bu beklemeler katılımcıların ilerlemesini birbirine bağlar. (d) Pipe uygulama mesaj sınırlarını
+korumayan bir bayt akışıdır (byte stream); read üreticinin write'larından farklı parçalarla dönebilir. Çerçeveleme
+(framing) tanımlanmalı: ayraç (delimiter) ya da uzunluk alanı. (e) Hayır: paylaşılan bellek ortak bölge sağlar ama
+düzen, sahiplik ve verinin ne zaman hazır olduğu konusunda anlaşma gerekir; bölgedeki bir bayrak bile doğru
+senkronizasyon ister. Mesaj geçişi de hata ele alma, sıralama ve tam mesaj ayrımı ister. Hiçbiri protokol
+tasarımını ortadan kaldırmaz. (f) 2 (iki newline sayılır; boşluk biçimi değişebilir); sonuç girdiden gelir,
+scheduling sırasından değil. printf bir builtin olabileceğinden komut metni yeni dış süreç sayısını güvenilir
+biçimde göstermez.</p>
+</details><hr /></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 270" role="img" aria-label="Banker istek algoritması: Request Need'den büyükse hata, maksimum aşıldı. Available'dan büyükse bekle, durum aynı. Değilse geçici tahsis yap ve safety testini çalıştır. Safe ise kalıcı yap; unsafe ise eski durumu geri yükle ve beklet." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04bi-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d04bi-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker>
+    <marker id="d04bi-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600">Tᵢ'nin Request'i nasıl karara bağlanır [sl. 51]</text>
+
+  <rect class="box" x="14" y="50" width="130" height="56" rx="8"/>
+  <text x="79" y="74" text-anchor="middle" font-weight="600">1. Request ≤ Need?</text>
+  <text x="79" y="93" text-anchor="middle" font-size="11" class="t-mut">beyan edilen sınır</text>
+
+  <rect class="box" x="184" y="50" width="150" height="56" rx="8"/>
+  <text x="259" y="74" text-anchor="middle" font-weight="600">2. Request ≤ Available?</text>
+  <text x="259" y="93" text-anchor="middle" font-size="11" class="t-mut">şu an var mı</text>
+
+  <rect class="box" x="374" y="50" width="170" height="56" rx="8"/>
+  <text x="459" y="70" text-anchor="middle" font-weight="600">3. Geçici tahsis</text>
+  <text x="459" y="88" text-anchor="middle" font-size="11">Avail −= R; Alloc += R</text>
+  <text x="459" y="101" text-anchor="middle" font-size="11">Need −= R</text>
+
+  <rect class="box" x="584" y="50" width="162" height="56" rx="8"/>
+  <text x="665" y="74" text-anchor="middle" font-weight="600">4. Safety testi</text>
+  <text x="665" y="93" text-anchor="middle" font-size="11" class="t-mut">geçici durum üzerinde</text>
+
+  <line class="ln" x1="144" y1="78" x2="182" y2="78" marker-end="url(#d04bi-a)"/>
+  <text x="163" y="70" text-anchor="middle" font-size="11">evet</text>
+  <line class="ln" x1="334" y1="78" x2="372" y2="78" marker-end="url(#d04bi-a)"/>
+  <text x="353" y="70" text-anchor="middle" font-size="11">evet</text>
+  <line class="ln" x1="544" y1="78" x2="582" y2="78" marker-end="url(#d04bi-a)"/>
+
+  <rect class="box-plain" x="14" y="170" width="130" height="62" rx="8"/>
+  <text x="79" y="194" text-anchor="middle" font-weight="600" class="t-warn">Hata</text>
+  <text x="79" y="212" text-anchor="middle" font-size="11">maksimum aşıldı</text>
+  <text x="79" y="225" text-anchor="middle" font-size="11" class="t-mut">(above maximum)</text>
+  <line class="ln-warn" x1="79" y1="106" x2="79" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="86" y="140" font-size="11" class="t-warn">hayır</text>
+
+  <rect class="box-plain" x="184" y="170" width="150" height="62" rx="8"/>
+  <text x="259" y="194" text-anchor="middle" font-weight="600" class="t-warn">Bekle</text>
+  <text x="259" y="212" text-anchor="middle" font-size="11">durum aynı, simülasyon yok</text>
+  <text x="259" y="225" text-anchor="middle" font-size="11" class="t-mut">(unavailable)</text>
+  <line class="ln-warn" x1="259" y1="106" x2="259" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="266" y="140" font-size="11" class="t-warn">hayır</text>
+
+  <rect class="box-plain" x="414" y="170" width="170" height="62" rx="8"/>
+  <text x="499" y="194" text-anchor="middle" font-weight="600" class="t-warn">Geri yükle ve beklet</text>
+  <text x="499" y="212" text-anchor="middle" font-size="11">eski Available, Alloc, Need</text>
+  <text x="499" y="225" text-anchor="middle" font-size="11" class="t-mut">(unsafe)</text>
+  <line class="ln-warn" x1="640" y1="106" x2="560" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="610" y="142" font-size="11" class="t-warn">unsafe</text>
+
+  <rect class="box-acc" x="616" y="170" width="130" height="62" rx="8"/>
+  <text x="681" y="194" text-anchor="middle" font-weight="600" class="t-acc">Kalıcı yap</text>
+  <text x="681" y="212" text-anchor="middle" font-size="11">istek verildi</text>
+  <text x="681" y="225" text-anchor="middle" font-size="11" class="t-mut">(granted)</text>
+  <line class="ln-acc" x1="690" y1="106" x2="690" y2="168" marker-end="url(#d04bi-c)"/>
+  <text x="698" y="142" font-size="11" class="t-acc">safe</text>
+
+  <text x="380" y="260" text-anchor="middle" font-size="12" class="t-mut">Karar diğer tahsis kararlarıyla seri hâle getirilir. Reddedilen istek sonraki probleme taşınmaz [sl. 51, 54].</text>
+</svg>

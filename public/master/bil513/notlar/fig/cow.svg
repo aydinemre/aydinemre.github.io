@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 230" role="img" aria-label="Copy-on-write: fork'tan hemen sonra parent ile child'ın x eşlemeleri aynı salt okunur fiziksel sayfayı gösterir. Child x'e 20 yazınca kernel ona özel bir kopya verir; parent'ın sayfasında x hâlâ 10'dur." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="cw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="cw-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="190" y="22" text-anchor="middle" font-weight="600">fork'tan hemen sonra</text>
+  <text x="570" y="22" text-anchor="middle" font-weight="600">child x = 20 yazdıktan sonra</text>
+  <line class="faint" x1="380" y1="10" x2="380" y2="220"/>
+  <!-- sol panel -->
+  <rect class="box" x="30" y="50" width="130" height="44" rx="6"/>
+  <text x="95" y="70" text-anchor="middle" font-weight="600">parent</text>
+  <text x="95" y="86" text-anchor="middle" font-size="12" class="t-mut">&amp;x eşlemesi</text>
+  <rect class="box" x="30" y="150" width="130" height="44" rx="6"/>
+  <text x="95" y="170" text-anchor="middle" font-weight="600">child</text>
+  <text x="95" y="186" text-anchor="middle" font-size="12" class="t-mut">&amp;x eşlemesi</text>
+  <rect class="box-plain" x="230" y="98" width="120" height="50" rx="6"/>
+  <text x="290" y="119" text-anchor="middle" font-weight="600">x = 10</text>
+  <text x="290" y="137" text-anchor="middle" font-size="12" class="t-mut">salt okunur</text>
+  <line class="ln" x1="160" y1="72" x2="227" y2="110" marker-end="url(#cw-a)"/>
+  <line class="ln" x1="160" y1="172" x2="227" y2="136" marker-end="url(#cw-a)"/>
+  <text x="290" y="172" text-anchor="middle" font-size="12" class="t-mut">tek fiziksel sayfa</text>
+  <!-- sağ panel -->
+  <rect class="box" x="410" y="50" width="130" height="44" rx="6"/>
+  <text x="475" y="70" text-anchor="middle" font-weight="600">parent</text>
+  <text x="475" y="86" text-anchor="middle" font-size="12" class="t-mut">&amp;x (aynı adres)</text>
+  <rect class="box" x="410" y="150" width="130" height="44" rx="6"/>
+  <text x="475" y="170" text-anchor="middle" font-weight="600">child</text>
+  <text x="475" y="186" text-anchor="middle" font-size="12" class="t-mut">&amp;x (aynı adres)</text>
+  <rect class="box-plain" x="620" y="47" width="120" height="50" rx="6"/>
+  <text x="680" y="77" text-anchor="middle" font-weight="600">x = 10</text>
+  <rect class="box-acc" x="620" y="147" width="120" height="50" rx="6"/>
+  <text x="680" y="168" text-anchor="middle" font-weight="600" class="t-acc">x = 20</text>
+  <text x="680" y="186" text-anchor="middle" font-size="12" class="t-acc">yeni kopya</text>
+  <line class="ln" x1="540" y1="72" x2="616" y2="72" marker-end="url(#cw-a)"/>
+  <line class="ln-acc" x1="540" y1="172" x2="616" y2="172" marker-end="url(#cw-b)"/>
+  <text x="578" y="130" text-anchor="middle" font-size="12" class="t-acc">yazma → fault → kopya</text>
+</svg>

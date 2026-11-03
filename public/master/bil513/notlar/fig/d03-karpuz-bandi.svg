@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 362" role="img" aria-label="Karpuz bandı: N = 4 yuvalı dairesel tampon. Örnek durumda 1. ve 2. yuvada karpuz var, out 1'i, in 3'ü gösteriyor, count = 2. Üretici count == N iken bekler, onu tüketici değiştirir. Tüketici count == 0 ve kapanmamışken bekler, onu üretici ya da kapanış değiştirir." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d03kb-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d03kb-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="380" y="18" text-anchor="middle" font-weight="600" font-size="12.5">Bant = N = 4 yuvalı dairesel tampon (bounded buffer) [sl. 49–50, 54]</text>
+  <rect class="box" x="20" y="76" width="140" height="52" rx="8"/>
+  <text x="90" y="97" text-anchor="middle" font-weight="600">üretici</text>
+  <text x="90" y="115" text-anchor="middle" font-size="11.5" class="t-mut">(yükleyen işçi)</text>
+  <rect class="box" x="600" y="76" width="140" height="52" rx="8"/>
+  <text x="670" y="97" text-anchor="middle" font-weight="600">tüketici</text>
+  <text x="670" y="115" text-anchor="middle" font-size="11.5" class="t-mut">(boşaltan işçi)</text>
+
+  <rect class="box-plain" x="220" y="80" width="76" height="44" rx="6"/>
+  <text x="258" y="107" text-anchor="middle" font-size="11.5" class="t-mut">boş</text>
+  <text x="258" y="140" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-mut">0</text>
+  <rect class="box-acc" x="304" y="80" width="76" height="44" rx="6"/>
+  <text x="342" y="107" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">karpuz A</text>
+  <text x="342" y="140" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-mut">1</text>
+  <rect class="box-acc" x="388" y="80" width="76" height="44" rx="6"/>
+  <text x="426" y="107" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">karpuz B</text>
+  <text x="426" y="140" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-mut">2</text>
+  <rect class="box-plain" x="472" y="80" width="76" height="44" rx="6"/>
+  <text x="510" y="107" text-anchor="middle" font-size="11.5" class="t-mut">boş</text>
+  <text x="510" y="140" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-mut">3</text>
+  <line class="ln" x1="160" y1="102" x2="216" y2="102" marker-end="url(#d03kb-a)"/>
+  <line class="ln" x1="548" y1="102" x2="596" y2="102" marker-end="url(#d03kb-a)"/>
+  <path class="ln dash" d="M510,78 C510,40 258,40 258,78" marker-end="url(#d03kb-a)"/>
+  <text x="384" y="40" text-anchor="middle" font-size="11.5" class="t-mut">indeksler mod N sarar: in = (in + 1) % N, out = (out + 1) % N</text>
+  <line class="ln-acc" x1="342" y1="172" x2="342" y2="148" marker-end="url(#d03kb-b)"/>
+  <text x="342" y="188" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" class="t-acc">out</text>
+  <line class="ln-acc" x1="510" y1="172" x2="510" y2="148" marker-end="url(#d03kb-b)"/>
+  <text x="510" y="188" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" class="t-acc">in</text>
+  <text x="90" y="160" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">buffer[in] = x</text>
+  <text x="670" y="160" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">x = buffer[out]</text>
+  <text x="384" y="214" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12.5">count = 2   (değişmez: 0 ≤ count ≤ N)</text>
+  <text x="384" y="232" text-anchor="middle" font-size="11.5" class="t-mut">in == out hem boş hem dolu olabilir; ikisini count ayırt eder [sl. 50]</text>
+
+  <line class="faint" x1="20" y1="248" x2="740" y2="248"/>
+  <text x="230" y="266" font-weight="600" font-size="12.5">üretici</text>
+  <text x="480" y="266" font-weight="600" font-size="12.5">tüketici</text>
+  <text x="24" y="290" font-weight="600" font-size="12">bekleme yüklemi</text>
+  <text x="230" y="290" font-family="ui-monospace, Menlo, monospace" font-size="11.5">while (count == N) wait(not_full)</text>
+  <text x="480" y="290" font-family="ui-monospace, Menlo, monospace" font-size="11.5">while (count == 0 &amp;&amp; !closed)</text>
+  <text x="24" y="314" font-weight="600" font-size="12">yüklemi kim değiştirir?</text>
+  <text x="230" y="314" font-size="12" class="t-acc">tüketici: count--, signal(not_full)</text>
+  <text x="480" y="314" font-size="12" class="t-acc">üretici: count++, signal(not_empty)</text>
+  <text x="480" y="332" font-size="12" class="t-acc">ya da kapanış: closed = 1 + broadcast</text>
+  <line class="faint" x1="20" y1="344" x2="740" y2="344"/>
+  <text x="20" y="360" font-size="12" class="t-mut">Kontrol ve değişiklik aynı kilitli işlemde: count, in, out, dizi ve closed tek mutex altında [sl. 54; Okuma §13].</text>
+</svg>

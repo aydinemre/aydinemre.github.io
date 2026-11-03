@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" role="img" aria-label="Interrupt güdümlü disk okuması: driver controller'a komut yazar, controller diski okur, DMA ile bloğu belleğe koyar ve iş bitince CPU'ya interrupt gönderir; CPU o arada başka iş yapar." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="kio-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="kio-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <rect class="box" x="40" y="40" width="200" height="72" rx="6"/>
+  <text x="140" y="70" text-anchor="middle" font-weight="600">CPU</text>
+  <text x="140" y="90" text-anchor="middle" class="t-mut" font-size="12">o sırada başka iş yapar</text>
+  <text x="140" y="140" text-anchor="middle" font-size="12">⑤ PC + register'ları kaydet</text>
+  <text x="140" y="157" text-anchor="middle" font-size="12">→ interrupt vector → ISR → devam</text>
+  <rect class="box" x="40" y="200" width="200" height="60" rx="6"/>
+  <text x="140" y="235" text-anchor="middle" font-weight="600">Ana bellek</text>
+  <rect class="box" x="380" y="40" width="200" height="72" rx="6"/>
+  <text x="480" y="70" text-anchor="middle" font-weight="600">Disk controller</text>
+  <text x="480" y="90" text-anchor="middle" class="t-mut" font-size="12">yerel tampon</text>
+  <rect class="box" x="630" y="40" width="110" height="72" rx="6"/>
+  <text x="685" y="80" text-anchor="middle" font-weight="600">Disk</text>
+  <line class="ln" x1="242" y1="62" x2="376" y2="62" marker-end="url(#kio-a)"/>
+  <text x="309" y="54" text-anchor="middle" font-size="12">① komut yaz (driver)</text>
+  <line class="ln-acc" x1="378" y1="92" x2="246" y2="92" marker-end="url(#kio-b)"/>
+  <text x="312" y="110" text-anchor="middle" font-size="12" class="t-acc" font-weight="600">④ interrupt</text>
+  <line class="ln" x1="584" y1="76" x2="626" y2="76" marker-start="url(#kio-a)" marker-end="url(#kio-a)"/>
+  <text x="605" y="66" text-anchor="middle" font-size="12">② oku</text>
+  <polyline class="ln" points="480,112 480,230 246,230" marker-end="url(#kio-a)"/>
+  <text x="363" y="222" text-anchor="middle" font-size="12">③ DMA: blok → bellek</text>
+  <text x="363" y="250" text-anchor="middle" font-size="12" class="t-mut">(CPU'ya uğramaz)</text>
+</svg>

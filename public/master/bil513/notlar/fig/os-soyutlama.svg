@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 414" role="img" aria-label="OS'nin üç soyutlaması üç satırda. Solda programın gördüğü: process ile kesintisiz bir CPU, sanal bellek ile kendine ait bir adres alanı, dosya ve soket ile bayt dizisi. Ortada kernel'in bunu nasıl kurduğu: zaman paylaştırma ve context switch, sayfa tablosu ile adres çevirisi, fd tablosu, dosya sistemi, ağ yığını ve driver. Sağda gerçek donanım: az sayıda CPU çekirdeği, tek fiziksel RAM, disk ve ağ kartı. Program kernel'e üç yoldan girer: timer interrupt, exception ve system call." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="12">
+  <defs>
+    <marker id="sy-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="sy-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <!-- sütun başlıkları -->
+  <text x="119" y="22" text-anchor="middle" font-size="13" font-weight="600">Programın gördüğü</text>
+  <text x="445" y="22" text-anchor="middle" font-size="13" font-weight="600">Kernel'in yaptığı</text>
+  <text x="667" y="22" text-anchor="middle" font-size="13" font-weight="600">Gerçek donanım</text>
+  <!-- kernel bölgesi = koruma sınırı -->
+  <rect class="box-plain dash" x="330" y="34" width="230" height="310" rx="8"/>
+  <text x="322" y="360" text-anchor="end" font-size="11" class="t-mut">user mode ◂</text>
+  <text x="338" y="360" font-size="11" class="t-mut">▸ kernel mode</text>
+
+  <!-- satır 1: process -->
+  <rect class="box-acc" x="12" y="46" width="214" height="88" rx="6"/>
+  <text x="119" y="72" text-anchor="middle" font-size="13" font-weight="600">Process</text>
+  <text x="119" y="94" text-anchor="middle">"CPU sürekli bende"</text>
+  <text x="119" y="114" text-anchor="middle" class="t-mut">kendi PC, register ve stack'i</text>
+  <line class="ln-acc" x1="226" y1="90" x2="338" y2="90" marker-end="url(#sy-b)"/>
+  <text x="276" y="82" text-anchor="middle" font-size="11" class="t-acc" font-weight="600">timer interrupt</text>
+  <rect class="box" x="342" y="46" width="206" height="88" rx="6"/>
+  <text x="445" y="72" text-anchor="middle" font-size="13" font-weight="600">zaman paylaştırma</text>
+  <text x="445" y="94" text-anchor="middle">context switch, PCB'ye kayıt</text>
+  <text x="445" y="114" text-anchor="middle" class="t-mut">scheduler sıradakini seçer</text>
+  <line class="ln" x1="548" y1="90" x2="581" y2="90" marker-end="url(#sy-a)"/>
+  <rect class="box-plain" x="585" y="46" width="165" height="88" rx="6"/>
+  <text x="667" y="72" text-anchor="middle" font-size="13" font-weight="600">CPU çekirdekleri</text>
+  <text x="667" y="94" text-anchor="middle" class="t-mut">az çekirdek, çok process</text>
+
+  <!-- satır 2: sanal bellek -->
+  <rect class="box-acc" x="12" y="146" width="214" height="88" rx="6"/>
+  <text x="119" y="172" text-anchor="middle" font-size="13" font-weight="600">Sanal bellek: adres alanı</text>
+  <text x="119" y="194" text-anchor="middle">"bütün bellek benim"</text>
+  <text x="119" y="214" text-anchor="middle" class="t-mut">aynı adres ≠ aynı fiziksel yer</text>
+  <line class="ln-acc" x1="226" y1="190" x2="338" y2="190" marker-end="url(#sy-b)"/>
+  <text x="276" y="182" text-anchor="middle" font-size="11" class="t-acc" font-weight="600">exception</text>
+  <text x="276" y="206" text-anchor="middle" font-size="11" class="t-mut">(page fault,</text>
+  <text x="276" y="220" text-anchor="middle" font-size="11" class="t-mut">izinsiz erişim)</text>
+  <rect class="box" x="342" y="146" width="206" height="88" rx="6"/>
+  <text x="445" y="172" text-anchor="middle" font-size="13" font-weight="600">adres çevirisi</text>
+  <text x="445" y="194" text-anchor="middle">kernel sayfa tablosunu kurar</text>
+  <text x="445" y="214" text-anchor="middle" class="t-mut">her erişimi MMU donanımı çevirir</text>
+  <line class="ln" x1="548" y1="190" x2="581" y2="190" marker-end="url(#sy-a)"/>
+  <rect class="box-plain" x="585" y="146" width="165" height="88" rx="6"/>
+  <text x="667" y="172" text-anchor="middle" font-size="13" font-weight="600">Fiziksel RAM</text>
+  <text x="667" y="194" text-anchor="middle" class="t-mut">tek bellek, herkes ortak</text>
+  <text x="667" y="214" text-anchor="middle" class="t-mut">sayfalar dağınık durur</text>
+
+  <!-- satır 3: dosya ve soket -->
+  <rect class="box-acc" x="12" y="246" width="214" height="88" rx="6"/>
+  <text x="119" y="272" text-anchor="middle" font-size="13" font-weight="600">Dosya · soket</text>
+  <text x="119" y="294" text-anchor="middle">read(fd, buf, n) · send(s, …)</text>
+  <text x="119" y="314" text-anchor="middle" class="t-mut">"bayt dizisi": sektör, paket yok</text>
+  <line class="ln-acc" x1="226" y1="290" x2="338" y2="290" marker-end="url(#sy-b)"/>
+  <text x="276" y="282" text-anchor="middle" font-size="11" class="t-acc" font-weight="600">system call</text>
+  <rect class="box" x="342" y="246" width="206" height="88" rx="6"/>
+  <text x="445" y="272" text-anchor="middle" font-size="13" font-weight="600">dosya sistemi · ağ yığını</text>
+  <text x="445" y="294" text-anchor="middle">fd tablosu, izin kontrolü</text>
+  <text x="445" y="314" text-anchor="middle" class="t-mut">driver controller'ı sürer</text>
+  <line class="ln" x1="548" y1="290" x2="581" y2="290" marker-end="url(#sy-a)"/>
+  <rect class="box-plain" x="585" y="246" width="165" height="88" rx="6"/>
+  <text x="667" y="272" text-anchor="middle" font-size="13" font-weight="600">Disk · ağ kartı</text>
+  <text x="667" y="294" text-anchor="middle" class="t-mut">bloklar, sektörler</text>
+  <text x="667" y="314" text-anchor="middle" class="t-mut">ağ çerçeveleri</text>
+
+  <!-- üç iş -->
+  <text x="12" y="384" font-weight="600">① Soyutlama</text>
+  <text x="96" y="384" class="t-mut">= sol sütun.</text>
+  <text x="186" y="384" font-weight="600">② Paylaştırma</text>
+  <text x="278" y="384" class="t-mut">= orta sütun: kim, ne zaman, ne kadar alır.</text>
+  <text x="12" y="404" font-weight="600">③ Koruma</text>
+  <text x="80" y="404" class="t-mut">= kesikli çerçeve: program donanıma doğrudan dokunamaz, kernel'e yalnız bu üç yoldan girer (sl. 8).</text>
+</svg>

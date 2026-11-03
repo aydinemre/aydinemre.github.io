@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 Ders 5: Soru bankası ve cevap anahtarı</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 Ders 5: Soru bankası ve cevap anahtarı">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-05-sorular.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-05.html">Anlatım</a> <a href="ders-05-ozet.html">Özet</a> <a href="ders-05-sorular.html" aria-current="page">Soru bankası</a> <a href="ders-05-deneme.html">Deneme sınavı</a> <a href="ders-05-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a><ul><li><a href="#a1-merkez-ogrenme-hedefleri-ve-sl-68">A.1 Merkez: öğrenme hedefleri ve sl. 68</a></li><li><a href="#a2-bolum-bolum-harita">A.2 Bölüm bölüm harita</a></li><li><a href="#a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar</a></li></ul></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a><ul><li><a href="#seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap</a></li><li><a href="#seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz</a></li><li><a href="#seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma</a></li><li><a href="#seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak</a></li></ul></li></ul></aside>
+  <main><h1 id="cse-513-ders-5-soru-bankas-ve-cevap-anahtar">CSE 513 Ders 5: Soru bankası ve cevap anahtarı<a class="headerlink" href="#cse-513-ders-5-soru-bankas-ve-cevap-anahtar" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a></li></ul></details>
+<p>Kaynak: sınav/pedagoji uzman ajanının notu (2026-11-03), denetçi raporuna göre düzeltildi. Düzeltilenler: Q14 (D-08), Q30 (D-14), Q31(c) (D-19), Q37(c) (D-01), Q43(a) (D-09), Q47(b) (D-16), Q53 (D-02), B#11 (D-03), Q16 ölçütü (D-20), puanlama tahminleri (D-17). Deneme sınavı ayrı dosyada: <code>deneme-sinavi.md</code>. Bonus sorular <code>ilerleme.md</code>'de.</p>
+<p>Okunan kaynaklar: <code>CSE513-Lecture05.pdf</code> (81 slayt, pypdf ile metin), <code>_site-kopyasi/lecture-05-reading.html</code> (okuma kitapçığı, 18 bölüm, içindeki bütün "Predict / Explain / Calculate / Compare / Reflect" çalışılmış soruları dahil), <code>lecture-05.html</code> (öğrenme hedefleri), <code>kod/translate.c</code>, <code>kod/address-view.c</code>, <code>OSC-10-slaytlar/ch9.pptx</code> (67 slayt), OSTEP <code>vm-paging</code>, <code>vm-tlbs</code>, <code>vm-smalltables</code> (metin ve Homework bölümleri).</p>
+<p>Kısaltmalar: "sl. N" = hocanın slaytı; "Okuma §N" = okuma kitapçığının bölümü; "S-N" = bu notta kullanılmadı (okumanın çalışılmış soruları numarasız; hepsi §N ile gösterildi); "OSC ch9 sl. N" = Silberschatz ch9.pptx slayt numarası; "OSTEP …" = OSTEP bölümü. "<span class="ek">ek bilgi</span>" = hocanın materyalinde yok, genel bilgi.</p>
+<p><strong>Hesap doğrulaması.</strong> Bütün hesaplar iki kez yapıldı: bir kez hex/bit alanlarıyla, bir kez ondalık bölme (<code>p = floor(A/P)</code>, <code>d = A mod P</code>) ile; ikisi ayrıca küçük bir Python betiğiyle karşılaştırıldı (çeviri, iç parçalanma, PTE adresi, iki seviyeli yürüme, TLB LRU/FIFO izleri, first/best/worst fit, EAT, tablo boyutları, <code>/proc/maps</code> aralıkları). <code>translate.c</code> macOS'ta <code>cc -std=c11 -Wall -Wextra -Werror -O2</code> ile derlenip çalıştırıldı; Q36–Q37'deki çıktılar ölçülen çıktıdır (Q37'nin eklenmiş iki çağrısı dahil). <code>address-view.c</code> Linux dalı çalıştırılmadı; Q24 ve Q38'deki maps satırları <strong>örnek</strong> (uydurma değil ama ölçülmemiş, tipik Ubuntu x86-64 biçimi) diye işaretli.</p>
+<hr />
+<h2 id="0-hocann-soru-uslubu">0. Hocanın soru üslubu<a class="headerlink" href="#0-hocann-soru-uslubu" title="Permanent link">#</a></h2>
+<p>Ders 5 slaytları Ders 1'deki kalıpları sürdürüyor, üstüne hesap disiplini ekliyor. Slaytlarda açıkça görülen yedi kalıp:</p>
+<ol>
+<li><strong>"State the model."</strong> sl. 4 ("State which model an exercise uses"), sl. 13 ("State the search order, tie rule, splitting and coalescing assumptions"), sl. 38 başlığı ("Effective access time: state the model"), sl. 37 ("The result depends on … assumptions"), sl. 50 ("Assume one 4 KiB root…"). Her hesap cevabı <strong>varsayım satırıyla</strong> başlamalı: sayfa boyutu, PTE boyutu, seri/paralel TLB, seviye sayısı, sayfaların resident olup olmadığı. Varsayımsız doğru sayı puan kaybettirebilir (tahmin; hocanın materyalinde puanlama kuralı yok).</li>
+<li><strong>"Reject invalid references explicitly / There is no physical result to invent."</strong> sl. 10 ("Offset 1000 must trap"), sl. 19 ("(1, 400) is illegal even if physical byte 6700 exists"), sl. 28. Geçersiz bir referansa fiziksel adres yazmak yanlıştır; doğru cevap <strong>adlandırılmış ret</strong>tir (UNMAPPED, PROTECTION, trap).</li>
+<li><strong>"Keep the two addresses separate / Label each arrow."</strong> sl. 33 (PTE adresi ≠ veri adresi), sl. 48 ("Intermediate table addresses and the final data address play different roles"), sl. 68. Cevapta "entry address", "entry contents", "data address" ayrı yazılır.</li>
+<li><strong>"Not necessarily / does not imply"</strong> soruları. sl. 35 "A TLB miss is not a page fault"; sl. 27 sanal komşuluk fiziksel komşuluk değil; sl. 50 hiyerarşi her zaman küçük değil; sl. 56 "nominal reach is not a guarantee of hits"; sl. 57 beş isim beş erişim değil; sl. 63 mapping residency kanıtı değil; sl. 16 paging her parçalanmayı yok etmez; sl. 17 compaction iç parçalanmayı silmez; sl. 29 yarım sayfa ortalaması yasa değil; sl. 67 "Read-only for A does not make the frame immutable to everyone".</li>
+<li><strong>İki (ya da dört) ekseni ayır.</strong> sl. 28 "Mapping existence and permitted access are separate checks"; sl. 35 "Record translation-cache behavior separately from residency and permissions"; sl. 68 "Distinguish virtual-space validity, residency and cached translation"; sl. 42/67 "Mapping permissions and race freedom are different obligations". Tam puan için her ekseni <strong>adıyla</strong> söyle: mapping / permission / residency / cached translation / synchronization.</li>
+<li><strong>Tahmin et, gözle, açıkla.</strong> sl. 61 "Predict which region contains each address", sl. 65 "Before running, hand-compute…", "Explain which address bits change", "AI assistance is permitted. Verify arithmetic…". Kod sorularında çıktıyı yazmak yetmez, her TLB durum geçişi açıklanır.</li>
+<li><strong>Model ile ölçümü / gerçek donanımı ayır.</strong> sl. 38 "a teaching model, not a measured latency prediction"; sl. 51 "Real CPUs use data caches, walk caches and overlap"; sl. 52 "not a specification for every 64-bit CPU"; sl. 58/70 "historical"; sl. 62 "Do not infer a physical frame number from a printed pointer"; sl. 64 "This is a model, not a tool for reading the host's physical page tables".</li>
+</ol>
+<p>Okumaya özgü iki ek alışkanlık:</p>
+<ul>
+<li><strong>Korunum kontrolü (conservation check)</strong> <span class="src">Okuma §4</span>: kalan delikler toplamı = başlangıç toplamı − karşılanan istekler. Fit sorularında bunu yazmak hatayı yakalar.</li>
+<li><strong>Yüzdenin tabanını söyle</strong> <span class="src">Okuma §11</span>: "slowdown relative to 100 ns is not the same percentage as slowdown relative to 101 ns".</li>
+</ul>
+<p><strong>Sınavda işe yarayan İngilizce kalıp cümleler (12):</strong></p>
+<ol>
+<li>"Under the stated model (4 KiB pages, 4-byte PTEs, serial TLB lookup, all pages resident), …"</li>
+<li>"p = floor(A/P) and d = A mod P; the offset passes through translation unchanged, so PA = f × P + d."</li>
+<li>"This reference must be rejected: there is no physical result to invent."</li>
+<li>"Mapping existence and permitted access are separate checks; a frame number alone does not authorize a write."</li>
+<li>"A TLB miss is not a page fault: the translation is missing from a cache, not the page from RAM."</li>
+<li>"A TLB hit supplies a cached translation together with its permissions; it does not bypass protection."</li>
+<li>"The PTE address (0x8008) is where the mapping is stored; it is not the address of the requested data (0x9234)."</li>
+<li>"Virtual adjacency does not imply physical adjacency across a page boundary."</li>
+<li>"Equal virtual addresses can reach different frames; different virtual addresses can reach the same frame."</li>
+<li>"Savings depend on sparsity: a hierarchy is not automatically smaller than a linear table."</li>
+<li>"Total free space is not enough; contiguous allocation needs one sufficiently large hole."</li>
+<li>"This is a teaching model, not a measured latency prediction; real CPUs add data caches, walk caches and overlap."</li>
+</ol>
+<p><strong>Öncelik.</strong> Hocanın slaytına doğrudan dayanan sorular çekirdektir. Bonus listesi dosyanın sonunda. Zaman azsa sırayla: Q17, Q19–Q21, Q27, Q31–Q33, Q36, Q51, sonra Seviye 4.</p>
+<hr />
+<h2 id="a-kapsam-haritas">A) Kapsam haritası<a class="headerlink" href="#a-kapsam-haritas" title="Permanent link">#</a></h2>
+<h3 id="a1-merkez-ogrenme-hedefleri-ve-sl-68">A.1 Merkez: öğrenme hedefleri ve sl. 68<a class="headerlink" href="#a1-merkez-ogrenme-hedefleri-ve-sl-68" title="Permanent link">#</a></h3>
+<p><strong>Öğrenme hedefleri</strong> (<code>lecture-05.html</code>, "What you should be able to do"):</p>
+<ul>
+<li><em>Translate an address using a specified page table.</em></li>
+<li><em>Explain page-table and TLB roles and memory-allocation trade-offs.</em></li>
+<li>Somut örnek: <em>Follow one address through its page number, offset, page-table entry and physical memory location.</em></li>
+<li>Ana soru: <em>How does a process get its own view of memory?</em> Slayttaki biçimi <span class="src">sl. 2</span>: <em>How can two processes use the same virtual address without accessing the same data?</em> ve <em>By the end, translate an address and explain both the mapping and the permission check.</em></li>
+</ul>
+<p><strong>sl. 68 "What to explain without memorizing a diagram"</strong> dört satırdır, sınavın omurgası budur:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>sl. 68 maddesi</th>
+<th>Çekirdek ayrım</th>
+<th>Kanıt slaytları</th>
+<th>En olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Derive page number, offset, physical address; keep PTE addresses separate from data addresses</td>
+<td>p = ⌊A/P⌋, d = A mod P, PA = f·P + d; PTE adresi = PTBR + p·(PTE boyutu)</td>
+<td>21–28, 33, 49</td>
+<td>Hex çeviri tablosu, PTE adresi, iki seviyeli yürüme</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Isolation and sharing coexist; a TLB hit does not bypass permissions</td>
+<td>Paylaşım mapping ile; izin mapping'e ait; TLB izni de taşır</td>
+<td>41–44, 64, 66–67</td>
+<td>Entegre A/B problemi, translate.c yazma denemesi</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Table storage and access cost under explicit assumptions</td>
+<td>Lineer 4 MiB; seyrek hiyerarşi (1+k)·4 KiB; EAT seri modeli</td>
+<td>38–39, 45, 50–51</td>
+<td>Boyut ve EAT hesapları</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Distinguish validity, residency and cached translation</td>
+<td>Üç ayrı soru: adres alanında mı, RAM'de mi, TLB'de mi</td>
+<td>28, 35, 37, 41, 60</td>
+<td>Sınıflandırma, "not necessarily"</td>
+</tr>
+</tbody>
+</table>
+<p>Okumanın son öz-denetimi aynı şeyi dört yanılgı olarak verir <span class="src">Okuma §18</span>: PTE adresi veri adresi değildir; TLB miss otomatik page-in değildir; sanal pointer fiziksel frame'i göstermez; hiyerarşi her doluluk deseni için bellek kazandırmaz. "Her biri için sayısal ya da yapısal karşı örnek ver" deniyor: bu, sınav sorusu kalıbıdır.</p>
+<h3 id="a2-bolum-bolum-harita">A.2 Bölüm bölüm harita<a class="headerlink" href="#a2-bolum-bolum-harita" title="Permanent link">#</a></h3>
+<p>Ağırlık ölçütü: <strong>Yüksek</strong> = çalışılmış sayısal örnek ve/veya sl. 68 maddesi. <strong>Orta</strong> = slaytta açık anlatım, sayısal örnek yok ya da tek örnek. <strong>Düşük</strong> = tek cümle, "historical" etiketli ya da yalnız OSC'de.</p>
+<table>
+<thead>
+<tr>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Kavram</th>
+<th>Ağırlık</th>
+<th>Gerekçe ve olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 base/limit</td>
+<td>2–5</td>
+<td>Adres alanı, OS kurar / donanım uygular; base ≤ adres &lt; base+limit; koruma register'ları ayrıcalıklı</td>
+<td>Orta–yüksek</td>
+<td>sl. 5 sayısal örnek (14000/1000, 14999 legal, 15000 dışarıda). Off-by-one ve "iki model" tuzağı. Kısa hesap + "neden privileged"</td>
+</tr>
+<tr>
+<td>2 bağlama, MMU, relocation, dynamic loading/linking</td>
+<td>6–11</td>
+<td>Compile / load / execution-time binding; logical vs physical; PA = base + offset; <strong>önce limit sonra base</strong>; dynamic loading ≠ dynamic linking</td>
+<td>Orta (sl. 9–10 yüksek)</td>
+<td>sl. 10 "Offset 1000 must trap" çalışılmış. Binding türü kısa cevap; "linking fiziksel adresi verir mi?" <span class="src">Okuma §2</span></td>
+</tr>
+<tr>
+<td>3 contiguous allocation, fit, parçalanma, compaction</td>
+<td>12–17</td>
+<td>Delik, bölme, birleştirme; first/best/worst; external vs internal; compaction maliyeti; paging tahsis birimini değiştirir</td>
+<td><strong>Yüksek</strong></td>
+<td>sl. 14 tam tablo, sl. 15 "959 KiB free, 426 fails", sl. 31 yarı dönem kontrolü. Fit izi + korunum kontrolü kesin gelir</td>
+</tr>
+<tr>
+<td>4 segmentation</td>
+<td>18–19</td>
+<td>(s, d); base + length + izin; önce uzunluk kontrolü; dış parçalanma</td>
+<td>Orta–yüksek</td>
+<td>sl. 19 sayısal örnek ((1,400) illegal). Segment tablosu hesabı</td>
+</tr>
+<tr>
+<td>5 paging çeviri</td>
+<td>20–31</td>
+<td>Sayfa/frame; p, d; bit alanları; mini örnek; 0x1234 → 0x9234; sayfa sınırı; geçersiz/izin reddi; iç parçalanma 962; free-frame listesi</td>
+<td><strong>Çok yüksek</strong></td>
+<td>sl. 24–28 ana çalışılmış örnek, sl. 29 hesap, sl. 31 kontrol soruları. Hex çeviri tablosu sorusu çok olası (tahmin)</td>
+</tr>
+<tr>
+<td>6 PTBR, PTE adresi, TLB, EAT, ASID</td>
+<td>32–40</td>
+<td>Tablo bellekte; PTE adresi 0x8008; TLB çevirileri önbellekler; <strong>miss ≠ fault</strong>; LRU izi; EAT = h(t+m) + (1−h)(t+2m); ASID/flush</td>
+<td><strong>Çok yüksek</strong></td>
+<td>sl. 33, 36–39 çalışılmış. TLB izi + EAT + "miss disk erişimi mi?"</td>
+</tr>
+<tr>
+<td>7 koruma ve paylaşım</td>
+<td>41–44</td>
+<td>Valid/invalid bitinin anlamı modele bağlı; R/W/X ve user/kernel; paylaşılan kod, özel veri; farklı VA aynı frame; izin mapping'e ait</td>
+<td><strong>Yüksek</strong></td>
+<td>sl. 43 sayısal örnek; sl. 66–67 entegre soru bunun üstüne kurulu</td>
+</tr>
+<tr>
+<td>8 tablo yapıları</td>
+<td>45–56</td>
+<td>Lineer 4 MiB; hiyerarşi; 10/10/12; iki seviyeli yürüme; seyrek tasarruf (16 KiB vs 4 MiB; 1025 sayfa); k seviyeli EAT (111 ns); 64-bit; hashed; inverted; sayfa boyutu ve TLB reach</td>
+<td><strong>Yüksek</strong></td>
+<td>sl. 45, 49, 50, 51, 56 hepsi sayısal. Hashed/inverted yalnız kavramsal (sayı yok) → orta</td>
+</tr>
+<tr>
+<td>9 Linux ve tarihsel mimariler</td>
+<td>57–58, 70–81</td>
+<td>PGD/P4D/PUD/PMD/PTE, katlanan seviyeler; IA-32 segmentasyon+paging; x86-64 ≠ IA-64; ek şekiller</td>
+<td>Düşük–orta</td>
+<td>sl. 57 "beş isim ≠ beş erişim" tipik "not necessarily". Ek slaytlar için aşağıdaki değerlendirme</td>
+</tr>
+<tr>
+<td>10 swapping</td>
+<td>59–60</td>
+<td>Bütün süreç takası (tarihsel); binding geri dönüş yerini belirler; sayfa düzeyi taşıma; Hafta 6 köprüsü</td>
+<td>Düşük–orta</td>
+<td>Kısa cevap; Hafta 6 sorularına zemin</td>
+</tr>
+<tr>
+<td>11 Ubuntu deneyleri ve entegre tekrar</td>
+<td>61–68</td>
+<td>address-view.c, /proc/self/maps okuma (bitiş hariç, r/w/x, p/s), translate.c tahmin–gözlem; entegre A/B problemi; sl. 68 özeti</td>
+<td><strong>Yüksek</strong> (sl. 64–68), orta (61–63)</td>
+<td>sl. 66–67 entegre soru aynen ya da sayı değiştirilerek gelebilir. translate.c çıktı tahmini kod okuma sorusu olur. Deney "optional, no graded submission" <span class="src">sl. 61</span> ama sınavda kod okuma olarak çıkabilir</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ek slaytlar 70–81 ("historical" / "Textbook figure reference") değerlendirmesi.</strong> Hoca sl. 70'te bunları "for comparison and revision" diye ayırıyor ve iki kez uyarıyor: "Read Intel and ARM diagrams as the historical models identified here. Their specific widths, page sizes and modes are not universal" <span class="src">sl. 58, 70</span>. Sonuç:</p>
+<ul>
+<li><strong>Kullanılabilir genel ilkeler (orta):</strong> sl. 71 bit alanı formülü (p = m−n bit, d = n bit), sl. 72 associative arama (offset değişmeden geçer), sl. 73 42/10/12 bölümünün dış tablosunun neden pratik olmadığı (aritmetik soru olarak gelebilir).</li>
+<li><strong>Kavram ayrımı olarak (düşük–orta):</strong> sl. 76–77 logical → linear → physical ayrımı; sl. 79 PAE: okumada çalışılmış soru var ("does PAE turn a 32-bit process into a process with a 36-bit linear address? No") <span class="src">Okuma §17</span>. Bu tek tarihsel soru tipi büyük olasılıkla sorulabilecek olandır.</li>
+<li><strong>Ezber gerektirmeyen (düşük):</strong> sl. 74 selector bit genişlikleri (13/1/2), sl. 78 4 MB sayfa yolu, sl. 80 48-bit canonical, sl. 81 ARM section'ları. Sınavda bu sayılar istenirse soru metninde verilir; ezberleme. Tuzak: bu sayıları "bugünün evrensel sınırı" diye yazmak.</li>
+</ul>
+<h3 id="a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar<a class="headerlink" href="#a3-oscde-olup-hoca-slaytnda-olmayanlar" title="Permanent link">#</a></h3>
+<p>Bunlar <code>ch9.pptx</code> içinde var, hocanın 81 slaytında yok ya da yalnız şekil olarak var. Düşük öncelik:</p>
+<ul>
+<li><strong>50-percent rule</strong> <span class="src">OSC ch9 sl. 21</span>: first fit ile N blok tahsisinde ~0,5N blok parçalanmaya gider, belleğin ~1/3'ü kullanılamaz. Hoca bunu söylemiyor; okuma yalnız "half-page average … not a law" diyor.</li>
+<li><strong>PTLR (page-table length register)</strong> <span class="src">OSC ch9 sl. 30, 35</span>: tablo uzunluğunu sınırlar. Hocada yok ama translate.c'deki <code>page &gt;= 4</code> kontrolünün donanım karşılığı olarak açıklamada işe yarar.</li>
+<li><strong>Wired-down TLB girdileri, TLB boyutu 64–1024</strong> <span class="src">OSC ch9 sl. 31</span>.</li>
+<li><strong>Eski EAT modeli (TLB süresini yok sayan)</strong> <span class="src">OSC ch9 sl. 34</span>: m = 10 ns, h = 0,8 → 12 ns; h = 0,99 → 10,1 ns. Hocanın modeli t'yi ekliyor; okuma "If a source ignores TLB lookup time, its formula differs because its assumptions differ. Do not combine…" diyerek bunu açıkça karşılaştırıyor. Bu yüzden <strong>iki modeli ayırt etmek</strong> orta önem taşır.</li>
+<li><strong>Clustered page tables</strong> <span class="src">OSC ch9 sl. 45</span>, <strong>Solaris TSB/TTE</strong> <span class="src">OSC ch9 sl. 49–50</span>.</li>
+<li><strong>Swap süresi hesabı</strong> <span class="src">OSC ch9 sl. 54</span>: 100 MB, 50 MB/s → 2 s dışarı + 2 s içeri = 4 s; <code>request_memory()</code>/<code>release_memory()</code>; <strong>double buffering</strong> <span class="src">OSC ch9 sl. 55</span>; mobil sistemlerde swap yok <span class="src">OSC ch9 sl. 56</span>.</li>
+<li><strong>Reentrant code</strong> terimi <span class="src">OSC ch9 sl. 37</span>.</li>
+<li>IA-32: 16K segment, LDT/GDT, segment 4 GB <span class="src">OSC ch9 sl. 59</span>; x86-64 4 KB/2 MB/1 GB sayfa, 48-bit sanal / 52-bit fiziksel <span class="src">OSC ch9 sl. 65</span>; ARM micro-TLB'ler <span class="src">OSC ch9 sl. 66</span>.</li>
+</ul>
+<p>OSTEP'te olup hocada olmayan, bonus soruya dönüşenler: dizi taramasında %70 TLB isabeti (spatial locality) <span class="src">OSTEP vm-tlbs</span>; 16 KiB adres alanı, 64 baytlık sayfa, 0x3F80 → 0x0DC0 iki seviyeli örneği <span class="src">OSTEP vm-smalltables</span>; "TLB valid bit ≠ page table valid bit" kutusu <span class="src">OSTEP vm-tlbs</span>; Saavedra-Barrera TLB ölçüm ödevi <span class="src">OSTEP vm-tlbs Homework</span>.</p>
+<hr />
+<h2 id="b-kavram-yanlglar">B) Kavram yanılgıları<a class="headerlink" href="#b-kavram-yanlglar" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Yanılgı</th>
+<th>Doğrusu</th>
+<th>Kaynak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"Bir sanal adres tek bir fiziksel baytı belirtir."</td>
+<td>Adres süreç bağlamında yorumlanır; iki süreç 0x1234'ü farklı frame'lere eşleyebilir.</td>
+<td><span class="src">sl. 3, 31; Okuma §1</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>"Paylaşım için iki süreç aynı sanal adresi kullanmalı."</td>
+<td>A'nın sayfa 1'i ve B'nin sayfa 7'si aynı frame 9'a gidebilir (0x1234 ve 0x7234 → 0x9234).</td>
+<td><span class="src">sl. 43</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Limit 1000 ise offset 1000 de geçerli (offset ≤ limit)."</td>
+<td>Geçerli aralık 0 ≤ offset &lt; limit; offset 1000 trap eder.</td>
+<td><span class="src">sl. 10; Okuma §3</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td>"Fiziksel aralık modelinde de base'i eklerim."</td>
+<td>O modelin girdisi zaten fiziksel adres; base'i ikinci kez eklemek çift toplama hatasıdır. Önce hangi modelin kullanıldığını söyle.</td>
+<td><span class="src">sl. 4–5; Okuma §3</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>"Fiziksel bayt 6700 var, öyleyse (1, 400) çevrilir."</td>
+<td>Fiziksel varlık izin vermez; offset segment uzunluğuna eşit, ret. "There is no physical result to invent."</td>
+<td><span class="src">sl. 19, 28; Okuma §3, §6</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>"Toplam boş alan istekten büyükse istek sığar."</td>
+<td>Bitişik modelde tek bir yeterli delik gerekir: 959 KiB boş, en büyük delik 300 KiB, 426 KiB sığmaz.</td>
+<td><span class="src">sl. 12, 15, 31</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>"Best fit her zaman en iyisidir."</td>
+<td>Örnekteki başarı bir sonuçtur, kanıt değildir; tek istek için ekonomik seçim sonrakileri zorlaştırabilir (karşı örnek Q44).</td>
+<td><span class="src">sl. 13; Okuma §4</span></td>
+</tr>
+<tr>
+<td>8</td>
+<td>"Paging parçalanmayı tamamen yok eder."</td>
+<td>Bitişik süreç yerleştirme sorununu kaldırır; son sayfada iç parçalanma kalır, başka sistem tahsisleri bitişik bölge isteyebilir.</td>
+<td><span class="src">sl. 16; Okuma §5</span></td>
+</tr>
+<tr>
+<td>9</td>
+<td>"Compaction iç parçalanmayı da giderir."</td>
+<td>Compaction tahsisleri taşır; bir tahsisin içindeki boş baytları silmez. Ayrıca execution-time relocation ister, I/O'yu koordine etmek gerekir.</td>
+<td><span class="src">sl. 16–17; OSC ch9 sl. 22</span></td>
+</tr>
+<tr>
+<td>10</td>
+<td>"Ortalama iç parçalanma yarım sayfadır (yasa)."</td>
+<td>Son sayfa doluluğunun uygun bir dağılımını varsayar; her iş yükü için yasa değildir.</td>
+<td><span class="src">sl. 29</span></td>
+</tr>
+<tr>
+<td>11</td>
+<td>"Frame numarası bit sayısı = sanal sayfa numarası bit sayısı."</td>
+<td>Frame bitleri fiziksel adres genişliğine bağlıdır (ör. mini örnekte VPN 2 bit, frame numarası 3 bit: 32 B fiziksel / 4 B sayfa = 8 frame).</td>
+<td><span class="src">sl. 22, 23</span></td>
+</tr>
+<tr>
+<td>12</td>
+<td>"PA = frame tabanı + bütün sanal adres."</td>
+<td>Yalnız offset eklenir; bütün VA'yı eklemek sayfa katkısını iki kez sayar.</td>
+<td><span class="src">Okuma §7</span></td>
+</tr>
+<tr>
+<td>13</td>
+<td>"PTE adresi verinin adresidir."</td>
+<td>0x8008 mapping'in saklandığı yer; veri 0x9234'te.</td>
+<td><span class="src">sl. 33, 48; Okuma §9</span></td>
+</tr>
+<tr>
+<td>14</td>
+<td>"Sayfa tablosu programın ikinci kopyasıdır."</td>
+<td>Metadata'dır: hangi frame ve hangi erişimler.</td>
+<td><span class="src">sl. 32</span></td>
+</tr>
+<tr>
+<td>15</td>
+<td>"TLB veri baytlarını önbellekler / TLB = veri önbelleği."</td>
+<td>TLB çeviri + izin önbelleğidir; ikisi de yerelliği kullanır ama farklı sorun çözer, birinde isabet ötekinde isabet demek değildir.</td>
+<td><span class="src">sl. 34; Okuma §10</span></td>
+</tr>
+<tr>
+<td>16</td>
+<td>"TLB miss = page fault = disk erişimi."</td>
+<td>Geçerli ve resident mapping varsa tablodan bulunur, disk yok. Page fault erişimle ilişkili bir istisnadır (nonresident sayfa, bazı mimarilerde koruma ihlali).</td>
+<td><span class="src">sl. 35, 37; Okuma §10</span></td>
+</tr>
+<tr>
+<td>17</td>
+<td>"Her TLB miss OS'u çağırır."</td>
+<td>Donanım mı yazılım mı ele alacağı mimariye bağlı.</td>
+<td><span class="src">sl. 35</span></td>
+</tr>
+<tr>
+<td>18</td>
+<td>"TLB hit izin kontrolünü atlar."</td>
+<td>TLB girdisi izinleri de taşır; translate.c'de yazma TLB HIT olur ama PROTECTION verir.</td>
+<td><span class="src">sl. 64, 68; Okuma §12</span></td>
+</tr>
+<tr>
+<td>19</td>
+<td>"Sanal olarak komşu baytlar fiziksel olarak da komşudur."</td>
+<td>Sayfa içinde evet; sınırda 0x0FFF → 0x3FFF, 0x1000 → 0x9000. Sınırı geçen çok baytlı erişim iki çeviri isteyebilir.</td>
+<td><span class="src">sl. 27</span></td>
+</tr>
+<tr>
+<td>20</td>
+<td>"Her sayfa tablosu reddi diskten sayfa yükleyerek çözülür."</td>
+<td>Eşlenmemiş adres ya da yasak yazma veri yükleyerek yasal olmaz. Geçerli ama nonresident sayfa ayrı durumdur (Hafta 6).</td>
+<td><span class="src">sl. 28; Okuma §8</span></td>
+</tr>
+<tr>
+<td>21</td>
+<td>"Valid biti = sayfa RAM'de."</td>
+<td>OSC şeklinde valid/invalid, mantıksal adres alanına üyelik demek; residency ayrı bir sorudur; gerçek PTE'ler mimariye özgü.</td>
+<td><span class="src">sl. 41; Okuma §12; OSTEP vm-tlbs</span></td>
+</tr>
+<tr>
+<td>22</td>
+<td>"A için read-only olan frame herkes için değişmez."</td>
+<td>İzin mapping'e aittir; B kendi RW mapping'iyle aynı bayta yazabilir.</td>
+<td><span class="src">sl. 43, 67</span></td>
+</tr>
+<tr>
+<td>23</td>
+<td>"Paylaşılan bellek mapping'i yarışı önler."</td>
+<td>Çeviri veri yarışını önlemez; senkronizasyon ayrı yükümlülük.</td>
+<td><span class="src">sl. 42, 67; Okuma §12</span></td>
+</tr>
+<tr>
+<td>24</td>
+<td>"Hiyerarşik tablo her zaman lineer tablodan küçüktür."</td>
+<td>Tam dolulukta 1025 sayfa &gt; 1024 sayfa. Kazanç seyrekliğe bağlı.</td>
+<td><span class="src">sl. 50</span></td>
+</tr>
+<tr>
+<td>25</td>
+<td>"Linux beş seviye adlandırıyor, öyleyse her erişim beş tablo okur."</td>
+<td>Kullanılmayan seviyeler katlanır; mod, sayfa boyutu ve yaprak türü yürümeyi belirler.</td>
+<td><span class="src">sl. 57</span></td>
+</tr>
+<tr>
+<td>26</td>
+<td>"64 girdi × 2 MiB = 128 MiB reach, öyleyse 128 MiB'lık iş kümesi hep isabet eder."</td>
+<td>Nominal reach garanti değildir: associativity, sayfa boyutu desteği, erişim deseni.</td>
+<td><span class="src">sl. 56</span></td>
+</tr>
+<tr>
+<td>27</td>
+<td>"Context switch yalnız PC'yi değiştirir."</td>
+<td>Adres alanı değişir; TLB ya ASID ile etiketlenir ya da ilgili girdiler geçersiz kılınır.</td>
+<td><span class="src">sl. 40</span></td>
+</tr>
+<tr>
+<td>28</td>
+<td>"/proc/PID/maps fiziksel adresleri / residency'yi gösterir."</td>
+<td>Sanal aralık + izin; bitiş hariç; frame ya da residency kanıtı değil.</td>
+<td><span class="src">sl. 62–63; Okuma §15</span></td>
+</tr>
+<tr>
+<td>29</td>
+<td>"Her malloc sonucu [heap] bölgesindedir."</td>
+<td>Ayırıcı seçimi ve boyut farklı bölge doğurabilir.</td>
+<td><span class="src">sl. 63</span></td>
+</tr>
+<tr>
+<td>30</td>
+<td>"Bağlama (linking) her değişkenin fiziksel adresini sabitler."</td>
+<td>Linking program referanslarını çözer; execution-time mapping sanal sayfaları farklı frame'lere koyabilir.</td>
+<td><span class="src">sl. 6; Okuma §2</span></td>
+</tr>
+<tr>
+<td>31</td>
+<td>"Dynamic loading ile dynamic linking aynı şeydir."</td>
+<td>Biri hangi kodun ne zaman yükleneceği, öteki ayrı sağlanan koda referansın nasıl bağlanacağı.</td>
+<td><span class="src">sl. 11</span></td>
+</tr>
+<tr>
+<td>32</td>
+<td>"PAE süreci 36-bit doğrusal adresli yapar."</td>
+<td>Süreç 32-bit linear adres kullanır; PAE fiziksel kapasiteyi büyütür.</td>
+<td><span class="src">sl. 79; Okuma §17</span></td>
+</tr>
+<tr>
+<td>33</td>
+<td>"x86-64 = IA-64."</td>
+<td>Ayrı mimariler.</td>
+<td><span class="src">sl. 58</span></td>
+</tr>
+<tr>
+<td>34</td>
+<td>"Bütün süreç swap'ı bugünkü 'swap' ile aynı."</td>
+<td>Tarihsel model; bugünkü kullanımlarla eşitlenmemeli; sayfa düzeyi taşıma farklı.</td>
+<td><span class="src">sl. 59–60</span></td>
+</tr>
+<tr>
+<td>35</td>
+<td>"Bir modelin hit maliyetini ötekinin miss maliyetiyle birleştiririm." / "Yüzde her zaman 100'e göre."</td>
+<td>Tek model; tabanı yaz (106 ns, 100 ns'e göre %6, 101 ns'e göre ≈%4,95).</td>
+<td><span class="src">Okuma §11</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-soru-bankas">C) Soru bankası<a class="headerlink" href="#c-soru-bankas" title="Permanent link">#</a></h2>
+<p>Biçim: soru metni Türkçe; önemli sorularda sınavdaki İngilizce ifadesi <code>&gt; English:</code> satırında. Cevap İngilizce (sınav dili). <strong>Zorluk</strong> 1 (tanım) → 4 (sentez/tasarım/ince tuzak). <strong>Bölüm</strong> 1–11 (A.2'deki numaralama). Bonus sorular dosya sonundaki listede.</p>
+<h3 id="seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap<a class="headerlink" href="#seviye-1-tanm-ve-ksa-cevap" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q1.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım ayrımı · Kaynak: sl. 3, 8, 31; Okuma §1</em></p>
+<p>Mantıksal (logical/virtual) adres ile fiziksel adresi ayırın. Çeviriyi kim yapar, mapping verisini kim tutar? İki süreç aynı sanal adres 0x1234'ü kullanıp nasıl farklı veriye erişir?</p>
+<blockquote>
+<p>English: Distinguish a logical (virtual) address from a physical address. Who performs the mapping and who maintains it? How can two processes use virtual address 0x1234 without accessing the same data?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A virtual address is generated in a process's address space and is interpreted in that process's context; a physical address selects a memory location after translation <span class="src">sl. 8</span>. The MMU (hardware) applies translation and protection on every access; the OS establishes and changes the mappings and handles exceptional cases <span class="src">sl. 3, 8</span>. The OS therefore does not run for every ordinary load/store <span class="src">Okuma §1</span>. Two processes can both use 0x1234 because each has its own mapping: their page tables can select different frames <span class="src">sl. 31</span>. A numerical address alone does not identify a unique physical byte <span class="src">sl. 3</span>.</p>
+<p><strong>Ölçüt.</strong> (1) iki adresin tanımı + "süreç bağlamında yorumlanır", (2) donanım uygular / OS kurar ayrımı, (3) "farklı mapping, farklı frame". Üçü gerekli.</p>
+</details><hr />
+<p><strong>Q2.</strong> <em>Zorluk 1 · Bölüm 1 · Kısa cevap · Kaynak: sl. 4–5; Okuma §1</em></p>
+<p>Base ve limit register'larını kim değiştirebilir, neden? Bir süreç "kendi alanımda kalacağım" söz vererek kendini yalıtabilir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Only privileged (kernel-mode) code may load the protection registers; otherwise the process could enlarge its own boundary <span class="src">sl. 5</span>. A promise is not isolation: a buggy or hostile instruction could ignore it, so the boundary must be enforced by a mechanism the process cannot freely reconfigure. In paging, the page tables and associated control state must likewise be protected <span class="src">Okuma §1</span>.</p>
+<p><strong>Ölçüt.</strong> "privileged" kelimesi + "aksi halde sınırını büyütür" gerekçesi + "söz yetmez, donanımla zorlanır".</p>
+</details><hr />
+<p><strong>Q3.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım · Kaynak: sl. 6, 59; OSC ch9 sl. 8</em></p>
+<p>Üç adres bağlama (address binding) zamanını sayın. Hangisi süreç çalışmaya başladıktan sonra bellekte başka yere taşınmasına izin verir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Compile-time binding assumes a known location and generates absolute addresses (moving requires recompiling). Load-time binding resolves placement when the program is loaded (relocatable code; fixed once loaded). Execution-time binding translates each generated address during execution, so placement can change later (needs hardware support such as a relocation register or MMU) <span class="src">sl. 6; OSC ch9 sl. 8</span>. Only execution-time binding allows moving a running process, e.g., after compaction or when returning from whole-process swapping to a different location <span class="src">sl. 16, 59</span>. These are conceptual alternatives, not a claim that a modern executable uses only one <span class="src">Okuma §2</span>.</p>
+<p><strong>Ölçüt.</strong> Üç zaman doğru tanımlı + "execution-time" cevabı. Donanım desteği gerektiğini söylemek tam puanın parçası.</p>
+</details><hr />
+<p><strong>Q4.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım ayrımı · Kaynak: sl. 11; Okuma §2</em></p>
+<p>Dynamic loading ile dynamic linking arasındaki farkı yazın. Paylaşılan kütüphaneler bütün sayfaların RAM'de durmasını gerektirir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Dynamic loading delays loading a routine until it is needed (which code is loaded). Dynamic linking resolves references to separately supplied library code at run time (how references are connected) <span class="src">sl. 11</span>. A program can use either without the other. Shared libraries can reduce duplicate code storage, but mapping, permissions and per-process writable state still matter. Neither idea implies that all pages must remain in RAM; demand paging (Week 6) adds that a mapped range need not be fully resident <span class="src">sl. 11</span>.</p>
+<p><strong>Ölçüt.</strong> İki ayrı soru ("hangi kod" / "nasıl bağlanır") + "hayır, residency ayrı (Hafta 6)".</p>
+</details><hr />
+<p><strong>Q5.</strong> <em>Zorluk 1 · Bölüm 3 · Tanım · Kaynak: sl. 15; Okuma §5</em></p>
+<p>Dış (external) ve iç (internal) parçalanmayı tanımlayın, her biri için bu dersten bir sayısal örnek verin.</p>
+<blockquote>
+<p>English: Define external and internal fragmentation and give a numerical example of each from this lecture.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> External fragmentation: enough total free space exists, but no single hole can satisfy a contiguous request; it concerns how free regions are arranged. Example: after first fit, 959 KiB is free but the largest hole is 300 KiB, so a 426 KiB request fails <span class="src">sl. 15</span>. Internal fragmentation: a reserved allocation unit contains bytes not needed by that allocation. Example: 72766 bytes in 2048-byte pages reserves 36 pages = 73728 bytes; the last page wastes 2048 − 1086 = 962 bytes <span class="src">sl. 29</span>. Always name the allocation unit and model <span class="src">sl. 15</span>.</p>
+<p><strong>Ölçüt.</strong> İki tanım + iki doğru örnek (959/426 ve 962). "Birimi adlandır" vurgusu artı puan.</p>
+</details><hr />
+<p><strong>Q6.</strong> <em>Zorluk 1 · Bölüm 3 · Tanım · Kaynak: sl. 13; Okuma §4; OSC ch9 sl. 20</em></p>
+<p>First fit, best fit ve worst fit'i tanımlayın. İki politikayı karşılaştırmadan önce hangi varsayımlar yazılmalıdır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> First fit searches in address order and chooses the first sufficient hole; best fit chooses the smallest sufficient hole; worst fit chooses the largest <span class="src">sl. 13</span>. Before comparing, state the search order, the tie rule, whether the chosen hole is split, and whether freed neighbours coalesce, and start every policy from the same state <span class="src">sl. 13; Okuma §4</span>. A choice that looks economical for one request can make later requests harder, so policies are evaluated on a sequence <span class="src">sl. 13</span>. (OSC adds that best and worst fit must search the whole list unless it is ordered by size <span class="src">OSC ch9 sl. 20</span>.)</p>
+<p><strong>Ölçüt.</strong> Üç tanım + en az üç varsayım (arama sırası, eşitlik kuralı, bölme/birleştirme).</p>
+</details><hr />
+<p><strong>Q7.</strong> <em>Zorluk 1 · Bölüm 5 · Tanım · Kaynak: sl. 20–22</em></p>
+<p>Sayfa (page), frame ve sayfa tablosu nedir? Çeviride hangi bitler değişmez? Frame numarası bit sayısı neye bağlıdır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The virtual address space is divided into fixed-size pages; physical memory into frames of the same size. A page table records which frame backs each mapped virtual page; consecutive virtual pages need not use consecutive frames <span class="src">sl. 20</span>. The offset (the low n bits for 2ⁿ-byte pages) survives translation unchanged; only the page part is replaced by a frame number <span class="src">sl. 21–22</span>. The number of frame-number bits depends on the physical address width; it need not equal the number of virtual-page bits <span class="src">sl. 22</span>.</p>
+<p><strong>Ölçüt.</strong> Üç tanım + "offset değişmez" + "frame bitleri fiziksel genişliğe bağlı".</p>
+</details><hr />
+<p><strong>Q8.</strong> <em>Zorluk 1 · Bölüm 6 · Tanım ayrımı · Kaynak: sl. 34; Okuma §10</em></p>
+<p>TLB neyi saklar, neyi saklamaz? TLB ile veri önbelleği (data cache) arasındaki fark nedir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The TLB caches recently useful address translations (virtual page → frame) with associated metadata such as permissions, for a given address space. It does not hold the program's data bytes <span class="src">sl. 34</span>. A hit supplies the frame and permissions without a page-table walk; a miss requires looking up the mapping. A data cache stores instruction/data bytes. Both exploit locality but solve different problems, and a hit in one does not imply a hit in the other <span class="src">sl. 34; Okuma §10</span>.</p>
+<p><strong>Ölçüt.</strong> "çeviri + izin, veri değil" + iki önbelleğin bağımsızlığı.</p>
+</details><hr />
+<p><strong>Q9.</strong> <em>Zorluk 1 · Bölüm 6 · Kısa cevap · Kaynak: sl. 40; OSC ch9 sl. 31</em></p>
+<p>ASID (address-space identifier) ne işe yarar? ASID yoksa context switch'te ne yapılmalıdır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The same virtual page number can mean different frames in different address spaces, so the TLB must distinguish contexts. ASIDs tag each TLB entry with its address space, so entries of several processes can coexist safely <span class="src">sl. 40; OSC ch9 sl. 31</span>. Without ASIDs, the relevant old translations must be invalidated (flushed) when changing address spaces. Changing permissions or mappings also requires a consistency protocol for cached translations <span class="src">sl. 40</span>. "A cached decision must not outlive the state on which it depends" <span class="src">Okuma §10</span>.</p>
+<p><strong>Ölçüt.</strong> Etiketleme amacı + "yoksa flush" + mapping değişince tutarlılık gerektiği.</p>
+</details><hr />
+<p><strong>Q10.</strong> <em>Zorluk 1 · Bölüm 7 · Tanım ayrımı · Kaynak: sl. 41; Okuma §12; OSC ch9 sl. 35</em></p>
+<p>OSC şeklindeki valid/invalid biti neyi anlatır? "Valid = sayfa RAM'de" demek doğru mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> In the OSC figure, valid/invalid marks membership in the process's legal logical address space <span class="src">sl. 41; OSC ch9 sl. 35</span>. Residency (whether a legal page currently has a usable frame) is a different question; real entries contain architecture-specific state <span class="src">sl. 41</span>. So "valid = resident" is not justified without stating the model. Read, write, execute and user/kernel bits can reject an access even when a frame number is available <span class="src">sl. 41</span>.</p>
+<p><strong>Ölçüt.</strong> "mantıksal adres alanına üyelik" + residency'nin ayrı soru olduğu + izin bitlerinin ayrıca reddedebileceği.</p>
+</details><hr />
+<p><strong>Q11.</strong> <em>Zorluk 1 · Bölüm 8 · Tanım · Kaynak: sl. 54–55; OSC ch9 sl. 45, 47</em></p>
+<p>Hashed page table ve inverted page table'ı birer cümleyle tanımlayın; her birinin bir zayıflığını yazın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Hashed: the virtual page number is hashed to a bucket whose chain holds candidate (VPN, frame) elements; the key must be compared because collisions are possible, and it must include the address space if the structure is shared <span class="src">sl. 54; OSC ch9 sl. 45</span>. Inverted: one entry per physical frame, recording which (process, virtual page) occupies it; storage is tied to physical memory rather than the virtual range, but finding a mapping requires an efficient search (usually a hash), and shared frames break the simple one-entry/one-owner model <span class="src">sl. 55; OSC ch9 sl. 47</span>. Neither is "the" structure every OS uses <span class="src">sl. 54</span>.</p>
+<p><strong>Ölçüt.</strong> İki tanım + zayıflık (çakışma/anahtar karşılaştırma; arama maliyeti/paylaşım).</p>
+</details><hr />
+<p><strong>Q12.</strong> <em>Zorluk 1 · Bölüm 11 · Kısa cevap · Kaynak: sl. 62–63; Okuma §15</em></p>
+<p><code>/proc/PID/maps</code> satırı neyi bildirir, neyi bildirmez?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A maps line reports a virtual address range (end exclusive), access permissions r/w/x, the mapping type p (private) or s (shared), and optional file information (offset, device, inode, path) <span class="src">sl. 63</span>. It does not give physical frame numbers, does not prove that every page in the range is resident, and does not prove that each page has a unique frame <span class="src">sl. 62–63</span>. Not every malloc allocation appears in [heap] <span class="src">sl. 63</span>.</p>
+<p><strong>Ölçüt.</strong> Dört bildirilen alan + iki "bildirmez" (frame, residency). "Bitiş hariç" unutulursa eksik.</p>
+</details><hr />
+<h3 id="seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz<a class="headerlink" href="#seviye-2-uygulama-snflandrma-basit-iz" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q13.</strong> <em>Zorluk 2 · Bölüm 1 · Hesap · Kaynak: sl. 4–5, 9–10; Okuma §3; OSC ch9 sl. 6</em></p>
+<p>(a) Offset modeli: relocation (base) = 300040, limit = 120900. Mantıksal offset 0, 120899, 120900 ve 346 için karar ve fiziksel adres? (b) Fiziksel aralık modeli: base = 300040, limit = 120900. Fiziksel adres 420939 ve 420940 yasal mı? (c) Bir öğrenci (b)'de 300040 + 420939 hesaplıyor. Hatası ne?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Model (a): require 0 ≤ offset &lt; limit, only then PA = base + offset <span class="src">sl. 10</span>.</p>
+<ul>
+<li>0 → legal → 300040.</li>
+<li>120899 → legal (120899 &lt; 120900) → 300040 + 120899 = 420939.</li>
+<li>120900 → offset = limit → trap; no physical result.</li>
+<li>346 → 300386.
+Model (b): legal iff base ≤ address &lt; base + limit = 300040 + 120900 = 420940 <span class="src">sl. 5</span>. 420939 legal; 420940 outside.
+(c) In the physical-interval model the input is already physical; adding the base again is a double-addition error <span class="src">sl. 4; Okuma §3</span>. State which model the exercise uses.</li>
+</ul>
+<p><strong>Ölçüt.</strong> (a) dört doğru karar, 120900 için "trap" (adres yazmak sıfır puan); (b) üst sınırın hariç olduğu; (c) "çift toplama / model karıştırma".</p>
+</details><hr />
+<p><strong>Q14.</strong> <em>Zorluk 2 · Bölüm 4 · Hesap · Kaynak: sl. 18–19; Okuma §6</em></p>
+<p>Segment tablosu (base, length): 0: (1400, 1000); 1: (6300, 400); 2: (4300, 400); 3: (3200, 1100); 4: (4700, 1000). Şu mantıksal adresleri çevirin: (0, 430), (1, 399), (1, 400), (2, 53), (3, 852), (0, 1222), (4, 999), (5, 10).</p>
+<blockquote>
+<p>English: Translate the following (segment, offset) pairs, or explain why each must be rejected.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Rule: check 0 ≤ offset &lt; length, then PA = base + offset <span class="src">sl. 18</span>.</p>
+<ul>
+<li>(0, 430): 430 &lt; 1000 → 1400 + 430 = 1830 <span class="src">sl. 19</span>.</li>
+<li>(1, 399): 399 &lt; 400 → 6300 + 399 = 6699 <span class="src">sl. 19</span>.</li>
+<li>(1, 400): 400 = length → trap, even though physical byte 6700 exists <span class="src">sl. 19</span>.</li>
+<li>(2, 53): 53 &lt; 400 → 4353.</li>
+<li>(3, 852): 852 &lt; 1100 → 4052.</li>
+<li>(0, 1222): 1222 ≥ 1000 → trap.</li>
+<li>(4, 999): 999 &lt; 1000 → 5699.</li>
+<li>(5, 10): no segment 5 in the table → invalid segment number, trap. <span class="ek">ek bilgi: segment-table length check, STLR</span>
+Segments 2–4 appear in the lecture's segmentation figure (sl. 18–19); the slide text works only 0 and 1.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Sekiz doğru sonuç; üç ret ayrı adlandırılmalı ((1,400) offset sınırı, (0,1222) offset sınırı, (5,10) geçersiz segment). Ret yerine sayı yazmak o şık için sıfır.</p>
+</details><hr />
+<p><strong>Q15.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap · Kaynak: sl. 22, 23, 71; OSTEP vm-smalltables</em></p>
+<p>Her durumda sayfa numarası ve offset bit sayısını, sayfa sayısını ve (verildiyse) frame numarası bit sayısını bulun: (a) 32-bit VA, 4 KiB sayfa; (b) 32-bit VA, 8 KiB sayfa, 1 GiB fiziksel bellek; (c) 16-bit VA, 1 KiB sayfa; (d) mini örnek: 16 baytlık sanal alan, 4 baytlık sayfa, 32 baytlık fiziksel bellek; (e) 14-bit VA, 64 baytlık sayfa.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> For a 2^m-byte space and 2^n-byte pages: p has m − n bits, d has n bits <span class="src">sl. 71</span>.</p>
+<ul>
+<li>(a) 4 KiB = 2¹² → d = 12, p = 20 bits, 2²⁰ = 1,048,576 pages <span class="src">sl. 22</span>.</li>
+<li>(b) 8 KiB = 2¹³ → d = 13, p = 19, 2¹⁹ = 524,288 pages. 1 GiB = 2³⁰ → frame bits = 30 − 13 = 17 (2¹⁷ frames).</li>
+<li>(c) 1 KiB = 2¹⁰ → d = 10, p = 6, 64 pages.</li>
+<li>(d) m = 4, n = 2 → p = 2, d = 2, 4 pages; physical 32 = 2⁵ → frame bits = 3 (8 frames). Frame bits (3) ≠ page bits (2) <span class="src">sl. 22–23</span>.</li>
+<li>(e) d = 6, p = 8, 256 pages <span class="src">OSTEP vm-smalltables</span>.
+Check by division: (b) 2³² / 2¹³ = 2¹⁹; 2³⁰ / 2¹³ = 2¹⁷.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her şık doğru; (b) ve (d)'de frame bitlerinin VPN bitlerinden farklı olduğunun söylenmesi.</p>
+</details><hr />
+<p><strong>Q16.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap · Kaynak: sl. 23; Okuma §8; OSC ch9 sl. 27</em></p>
+<p>OSC mini örneği: 4 baytlık sayfa, sayfa tablosu 0→5, 1→6, 2→1, 3→2. Mantıksal adres 0, 3, 4, 6, 10, 13, 15'in fiziksel adresleri?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> p = ⌊A/4⌋, d = A mod 4, PA = f × 4 + d.</p>
+<ul>
+<li>0: p 0, d 0 → 5×4 + 0 = 20.</li>
+<li>3: p 0, d 3 → 23.</li>
+<li>4: p 1, d 0 → 6×4 = 24.</li>
+<li>6: p 1, d 2 → 26 <span class="src">sl. 23</span>.</li>
+<li>10: p 2, d 2 → 1×4 + 2 = 6.</li>
+<li>13: p 3, d 1 → 2×4 + 1 = 9.</li>
+<li>15: p 3, d 3 → 11.
+Bit check: 13 = 1101₂ → p = 11₂ = 3, d = 01₂ = 1; frame 2 = 010₂ → PA = 010 01₂ = 9. Note virtual address 6 vs frame number 6: numerically equal, different meanings <span class="src">Okuma §8</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Tablonun 16 satırı doğru; sınırlarda komşuluk yorumu: VA 3→4'te PA 23→24 tesadüfen komşu (frame 5 ve 6 ardışık), VA 11→12'de PA 7→8 de tesadüfen komşu, VA 7→8'de PA 27→4 komşu değil.</p>
+</details><hr />
+<p><strong>Q17.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap · Kaynak: sl. 24–28; Okuma §8</em></p>
+<p>Sayfa boyutu 4 KiB. Tablo: sayfa 0 → frame 3 (RW), 1 → frame 9 (R), 2 → eşlenmemiş, 3 → frame 1 (RW); tablo 4 girdilik. Şu erişimleri çevirin: okuma 0x0FFF, okuma 0x1000, okuma 0x1234, yazma 0x1234, okuma 0x3ABC, yazma 0x1FFF, yazma 0x0C08, okuma 0x2010, okuma 0x4000.</p>
+<blockquote>
+<p>English: Using the table, give page number, offset and physical address, or name the rejection, for each access.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Model: 4096-byte pages, all mapped pages resident; PA = f × 4096 + d.</p>
+<table>
+<thead>
+<tr>
+<th>Access</th>
+<th>Decimal / 4096</th>
+<th>p, d</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R 0x0FFF</td>
+<td>4095 = 0×4096 + 4095</td>
+<td>0, 0xFFF</td>
+<td>3×4096 + 4095 = 16383 = <strong>0x3FFF</strong></td>
+</tr>
+<tr>
+<td>R 0x1000</td>
+<td>4096 = 1×4096 + 0</td>
+<td>1, 0</td>
+<td>9×4096 = 36864 = <strong>0x9000</strong></td>
+</tr>
+<tr>
+<td>R 0x1234</td>
+<td>4660 = 1×4096 + 564</td>
+<td>1, 0x234</td>
+<td>36864 + 564 = 37428 = <strong>0x9234</strong> <span class="src">sl. 25</span></td>
+</tr>
+<tr>
+<td>W 0x1234</td>
+<td>same</td>
+<td>1, 0x234</td>
+<td><strong>PROTECTION</strong> (page 1 read-only)</td>
+</tr>
+<tr>
+<td>R 0x3ABC</td>
+<td>15036 = 3×4096 + 2748</td>
+<td>3, 0xABC</td>
+<td>4096 + 2748 = 6844 = <strong>0x1ABC</strong></td>
+</tr>
+<tr>
+<td>W 0x1FFF</td>
+<td>8191 = 1×4096 + 4095</td>
+<td>1, 0xFFF</td>
+<td><strong>PROTECTION</strong></td>
+</tr>
+<tr>
+<td>W 0x0C08</td>
+<td>3080 = 0×4096 + 3080</td>
+<td>0, 0xC08</td>
+<td>12288 + 3080 = 15368 = <strong>0x3C08</strong></td>
+</tr>
+<tr>
+<td>R 0x2010</td>
+<td>8208 = 2×4096 + 16</td>
+<td>2, 0x010</td>
+<td><strong>UNMAPPED</strong>: no physical result to invent <span class="src">sl. 28</span></td>
+</tr>
+<tr>
+<td>R 0x4000</td>
+<td>16384 = 4×4096 + 0</td>
+<td>4, 0</td>
+<td>beyond the 4-entry table → <strong>UNMAPPED</strong> (rejected)</td>
+</tr>
+</tbody>
+</table>
+<p>Hex check: with 4 KiB pages the low three hex digits are the offset and the rest is the page number, so the frame digit simply replaces the page digit (0x1234 → 0x9234). 0x0FFF → 0x3FFF and 0x1000 → 0x9000 are virtually adjacent but physically far apart <span class="src">sl. 27</span>. Mapping existence and permission are separate checks <span class="src">sl. 28</span>.</p>
+<p><strong>Ölçüt.</strong> Dokuz satırın hepsi; iki PROTECTION ve iki UNMAPPED ayrı adlandırılmalı. Ret satırına adres yazmak o satır için sıfır; "would-be" adres parantez içinde not olarak kabul.</p>
+</details><hr />
+<p><strong>Q18.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap · Kaynak: sl. 29; Okuma §5; OSC ch9 sl. 28</em></p>
+<p>(a) 2048 baytlık sayfada 72766 baytlık tahsis için sayfa sayısı, ayrılan alan ve iç parçalanma? (b) Aynı soru: 4096 baytlık sayfa, 10000 baytlık tahsis. (c) En kötü durum iç parçalanma kaçtır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 72766 = 35 × 2048 + 1086 (35 × 2048 = 71680) → 36 pages, reserved 36 × 2048 = 73728 bytes, internal fragmentation 2048 − 1086 = 962 bytes (check: 73728 − 72766 = 962) <span class="src">sl. 29</span>.
+(b) 10000 = 2 × 4096 + 1808 → 3 pages, reserved 12288, waste 4096 − 1808 = 2288 bytes (check 12288 − 10000 = 2288).
+(c) Worst case is one page minus one byte (allocation exceeds a multiple of P by 1 byte), e.g., 2047 bytes for 2048-byte pages <span class="src">OSC ch9 sl. 28</span>. The half-page average is not a law; it assumes a suitable distribution of final-page occupancy <span class="src">sl. 29</span>.</p>
+<p><strong>Ölçüt.</strong> İki sayı ve kontrol çıkarması; (c)'de "P − 1" ve yarım sayfa uyarısı.</p>
+</details><hr />
+<p><strong>Q19.</strong> <em>Zorluk 2 · Bölüm 6 · Hesap · Kaynak: sl. 33; Okuma §9</em></p>
+<p>(a) PTBR = 0x8000, PTE = 8 bayt. Sayfa 1 ve sayfa 3'ün PTE adresleri? Sayfa 1'in PTE'si frame 9 içeriyorsa okuma 0x1234'ün veri adresi? (b) PTBR = 0x00200000, PTE = 4 bayt, 4 KiB sayfa, VA = 0x00ABCDEF. PTE adresi? PTE frame 0x1F3 içeriyorsa fiziksel adres? PTE 8 bayt olsaydı PTE adresi?</p>
+<blockquote>
+<p>English: Give the PTE address and the data address separately.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> PTE address = PTBR + p × (PTE size).
+(a) Page 1: 0x8000 + 1 × 8 = 0x8008; page 3: 0x8000 + 3 × 8 = 0x8018 <span class="src">sl. 33; Okuma §9</span>. Data address for 0x1234: 9 × 0x1000 + 0x234 = 0x9234. 0x8008 is where the mapping is stored, not the data <span class="src">sl. 33</span>.
+(b) p = 0x00ABCDEF &gt;&gt; 12 = 0xABC = 2748, d = 0xDEF = 3567 (decimal check: 11259375 = 2748 × 4096 + 3567).</p>
+<ul>
+<li>PTE address = 0x00200000 + 0xABC × 4 = 0x00200000 + 0x2AF0 = <strong>0x00202AF0</strong> (2748 × 4 = 10992 = 0x2AF0).</li>
+<li>Data address = 0x1F3 × 0x1000 + 0xDEF = <strong>0x001F3DEF</strong> (499 × 4096 + 3567 = 2043904 + 3567 = 2047471).</li>
+<li>With 8-byte PTEs: 0x00200000 + 0xABC × 8 = 0x00200000 + 0x55E0 = <strong>0x002055E0</strong>.
+Without a TLB, this one access costs two memory accesses: the PTE read, then the data <span class="src">sl. 32</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her adresin etiketiyle (entry address / entry contents / data address) yazılması. PTE adresini veri adresi sanmak ana hata.</p>
+</details><hr />
+<p><strong>Q20.</strong> <em>Zorluk 2 · Bölüm 6 · İz · Kaynak: sl. 36–37, 65; Okuma §10, §16</em></p>
+<p>İki girdili, tam ilişkili (fully associative), başlangıçta boş, LRU değiştirmeli TLB; bütün sayfalar eşlenmiş ve resident. (a) Sayfa referansları 0, 1, 0, 2, 1. (b) 0, 1, 0, 3, 1. Her adımda hit/miss ve TLB içeriği (eski → yeni)? Kaç demand-paging fault vardır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) <span class="src">sl. 36</span></p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Result</th>
+<th>TLB (old → new)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Miss</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Miss</td>
+<td>0, 1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Hit</td>
+<td>1, 0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Miss; evict 1</td>
+<td>0, 2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Miss; evict 0</td>
+<td>2, 1</td>
+</tr>
+</tbody>
+</table>
+<p>(b) Same pattern with 3 instead of 2: Miss [0]; Miss [0,1]; Hit [1,0]; Miss evict 1 [0,3]; Miss evict 0 [3,1].
+Both: 1 hit, 4 misses, hit ratio 1/5 = 20% <span class="src">sl. 37</span>. Demand-paging faults: 0, because every miss is resolved from a resident mapping <span class="src">sl. 37</span>. The result depends on the sequence, capacity, initial contents and replacement assumption <span class="src">sl. 37</span>. Note that "page 2" in (a) does not inherit the unmapped state from the four-page table: each example states its own conditions <span class="src">Okuma §10</span>.</p>
+<p><strong>Ölçüt.</strong> Tablo doğru + "fault = 0" + gerekçe (resident). Hit'in LRU sırasını güncellediğini göstermek şart (1, 0 satırı).</p>
+</details><hr />
+<p><strong>Q21.</strong> <em>Zorluk 2 · Bölüm 6 · Hesap · Kaynak: sl. 38–39; Okuma §11; OSC ch9 sl. 34</em></p>
+<p>Hocanın modeli: seri TLB arama t = 1 ns, bellek erişimi m = 100 ns, tek seviyeli tablo, başka önbellek yok. (a) h = 0,80; 0,90; 0,95; 0,98 için EAT? (b) 100 ns tabana göre ek yük yüzdesi? (c) OSC'nin modeli: m = 10 ns, TLB süresi yok sayılıyor, h = 0,80 ve 0,99 için EAT? (d) Bu iki model neden karıştırılmamalı?</p>
+<blockquote>
+<p>English: State the model, then compute the effective access time.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Hit = t + m = 101 ns; miss = t + 2m = 201 ns (one PTE read + data) <span class="src">sl. 38</span>. EAT = h·101 + (1 − h)·201 = 201 − 100h <span class="src">sl. 39</span>.
+(a) h = 0.80: 0.80×101 + 0.20×201 = 80.8 + 40.2 = 121 ns. h = 0.90: 90.9 + 20.1 = 111 ns. h = 0.95: 95.95 + 10.05 = 106 ns <span class="src">sl. 38</span>. h = 0.98: 98.98 + 4.02 = 103 ns. (Check with 201 − 100h: 121, 111, 106, 103.)
+(b) Relative to 100 ns: 21%, 11%, 6%, 3%. (Relative to the 101 ns hit cost, 106 is ≈ 4.95%: state the baseline <span class="src">Okuma §11</span>.)
+(c) OSC: hit 10 ns, miss 20 ns. 0.80×10 + 0.20×20 = 12 ns (20% slowdown); 0.99×10 + 0.01×20 = 10.1 ns (1%) <span class="src">OSC ch9 sl. 34</span>.
+(d) The assumptions differ (OSC ignores the TLB lookup time). Do not combine a hit cost from one model with a miss cost from another <span class="src">Okuma §11</span>. Either way it is a teaching model, not a measured latency prediction <span class="src">sl. 38</span>.</p>
+<p><strong>Ölçüt.</strong> Varsayım satırı + dört doğru EAT + yüzde tabanının söylenmesi + model karıştırma uyarısı.</p>
+</details><hr />
+<p><strong>Q22.</strong> <em>Zorluk 2 · Bölüm 8 · Hesap · Kaynak: sl. 45, 52; OSC ch9 sl. 39, 43; OSTEP vm-smalltables</em></p>
+<p>Tam lineer sayfa tablosunun boyutu: (a) 32-bit, 4 KiB, 4 baytlık PTE; (b) 32-bit, 16 KiB, 4 bayt; (c) 32-bit, 1 KiB, 4 bayt; (d) 36-bit VA, 4 KiB, 4 bayt; (e) 48-bit VA, 4 KiB, 8 bayt; (f) 64-bit, 4 KiB, 4 bayt. (g) 200 süreç (a)'daki gibi tam lineer tablo kullanırsa toplam?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Size = 2^(VA bits − offset bits) × PTE size.</p>
+<ul>
+<li>(a) 2²⁰ × 4 = 2²² B = 4 MiB <span class="src">sl. 45</span>.</li>
+<li>(b) 2¹⁸ × 4 = 2²⁰ B = 1 MiB <span class="src">OSTEP vm-smalltables</span>.</li>
+<li>(c) 2²² × 4 = 2²⁴ B = 16 MiB.</li>
+<li>(d) 2²⁴ × 4 = 2²⁶ B = 64 MiB.</li>
+<li>(e) 2³⁶ × 8 = 2³⁹ B = 512 GiB.</li>
+<li>(f) 2⁵² entries <span class="src">sl. 52</span> × 4 = 2⁵⁴ B = 16 PiB: impractical.</li>
+<li>(g) 200 × 4 MiB = 800 MiB, including entries for unmapped ranges <span class="src">sl. 45</span>.
+Trend: table size grows with address-space size and shrinks with page size.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her şık için 2'nin kuvveti ve birim (KiB/MiB/GiB açıkça). Birimsiz sayı yarım puan <span class="src">sl. 22</span>.</p>
+</details><hr />
+<p><strong>Q23.</strong> <em>Zorluk 2 · Bölüm 8 · Hesap · Kaynak: sl. 56; Okuma §14</em></p>
+<p>(a) 64 girdili TLB'nin 4 KiB ve 2 MiB sayfayla nominal kapsamı (reach)? (b) 1024 girdili TLB için aynı hesap. (c) 64 MiB'lık bir diziyi rastgele okuyan program için 4 KiB ve 2 MiB sayfada kaç sayfa gerekir? Bu, 2 MiB sayfada hiç miss olmayacağını kanıtlar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Reach = entries × page size (one page per entry).
+(a) 64 × 4 KiB = 256 KiB; 64 × 2 MiB = 128 MiB <span class="src">sl. 56</span>.
+(b) 1024 × 4 KiB = 4 MiB; 1024 × 2 MiB = 2 GiB.
+(c) 64 MiB / 4 KiB = 16384 pages (far more than 1024 entries); 64 MiB / 2 MiB = 32 pages. Not proof: nominal reach is not a guarantee of hits; associativity, page-size support and access pattern matter <span class="src">sl. 56</span>. Larger pages also increase unused space in partially used pages <span class="src">sl. 30, 56</span>.</p>
+<p><strong>Ölçüt.</strong> Dört reach değeri + (c)'de "not a guarantee" + en az bir neden.</p>
+</details><hr />
+<p><strong>Q24.</strong> <em>Zorluk 2 · Bölüm 11 · Yorumlama · Kaynak: sl. 61–63; Okuma §15–16</em></p>
+<p>Şu satırlar address-view'un çıktısından (örnek; Ubuntu x86-64 biçimi, ölçülmedi):</p>
+<pre><code>55d0c7e01000-55d0c7e02000 r-xp 00001000 08:02 1048602   /home/emre/address-view
+55d0c7e04000-55d0c7e05000 rw-p 00003000 08:02 1048602   /home/emre/address-view
+55d0c8a4b000-55d0c8a8c000 rw-p 00000000 00:00 0         [heap]
+7ffd5a3e1000-7ffd5a402000 rw-p 00000000 00:00 0         [stack]
+</code></pre>
+<p>Program <code>static object: 0x55d0c7e04010</code>, <code>automatic object: 0x7ffd5a400a1c</code>, <code>allocated object: 0x55d0c8a4b2a0</code> yazdı. (a) Her pointer hangi aralıkta? (b) [heap] ve [stack] aralıklarının bayt uzunluğu ve 4 KiB sayfa sayısı? Son dahil bayt? (c) <code>r-xp</code>'deki dört harf ne der? (d) Hocanın okumasındaki 00400000–00402000 aralığı kaç bayt, kaç sayfa, son bayt? (e) Bu çıktıdan static nesnenin fiziksel frame'i bulunabilir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) static 0x55d0c7e04010 ∈ [0x55d0c7e04000, 0x55d0c7e05000) → the executable's rw-p (data) mapping; automatic 0x7ffd5a400a1c ∈ [stack]; allocated 0x55d0c8a4b2a0 ∈ [heap] (for this small allocation; not guaranteed in general <span class="src">sl. 63</span>).
+(b) [heap]: 0x55d0c8a8c000 − 0x55d0c8a4b000 = 0x41000 = 266240 bytes = 65 pages (266240 / 4096 = 65); last byte 0x55d0c8a8bfff. [stack]: 0x7ffd5a402000 − 0x7ffd5a3e1000 = 0x21000 = 135168 bytes = 33 pages; last byte 0x7ffd5a401fff. End address is exclusive <span class="src">sl. 63</span>.
+(c) r = readable, x = executable, − = not writable, p = private mapping (vs s shared) <span class="src">sl. 63</span>. Code is not writable; a store there would be rejected.
+(d) 0x00402000 − 0x00400000 = 0x2000 = 8192 bytes = 2 pages under 4096-byte pages; last included byte 0x00401FFF <span class="src">Okuma §15</span>.
+(e) No. Pointers and maps reveal virtual layout, not physical frames, residency or TLB behaviour <span class="src">sl. 62; Okuma §16</span>. Use the reported page size from sysconf, not the lecture's 4096 by assumption <span class="src">Okuma §16</span>.</p>
+<p><strong>Ölçüt.</strong> (b)'de bitişin hariç olduğu ve doğru sayfa sayıları; (e) kesin "hayır" + gerekçe.</p>
+</details><hr />
+<p><strong>Q25.</strong> <em>Zorluk 2 · Bölüm 6 · Sınıflandırma · Kaynak: sl. 28, 35, 41, 60, 68; Okuma §8, §10</em></p>
+<p>Q17'deki tabloyu ve bir TLB'yi düşünün. Her olayı dört eksende sınıflandırın (mapping var mı / izin var mı / resident mı / TLB'de mi) ve sonucu adlandırın: (a) okuma 0x3004, TLB miss; (b) yazma 0x1010, TLB hit; (c) okuma 0x2004; (d) (Hafta 6 modeli) yasal ama nonresident bir sayfaya okuma; (e) okuma 0x5000.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<ul>
+<li>(a) mapped yes, read permitted, resident yes, TLB miss → walk the table, refill the TLB, PA = 1×4096 + 4 = 0x1004. No page fault, no disk <span class="src">sl. 35</span>.</li>
+<li>(b) mapped yes, write not permitted (page 1 read-only), resident yes, TLB hit → protection rejection; the hit does not bypass permissions <span class="src">sl. 28, 64</span>.</li>
+<li>(c) page 2 unmapped → rejection; no physical result; loading data from disk would not make it legal <span class="src">sl. 28; Okuma §8</span>.</li>
+<li>(d) mapped (valid) yes, not resident → page fault; a fault handler may supply a frame and retry (Week 6) <span class="src">sl. 28, 60</span>.</li>
+<li>(e) page 5 beyond the table → rejected as outside the address space.
+Record translation-cache behaviour separately from residency and permissions <span class="src">sl. 35, 68</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her olay için dört eksen + doğru sonuç adı; (a) için "fault yok", (d) için "Hafta 6, handler" ifadeleri.</p>
+</details><hr />
+<p><strong>Q26.</strong> <em>Zorluk 2 · Bölüm 3 · Hesap · Kaynak: OSC ch9 sl. 21</em></p>
+<p>OSC'nin "50-percent rule"u: first fit ile N blok tahsis edildiğinde yaklaşık 0,5N blok parçalanmaya gider. Belleğin hangi kesri kullanılamaz? Bu bir yasa mıdır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Lost / total = 0.5N / (N + 0.5N) = 0.5 / 1.5 = 1/3 of memory may be unusable <span class="src">OSC ch9 sl. 21</span>. It is a statistical result of first-fit analysis under particular assumptions, not a law for every workload; the lecture uses the same caution for the half-page internal-fragmentation average <span class="src">sl. 29</span>.</p>
+<p><strong>Ölçüt.</strong> 1/3 ve hesabı + "varsayıma bağlı" çekincesi.</p>
+</details><hr />
+<h3 id="seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma<a class="headerlink" href="#seviye-3-cok-adml-iz-hesap-hata-bulma" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q27.</strong> <em>Zorluk 3 · Bölüm 3 · İz · Kaynak: sl. 14–15, 31; Okuma §4</em></p>
+<p>Adres sırasıyla delikler: 100, 500, 200, 300, 600 KiB. İstekler sırayla 212, 417, 112, 426 KiB. Seçilen delik bölünür; serbest bırakma yok. Üç politika için her adımda seçilen deliği, son delik listesini, toplam boş alanı yazın ve korunum kontrolü yapın.</p>
+<blockquote>
+<p>English: Trace first fit, best fit and worst fit; give the final holes and check conservation.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Assumptions: address-order search for first fit, chosen hole split in place, no deallocation, no coalescing needed <span class="src">sl. 14</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Request</th>
+<th>First fit</th>
+<th>Best fit</th>
+<th>Worst fit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>212</td>
+<td>500 → 288</td>
+<td>300 → 88</td>
+<td>600 → 388</td>
+</tr>
+<tr>
+<td>417</td>
+<td>600 → 183</td>
+<td>500 → 83</td>
+<td>500 → 83</td>
+</tr>
+<tr>
+<td>112</td>
+<td>288 → 176</td>
+<td>200 → 88</td>
+<td>388 → 276</td>
+</tr>
+<tr>
+<td>426</td>
+<td>cannot fit</td>
+<td>600 → 174</td>
+<td>cannot fit</td>
+</tr>
+</tbody>
+</table>
+<p>Final holes (address order):</p>
+<ul>
+<li>First fit: 100, 176, 200, 300, 183 = 959 KiB; largest 300 &lt; 426 → external fragmentation <span class="src">sl. 15</span>.</li>
+<li>Best fit: 100, 83, 88, 88, 174 = 533 KiB <span class="src">Okuma §4</span>.</li>
+<li>Worst fit: 100, 83, 200, 300, 276 = 959 KiB; largest 300 &lt; 426.
+Conservation: initial 100+500+200+300+600 = 1700. First/worst satisfied 212+417+112 = 741 → 1700 − 741 = 959 ✓. Best satisfied all four, 1167 → 1700 − 1167 = 533 ✓ <span class="src">Okuma §4</span>. Best fit succeeding here is an example outcome, not proof that it dominates every workload <span class="src">Okuma §4</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Tablo + üç son liste + iki korunum kontrolü + "örnek sonuç, kanıt değil". Worst fit'in son listesi slaytta yok; doğru yazılması ayırt edici.</p>
+</details><hr />
+<p><strong>Q28.</strong> <em>Zorluk 3 · Bölüm 3 · İz · Kaynak: sl. 13–15 (yeni sayılar)</em></p>
+<p>Delikler (adres sırası): 300, 600, 350, 200, 750, 125 KiB. İstekler: 115, 500, 358, 200, 375 KiB. Bölme var, serbest bırakma yok; eşit boyutta deliklerde adresi küçük olan seçilir. Üç politikayı izleyin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Initial total = 2325 KiB.
+First fit:</p>
+<ul>
+<li>115 → 300 → 185 · 500 → 600 → 100 · 358 → 750 → 392 (185, 100, 350, 200 too small) · 200 → 350 → 150 · 375 → 392 → 17.</li>
+<li>
+<p>Holes: 185, 100, 150, 200, 17, 125 = 777. Check: requests 115+500+358+200+375 = 1548; 2325 − 1548 = 777 ✓.
+Best fit:</p>
+</li>
+<li>
+<p>115 → 125 → 10 · 500 → 600 → 100 · 358 → 750 → 392 (350 is too small) · 200 → 200 → 0 (hole disappears) · 375 → 392 → 17.</p>
+</li>
+<li>
+<p>Holes: 300, 100, 350, 17, 10 = 777 ✓.
+Worst fit:</p>
+</li>
+<li>
+<p>115 → 750 → 635 · 500 → 635 → 135 · 358 → 600 → 242 · 200 → 350 → 150 · 375 → largest hole is 300 → <strong>cannot fit</strong>.</p>
+</li>
+<li>Holes: 300, 242, 150, 200, 135, 125 = 1152. Check: 2325 − (1548 − 375) = 2325 − 1173 = 1152 ✓. 1152 KiB free yet 375 fails: external fragmentation.
+Worst fit consumed the large holes early; a choice that looks good for one request made a later request harder <span class="src">sl. 13</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her politikanın beş adımı + korunum kontrolleri + worst fit başarısızlığının "dış parçalanma" diye adlandırılması.</p>
+</details><hr />
+<p><strong>Q29.</strong> <em>Zorluk 3 · Bölüm 5 · Hesap (hex tuzağı) · Kaynak: sl. 21–22, 28; Okuma §7</em></p>
+<p>16-bit VA, <strong>1 KiB</strong> sayfa, 16 KiB fiziksel bellek. Sayfa tablosu (4 girdi): 0 → frame 7 (RW), 1 → frame 2 (R), 2 → eşlenmemiş, 3 → frame 0x0C (RW). Çevirin: okuma 0x0E7F, okuma 0x05FF, yazma 0x05FF, okuma 0x0400, okuma 0x0812, okuma 0x13FF. Frame numarası kaç bittir?</p>
+<blockquote>
+<p>English: With 1 KiB pages, why can you not split the hexadecimal digits directly?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> 1 KiB = 2¹⁰ → offset = low 10 bits, VPN = upper 6 bits. 10 bits is not a multiple of 4, so hex digits do not align with the page/offset boundary; work in binary or by division. Physical 16 KiB = 2¹⁴ → frame bits = 14 − 10 = 4.</p>
+<ul>
+<li>R 0x0E7F = 0000 11|10 0111 1111 → VPN 3, d = 0x27F = 639. Division: 3711 = 3×1024 + 639 ✓. PA = 12×1024 + 639 = 12927 = 0x327F (0x0C &lt;&lt; 10 = 0x3000; + 0x27F).</li>
+<li>R 0x05FF = 0000 01|01 1111 1111 → VPN 1, d = 0x1FF = 511 (1535 = 1×1024 + 511). PA = 2×1024 + 511 = 2559 = 0x09FF.</li>
+<li>W 0x05FF → page 1 read-only → PROTECTION.</li>
+<li>R 0x0400 → VPN 1, d 0 (1024 = 1×1024) → PA 2048 = 0x0800.</li>
+<li>R 0x0812 = 0000 10|00 0001 0010 → VPN 2, d = 18 (2066 = 2×1024 + 18) → UNMAPPED.</li>
+<li>R 0x13FF = 0001 00|11 1111 1111 → VPN 4, d = 1023 (5119 = 4×1024 + 1023) → beyond the 4-entry table → rejected.
+Common error: reading 0x0E7F as "page 0x0E, offset 0x7F" (that would be 256-byte pages).</li>
+</ul>
+<p><strong>Ölçüt.</strong> Altı doğru sonuç + 4-bit frame + hex hizalama uyarısı. Bir tanesinde hex basamaklarını doğrudan bölmek o şıkkı sıfırlar.</p>
+</details><hr />
+<p><strong>Q30.</strong> <em>Zorluk 3 · Bölüm 7 · Hesap · Kaynak: sl. 43–44, 66–67</em></p>
+<p>Sanal adres 24 bit, sayfa boyutu <strong>8 KiB</strong>. Süreç A sanal sayfa 2'yi frame 0x15'e salt okunur; süreç B sanal sayfa 0x40'ı aynı frame'e RW eşliyor. (a) A'nın okuma 0x5A10 erişimi hangi fiziksel adrese gider? (b) B aynı bayta hangi sanal adresle ulaşır? (c) A 0x5A10'a yazabilir mi? B kendi adresine yazabilir mi? (d) A, B'nin yazdığını görür mü?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> 8 KiB = 2¹³ → offset 13 bits (hex digits do not align).
+(a) 0x5A10 = 0101 1010 0001 0000 → VPN = VA &gt;&gt; 13 = 2 (the bits above bit 12), d = 1 1010 0001 0000 = 0x1A10. Division: 23056 = 2×8192 + 6672 (6672 = 0x1A10) ✓. PA = 0x15 × 0x2000 + 0x1A10 = 0x2A000 + 0x1A10 = <strong>0x2BA10</strong>; decimal 21×8192 + 6672 = 172032 + 6672 = 178704 ✓.
+(b) B: 0x40 × 0x2000 + 0x1A10 = 0x80000 + 0x1A10 = <strong>0x81A10</strong> (530960 = 64×8192 + 6672) → same PA 0x2BA10. Different virtual addresses reach the same frame <span class="src">sl. 43</span>.
+(c) A's write is rejected by A's read-only mapping; B's write is permitted by B's RW mapping. Permissions belong to the mapping used <span class="src">sl. 43–44</span>.
+(d) Yes: same physical byte; read-only for A does not make the frame immutable <span class="src">sl. 67</span>. If several writers update it, synchronization is still needed <span class="src">sl. 42</span>.</p>
+<p><strong>Ölçüt.</strong> İki doğru adres (hex + ondalık kontrol), izin kararı mapping'e göre, "immutable değil".</p>
+</details><hr />
+<p><strong>Q31.</strong> <em>Zorluk 3 · Bölüm 8 · İz · Kaynak: sl. 47–49; Okuma §13</em></p>
+<p>32-bit VA, 4 KiB sayfa, iki seviyede 4 baytlık girdi, 10/10/12 bölünme, kök tablo 0x1000'de. (a) Hocanın örneği: 0x00403004'ü yürüyün (kök girdisi 1 → iç taban 0x5000; iç girdi 3 → frame 0xA). (b) Yeni: 0x00805ABC; kök girdisi → iç taban 0x7000; iç girdi → frame 0x2C. Her adımda girdi adresini, içeriğini ve son veri adresini yazın. (c) Kök girdisi bu bölge için hiç iç tablo olmadığını gösteriyorsa (bölge kullanılmıyor) kaç bellek okuması yapılır ve sonuç ne olur?</p>
+<blockquote>
+<p>English: Label each arrow: entry address, entry contents, data address.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Outer = VA &gt;&gt; 22, inner = (VA &gt;&gt; 12) &amp; 0x3FF, offset = VA &amp; 0xFFF <span class="src">sl. 47</span>.
+(a) 0x00403004: outer = 1 (0x00403004 / 2²² = 1 rem 0x3004), inner = 0x3004 / 4096 = 3, offset 4.</p>
+<ul>
+<li>Outer entry address 0x1000 + 1×4 = 0x1004 → contents: inner base 0x5000.</li>
+<li>Inner entry address 0x5000 + 3×4 = 0x500C → contents: frame 0xA.</li>
+<li>
+<p>Data 0xA × 4096 + 4 = 0xA004 <span class="src">sl. 49</span>.
+(b) 0x00805ABC = 0000 0000 10|00 0000 0101|1010 1011 1100 → outer 2, inner 5, offset 0xABC. Division: 8411836 = 2×4194304 + 23228; 23228 = 5×4096 + 2748 (0xABC) ✓.</p>
+</li>
+<li>
+<p>Outer entry 0x1000 + 2×4 = 0x1008 → inner base 0x7000.</p>
+</li>
+<li>Inner entry 0x7000 + 5×4 = 0x7014 → frame 0x2C.</li>
+<li>Data 0x2C × 0x1000 + 0xABC = <strong>0x2CABC</strong> (44×4096 + 2748 = 182972) ✓.
+(c) One memory read (the outer entry), then the walk stops: the region has no inner table, so the reference is rejected (invalid). (A Week 6 model where a valid inner table is merely nonresident would be a different case: a fault that is serviced.) Only a permitted leaf mapping is combined with the offset <span class="src">sl. 48</span>. 0x1008 and 0x7014 are table addresses; 0x2CABC is the data address <span class="src">sl. 48</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Her ok etiketli (adres → içerik), bit bölünmesi ve ondalık kontrol, (c)'de "1 okuma, ret".</p>
+</details><hr />
+<p><strong>Q32.</strong> <em>Zorluk 3 · Bölüm 8 · Hesap · Kaynak: sl. 45, 50; Okuma §13</em></p>
+<p>Q31'deki 10/10/12 model. Bir süreç şu aralıkları eşliyor (her biri dahil): kod 0x08048000–0x0804BFFF, veri/heap 0x0804C000–0x08450FFF, kütüphane 0x40000000–0x40002FFF, stack 0xBFFFE000–0xBFFFFFFF. (a) Kaç sayfa eşlenmiş? (b) Hangi dış indeksler kullanılıyor? (c) Tablo belleği ne kadar, lineer tabloyla karşılaştırın. (d) 0x08451000'deki bir sayfa daha eşlenirse ne değişir? 0x00000000'daki bir sayfa eşlenirse? (e) Hiyerarşinin lineer tablodan büyük olduğu durum?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Outer index = VA &gt;&gt; 22 = ⌊VA / 4 MiB⌋.
+(a) Code (0x0804C000 − 0x08048000) / 4096 = 0x4000 / 0x1000 = 4; heap (0x08451000 − 0x0804C000) = 0x405000 → 1029; library 3; stack 2. Total 1038 pages.
+(b) Code: 0x08048000 &gt;&gt; 22 = 32 (0x08000000 = 32 × 0x400000). Heap: 32 to 0x08450FFF &gt;&gt; 22 = 33 (0x08400000 = 33 × 0x400000), so it spans two regions. Library: 0x40000000 &gt;&gt; 22 = 256. Stack: 0xBFFFE000 &gt;&gt; 22 = 767 (767 × 4 MiB = 0xBFC00000). Distinct: {32, 33, 256, 767} = 4.
+(c) 1 root + 4 leaf tables = 5 × 4 KiB = 20 KiB versus 4 MiB for a full linear table <span class="src">sl. 50</span>.
+(d) 0x08451000 &gt;&gt; 22 = 33: its leaf table exists; one more entry, no new table <span class="src">Okuma §13</span>. 0x00000000 → outer 0, new leaf table: 24 KiB.
+(e) If every outer region needs a leaf table: 1 + 1024 = 1025 pages = 4100 KiB &gt; 4096 KiB linear <span class="src">sl. 50</span>. Savings depend on sparsity.</p>
+<p><strong>Ölçüt.</strong> Dört dış indeksin doğru bulunması (heap'in iki bölgeye taşması kilit), 20 KiB, (d) iki durum ayrımı, (e) 1025.</p>
+</details><hr />
+<p><strong>Q33.</strong> <em>Zorluk 3 · Bölüm 8 · Hesap · Kaynak: sl. 38, 51; Okuma §11</em></p>
+<p>Hocanın seri modeli (t = 1 ns, m = 100 ns, sayfalar resident, başka önbellek yok), k seviyeli tablo. (a) Genel EAT formülünü yazın. (b) k = 2, h = 0,95; k = 3, h = 0,98; k = 4, h = 0,99 için EAT. (c) k = 2'de EAT ≤ 105 ns için gereken en küçük h? (d) k = 1'de 100 ns tabana göre en fazla %10 ek yük için h?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Hit = t + m; miss = t + k·m (PTE reads) + m (data) = t + (k+1)m <span class="src">sl. 51</span>. EAT = h(t + m) + (1 − h)(t + (k+1)m) = t + m + (1 − h)·k·m.
+(b)</p>
+<ul>
+<li>k = 2, h = 0.95: miss = 301; 0.95×101 + 0.05×301 = 95.95 + 15.05 = 111 ns <span class="src">sl. 51</span>. Check: 101 + 0.05×200 = 111 ✓.</li>
+<li>k = 3, h = 0.98: miss = 401; 0.98×101 + 0.02×401 = 98.98 + 8.02 = 107 ns. Check: 101 + 0.02×300 = 107 ✓.</li>
+<li>k = 4, h = 0.99: miss = 501; 99.99 + 5.01 = 105 ns. Check: 101 + 0.01×400 = 105 ✓.
+(c) 101 + (1 − h)·200 ≤ 105 → 1 − h ≤ 0.02 → h ≥ 0.98.
+(d) 201 − 100h ≤ 110 → h ≥ 0.91.
+No page-in or disk cost is included; real CPUs add data caches, walk caches and overlap <span class="src">sl. 51; Okuma §11</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Formül + üç değer + iki ters çözüm + model çekincesi.</p>
+</details><hr />
+<p><strong>Q34.</strong> <em>Zorluk 3 · Bölüm 6 · İz · Kaynak: sl. 36–37; OSC ch9 sl. 31</em></p>
+<p>Üç girdili, tam ilişkili, başlangıçta boş TLB; bütün sayfalar resident. Sayfa referansları: 1, 2, 3, 1, 4, 1, 2, 5, 1, 2. (a) LRU, (b) FIFO ile izleyin; hit sayısı ve oranı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) LRU (old → new):
+1 M [1] · 2 M [1,2] · 3 M [1,2,3] · 1 H [2,3,1] · 4 M evict 2 [3,1,4] · 1 H [3,4,1] · 2 M evict 3 [4,1,2] · 5 M evict 4 [1,2,5] · 1 H [2,5,1] · 2 H [5,1,2].
+Hits 4 / 10 = 40%.
+(b) FIFO (insertion order; a hit does not change order):
+1 M [1] · 2 M [1,2] · 3 M [1,2,3] · 1 H [1,2,3] · 4 M evict 1 [2,3,4] · 1 M evict 2 [3,4,1] · 2 M evict 3 [4,1,2] · 5 M evict 4 [1,2,5] · 1 H · 2 H.
+Hits 3 / 10 = 30%.
+All misses are resolved from resident mappings: zero page faults <span class="src">sl. 37</span>. The difference comes from the replacement assumption, which must be stated <span class="src">sl. 37</span>.</p>
+<p><strong>Ölçüt.</strong> İki iz doğru + sayılar + "fault yok". FIFO'da hit'in sırayı değiştirmediği kritik.</p>
+</details><hr />
+<p><strong>Q35.</strong> <em>Zorluk 3 · Bölüm 6 · İz · Kaynak: sl. 36–37 (adresten başlayan iz)</em></p>
+<p>4 KiB sayfa, iki girdili boş TLB, sayfalar resident. Sanal adres dizisi: 0x0004, 0x0FF0, 0x1008, 0x0010, 0x2FFC, 0x1FFC, 0x3000, 0x0000. (a) Sayfa dizisi? (b) LRU ve FIFO izleri ve hit oranları. (c) "LRU her zaman FIFO'dan iyidir" iddiası?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Page = VA &gt;&gt; 12: 0, 0, 1, 0, 2, 1, 3, 0. Sequential accesses within a page reuse one translation <span class="src">sl. 37</span>.
+(b) LRU: 0 M [0] · 0 H [0] · 1 M [0,1] · 0 H [1,0] · 2 M evict 1 [0,2] · 1 M evict 0 [2,1] · 3 M evict 2 [1,3] · 0 M evict 1 [3,0] → 2/8 = 25%.
+FIFO: 0 M [0] · 0 H · 1 M [0,1] · 0 H [0,1] · 2 M evict 0 [1,2] · 1 H [1,2] · 3 M evict 1 [2,3] · 0 M evict 2 [3,0] → 3/8 = 37.5%.
+(c) Not necessarily: here FIFO has more hits. The result depends on the reference sequence, capacity and replacement assumptions <span class="src">sl. 37</span>.</p>
+<p><strong>Ölçüt.</strong> Sayfa dizisi + iki iz + karşı örnek olarak (c).</p>
+</details><hr />
+<p><strong>Q36.</strong> <em>Zorluk 3 · Bölüm 11 · Kod okuma · Kaynak: sl. 64–65; Okuma §16; kod/translate.c</em></p>
+<p><code>translate.c</code>'nin <code>main</code>'i sırayla R 0x0FFF, R 0x1000, R 0x0001, R 0x3000, R 0x1234, W 0x1234, R 0x2000, R 0x4000 çağırıyor. Çalıştırmadan her satırın çıktısını ve her adımdan sonra TLB içeriğini (slot ve <code>last</code> değeriyle) yazın.</p>
+<blockquote>
+<p>English: Predict every printed line and the TLB state after each call; explain why the write at 0x1234 reports a TLB hit.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Model: pt = {0:(3,RW), 1:(9,R), 2:unmapped, 3:(1,RW)}, 4 KiB pages, two-entry LRU TLB using <code>last</code>, ties broken by <code>tlb[0].last &lt;= tlb[1].last ? 0 : 1</code>. Successful accesses update <code>last</code>; rejected accesses return before updating <span class="src">Okuma §16</span>. Measured output:</p>
+<pre><code>R VA=0x0FFF page=0 offset=4095 TLB=MISS frame=3 PA=0x3FFF
+R VA=0x1000 page=1 offset=0 TLB=MISS frame=9 PA=0x9000
+R VA=0x0001 page=0 offset=1 TLB=HIT frame=3 PA=0x3001
+R VA=0x3000 page=3 offset=0 TLB=MISS frame=1 PA=0x1000
+R VA=0x1234 page=1 offset=564 TLB=MISS frame=9 PA=0x9234
+W VA=0x1234 page=1 offset=564 TLB=HIT PROTECTION
+R VA=0x2000 page=2 offset=0 UNMAPPED
+R VA=0x4000 page=4 offset=0 UNMAPPED
+</code></pre>
+<p>TLB states:</p>
+<ol>
+<li>slot0 = p0 (last 1).</li>
+<li>slot1 = p1 (last 2).</li>
+<li>hit p0 → slot0 last 3.</li>
+<li>Miss p3: both valid; tlb[0].last 3 ≤ tlb[1].last 2 is false → victim slot1 (p1, LRU). slot1 = p3 (last 4).</li>
+<li>Miss p1: 3 ≤ 4 → victim slot0 (p0). slot0 = p1 (last 5). The page sequence 0, 1, 0, 3, 1 matches the predicted trace <span class="src">sl. 65</span>.</li>
+<li>W 0x1234: p1 is in slot0 → HIT; the entry's copied <code>writable = false</code> → PROTECTION; return before <code>last</code> update; TLB unchanged. A cached translation still enforces read-only protection <span class="src">sl. 64</span>.
+7–8. Pages 2 and 4 are rejected at line 17 before the TLB is consulted; TLB unchanged.
+Note the offset is printed in decimal (564 = 0x234) and PA with <code>%04X</code>.</li>
+</ol>
+<p><strong>Ölçüt.</strong> Sekiz satır + TLB durumları + 6. adımın gerekçesi (izin TLB girdisinde de var) + 7–8'in TLB'ye dokunmadığı.</p>
+</details><hr />
+<p><strong>Q37.</strong> <em>Zorluk 3 · Bölüm 11 · Kod okuma, hata bulma · Kaynak: sl. 40, 64–65; Okuma §16; kod/translate.c</em></p>
+<p>(a) <code>main</code>'in sonuna <code>access_address(0x0FFF,'W'); access_address(0x3004,'R');</code> eklenirse ne yazdırılır? (b) 17. satırdaki koşulda <code>page &gt;= sizeof pt / sizeof pt[0]</code> neden <code>!pt[page].mapped</code>'den önce? (c) 22. satırdaki izin kontrolü TLB'ye ekleme (23–26) sonrasına taşınsa ne değişir? (d) Program çalışırken <code>pt[1].frame</code> 9'dan 5'e değiştirilse ve TLB temizlenmese ne olur? Okumanın önerdiği "boş TLB'den yeniden çalıştır" neden önemli? (e) Değişiklik yalnız kaynakta yapılıp program baştan çalıştırılırsa 0x1234 okuması ne verir, hangi adres bitleri değişir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) State before: slot0 = p1 (last 5), slot1 = p3 (last 4). Measured:</p>
+<pre><code>W VA=0x0FFF page=0 offset=4095 TLB=MISS frame=3 PA=0x3FFF
+R VA=0x3004 page=3 offset=4 TLB=MISS frame=1 PA=0x1004
+</code></pre>
+<p>W 0x0FFF: p0 miss, pt[0] writable → allowed; victim slot1 (p3, last 4) → slot1 = p0 (last 6). R 0x3004: p3 was just evicted → miss; victim slot0 (p1, last 5) → slot0 = p3 (last 7).
+(b) Short-circuit evaluation: for page 4, <code>pt[4]</code> would read past the 4-element array (undefined behaviour). The bound check acts like a page-table length check (PTLR in OSC terms) <span class="src">OSC ch9 sl. 30, 35</span>.
+(c) For the given eight calls the output does not change: the only rejected write (W 0x1234) is a TLB hit, and a hit skips the fill code. The difference appears only for a write to a read-only page that misses in the TLB: the rejected access would then install an entry (evicting a victim, with <code>last</code> still 0), breaking the rule "rejected accesses leave the cache unchanged" <span class="src">Okuma §16</span>. Protection is still enforced, because the write is still refused. (Measured: moving the check leaves the eight lines identical; W 0x1234 then R 0x1234 from an empty TLB prints MISS in the original and HIT in the modified version.)
+(d) The TLB would keep the stale entry p1 → 9, and accesses that hit would continue to reach frame 9: a cached decision would outlive the state it depends on. Changing mappings requires invalidating the cached translation <span class="src">sl. 40; Okuma §10</span>. Starting from an empty TLB avoids this unmodelled stale-translation problem <span class="src">Okuma §16</span>.
+(e) 0x1234 → 5 × 0x1000 + 0x234 = 0x5234. Page number (1) and offset (0x234) are unchanged; only the frame bits (bits 12 and above of the PA) change from 9 to 5 <span class="src">sl. 65; Okuma §16</span>. The write is still rejected, because the permission is unchanged.</p>
+<p><strong>Ölçüt.</strong> (a) iki satır ve kurban seçimi; (b) "kısa devre + dizi sınırı"; (c) "bu 8 çağrıda değişmez, çünkü reddedilen yazma hit" + miss'li yazmada önbellek durumunun değişmesi; (d) "stale translation → invalidate"; (e) 0x5234 ve değişen bitler.</p>
+</details><hr />
+<p><strong>Q38.</strong> <em>Zorluk 3 · Bölüm 11 · Kod okuma · Kaynak: sl. 61–63; Okuma §16; kod/address-view.c</em></p>
+<p><code>address-view.c</code>'yi okuyun. (a) Program neden <code>/proc/self/maps</code>'i kendisi okuyor, <code>cat /proc/self/maps</code> ayrı komut olarak neden yanlış olurdu? (b) Sayfa boyutunu nereden alıyor, neden 4096 varsayılmıyor? (c) İki çalıştırmada adresler farklı çıkarsa bu bir hata mı? (d) <code>allocated</code> her zaman [heap] içinde mi? (e) Bu çıktıdan TLB isabet oranı ya da fiziksel frame çıkarılabilir mi? (f) macOS'ta ne olur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) /proc/self refers to the reading process. A separate <code>cat</code> would print cat's own address space, not the program's; reading it from inside guarantees that the pointers and the map belong to the same process <span class="src">sl. 61; Okuma §16</span>.
+(b) <code>sysconf(_SC_PAGESIZE)</code>; the machine's base page size must be discovered, not replaced by the lecture's 4096-byte model <span class="src">Okuma §16</span>.
+(c) Not necessarily an error: compare runs without assuming that an object must appear at a fixed address <span class="src">Okuma §16</span>. (Address-space layout randomization is one common cause: ek bilgi.)
+(d) No. Allocator choices and allocation size can differ <span class="src">sl. 63</span>. (glibc serves large requests with separate mmap regions: ek bilgi.) The 512-byte request here usually lands in [heap].
+(e) No. Native pointers and maps reveal virtual layout, not a physical frame number or a TLB hit rate <span class="src">sl. 62; Okuma §16</span>.
+(f) The <code>#ifdef __linux__</code> branch is skipped; it prints PID, page size and the three pointers and a note that /proc/self/maps is Linux-specific (on Apple silicon the reported page size is typically 16384: ek bilgi).</p>
+<p><strong>Ölçüt.</strong> (a) ve (e) kilit; (b) sysconf; (c)–(d) "not necessarily" kalıbıyla.</p>
+</details><hr />
+<p><strong>Q39.</strong> <em>Zorluk 3 · Bölüm 5 · Hesap, ince tuzak · Kaynak: sl. 29–30, 56; Okuma §5</em></p>
+<p>72766 baytlık tahsis için sayfa boyutu 512, 1024, 2048, 4096 ve 8192 bayt olsun. Her biri için sayfa sayısı, ayrılan alan ve iç parçalanmayı bulun. "Sayfayı küçültmek iç parçalanmayı her zaman azaltır" iddiasını değerlendirin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<table>
+<thead>
+<tr>
+<th>P</th>
+<th>72766 = q·P + r</th>
+<th>Pages</th>
+<th>Reserved</th>
+<th>Internal frag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>512</td>
+<td>142·512 + 62</td>
+<td>143</td>
+<td>73216</td>
+<td>450</td>
+</tr>
+<tr>
+<td>1024</td>
+<td>71·1024 + 62</td>
+<td>72</td>
+<td>73728</td>
+<td>962</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>35·2048 + 1086</td>
+<td>36</td>
+<td>73728</td>
+<td>962 <span class="src">sl. 29</span></td>
+</tr>
+<tr>
+<td>4096</td>
+<td>17·4096 + 3134</td>
+<td>18</td>
+<td>73728</td>
+<td>962</td>
+</tr>
+<tr>
+<td>8192</td>
+<td>8·8192 + 7230</td>
+<td>9</td>
+<td>73728</td>
+<td>962</td>
+</tr>
+</tbody>
+</table>
+<p>Check: waste = reserved − 72766 in every row. 73728 = 9 × 8192 is a multiple of 1024, 2048, 4096 and 8192, so all four round up to the same total. Claim: not necessarily. Halving the page size reduces the waste only when the rounded-up total changes. The trend still holds: the maximum possible waste (P − 1) and, under a suitable distribution, the expected waste, shrink with P, while the number of page-table entries grows (9 → 143) and TLB reach shrinks <span class="src">sl. 30, 56; Okuma §5</span>.</p>
+<p><strong>Ölçüt.</strong> Tablo + "not necessarily" + doğru gerekçe (yuvarlanan toplam) + tablo girdisi/TLB ödünleşimi.</p>
+</details><hr />
+<p><strong>Q40.</strong> <em>Zorluk 3 · Bölüm 8 · İz · Kaynak: OSTEP vm-smalltables</em></p>
+<p>OSTEP örneği: 16 KiB adres alanı, 64 baytlık sayfa, 4 baytlık PTE. (a) VPN ve offset bitleri? Lineer tablo kaç bayt, kaç sayfa? (b) Sayfa dizini (page directory) kaç girdi, VPN nasıl bölünür? (c) Yalnız VPN 0, 1, 4, 5, 254, 255 eşlenmişse kaç tablo sayfası gerekir? (d) 0x3F80'i çevirin; VPN 254 → PFN 55.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 14-bit VA: 8-bit VPN, 6-bit offset. Linear: 256 × 4 = 1 KiB = 16 pages of 64 bytes (16 PTEs per page).
+(b) The directory needs one entry per page of the page table: 16 entries → top 4 VPN bits = PD index, next 4 = PT index.
+(c) VPNs 0–15 share PT page 0 (VPN 0, 1, 4, 5), VPNs 240–255 share PT page 15 (254, 255) → 1 directory + 2 PT pages = 3 pages instead of 16.
+(d) 0x3F80 = 11 1111 1000 0000 → VPN = 1111 1110 = 254, offset 0. PD index 1111 = 15; PT index 1110 = 14 → PFN 55 = 0x37. PA = 55 × 64 + 0 = 3520 = <strong>0x0DC0</strong> (00 1101 1100 0000) <span class="src">OSTEP vm-smalltables</span>. Decimal check: 0x3F80 = 16256 = 254 × 64 + 0 ✓.</p>
+<p><strong>Ölçüt.</strong> Bölünme 4/4/6, 3 sayfa, 0x0DC0.</p>
+</details><hr />
+<p><strong>Q41.</strong> <em>Zorluk 3 · Bölüm 6 · İz · Kaynak: OSTEP vm-tlbs; sl. 37</em></p>
+<p>8-bit sanal adres alanı, 16 baytlık sayfa. 10 elemanlı <code>int a[10]</code> (4 bayt) sanal adres 100'den başlıyor; döngü <code>a[0]..a[9]</code> toplanıyor; TLB başta boş ve yeterince büyük. Hit/miss dizisi ve hit oranı? Döngü hemen ikinci kez çalışırsa?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Element i is at 100 + 4i; page = ⌊addr / 16⌋. a[0..2] (100, 104, 108) → page 6; a[3..6] (112–124) → page 7; a[7..9] (128–136) → page 8. Sequence: M H H M H H H M H H → 7/10 = 70% (spatial locality) <span class="src">OSTEP vm-tlbs</span>. A second pass with the three entries still cached: 10/10 hits (temporal locality). Consistent with sl. 37: sequential accesses within a page reuse one translation.</p>
+<p><strong>Ölçüt.</strong> Sayfa atamaları + %70 + ikinci geçiş %100 (TLB yeterli varsayımıyla).</p>
+</details><hr />
+<p><strong>Q42.</strong> <em>Zorluk 3 · Bölüm 5 · Hatayı bul · Kaynak: sl. 10, 25, 28, 33, 35, 64; Okuma §7</em></p>
+<p>Bir öğrencinin çözümünde beş hata var; her birini bulun ve düzeltin (Q17'nin tablosu, PTBR = 0x8000, 8 baytlık PTE):</p>
+<ol>
+<li>"Okuma 0x1234: frame 9, PA = 9 × 4096 + 0x1234 = 0x9000 + 0x1234 = 0xA234."</li>
+<li>"Sayfa 1'in PTE'si 0x8008'de; veri 0x8008 + 0x234 = 0x823C'de."</li>
+<li>"Base 14000, limit 1000: offset 1000 → 15000, çünkü offset ≤ limit."</li>
+<li>"Yazma 0x1234 TLB'de hit olduğundan izin verilir."</li>
+<li>"Okuma 0x2000 eşlenmemiş; işletim sistemi sayfayı diskten yükler ve yeniden dener. Ayrıca her TLB miss disk erişimi demektir."</li>
+</ol>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<ol>
+<li>Added the whole virtual address, counting the page contribution twice. Correct: PA = f × P + d = 0x9000 + 0x234 = 0x9234 <span class="src">sl. 25; Okuma §7</span>.</li>
+<li>Confused the PTE address with the data address. 0x8008 holds the entry; its contents (frame 9) give data address 0x9234 <span class="src">sl. 33</span>.</li>
+<li>Legal offsets satisfy 0 ≤ offset &lt; limit; offset 1000 must trap; no physical result <span class="src">sl. 10</span>.</li>
+<li>A TLB hit supplies the cached translation and its permissions; the read-only mapping rejects the write <span class="src">sl. 64; translate.c output</span>.</li>
+<li>An unmapped page is an invalid reference; loading data does not make it legal. Only a valid but nonresident page is serviced by a fault handler (Week 6) <span class="src">sl. 28</span>. A TLB miss with a resident mapping needs no disk access <span class="src">sl. 35</span>.</li>
+</ol>
+<p><strong>Ölçüt.</strong> Beş hata ve doğru değerler; her biri 1 puan.</p>
+</details><hr />
+<h3 id="seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak<a class="headerlink" href="#seviye-4-sentez-tasarm-ince-tuzak" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q43.</strong> <em>Zorluk 4 · Bölüm 5–8 · Doğru/yanlış + gerekçe · Kaynak: sl. 16–17, 27, 35, 43, 50, 56, 57, 62–64</em></p>
+<p>Her ifadeye "True / False / Not necessarily" deyin ve tek cümleyle gerekçelendirin: (a) Her TLB miss bir disk erişimi gerektirir. (b) TLB hit, erişimin izinli olduğunu gösterir. (c) İki süreç aynı pointer değerini yazdırıyorsa aynı nesneyi paylaşıyorlardır. (d) Ardışık iki sanal bayt fiziksel olarak ardışıktır. (e) Hiyerarşik tablo lineer tablodan her zaman küçüktür. (f) Compaction iç parçalanmayı giderir. (g) Paging parçalanmayı yok eder. (h) Linux beş seviye adlandırdığı için her TLB miss beş tablo okur. (i) 2 MiB sayfalar 128 MiB'lık iş kümesinde hiç TLB miss olmamasını sağlar. (j) <code>/proc/self/maps</code> bir nesnenin fiziksel frame'ini bulmak için yeterlidir.</p>
+<blockquote>
+<p>English: For each statement answer True, False or Not necessarily, with one sentence of justification.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<ul>
+<li>(a) False: no disk read follows merely from a TLB miss; a valid resident mapping is recovered from the page table <span class="src">sl. 35, 67</span>.</li>
+<li>(b) False: the entry carries permissions that are still checked; translate.c reports TLB=HIT PROTECTION <span class="src">sl. 64</span>.</li>
+<li>(c) Not necessarily: equal virtual addresses can reach different frames <span class="src">sl. 43; Okuma §1</span>.</li>
+<li>(d) Not necessarily: true within a page, not across a page boundary (0x0FFF → 0x3FFF, 0x1000 → 0x9000) <span class="src">sl. 27</span>.</li>
+<li>(e) False: fully populated, 1025 pages &gt; 1024 pages <span class="src">sl. 50</span>.</li>
+<li>(f) False: it relocates allocations; unused space inside an allocation remains <span class="src">sl. 17</span>.</li>
+<li>(g) False: it removes the contiguous-process placement problem; the final page can be partly unused, and other allocations may need contiguous regions <span class="src">sl. 16; Okuma §5</span>.</li>
+<li>(h) False: unused levels are folded; the mode, page size and leaf type determine the hardware walk <span class="src">sl. 57</span>.</li>
+<li>(i) Not necessarily: nominal reach is not a guarantee; associativity, page-size support and the access pattern matter <span class="src">sl. 56</span>.</li>
+<li>(j) False: maps reports virtual ranges and permissions, not frames or residency <span class="src">sl. 62–63</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> On şık; "Not necessarily" yerine "False" (ya da tersi) yazıp gerekçe doğruysa yarım puan.</p>
+</details><hr />
+<p><strong>Q44.</strong> <em>Zorluk 4 · Bölüm 3 · Karşı örnek · Kaynak: sl. 13; Okuma §4</em></p>
+<p>"Best fit, first fit'in karşıladığı her istek dizisini karşılar" iddiasını bir karşı örnekle çürütün. Delikler (adres sırası) 150 ve 100 KiB; istekler 90, 60, 100 KiB.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+First fit: 90 → 150 → 60; 60 → 60 → 0; 100 → 100 → 0. All succeed.
+Best fit: 90 → 100 (smallest sufficient) → 10; 60 → 150 → 90; 100 → largest hole is 90 → fails. Free = 100 KiB in holes 90 and 10.
+Worst fit: 90 → 150 → 60; 60 → 100 → 40; 100 → fails.
+So best fit does not dominate first fit: a choice that looks economical for one request (leaving only a 10 KiB sliver) made a later request impossible <span class="src">sl. 13</span>. The lecture's own exercise, where best fit succeeds, is an example outcome, not a proof <span class="src">Okuma §4</span>. Conservation check: 250 − 150 = 100 ✓.</p>
+<p><strong>Ölçüt.</strong> Üç politikanın izi + "örnek sonuç, kanıt değil" vurgusu.</p>
+</details><hr />
+<p><strong>Q45.</strong> <em>Zorluk 4 · Bölüm 8 · Sentez · Kaynak: sl. 45–46, 50–51; Okuma §13</em></p>
+<p>32-bit, 4 KiB, 4 baytlık PTE, 10/10/12 iki seviyeli tablo. (a) Bir sürecin kaç farklı 4 MiB'lık bölgeyi kullanması durumunda iki seviyeli tablo lineer tablodan daha büyük olur? (b) İki seviyeli tablonun bedeli (zaman) nedir; TLB bunu nasıl dengeler? (c) "Hiyerarşi bellek kazandırır" cümlesini hocanın istediği biçimde yeniden yazın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Hierarchy = (1 + R) table pages for R used outer regions; linear = 1024 pages. 1 + R &gt; 1024 ⇔ R = 1024, i.e., only when every outer region is used; equality at R = 1023 (1024 pages). In bytes: (1 + R) × 4 KiB vs 4 MiB <span class="src">sl. 50</span>.
+(b) An uncached translation now needs two dependent PTE reads plus the data access: miss cost 301 ns instead of 201 ns in the serial model; EAT at h = 0.95 is 111 ns instead of 106 ns <span class="src">sl. 51</span>. The TLB reduces how often that walk is needed <span class="src">sl. 46</span>.
+(c) "A hierarchy can omit lower-level tables for unused regions; savings depend on sparsity, and a fully populated hierarchy needs 1025 table pages, slightly more than a linear table's 1024" <span class="src">sl. 50</span>.</p>
+<p><strong>Ölçüt.</strong> R = 1024 sınırı (1023'te eşitlik), zaman bedeli sayısal, yeniden yazılmış cümlede "depends on sparsity".</p>
+</details><hr />
+<p><strong>Q46.</strong> <em>Zorluk 4 · Bölüm 8–9 · Tasarım hesabı · Kaynak: sl. 52–53, 73, 80; OSC ch9 sl. 43, 65</em></p>
+<p>(a) 64-bit VA, 4 KiB sayfa, 4 baytlık girdi, iki seviye 42/10/12: dış tablo boyutu? (b) Üç seviye 32/10/10/12: en dıştaki tablo? (c) 48-bit VA, 4 KiB sayfa, <strong>8 baytlık</strong> girdi, her tablo tam bir sayfa olsun: seviye başına kaç bit, kaç seviye? TLB miss'te seri modelde kaç bellek erişimi? (d) Aynı yapıda 2 MiB'lık yaprak sayfa kullanılırsa offset kaç bit, yürüme kaç seviye? (e) Bu sayılar "bütün 64-bit CPU'ların" özelliği midir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) Outer: 2⁴² entries × 4 B = 2⁴⁴ B = 16 TiB: impractical <span class="src">sl. 73; OSC ch9 sl. 43</span>.
+(b) Second outer: 2³² × 4 B = 2³⁴ B = 16 GiB, still too large <span class="src">OSC ch9 sl. 43</span>.
+(c) 4096 / 8 = 512 = 2⁹ entries per table → 9 index bits per level. 48 − 12 = 36 = 4 × 9 → four levels (9/9/9/9/12) <span class="src">sl. 80</span>. Uncached access: 4 PTE reads + 1 data = 5 memory accesses; in the serial model miss cost = 1 + 5 × 100 = 501 ns.
+(d) 2 MiB = 2²¹ → offset 21 bits (9 + 12); the walk terminates one level earlier (3 PTE reads) <span class="src">sl. 53</span>.
+(e) No: an arithmetic model; implemented virtual and physical widths can be smaller than the register width, and the 48-bit layout is a historical example with canonical-address rules, not a universal limit <span class="src">sl. 52, 80</span>.</p>
+<p><strong>Ölçüt.</strong> (a)–(b) iki kuvvet doğru, (c) 512 → 9 bit → 4 seviye türetimi, (d) 21 bit/3 okuma, (e) "model, evrensel değil".</p>
+</details><hr />
+<p><strong>Q47.</strong> <em>Zorluk 4 · Bölüm 9 · Türetme · Kaynak: sl. 79; Okuma §17; OSC ch9 sl. 64</em></p>
+<p>IA-32 PAE: 32-bit linear adres, 4 KiB sayfa, girdiler 8 bayta çıkıyor. (a) Tablo bir sayfaysa seviye başına kaç bit? 32-bit linear adres nasıl bölünür? (b) 36-bit fiziksel adreste frame numarası kaç bittir; bu neden 4 baytlık girdiye sığmayı zorlaştırır? (c) "PAE 32-bit süreci 36-bit linear adresli yapar" doğru mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 4096 / 8 = 512 entries → 9 bits per level. 32 − 12 = 20 = 2 + 9 + 9 → a 2-bit page-directory-pointer index (4 entries), 9-bit directory index, 9-bit table index, 12-bit offset: three levels <span class="src">sl. 79; OSC ch9 sl. 64</span>.
+(b) 36 − 12 = 24 frame bits. <span class="ek">ek bilgi</span> 24 frame bits + 12 low flag bits = 36 bits &gt; 32, so the entry cannot fit in 4 bytes; OSC ch9 sl. 64 states only that entries moved to 64 bits.
+(c) No. The process still uses a 32-bit linear address; PAE increases the physical-address capacity (64 GiB) <span class="src">Okuma §17</span>. Always say whether a width is virtual, linear or physical.</p>
+<p><strong>Ölçüt.</strong> 2/9/9/12 türetimi + "hayır, fiziksel kapasite".</p>
+</details><hr />
+<p><strong>Q48.</strong> <em>Zorluk 4 · Bölüm 8 · Karşılaştırma hesabı · Kaynak: sl. 45, 55; OSC ch9 sl. 47</em></p>
+<p>4 GiB fiziksel bellek, 4 KiB frame. (a) Inverted tablo kaç girdi? Girdi 8 bayt (PID + VPN + bayraklar) varsayılırsa boyutu? (b) 32-bit sanal alanlı 200 süreç tam lineer tablo kullanırsa toplam? (c) Inverted tabloda (pid, vpn) araması neden pahalıdır, nasıl hızlandırılır? (d) İki süreç aynı frame'i paylaşırsa ne sorun çıkar?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 2³² / 2¹² = 2²⁰ = 1,048,576 entries; × 8 B = 8 MiB, system-wide and independent of the number of processes and of virtual range <span class="src">sl. 55</span>. (Entry size is an assumption: ek bilgi.)
+(b) 200 × 4 MiB = 800 MiB <span class="src">sl. 45</span>.
+(c) Entries are organized by frame; finding the frame for (pid, vpn) means searching. A hash table limits the search to one or a few entries, and the TLB accelerates repeated translations <span class="src">sl. 55; OSC ch9 sl. 47</span>.
+(d) One frame may be reachable through several virtual mappings in different processes; a one-entry/one-owner record cannot describe all aliases without extra machinery <span class="src">sl. 55; Okuma §14</span>.</p>
+<p><strong>Ölçüt.</strong> 2²⁰, 8 MiB, 800 MiB + arama ve paylaşım sorunlarının ikisi.</p>
+</details><hr />
+<p><strong>Q49.</strong> <em>Zorluk 4 · Bölüm 6 · İz + tasarım · Kaynak: sl. 40; Okuma §10; OSC ch9 sl. 31</em></p>
+<p>4 KiB sayfa. A'da sayfa 0 → frame 3; B'de sayfa 0 → frame 8. TLB'de ASID yok. A 0x0010'u okur, sonra context switch olur, B 0x0010'u okur. (a) TLB temizlenmezse B hangi fiziksel adrese gider, sonuç nedir? (b) Temizlenirse? (c) ASID'li TLB'de? (d) Her yaklaşımın maliyeti? (e) A çalışırken OS A'nın sayfa 0'ını read-only yaparsa ne yapılmalı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) A's access caches (page 0 → frame 3). Without a flush, B's 0x0010 hits that stale entry → PA 0x3010, A's data. Isolation is violated <span class="src">sl. 40</span>.
+(b) Flush on switch: B misses, walks B's table, PA = 8 × 0x1000 + 0x10 = 0x8010.
+(c) Entries (A, 0) → 3 and (B, 0) → 8 coexist; B's lookup matches only its own ASID → 0x8010 without flushing <span class="src">sl. 40; OSC ch9 sl. 31</span>.
+(d) Flushing makes both processes start with a cold TLB after every switch (more misses); ASIDs need tag bits and still require invalidation when an ASID is reused or a mapping changes <span class="ek">ek bilgi on reuse</span>.
+(e) The cached translation with write permission must be invalidated or updated; changing permissions requires a consistency protocol for cached translations <span class="src">sl. 40</span>. A context switch is not simply a change of instruction pointer <span class="src">sl. 40</span>.</p>
+<p><strong>Ölçüt.</strong> (a)'da "izolasyon ihlali" ve 0x3010; (b)–(c) 0x8010; (e) "invalidate".</p>
+</details><hr />
+<p><strong>Q50.</strong> <em>Zorluk 4 · Bölüm 9 · Eleştirel okuma · Kaynak: sl. 57–58; Okuma §15</em></p>
+<p>Bir blog şöyle diyor: "Linux sayfa tabloları PGD, P4D, PUD, PMD ve PTE'den oluşur; dolayısıyla Linux'ta her TLB miss beş bellek okuması demektir. Ayrıca x86-64, IA-64'ün diğer adıdır." İki iddiayı da değerlendirin; bir uygulama iddiası için hangi bilgilere bakmak gerekir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> First claim: invalid conclusion. The five names are a software hierarchy; levels unused by an architecture can be folded. The relevant hardware walk depends on the address width, enabled paging mode, page size and leaf type (a large-page leaf ends the walk earlier), and real CPUs have walk caches <span class="src">sl. 53, 57</span>. Second claim: false; Intel 64 / x86-64 must not be confused with the separate IA-64 architecture <span class="src">sl. 58</span>. Implementation claims require the architecture documentation and the actual machine configuration <span class="src">sl. 57</span>.</p>
+<p><strong>Ölçüt.</strong> İki "yanlış" + katlanma + yürümeyi belirleyen etkenler + kaynak göstermek.</p>
+</details><hr />
+<p><strong>Q51.</strong> <em>Zorluk 4 · Bölüm 7, 11 · Entegre · Kaynak: sl. 66–67; Okuma §18</em></p>
+<p>4 KiB sayfa. A sayfa 1 → frame 9 salt okunur; B sayfa 7 → frame 9 RW; iki mapping de resident. (1) A'nın 0x1234 okuması nereye gider? (2) A oraya yazabilir mi? (3) B'nin 0x7234 yazması nereye gider? (4) A'nın TLB miss'i disk okuması demek mi? (5) B ve başka bir süreç paylaşılan veriyi aynı anda güncellerse hangi ek akıl yürütme gerekir?</p>
+<blockquote>
+<p>English: (1) Where does A's read at 0x1234 go? (2) Can A write there? (3) Where does B's write at 0x7234 go? (4) Does A missing in its TLB imply a disk read? (5) What additional reasoning is needed if B and another process update shared data concurrently?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<ol>
+<li>0x1234 = page 1, offset 0x234 (4660 = 4096 + 564) → frame 9 → 0x9234 (37428).</li>
+<li>No: A's write is rejected by its mapping permission.</li>
+<li>0x7234 = page 7, offset 0x234 (29236 = 7×4096 + 564) → frame 9 → 0x9234, the same physical byte; B's write is permitted. Read-only for A does not make the frame immutable to everyone.</li>
+<li>No: a TLB miss alone does not imply disk access; this mapping is resident, so it is recovered from the page table.</li>
+<li>Synchronization is still needed for shared updates (a read-modify-write is not atomic just because memory is shared). Mapping permissions and race freedom are different obligations <span class="src">sl. 67; Okuma §12</span>.</li>
+</ol>
+<p><strong>Ölçüt.</strong> Hocanın beş cevabı aynen; (3)'te "immutable değil", (5)'te "senkronizasyon ayrı yükümlülük". sl. 67 metniyle birebir.</p>
+</details><hr />
+<p><strong>Q52.</strong> <em>Zorluk 4 · Bölüm 5–7, 10 · Entegre (yeni sayılar) · Kaynak: sl. 28, 35, 40, 43, 60, 67–68</em></p>
+<p>16 KiB sayfa (2¹⁴). Süreç X: sayfa 3 → frame 0x21 (RW), sayfa 5 → frame 0x40 (R+X, paylaşılan kütüphane kodu), sayfa 6 → geçerli ama nonresident. Süreç Y: sayfa 0x10 → frame 0x40 (R+X). (a) X'in okuma 0xD00C'si nereye gider? (b) X'in 0x14ABC'ye yazması? (c) Y'nin 0x42ABC'den komut getirmesi hangi fiziksel adrese gider? (d) X'in 0x1A000 okuması (Hafta 6 modeli)? (e) X'in 0x20000 okuması? (f) Her şık için mapping / izin / residency / TLB eksenlerini ayırın; hangisi diske gider?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Offset = low 14 bits; p = ⌊VA / 16384⌋.
+(a) 0xD00C = 53260 = 3×16384 + 4108 → p 3, d 4108 = 0x100C. Bits: 0xD00C = 11|01 0000 0000 1100 → p = 3, d = 0x100C ✓. PA = 0x21 × 0x4000 + 0x100C = 0x84000 + 0x100C = <strong>0x8500C</strong> (33×16384 + 4108 = 540672 + 4108 = 544780) ✓.
+(b) 0x14ABC = 84668 = 5×16384 + 2748 → p 5, d 0xABC. Page 5 is R+X → write rejected (PROTECTION).
+(c) 0x42ABC = 273084 = 16×16384 + 10940 → p 0x10, d 10940 = 0x2ABC. Bits: 0x42ABC = 1 0000 | 10 1010 1011 1100 → p = 0x10, d = 0x2ABC ✓. PA = 0x40 × 0x4000 + 0x2ABC = 0x100000 + 0x2ABC = <strong>0x102ABC</strong>. Shared code frame, private data elsewhere <span class="src">sl. 42</span>.
+(d) 0x1A000 = 106496 = 6×16384 + 8192 → p 6: valid but nonresident → page fault; a handler may supply a frame and retry (Week 6) <span class="src">sl. 28, 60</span>. This is the only case that may involve backing store.
+(e) 0x20000 = 131072 = 8×16384 → p 8, not mapped → rejection; no physical result.
+(f) (a) mapped/permitted/resident; TLB hit or miss, no disk. (b) mapped, not permitted → protection, regardless of TLB. (c) mapped, execute permitted, resident. (d) mapped, permitted, not resident → fault. (e) not mapped. Record translation-cache behaviour separately <span class="src">sl. 35, 68</span>.</p>
+<p><strong>Ölçüt.</strong> Üç adres doğru (bit ve ondalık kontrolle), (b) PROTECTION, (d) fault/Hafta 6, (e) UNMAPPED, (f) eksenler.</p>
+</details><hr />
+<p><strong>Q53.</strong> <em>Zorluk 4 · Bölüm 8 · Tasarım · Kaynak: sl. 29–30, 56; Okuma §5, §14; OSTEP vm-smalltables</em></p>
+<p>Bir sistemde iki iş yükü var: (i) 1 GiB'lık bellek içi indeksi rastgele okuyan bir veritabanı, (ii) 300 küçük süreç, her birinde 16 KiB'lık 50 eşlenmiş bölge. TLB 1024 girdili. 4 KiB ve 2 MiB sayfa seçeneklerini sayılarla karşılaştırın ve bir tasarım önerin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> State the model: reach = entries × page size; internal waste computed from the stated region sizes, not from the half-page assumption, which is not a law <span class="src">sl. 29</span>.
+(i) 1 GiB / 4 KiB = 262144 pages vs 1024 entries (reach 4 MiB) → mostly misses for random access. 1 GiB / 2 MiB = 512 pages ≤ 1024 entries (reach 2 GiB) → nominally covered, though not guaranteed <span class="src">sl. 56</span>. Fewer leaf entries, and the walk ends one level earlier <span class="src">sl. 53</span>.
+(ii) The half-page average does not apply here, because each region (16 KiB) is far smaller than a 2 MiB page <span class="src">sl. 29</span>. 4 KiB pages: 16 KiB is an exact multiple, waste 0. 2 MiB pages: waste per region = 2048 − 16 = 2032 KiB; per process 50 × 2032 KiB ≈ 99.2 MiB; for 300 processes ≈ 29.1 GiB. Finer pages also give finer protection granularity <span class="src">sl. 56</span>.
+Proposal: small base pages by default, large pages for specific large, densely used regions (multiple page sizes) <span class="src">OSTEP vm-smalltables aside; sl. 56</span>. Page size is a trade-off among table entries, TLB reach, unused space and granularity <span class="src">sl. 56; Okuma §5</span>.</p>
+<p><strong>Ölçüt.</strong> İki iş yükü için sayılar + "garanti değil" + karma çözüm + varsayım satırı.</p>
+</details><hr />
+<p><strong>Q54.</strong> <em>Zorluk 4 · Bölüm 2, 3, 10 · Sentez · Kaynak: sl. 6, 16, 59; OSC ch9 sl. 22, 54–55</em></p>
+<p>(a) Compaction hangi bağlama türünü gerektirir, neden? (b) Taşınacak süreç bir diske DMA ile okuma bekliyorsa ne sorun çıkar, iki çözüm? (c) 100 MB'lık süreç 50 MB/s diske bütünüyle swap edilirse dışarı + içeri süre? (d) Süreç geri geldiğinde aynı fiziksel adrese dönmek zorunda mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Execution-time binding (dynamic relocation): only then can regions be moved by changing the base or mappings without rewriting every address in the program <span class="src">sl. 9, 16; OSC ch9 sl. 22</span>.
+(b) Pending I/O might still target the old location, so the data would land in the wrong place. Either latch (pin) the process in memory during I/O, or perform I/O only into OS buffers and copy (double buffering, with extra overhead) <span class="src">sl. 16; OSC ch9 sl. 22, 55</span>.
+(c) 100 / 50 = 2 s out + 2 s in = 4 s, plus device and software overhead; the cost is proportional to transferred bytes <span class="src">sl. 59; OSC ch9 sl. 54</span>.
+(d) It depends on address binding: compile-time or load-time binding forces the same location; execution-time translation allows another location <span class="src">sl. 59</span>. This whole-process model is historical; do not equate it with every modern use of "swap", and page-level backing gives finer control <span class="src">sl. 59–60</span>.</p>
+<p><strong>Ölçüt.</strong> (a) execution-time, (b) iki çözüm, (c) 4 s, (d) bağlamaya bağlı + tarihsel model uyarısı.</p>
+</details><hr />
+<p><strong>Q55.</strong> <em>Zorluk 4 · Bölüm 4, 9 · Karşılaştırma · Kaynak: sl. 18–19, 58, 74–77; Okuma §6; OSC ch9 sl. 59</em></p>
+<p>(a) Segmentation ile paging'i dört ölçütte karşılaştırın: birim, programcı görüşüne uyum, parçalanma türü, koruma birimi. (b) IA-32'de logical → linear → physical yolunu anlatın. Selector'ın 13-bit indeksi tablo başına kaç descriptor verir? (c) "Bir C dizisi bir segmenttir ya da bir sayfadır" doğru mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a)</p>
+<ul>
+<li>Unit: segment = variable-sized logical region; page = fixed size.</li>
+<li>Fit with the programmer's view: segments match regions (code, stack, table); pages need not correspond to source objects.</li>
+<li>Fragmentation: segments → external; pages → internal in the final page.</li>
+<li>Protection: per segment (base, length, permissions), checked as offset &lt; length, then add base; per page via PTE bits <span class="src">sl. 18–19; Okuma §6</span>.
+(b) The CPU generates a logical address (selector, offset); the selector identifies a descriptor whose base plus the offset, after bounds and access checks, forms the linear address; paging then translates the linear address to a physical address <span class="src">sl. 76–77</span>. A 13-bit index → 2¹³ = 8192 descriptors per table; the table-selection bit chooses GDT or LDT, and two bits carry privilege <span class="src">sl. 74; OSC ch9 sl. 59 gives 8K + 8K = 16K segments</span>. Historical model, useful for separating logical, linear and physical addresses <span class="src">sl. 58</span>.
+(c) Neither follows: an array may span pages, share a page or be part of a larger mapping <span class="src">Okuma §6</span>.</li>
+</ul>
+<p><strong>Ölçüt.</strong> Dört ölçüt + üç aşamalı yol + 8192 + (c) "hayır".</p>
+</details><hr />
+<p><strong>Q56.</strong> <em>Zorluk 4 · Bölüm 8 · Tasarım · Kaynak: sl. 45–56; Okuma §13–14</em></p>
+<p>Üç sistem için sayfa tablosu yapısı önerin ve bir cümleyle gerekçelendirin; her önerinin bedelini yazın: (a) 16-bit sanal adresli, 1 KiB sayfalı küçük gömülü sistem; (b) 64-bit, çok seyrek adres alanlı sunucu süreçleri; (c) çok sayıda süreç, görece küçük fiziksel bellek, paylaşım nadir.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 16-bit / 1 KiB → 64 entries; a linear table of 64 × 4 B = 256 bytes is trivial; a single-level walk minimizes miss cost <span class="src">sl. 21, 45</span>. Cost: none significant.
+(b) A multilevel hierarchy (or hashed/clustered tables): unused ranges need no lower-level tables <span class="src">sl. 46, 53–54</span>. Cost: deeper uncached walks (k + 1 accesses), mitigated by the TLB and larger pages where dense <span class="src">sl. 51, 56</span>.
+(c) An inverted table: storage tied to physical frames, not to the virtual range × number of processes <span class="src">sl. 55</span>. Cost: lookup requires hashing; sharing complicates the one-owner model; the TLB accelerates repeated translations <span class="src">sl. 55</span>.
+Representation choices are trade-offs, not "the" structure of every OS <span class="src">sl. 54</span>.</p>
+<p><strong>Ölçüt.</strong> Her sistem için yapı + gerekçe + bedel; (a)'da 256 bayt hesabı.</p>
+</details><hr />
+<p><strong>Soru bankası özeti</strong></p>
+<table>
+<thead>
+<tr>
+<th>Seviye</th>
+<th>Sorular</th>
+<th>Adet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Q1–Q12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Q13–Q26</td>
+<td>14</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Q27–Q42</td>
+<td>16</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Q43–Q56</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Toplam</td>
+<td></td>
+<td>56</td>
+</tr>
+</tbody>
+</table>
+<p>Hesap soruları: adres çevirisi Q16, Q17, Q29, Q30, Q52; base/limit Q13; segment Q14; bit alanları Q15; iç parçalanma Q18, Q39; PTE adresi Q19, Q31; EAT Q21, Q33, Q45; tablo boyutu Q22, Q32, Q45, Q46, Q47, Q48; TLB izi Q20, Q34, Q35, Q36, Q41, Q49; fit Q27, Q28, Q44; TLB reach Q23, Q53.</p>
+<hr /></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

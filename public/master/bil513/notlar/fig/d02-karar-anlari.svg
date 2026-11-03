@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 350" role="img" aria-label="Dört karar anı durum diyagramında. 1: running'den waiting'e (block) ve 4: running'den terminated'a (exit) CPU'yu boşaltır, seçim zorunludur. 2: running'den ready'ye (timer) ve 3: waiting'den ready'ye (wake) yalnız bir fırsattır; politika çalışanı kesebilir ya da sürdürebilir. Kesme bir fırsattır, başka işin çalıştığının kanıtı değildir." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d02ka-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d02ka-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <rect class="box-plain dash" x="20" y="65" width="90" height="40" rx="20"/>
+  <text x="65" y="90" text-anchor="middle" class="t-mut">new</text>
+  <rect class="box" x="170" y="60" width="160" height="50" rx="25"/>
+  <text x="250" y="82" text-anchor="middle" font-weight="600">Ready</text>
+  <text x="250" y="99" text-anchor="middle" class="t-mut" font-size="12">hazır kuyruğu</text>
+  <rect class="box" x="430" y="60" width="160" height="50" rx="25"/>
+  <text x="510" y="82" text-anchor="middle" font-weight="600">Running</text>
+  <text x="510" y="99" text-anchor="middle" class="t-mut" font-size="12">CPU'da</text>
+  <rect class="box-plain dash" x="650" y="65" width="90" height="40" rx="20"/>
+  <text x="695" y="90" text-anchor="middle" class="t-mut">terminated</text>
+  <rect class="box" x="270" y="210" width="220" height="50" rx="25"/>
+  <text x="380" y="232" text-anchor="middle" font-weight="600">Waiting</text>
+  <text x="380" y="249" text-anchor="middle" class="t-mut" font-size="12">olay bekliyor (blocked)</text>
+
+  <line class="faint" x1="110" y1="85" x2="166" y2="85" marker-end="url(#d02ka-a)"/>
+  <text x="138" y="77" text-anchor="middle" class="t-mut" font-size="11">varış</text>
+
+  <line class="ln" x1="330" y1="72" x2="426" y2="72" marker-end="url(#d02ka-a)"/>
+  <text x="378" y="62" text-anchor="middle" font-size="12">seçildi (dispatch)</text>
+
+  <line class="ln-acc" x1="430" y1="98" x2="334" y2="98" marker-end="url(#d02ka-b)"/>
+  <circle class="box-acc" cx="346" cy="124" r="10"/>
+  <text x="346" y="128" text-anchor="middle" class="t-acc" font-weight="600" font-size="12">2</text>
+  <text x="362" y="128" class="t-acc" font-size="12">timer: quantum doldu</text>
+
+  <line class="ln" x1="590" y1="85" x2="646" y2="85" marker-end="url(#d02ka-a)"/>
+  <circle class="box" cx="618" cy="112" r="10"/>
+  <text x="618" y="116" text-anchor="middle" font-weight="600" font-size="12">4</text>
+  <text x="618" y="138" text-anchor="middle" font-size="12">exit</text>
+
+  <line class="ln" x1="515" y1="112" x2="448" y2="206" marker-end="url(#d02ka-a)"/>
+  <circle class="box" cx="512" cy="160" r="10"/>
+  <text x="512" y="164" text-anchor="middle" font-weight="600" font-size="12">1</text>
+  <text x="528" y="164" font-size="12">block: I/O, wait()</text>
+
+  <line class="ln-acc" x1="318" y1="208" x2="258" y2="116" marker-end="url(#d02ka-b)"/>
+  <circle class="box-acc" cx="252" cy="166" r="10"/>
+  <text x="252" y="170" text-anchor="middle" class="t-acc" font-weight="600" font-size="12">3</text>
+  <text x="236" y="170" text-anchor="end" class="t-acc" font-size="12">wake: olay geldi</text>
+
+  <line class="faint" x1="20" y1="282" x2="740" y2="282"/>
+  <circle class="box" cx="34" cy="302" r="8"/>
+  <text x="50" y="306" font-size="12"><tspan font-weight="600">1, 4 zorunlu karar:</tspan> CPU boşaldı, başka hazır iş seçilmeli (nonpreemptive scheduler da karar verir).</text>
+  <circle class="box-acc" cx="34" cy="326" r="8"/>
+  <text x="50" y="330" font-size="12" class="t-acc"><tspan font-weight="600">2, 3 isteğe bağlı:</tspan> politika çalışanı kesebilir ya da sürdürebilir (yalnız preemptive).</text>
+  <text x="50" y="347" font-size="11" class="t-mut">Kesme bir karar fırsatıdır, başka bir işin çalıştığının kanıtı değildir.</text>
+</svg>

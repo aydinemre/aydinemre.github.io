@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 326" role="img" aria-label="Semaphore nerede yaşar: (1) tek süreçteki thread'ler global sem_t ve sem_init(&amp;s, 0, 1) kullanır, pshared = 0. (2) İki süreç, sem_t'yi paylaşılan bir bellek sayfasına koyup sem_init(s, 1, 1) ile pshared = 1 kullanır. (3) İlişkisiz süreçler sem_open(&quot;/cse513_demo&quot;) ile çekirdekteki adlı semaphore'u açar. macOS'ta sem_init ENOSYS döner." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d03sn-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600" font-size="12.5">Semaphore nerede yaşar? Fark, onu bulma yolu: paylaşılan bellek ya da ad [sl. 41; sl. 72–73]</text>
+  <rect class="box-plain" x="14" y="34" width="236" height="232" rx="10"/>
+  <text x="132" y="54" text-anchor="middle" font-weight="600" font-size="12.5">(1) Tek süreç, thread'ler</text>
+  <rect class="box-plain" x="262" y="34" width="236" height="232" rx="10"/>
+  <text x="380" y="54" text-anchor="middle" font-weight="600" font-size="12.5">(2) İki süreç, paylaşılan bellek</text>
+  <rect class="box-plain" x="510" y="34" width="236" height="232" rx="10"/>
+  <text x="628" y="54" text-anchor="middle" font-weight="600" font-size="12.5">(3) İlişkisiz süreçler, adlı</text>
+
+  <rect class="ln dash" x="30" y="66" width="204" height="128" rx="8"/>
+  <text x="40" y="82" font-size="11.5" class="t-mut">süreç</text>
+  <rect class="box" x="44" y="90" width="70" height="26" rx="13"/>
+  <text x="79" y="108" text-anchor="middle" font-weight="600" font-size="12">T1</text>
+  <rect class="box" x="150" y="90" width="70" height="26" rx="13"/>
+  <text x="185" y="108" text-anchor="middle" font-weight="600" font-size="12">T2</text>
+  <rect class="box-acc" x="72" y="150" width="120" height="32" rx="4"/>
+  <text x="132" y="171" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-acc">sem_t s (global)</text>
+  <line class="ln" x1="85" y1="117" x2="112" y2="147" marker-end="url(#d03sn-a)"/>
+  <line class="ln" x1="179" y1="117" x2="152" y2="147" marker-end="url(#d03sn-a)"/>
+  <text x="132" y="222" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">sem_init(&amp;s, 0, 1)</text>
+  <text x="132" y="241" text-anchor="middle" font-weight="600" class="t-acc">pshared = 0</text>
+  <text x="132" y="259" text-anchor="middle" font-size="11" class="t-mut">olağan kurulum</text>
+
+  <rect class="box" x="276" y="70" width="80" height="30" rx="6"/>
+  <text x="316" y="90" text-anchor="middle" font-weight="600" font-size="12">süreç P1</text>
+  <rect class="box" x="404" y="70" width="80" height="30" rx="6"/>
+  <text x="444" y="90" text-anchor="middle" font-weight="600" font-size="12">süreç P2</text>
+  <rect class="ln dash" x="290" y="118" width="180" height="84" rx="8"/>
+  <text x="380" y="196" text-anchor="middle" font-size="11" class="t-mut">paylaşılan bellek (MAP_SHARED)</text>
+  <rect class="box-acc" x="330" y="134" width="100" height="32" rx="4"/>
+  <text x="380" y="155" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">sem_t *s</text>
+  <line class="ln" x1="320" y1="101" x2="348" y2="131" marker-end="url(#d03sn-a)"/>
+  <line class="ln" x1="440" y1="101" x2="412" y2="131" marker-end="url(#d03sn-a)"/>
+  <text x="380" y="222" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">sem_init(s, 1, 1)</text>
+  <text x="380" y="241" text-anchor="middle" font-weight="600" class="t-acc">pshared = 1</text>
+  <text x="380" y="259" text-anchor="middle" font-size="11" class="t-warn">sıradan global fork'ta kopyalanır</text>
+
+  <rect class="box" x="524" y="70" width="80" height="30" rx="6"/>
+  <text x="564" y="90" text-anchor="middle" font-weight="600" font-size="12">süreç A</text>
+  <rect class="box" x="652" y="70" width="80" height="30" rx="6"/>
+  <text x="692" y="90" text-anchor="middle" font-weight="600" font-size="12">süreç B</text>
+  <rect class="box" x="530" y="124" width="196" height="70" rx="8"/>
+  <text x="628" y="140" text-anchor="middle" font-size="11" class="t-mut">çekirdek</text>
+  <rect class="box-acc" x="550" y="150" width="156" height="32" rx="4"/>
+  <text x="628" y="171" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5" class="t-acc">adlı: /cse513_demo</text>
+  <line class="ln" x1="568" y1="101" x2="596" y2="147" marker-end="url(#d03sn-a)"/>
+  <line class="ln" x1="688" y1="101" x2="660" y2="147" marker-end="url(#d03sn-a)"/>
+  <text x="628" y="222" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">sem_open("/cse513_demo", …)</text>
+  <text x="628" y="241" text-anchor="middle" font-weight="600" class="t-acc">ad ile bulunur</text>
+  <text x="628" y="259" text-anchor="middle" font-size="11" class="t-mut">ilk değer yalnız yaratılırken uygulanır</text>
+
+  <text x="20" y="290" font-size="12">“Adsız” ≠ “ilişkisiz süreçler arasında imkânsız”: shm_open + mmap ile ortak sayfa da olur [sl. 41].</text>
+  <text x="20" y="312" font-size="12" class="t-warn">macOS (ek bilgi, bu makinede denendi): sem_init −1 döner, errno = ENOSYS; sem_open / sem_wait / sem_post çalışır.</text>
+</svg>

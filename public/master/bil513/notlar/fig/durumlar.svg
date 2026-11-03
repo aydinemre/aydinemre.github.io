@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" role="img" aria-label="Durum geçişleri: ready seçilince running olur; zaman dilimi dolunca ya da preempt edilince ready'ye döner; bir olay beklerse waiting olur; olay gelince waiting doğrudan running'e değil ready'ye geçer." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="du-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="du-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <rect class="box-plain dash" x="20" y="65" width="90" height="40" rx="20"/>
+  <text x="65" y="90" text-anchor="middle" class="t-mut">new</text>
+  <rect class="box" x="170" y="60" width="160" height="50" rx="25"/>
+  <text x="250" y="82" text-anchor="middle" font-weight="600">Ready</text>
+  <text x="250" y="99" text-anchor="middle" class="t-mut" font-size="12">engel: CPU</text>
+  <rect class="box" x="430" y="60" width="160" height="50" rx="25"/>
+  <text x="510" y="82" text-anchor="middle" font-weight="600">Running</text>
+  <text x="510" y="99" text-anchor="middle" class="t-mut" font-size="12">bir CPU'da</text>
+  <rect class="box-plain dash" x="650" y="65" width="90" height="40" rx="20"/>
+  <text x="695" y="90" text-anchor="middle" class="t-mut">terminated</text>
+  <rect class="box" x="270" y="210" width="220" height="50" rx="25"/>
+  <text x="380" y="232" text-anchor="middle" font-weight="600">Waiting</text>
+  <text x="380" y="249" text-anchor="middle" class="t-mut" font-size="12">engel: olay · CPU yardım etmez</text>
+  <line class="ln" x1="110" y1="85" x2="166" y2="85" marker-end="url(#du-a)"/>
+  <line class="ln" x1="330" y1="72" x2="426" y2="72" marker-end="url(#du-a)"/>
+  <text x="378" y="62" text-anchor="middle" font-size="12">seçildi (dispatch)</text>
+  <line class="ln" x1="430" y1="98" x2="334" y2="98" marker-end="url(#du-a)"/>
+  <text x="380" y="124" text-anchor="middle" font-size="12">time slice doldu / preempt</text>
+  <line class="ln" x1="590" y1="85" x2="646" y2="85" marker-end="url(#du-a)"/>
+  <text x="618" y="77" text-anchor="middle" font-size="12">exit</text>
+  <line class="ln" x1="515" y1="112" x2="448" y2="206" marker-end="url(#du-a)"/>
+  <text x="492" y="170" font-size="12">olay bekler (read, I/O)</text>
+  <line class="ln-acc" x1="318" y1="208" x2="258" y2="116" marker-end="url(#du-b)"/>
+  <text x="276" y="168" text-anchor="end" font-size="12" class="t-acc" font-weight="600">olay geldi</text>
+  <text x="276" y="184" text-anchor="end" font-size="12" class="t-acc">→ ready, running değil</text>
+</svg>

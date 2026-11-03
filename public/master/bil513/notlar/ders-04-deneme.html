@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 4: Deneme sınavı (15 soru)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 4: Deneme sınavı (15 soru)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-04-deneme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-04.html">Anlatım</a> <a href="ders-04-ozet.html">Özet</a> <a href="ders-04-sorular.html">Soru bankası</a> <a href="ders-04-deneme.html" aria-current="page">Deneme sınavı</a> <a href="ders-04-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#s1-tanmayrm-kolay-sl-1516-36">S1 (tanım/ayrım, kolay) — sl. 15–16, 36</a></li><li><a href="#s2-dogruyanls-gerekce-kolay-sl-910-12">S2 (doğru/yanlış + gerekçe, kolay) — sl. 9–10, 12</a></li><li><a href="#s3-graph-okuma-tek-ve-cok-instance-kolayorta-sl-2123">S3 (graph okuma: tek ve çok instance, kolay–orta) — sl. 21–23</a></li><li><a href="#s4-kilit-sras-ispat-atomik-rezervasyon-orta-sl-29-31-34">S4 (kilit sırası ispatı + atomik rezervasyon, orta) — sl. 29, 31, 34</a></li><li><a href="#s5-kod-okuma-trylock-ve-livelock-orta-sl-16-35-6769">S5 (kod okuma: trylock ve livelock, orta) — sl. 16, 35, 67–69</a></li><li><a href="#s6-graph-okuma-yeni-rag-orta-sl-1821-58-73">S6 (graph okuma: yeni RAG, orta) — sl. 18–21, 58, 73</a></li><li><a href="#s7-wait-for-graph-orta-sl-24-62-63">S7 (wait-for graph, orta) — sl. 24, 62, 63</a></li><li><a href="#s8-banker-need-tam-safety-izi-orta-sl-4650-56">S8 (Banker: Need + tam safety izi, orta) — sl. 46–50, 56</a></li><li><a href="#s9-banker-istek-kabulu-ortazor-sl-5153">S9 (Banker: istek kabulü, orta–zor) — sl. 51–53</a></li><li><a href="#s10-banker-unavailable-ve-maksimumu-asan-istek-orta-sl-51-54-72">S10 (Banker: unavailable ve maksimumu aşan istek, orta) — sl. 51, 54, 72</a></li><li><a href="#s11-banker-available-ama-unsafe-review-sorusu-zor-sl-39-42-5556-73">S11 (Banker: available ama unsafe + review sorusu, zor) — sl. 39, 42, 55–56, 73</a></li><li><a href="#s12-lab-yorumu-orta-sl-6770-72-kodlock-orderc-kodbankerc">S12 (lab yorumu, orta) — sl. 67–70, 72; kod/lock-order.c, kod/banker.c</a></li><li><a href="#s13-tespit-available-0-ortazor-sl-5760">S13 (tespit: Available = 0, orta–zor) — sl. 57–60</a></li><li><a href="#s14-tespit-kurtarma-zor-sl-57-6163-66">S14 (tespit + kurtarma, zor) — sl. 57, 61–63, 66</a></li><li><a href="#s15-tasarmkarslastrma-zor-sl-27-31-38-51-6366-73">S15 (tasarım/karşılaştırma, zor) — sl. 27, 31, 38, 51, 63–66, 73</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-4-deneme-snav-15-soru">CSE 513 · Ders 4: Deneme sınavı (15 soru)<a class="headerlink" href="#cse-513-ders-4-deneme-snav-15-soru" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#s1-tanmayrm-kolay-sl-1516-36">S1 (tanım/ayrım, kolay) — sl. 15–16, 36</a></li><li><a href="#s2-dogruyanls-gerekce-kolay-sl-910-12">S2 (doğru/yanlış + gerekçe, kolay) — sl. 9–10, 12</a></li><li><a href="#s3-graph-okuma-tek-ve-cok-instance-kolayorta-sl-2123">S3 (graph okuma: tek ve çok instance, kolay–orta) — sl. 21–23</a></li><li><a href="#s4-kilit-sras-ispat-atomik-rezervasyon-orta-sl-29-31-34">S4 (kilit sırası ispatı + atomik rezervasyon, orta) — sl. 29, 31, 34</a></li><li><a href="#s5-kod-okuma-trylock-ve-livelock-orta-sl-16-35-6769">S5 (kod okuma: trylock ve livelock, orta) — sl. 16, 35, 67–69</a></li><li><a href="#s6-graph-okuma-yeni-rag-orta-sl-1821-58-73">S6 (graph okuma: yeni RAG, orta) — sl. 18–21, 58, 73</a></li><li><a href="#s7-wait-for-graph-orta-sl-24-62-63">S7 (wait-for graph, orta) — sl. 24, 62, 63</a></li><li><a href="#s8-banker-need-tam-safety-izi-orta-sl-4650-56">S8 (Banker: Need + tam safety izi, orta) — sl. 46–50, 56</a></li><li><a href="#s9-banker-istek-kabulu-ortazor-sl-5153">S9 (Banker: istek kabulü, orta–zor) — sl. 51–53</a></li><li><a href="#s10-banker-unavailable-ve-maksimumu-asan-istek-orta-sl-51-54-72">S10 (Banker: unavailable ve maksimumu aşan istek, orta) — sl. 51, 54, 72</a></li><li><a href="#s11-banker-available-ama-unsafe-review-sorusu-zor-sl-39-42-5556-73">S11 (Banker: available ama unsafe + review sorusu, zor) — sl. 39, 42, 55–56, 73</a></li><li><a href="#s12-lab-yorumu-orta-sl-6770-72-kodlock-orderc-kodbankerc">S12 (lab yorumu, orta) — sl. 67–70, 72; kod/lock-order.c, kod/banker.c</a></li><li><a href="#s13-tespit-available-0-ortazor-sl-5760">S13 (tespit: Available = 0, orta–zor) — sl. 57–60</a></li><li><a href="#s14-tespit-kurtarma-zor-sl-57-6163-66">S14 (tespit + kurtarma, zor) — sl. 57, 61–63, 66</a></li><li><a href="#s15-tasarmkarslastrma-zor-sl-27-31-38-51-6366-73">S15 (tasarım/karşılaştırma, zor) — sl. 27, 31, 38, 51, 63–66, 73</a></li></ul></details>
+<p>Bu sınavı notlara bakmadan, 60 dakikada çöz. Cevapları kâğıda yaz, sonra her sorunun altındaki "Cevabı ve ölçütü göster"e tıklayıp karşılaştır.</p>
+<p>Sorular hocanın slaytı (<code>CSE513-Lecture04.pdf</code>), okuma kitapçığı, <code>kod/banker.c</code>, <code>kod/lock-order.c</code> ve OSC-10 Bölüm 8 slaytları kullanılarak, notlara bakılmadan yazıldı (2026-11-03, sınav simülasyonu uzmanı). S8–S11 (Banker) ile S13–S14 (tespit) slaytta olmayan yeni sayılar kullanır; bu sayılar iki ayrı Python betiğiyle bağımsız olarak hesaplanıp karşılaştırıldı. Soru metinleri Türkçe; gerçek sınav İngilizce olacak, cevabı İngilizce yazmayı dene. Kolaydan zora sıralı. Hocanın sl. 73'teki üç review sorusu S6, S11 ve S15'in içinde.</p>
+<p>Puanlama önerisi: her soru 1 puan. Varsayımını (kaynak modeli, instance sayısı, hangi snapshot) yazmayan ya da "hep, kesin" diyen cevaba en fazla yarım puan. Banker ve tespit sorularında Work vektörü adım adım yazılmadıysa en fazla yarım puan.</p>
+<hr />
+<h2 id="s1-tanmayrm-kolay-sl-1516-36">S1 (tanım/ayrım, kolay) — sl. 15–16, 36<a class="headerlink" href="#s1-tanmayrm-kolay-sl-1516-36" title="Permanent link">#</a></h2>
+<p>Aşağıdaki dört gözlemi deadlock, starvation (açlık) ve livelock olarak sınıflandırın; sınıflandırılamayan varsa nedenini söyleyin.
+(a) Bir yazıcı sunucusu her zaman en kısa işi önce kabul ediyor. 400 sayfalık bir iş saatlerdir bekliyor, kısa işler basılmaya devam ediyor.
+(b) Thread A, L1'i tutuyor ve <code>pthread_mutex_lock(L2)</code> içinde bloklu. Thread B, L2'yi tutuyor ve <code>pthread_mutex_lock(L1)</code> içinde bloklu.
+(c) İki thread birinci kilidi alıyor, ikincisinde <code>trylock</code> başarısız oluyor, ikisi de birinci kilidi bırakıp aynı anda yeniden deniyor. Durum sürekli değişiyor ama hiçbir güncelleme tamamlanmıyor.
+(d) Bir istek 30 saniyelik timeout'a takıldı.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Starvation: bir katılımcı süresiz bekliyor ama başka işler tamamlanıyor; sebep kabul (admission) politikasının yeni ve kısa işleri hep öne alması. Circular wait'i kırmak bunu çözmez; fairness ya da bypass sınırı ayrı bir yükümlülüktür. (b) Deadlock (kilitler özyinelemesiz (nonrecursive), dış müdahale yok, kilidi yalnızca sahibi bırakır varsayımıyla): A'nın ihtiyaç duyduğu bırakma bloklu B'ye, B'ninki bloklu A'ya bağlı. Kümenin bağımlılıkları kapalı; daha fazla CPU zamanı ya da ikinci çekirdek bir bırakma yolu yaratmaz. (c) Livelock: durum değişiyor (kilit al, bırak, yeniden dene) ama faydalı iş bitmiyor. Kalıcı bloklama döngüsü yok. (d) Bu gözlemle sınıflandırılamaz. Timeout yalnızca seçilen sürenin aşıldığını kanıtlar; yavaş hesaplama, yavaş disk ya da dış I/O, starvation da timeout'a takılır. Teşhis için sahiplikler (owners), bekleyen istekler (requests) ve bırakma için gereken olaylar yeniden kurulmalı (sl. 36). Ölçüt: (d)'ye "deadlock" diyen cevap puan alamaz.</p>
+</details><h2 id="s2-dogruyanls-gerekce-kolay-sl-910-12">S2 (doğru/yanlış + gerekçe, kolay) — sl. 9–10, 12<a class="headerlink" href="#s2-dogruyanls-gerekce-kolay-sl-910-12" title="Permanent link">#</a></h2>
+<p>"Linux'un scheduler'ı preemptive (kesintili) olduğu için 'no preemption' koşulu Linux'ta sağlanamaz. Bu yüzden iki pthread mutex'i arasında deadlock oluşamaz. Oluşsa bile kernel mutex'i sahibinden alıp sorunu çözebilir." Değerlendirin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Yanlış, iki yerinden. (1) İşlemci kesintisi (processor/CPU preemption) ile kaynak kesintisi (resource preemption) farklı şeylerdir. Scheduler mutex'i tutan bir thread'i durdurup başkasını çalıştırabilir ama mutex'in sahipliği değişmez. "No preemption" koşulu kaynağın semantiğiyle ilgilidir: mutex sahibinden zorla alınamaz, yalnızca sahibi bırakır. Bu koşul makinede kaç CPU olduğuna da bağlı değildir (sl. 10). Dolayısıyla preemptive bir OS'te de dört koşul sağlanabilir ve iki mutex deadlock'a girebilir. (2) Kilidi zorla almak korunan işlemi düzeltmez: kilit, yarım güncellenmiş veriyi (ör. bir hesaptan düşülmüş, ötekine eklenmemiş para) açığa çıkarır. Kaynak kesintisi ancak kaynağın durumu kaydedilip geri yüklenebiliyorsa ya da güvenle geri alınabiliyorsa (rollback) pratiktir. Basılmış bir sayfa ya da gönderilmiş bir mesaj geri alınamaz.</p>
+</details><h2 id="s3-graph-okuma-tek-ve-cok-instance-kolayorta-sl-2123">S3 (graph okuma: tek ve çok instance, kolay–orta) — sl. 21–23<a class="headerlink" href="#s3-graph-okuma-tek-ve-cok-instance-kolayorta-sl-2123" title="Permanent link">#</a></h2>
+<p>Kaynak tipleri D (disk) ve K (teyp). Her durum için bir cycle (döngü) olup olmadığını ve durumun deadlock olup olmadığını gerekçesiyle söyleyin.</p>
+<ul>
+<li>Durum 1: bir D, bir K. P1 D'yi tutuyor ve K istiyor; P2 K'yı tutuyor ve D istiyor.</li>
+<li>Durum 2: bir D, <strong>iki</strong> K. P1 D'yi tutuyor ve K istiyor; P2 bir K tutuyor ve D istiyor; P3 diğer K'yı tutuyor ve <strong>D istiyor</strong>.</li>
+<li>Durum 3: Durum 2 ile aynı, yalnız P3 diğer K'yı tutuyor ve <strong>hiçbir şey istemiyor</strong>.</li>
+</ul>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Varsayım: kaynaklar yeniden kullanılabilir (reusable); isteği karşılanan thread sonlu sürede bitip tuttuğunu bırakır; aynı tipteki instance'lar birbirinin yerine geçer.</p>
+<ul>
+<li>Durum 1: cycle P1 → K → P2 → D → P1. Her tipte tek instance var, bu yüzden güncel istek ve atamalardan oluşan cycle deadlock'u kanıtlar. Deadlock kümesi {P1, P2}.</li>
+<li>Durum 2: iki cycle var (P1 → K → P2 → D → P1 ve P1 → K → P3 → D → P1). K'nın iki instance'ı olduğu için cycle tek başına yeterli değil; sayılara bakan bir indirgeme (reduction) gerekir. Available = (D 0, K 0). P1 K bekliyor, P2 ve P3 D bekliyor; hiçbirinin isteği karşılanamıyor. Deadlock kümesi {P1, P2, P3}. Ders: ikinci instance'ı kâğıt üzerinde eklemek yetmez. Onu tutan da bloklu olabilir; tutanın bir tamamlanma yolu olmalı.</li>
+<li>Durum 3: cycle hâlâ var ama deadlock yok. P3 bitip K'yı bırakır → Work = (0, 1). P1'in K isteği karşılanır, P1 biter: Work + Allocation(P1) = (0, 1) + (1, 0) = (1, 1). P2 D'yi alır, biter: (1, 1) + (0, 1) = (1, 2) = toplam. Herkes bitebilir (sl. 23'teki State B'nin aynısı).</li>
+</ul>
+<p>Garanti edilmeyen: Durum 3'teki sonuç P3'ün gerçekten bitmesine bağlıdır. P3 sonradan modelde olmayan bir istek yaparsa yeni snapshot gerekir.</p>
+</details><h2 id="s4-kilit-sras-ispat-atomik-rezervasyon-orta-sl-29-31-34">S4 (kilit sırası ispatı + atomik rezervasyon, orta) — sl. 29, 31, 34<a class="headerlink" href="#s4-kilit-sras-ispat-atomik-rezervasyon-orta-sl-29-31-34" title="Permanent link">#</a></h2>
+<pre><code class="language-c">void transfer(account *from, account *to, int amt) {
+    pthread_mutex_lock(&amp;from-&gt;m);
+    pthread_mutex_lock(&amp;to-&gt;m);
+    from-&gt;bal -= amt;  to-&gt;bal += amt;
+    pthread_mutex_unlock(&amp;to-&gt;m);
+    pthread_mutex_unlock(&amp;from-&gt;m);
+}
+</code></pre>
+<p>(a) <code>transfer(a7, a3, 10)</code> ve <code>transfer(a3, a7, 5)</code> aynı anda çalışıyor. Deadlock'a giden bir interleaving yazın ve dört koşulu bu örnekte gösterin.
+(b) Sabit hesap kimliğine (ID) dayalı bir düzeltme önerin ve bunun circular wait'i neden imkânsız kıldığını ispatlayın.
+(c) <code>transfer(a5, a5, 1)</code> çağrılırsa ne olur?
+(d) Bir arkadaşınız şunu öneriyor: "Önce iki kilidin de boş olduğunu kontrol et, ikisi de boşsa sırayla al." Bu bir bütün-küme rezervasyonu (whole-set reservation) mudur?
+(e) İspatınız neyi garanti etmez?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Adım 1: T1 a7.m'yi alır. Adım 2: T2 a3.m'yi alır. Adım 3: T1 a3.m'yi bekler. Adım 4: T2 a7.m'yi bekler. Mutual exclusion: mutex tek sahiplidir. Hold and wait: her biri ilk kilidini tutarken ikincisini bekler. No preemption: kilit sahibinden alınamaz. Circular wait: T1 → a3.m (T2'de) → T2 → a7.m (T1'de) → T1.
+(b) Her zaman küçük ID'li hesabın kilidini önce, büyüğünkini sonra al (<code>lo = min(from,to)</code>, <code>hi = max(from,to)</code>), transfer yönünden bağımsız olarak. Kural bir paylaşılan yardımcı fonksiyonda tutulmalı. İspat (çelişkiyle): her kilide benzersiz bir rank verilir; başka bir kilidi tutan thread yalnızca daha yüksek rank'lı kilit isteyebilir. Bir bekleme döngüsü olsaydı, her thread tuttuğundan yüksek rank'lı kilidi beklediği için zincir boyunca rank(L1) &lt; rank(L2) &lt; … &lt; rank(Lk) &lt; rank(L1) olurdu. Bu imkânsızdır. Kaldırılan koşul circular wait'tir; diğer üçü hâlâ geçerlidir.
+(c) Özyinelemesiz (nonrecursive) bir mutex aynı thread tarafından iki kez kilitlenir: bu ayrı bir self-deadlock sorunudur ve sıralama kuralı bunu çözmez. Aynı hesap durumu açıkça ele alınmalı (tek kilit al ya da işlem yapma).
+(d) Hayır. "Kontrol et, sonra al" atomik değildir: kontrol ile kilitleme arasında başka bir thread kaynaklardan birini alabilir. Kısmi sahiplikler birikir ve hold-and-wait geri gelir (okumadaki tarayıcı ve yazıcı örneği). Gerçek bir rezervasyonda bir koordinatör iki tahsisi tek bir işlem olarak karara bağlar ve kaydeder; küme eksikse iş, kümeden hiçbir şey tutmadan bekler. Bedeli: kaynak boşta tutulabilir, büyük istekler aç kalabilir.
+(e) İspat her yolun (callback'ler, hata yolları, yardımcı fonksiyonlar dahil) aynı sırayı izlediğini varsayar; tek bir yerel "istisna" ispatı geçersiz kılar. Fairness ya da sınırlı bekleme garantisi vermez. Ayrıca yalnızca sıralanan kilitleri kapsar; modelde olmayan bir bekleme (ör. kilit tutarken bir rendezvous ya da bağlantı havuzu) yeni bir döngü kurabilir.</p>
+</details><h2 id="s5-kod-okuma-trylock-ve-livelock-orta-sl-16-35-6769">S5 (kod okuma: trylock ve livelock, orta) — sl. 16, 35, 67–69<a class="headerlink" href="#s5-kod-okuma-trylock-ve-livelock-orta-sl-16-35-6769" title="Permanent link">#</a></h2>
+<p>İki worker şu döngüyü çalıştırıyor. A için <code>first = L1, second = L2</code>; B için <code>first = L2, second = L1</code>.</p>
+<pre><code class="language-c">for (;;) {
+    pthread_mutex_lock(first);
+    if (pthread_mutex_trylock(second) == 0) break;   /* ikisi de alındı */
+    pthread_mutex_unlock(first);                      /* EBUSY: geri çekil */
+}
+/* güncelleme; sonra iki kilidi bırak */
+</code></pre>
+<p>(a) Bu kod sl. 5'teki kalıcı bloklayan deadlock'a girebilir mi? (b) Sonsuza kadar ilerlemeden kalabilir mi? Durumun adı ne? (c) Programcı başarısızlık yolundaki <code>unlock(first)</code> satırını unutursa ne olur? (d) İki düzeltme önerin ve her birinin neyi garanti etmediğini söyleyin. (e) <code>lock-order.c</code>'nin <code>try</code> modu her iki worker için EBUSY yazdırıp bitiyor. Bu, livelock olmadığını ya da starvation'dan kurtulmayı gösterir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Hayır. <code>trylock</code> bloklamaz. Başarısızlıkta birinci kilit bırakıldığı için o denemede kalıcı hold-and-wait döngüsü oluşmaz (bırakma gerçekten yapıldığı sürece). Bloklayan tek çağrı <code>lock(first)</code>'tür ve bu çağrıda bekleyen thread bu çiftten hiçbir şey tutmaz. (b) Evet, livelock. İki worker senkron biçimde birinci kilidi alır, ikincide EBUSY görür, bırakır ve yeniden çarpışabilir. Durum değişir ama faydalı iş bitmez. Bu her çalıştırmada olmaz; protokol buna izin verir. (c) Thread birinci kilidi tutmaya devam eder ve döngünün başında aynı özyinelemesiz kilidi yeniden kilitlemeye çalışır: kendi kendine deadlock. Döngü yalnızca <code>trylock</code>'u tekrarlasaydı bile her biri kendi kilidini tutup ötekini beklerdi; hold-and-wait ve circular wait geri gelir, üstelik CPU harcayarak. (d) Seçenekler: (1) global sıra (ikisi de L1 sonra L2): circular wait kalkar, ama fairness garantisi yoktur. (2) Rastgele geri çekilme (random backoff): tekrarlanan çarpışmaları azaltır, ama deterministik bir bekleme sınırı vermez. (3) Asimetri, sınırlı deneme ve sonrasında koordinatör ya da kabul politikası: ilerleme argümanı ancak açık bir kabul kuralı ve scheduling varsayımlarıyla tamamlanır. (e) Hayır. <code>try</code> modu bir döngü değil, tek denemedir. Bir rendezvous iki birinci kilidin de iki deneme bitene kadar tutulmasını sağlar, bu yüzden iki EBUSY beklenen sonuçtur. Gösterdiği tek şey kabulün kalıcı bloklanma olmadan başarısız olabildiğidir. Keyfî yeniden denemelerde starvation olmadığını göstermez.</p>
+</details><h2 id="s6-graph-okuma-yeni-rag-orta-sl-1821-58-73">S6 (graph okuma: yeni RAG, orta) — sl. 18–21, 58, 73<a class="headerlink" href="#s6-graph-okuma-yeni-rag-orta-sl-1821-58-73" title="Permanent link">#</a></h2>
+<p>Kaynak tipleri ve instance sayıları: P (1), Q (2), S (1), U (3).</p>
+<ul>
+<li>T1, P'yi tutuyor ve Q istiyor.</li>
+<li>T2 bir Q tutuyor ve S istiyor.</li>
+<li>T3 diğer Q'yu ve S'yi tutuyor, P istiyor.</li>
+<li>T4 hiçbir şey tutmuyor, P istiyor.</li>
+<li>U'nun üç instance'ı da boşta.</li>
+</ul>
+<p>(a) Graph'taki cycle'ları yazın. (b) Deadlock var mı? Varsa kaynak tutan deadlock kümesi hangisi? (c) Üç boş U instance'ı neden yardımcı olmaz? (d) T4'ün durumu ne? T4'ü sonlandırmak döngüyü kırar mı? (e) Q'nun iki instance'ı olduğu hâlde cycle testi neden tek başına yeterli değildir? Bu durumu deadlock'tan çıkaracak tek bir değişiklik önerin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Varsayım: yeniden kullanılabilir kaynaklar; isteği karşılanan thread biter ve bırakır.
+(a) T1 → Q → T3 → P → T1 ve T1 → Q → T2 → S → T3 → P → T1. T4'ün gelen kenarı (assignment) olmadığı için T4 bir cycle üzerinde değildir.
+(b) Var. Available = (P 0, Q 0, S 0, U 3). T1 Q istiyor ama iki Q da T2 ve T3'te; T2 S istiyor, S T3'te; T3 P istiyor, P T1'de. İndirgemede hiçbir tutucunun isteği karşılanamaz. Deadlock kümesi {T1, T2, T3}.
+(c) Kaynak tipleri birbirinin yerine geçmez. U, eksik bir P, Q ya da S'nin yerini tutamaz (sl. 18–19'daki R4 gibi). Deadlock, bekleyen isteklerin hangi tipte olduğuna bağlıdır, toplam boş kaynağa değil.
+(d) T4 etkilenen bir bekleyicidir (affected waiter): bloklu ama hiçbir kaynak tutmuyor. Matris tespit algoritması T4'ü baştan "bitti" işaretler, çünkü T4 kümenin ihtiyaç duyduğu hiçbir instance'ı tutmaz. Rapor T4'ü tutucu kümeden ayrı göstermelidir (sl. 58). T4'ü sonlandırmak hiçbir kaynak bırakmaz ve döngüyü kırmaz.
+(e) Çok instance'lı bir tipte cycle olası bir deadlock'u gösterir; bir instance'ı cycle dışından biri tutup bitirebilir. Bu örnekte iki Q'yu tutanlar da cycle içinde bloklu olduğu için deadlock gerçektir. Değişiklik: üçüncü bir Q instance'ı olsun ve boşta dursun (ya da istek yapmayan bir T5 tutsun). Boş Q ile: T1 Q'yu alır, biter, P'yi ve aldığı Q'yu bırakır. T3 P'yi alır, biter, Q ve S'yi bırakır. T2 S'yi alır, biter. Cycle'lar başlangıçta yine vardır ama deadlock yoktur. Bu, sl. 73'teki ilk review sorusunun iki parçasıdır.</p>
+</details><h2 id="s7-wait-for-graph-orta-sl-24-62-63">S7 (wait-for graph, orta) — sl. 24, 62, 63<a class="headerlink" href="#s7-wait-for-graph-orta-sl-24-62-63" title="Permanent link">#</a></h2>
+<p>R1–R6'nın her biri tek instance'lı.</p>
+<ul>
+<li>T1, R1'i tutuyor ve R2 istiyor. T2, R2'yi tutuyor ve R3 istiyor. T3, R3'ü tutuyor ve R1 istiyor.</li>
+<li>T4, R4'ü tutuyor ve R2 istiyor. T5, R5'i tutuyor ve R4 istiyor.</li>
+<li>T6, R6'yı tutuyor ve hiçbir şey istemiyor.</li>
+</ul>
+<p>(a) Wait-for graph'ın kenarlarını yazın. (b) Cycle'ı ve bloklu kalan thread'leri belirleyin. (c) T6 bitebilir; bu yardımcı olur mu? (d) Kurban olarak T4, T5, T6 ya da T1–T3'ten biri önerildi. Hangileri bekleyişi çözer? (e) OSC slaytı cycle aramayı n² işlem olarak verirken hocanın slaytı O(V + E) diyor. Çelişki var mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Ti → R → Tj yerine Ti → Tj yazılır: T1 → T2, T2 → T3, T3 → T1, T4 → T2, T5 → T4. T6'nın giden kenarı yok.
+(b) Cycle T1 → T2 → T3 → T1. Tek instance olduğu için bu cycle deadlock'u kanıtlar. T4 ve T5 cycle üzerinde değil ama kaynak tutuyorlar ve bekleyişleri cycle'a dayanıyor (T5 → T4 → T2). İndirgemede yalnızca T6 bitebilir; T1–T5 bitmemiş kalır.
+(c) Hayır. T6 bitip R6'yı bırakır ama R6'yı bekleyen yok (sl. 24'teki T5 gibi). Çalışabilen bir thread bulmak yetmez; bırakılan kaynak ilgili beklemeleri çözmelidir.
+(d) T6: hiçbir şey çözmez. T5: R5'i kimse beklemiyor, değişen bir şey yok. T4: R4 serbest kalır, T5 ilerler ama cycle kalır. T1, T2 ya da T3: cycle kırılır. Örneğin T2 sonlandırılırsa R2'yi T1 ya da T4 alır (hangisinin alacağı politikaya bağlıdır); her iki durumda da zincir çözülür. Kurban seçimi deadlock'u kuran cycle'dan yapılmalı. Müdahaleden sonra durum yeniden kurulup kontrol edilmeli, çünkü cycle'lar örtüşebilir. Ayrıca sonlandırılan thread'in yarım bıraktığı paylaşılan durum onarılmalı (sl. 63).
+(e) Çelişki yok, temsil farkı var. Adjacency list ile yönlü cycle araması O(V + E) sürer; yoğun bir matris temsili düğüm sayısında karesel iş gerektirebilir. Karmaşıklık verirken temsil söylenmelidir. Asıl sınır başkadır: graph yalnızca içerdiği bağımlılıkları görür. Modelde olmayan bir veritabanı kilidi, callback ya da uzak bekleme gerçek cycle'ı gizleyebilir (sl. 62).</p>
+</details><h2 id="s8-banker-need-tam-safety-izi-orta-sl-4650-56">S8 (Banker: Need + tam safety izi, orta) — sl. 46–50, 56<a class="headerlink" href="#s8-banker-need-tam-safety-izi-orta-sl-4650-56" title="Permanent link">#</a></h2>
+<p>Yeni bir sistem: üç kaynak tipi A, B, C; dört thread. Available = (2, 1, 1).</p>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Allocation A B C</th>
+<th>Max A B C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>1 0 1</td>
+<td>3 2 2</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>2 1 0</td>
+<td>2 2 2</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>0 1 2</td>
+<td>1 2 3</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>1 1 1</td>
+<td>4 1 2</td>
+</tr>
+</tbody>
+</table>
+<p>(a) Toplam kaynak vektörünü bulun. (b) Need matrisini hesaplayın. (c) Safety algoritmasını Work'ü her adımda yazarak çalıştırın ve durumun safe olup olmadığını söyleyin. (d) T2 bittikten sonra Work neden (3, 3, 4) değildir? (e) Bulduğunuz tanık sırası (witness) tek mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Toplam = Available + ΣAllocation = (2, 1, 1) + (4, 3, 4) = <strong>(6, 4, 5)</strong>.
+(b) Need = Max − Allocation: T0 (2, 2, 1), T1 (0, 1, 2), T2 (1, 1, 1), T3 (3, 0, 1). Need en fazla ek talep demektir; toplam iddia da, şu anki istek de değildir.
+(c) Work = (2, 1, 1), hepsi bitmemiş. Bileşen bileşen karşılaştır:</p>
+<ul>
+<li>T0 (2, 2, 1): B'de 2 &gt; 1, uymaz. T1 (0, 1, 2): C'de 2 &gt; 1, uymaz; A'daki fazlalık C'deki eksiği karşılamaz. T3 (3, 0, 1): A'da 3 &gt; 2, uymaz. <strong>Yalnızca T2 uyar:</strong> (1, 1, 1) ≤ (2, 1, 1).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Seçilen ve Need</th>
+<th>Work (bitince)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Başlangıç</td>
+<td>—</td>
+<td>2 1 1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>T2: 1 1 1 ≤ 2 1 1</td>
+<td>2 1 1 + 0 1 2 = <strong>2 2 3</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>T0: 2 2 1 ≤ 2 2 3</td>
+<td>2 2 3 + 1 0 1 = <strong>3 2 4</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>T1: 0 1 2 ≤ 3 2 4</td>
+<td>3 2 4 + 2 1 0 = <strong>5 3 4</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>T3: 3 0 1 ≤ 5 3 4</td>
+<td>5 3 4 + 1 1 1 = <strong>6 4 5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Herkes bitti ve son Work toplam vektöre eşit, (6, 4, 5). Durum <strong>safe</strong>, tanık T2, T0, T1, T3. Bu bir olası tamamlanma sırasıdır, CPU zamanlama sırası değil.
+(d) T2'nin kalan ihtiyacı (1, 1, 1) önce ödünç verilir, bitince Max'ın tamamı geri döner: Work − Need + Max = Work + Allocation = (2, 1, 1) + (0, 1, 2) = (2, 2, 3). Max'ı doğrudan eklemek ((2, 1, 1) + (1, 2, 3) = (3, 3, 4)) az önce ödünç verilen birimleri ikinci kez sayar ve olmayan instance'lar yaratır.
+(e) Tek değil. Geçerli tanıklar: T2,T0,T1,T3; T2,T0,T3,T1; T2,T1,T0,T3; T2,T1,T3,T0. Hepsinde T2 ilk sırada olmak zorunda. Başka bir uygun thread'i seçmek hata değildir (sl. 56).</p>
+</details><h2 id="s9-banker-istek-kabulu-ortazor-sl-5153">S9 (Banker: istek kabulü, orta–zor) — sl. 51–53<a class="headerlink" href="#s9-banker-istek-kabulu-ortazor-sl-5153" title="Permanent link">#</a></h2>
+<p><strong>S8'in özgün snapshot'ından</strong> başlayın. T3, (1, 0, 0) istiyor. İstek algoritmasının dört adımını uygulayın. Karar ne olur? Geçici durumda S8'deki her tanık hâlâ geçerli mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> Snapshot: S8 özgün durumu, Available = (2, 1, 1).</p>
+<ol>
+<li>Request ≤ Need mi? (1, 0, 0) ≤ (3, 0, 1): A 1 ≤ 3, B 0 ≤ 0, C 0 ≤ 1. Evet.</li>
+<li>Request ≤ Available mı? (1, 0, 0) ≤ (2, 1, 1). Evet.</li>
+<li>Geçici durum: Available = (1, 1, 1); T3 Allocation = (2, 1, 1); T3 Need = (2, 0, 1). Diğer satırlar aynı. Değişmez kontrolü: (1, 1, 1) + ΣAllocation (5, 3, 4) = (6, 4, 5).</li>
+<li>Safety, <strong>geçici</strong> durum üzerinde: Work = (1, 1, 1). T0 (2, 2, 1): A ve B eksik. T1 (0, 1, 2): C eksik. T3 (2, 0, 1): A eksik. T2 (1, 1, 1) ≤ (1, 1, 1): uyar.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Seçilen ve Need</th>
+<th>Work (bitince)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Başlangıç</td>
+<td>—</td>
+<td>1 1 1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>T2: 1 1 1 ≤ 1 1 1</td>
+<td>1 1 1 + 0 1 2 = <strong>1 2 3</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>T1: 0 1 2 ≤ 1 2 3</td>
+<td>1 2 3 + 2 1 0 = <strong>3 3 3</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>T0: 2 2 1 ≤ 3 3 3</td>
+<td>3 3 3 + 1 0 1 = <strong>4 3 4</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>T3: 2 0 1 ≤ 4 3 4</td>
+<td>4 3 4 + 2 1 1 = <strong>6 4 5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Safe olduğu için <strong>istek kabul edilir</strong> ve geçici durum kalıcı olur. Tanıkların hepsi geçerli kalmaz: Work = (1, 2, 3) iken T0'ın A ihtiyacı 2 &gt; 1 olduğundan T2, T0, … ile başlayan iki tanık artık geçersizdir. Geçerli tanıklar yalnızca T2,T1,T0,T3 ve T2,T1,T3,T0'dır. Kabul edilen bir istek, durumu unsafe yapmadan geçerli sırayı değiştirebilir. Karar sırasının diğer tahsis kararlarıyla serileştirilmesi (serialize) gerekir (sl. 51).</p>
+</details><h2 id="s10-banker-unavailable-ve-maksimumu-asan-istek-orta-sl-51-54-72">S10 (Banker: unavailable ve maksimumu aşan istek, orta) — sl. 51, 54, 72<a class="headerlink" href="#s10-banker-unavailable-ve-maksimumu-asan-istek-orta-sl-51-54-72" title="Permanent link">#</a></h2>
+<p><strong>S9'daki istek kabul edildikten sonraki durumdan</strong> devam edin (Available = (1, 1, 1), T3 Allocation = (2, 1, 1)).
+(a) T0, (2, 0, 0) istiyor. (b) T1, (0, 2, 0) istiyor. (c) Bir öğrenci (a)'yı S8'in özgün snapshot'ına dönerek çözüyor: "Orada Available = (2, 1, 1), A yetiyor, o hâlde verilir." Değerlendirin.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Request ≤ Need: (2, 0, 0) ≤ (2, 2, 1), evet. Request ≤ Available: A'da 2 &gt; 1, hayır. T0 kaynak yetmediği için <strong>beklemek zorunda</strong>. Geçici tahsis ve safety simülasyonu gerekmez; durum değişmez.
+(b) Request ≤ Need: T1 Need = (0, 1, 2), B'de 2 &gt; 1. İstek <strong>beyan edilen maksimumu aşıyor</strong>. Bu bir hata (claim violation) durumudur, beklemekle düzelmez. Durum değişmez.
+(c) Bu başka bir problemdir: snapshot belirtilmeden sonuç anlamsızdır. Özgün durumda bile istek verilmez, ama başka bir nedenle. Adım 2'yi geçer ((2, 0, 0) ≤ (2, 1, 1)). Geçici durum: Available = (0, 1, 1), T0 Allocation = (3, 0, 1), Need = (0, 2, 1). Work = (0, 1, 1): T0 B'de (2 &gt; 1), T1 C'de (2 &gt; 1), T2 A'da (1 &gt; 0), T3 A'da (3 &gt; 0) eksik. Hiçbiri başlayamaz, yani <strong>unsafe</strong>: reddet ve özgün durumu geri yükle. Aynı istek bir snapshot'ta "bekle", ötekinde "unsafe, reddet" sonucunu verir. <code>banker.c</code> reddedilen her istekten sonra durumun değişmediğini ayrıca kontrol eder; doğru sınıflandırma yetmez, canlı veri değişmemiş olmalıdır.</p>
+</details><h2 id="s11-banker-available-ama-unsafe-review-sorusu-zor-sl-39-42-5556-73">S11 (Banker: available ama unsafe + review sorusu, zor) — sl. 39, 42, 55–56, 73<a class="headerlink" href="#s11-banker-available-ama-unsafe-review-sorusu-zor-sl-39-42-5556-73" title="Permanent link">#</a></h2>
+<p>Yine <strong>S9 kabulünden sonraki durumdan</strong> başlayın (Available = (1, 1, 1)).
+(a) T1, (0, 0, 1) istiyor. Karar ne?
+(b) Aynı vektörü, (0, 0, 1)'i T2 istiyor. Karar ne?
+(c) (a)'daki geçici durum deadlock mu? Herkesin bittiği somut bir gelecek gösterin. Banker yine de neden reddeder?
+(d) (a)'daki ret, istekten önceki durumun deadlock olduğunu kanıtlar mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) (0, 0, 1) ≤ Need (0, 1, 2): evet. (0, 0, 1) ≤ Available (1, 1, 1): evet. Geçici durum: Available = (1, 1, 0); T1 Allocation = (2, 1, 1), Need = (0, 1, 1). Work = (1, 1, 0):</p>
+<ul>
+<li>T0 (2, 2, 1): A, B ve C eksik.</li>
+<li>T1 (0, 1, 1): C'de 1 &gt; 0.</li>
+<li>T2 (1, 1, 1): C'de 1 &gt; 0.</li>
+<li>T3 (2, 0, 1): A ve C eksik.</li>
+</ul>
+<p>Safety testi başlayamıyor: <strong>unsafe, reddet</strong> ve Available = (1, 1, 1) olan durumu geri yükle.
+(b) (0, 0, 1) ≤ T2 Need (1, 1, 1): evet. ≤ Available: evet. Geçici durum: Available = (1, 1, 0); T2 Allocation = (0, 1, 3), Need = (1, 1, 0). Work (1, 1, 0) → T2: (1, 1, 0) ≤ (1, 1, 0), biter → <strong>(1, 2, 3)</strong> → T1: (0, 1, 2) ≤ (1, 2, 3) → <strong>(3, 3, 3)</strong> → T0: (2, 2, 1) ≤ (3, 3, 3) → <strong>(4, 3, 4)</strong> → T3: (2, 0, 1) ≤ (4, 3, 4) → <strong>(6, 4, 5)</strong> = toplam. <strong>Safe, kabul.</strong> Aynı vektör, isteyenin kalan Need'ine göre farklı karar alır. T2'nin son C birimini almak onun Need'ini (1, 1, 0)'a indirir ve T2'yi bitirilebilir kılar.
+(c) Deadlock değil. Avoidance modelinde şu an bloklu kimse yok; Need olası en büyük ek taleptir, bekleyen bir istek değildir. Örnek gelecek: T2 kalan (1, 1, 1)'ini hiç istemeden biterse (0, 1, 2) döner → Work = (1, 1, 0) + (0, 1, 2) = (1, 2, 2). T1 (0, 1, 1) ≤ (1, 2, 2) → (3, 3, 3); T0 → (4, 3, 4); T3 → (6, 4, 5). Herkes biter. Banker yine de reddeder, çünkü kuralı beyan edilen maksimum taleplere karşı bir tamamlanma garantisini korumaktır; taleplerin küçük çıkacağını tahmin etmez. Unsafe "garanti kayboldu" demektir; deadlock yalnızca olasıdır. Her deadlock durumu unsafe'tir, ama tersi doğru değildir (sl. 39). Bu, sl. 73'teki ikinci review sorusunun cevabıdır.
+(d) Hayır. İstekten önceki durum safe'tir (S9'daki iz: T2, T1, T0, T3). Unsafe sonuç varsayımsal tahsise aittir; geri yükleme eski garantiyi korur (sl. 56). Banker'ın garanti etmedikleri: fairness (T1 tekrar tekrar reddedilip aç kalabilir); doğru Max beyanı, sonlu sürede bırakma ve kararların serileştirilmesi varsayılır.</p>
+</details><h2 id="s12-lab-yorumu-orta-sl-6770-72-kodlock-orderc-kodbankerc">S12 (lab yorumu, orta) — sl. 67–70, 72; <code>kod/lock-order.c</code>, <code>kod/banker.c</code><a class="headerlink" href="#s12-lab-yorumu-orta-sl-6770-72-kodlock-orderc-kodbankerc" title="Permanent link">#</a></h2>
+<p>Ubuntu'da şu komutlar çalıştırılıyor (mesaj sırası çalıştırmadan çalıştırmaya değişebilir):</p>
+<pre><code class="language-text">$ timeout 3s ./lock-order deadlock
+worker 0 holds L1
+worker 1 holds L2
+worker 1 requests L1 while holding L2
+worker 0 requests L2 while holding L1
+$ echo $?
+124
+$ ./lock-order try
+worker 0 holds L1
+worker 1 holds L2
+worker 1: second lock EBUSY
+worker 0: second lock EBUSY
+completed
+$ ./banker | head -1
+initial: safe sequence: T1 T3 T4 T0 T2
+</code></pre>
+<p>(a) 124 neyi kanıtlar, neyi kanıtlamaz? Bu çalıştırmayı deadlock kanıtı yapan başka hangi kanıtlar gerekir?
+(b) Kod neden <code>sleep</code> yerine bir rendezvous kullanıyor? Rendezvous kaldırılır ve program bir kez başarıyla biterse bu ne gösterir?
+(c) <code>ordered</code> modu neden biter?
+(d) Slayt T1, T3, T4, T2, T0 sırasını gösteriyor, <code>banker.c</code> ise T1 T3 T4 T0 T2 yazıyor. Program hatalı mı? Koddaki tarama biçimini kullanarak açıklayın.</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) GNU <code>timeout</code> süre dolduğunda normalde 124 döndürür. Bu yalnızca programın 3 saniyede bitmediğini kanıtlar; bir deadlock dedektörü değildir. Yavaş bir program ya da çok kısa bir süre de 124 verir. Deadlock iddiası şunlarla birleşince kurulur: kaynak koddaki protokol (iki worker ters sırada kilitliyor, ikinci <code>pthread_mutex_lock</code> bloklayan çağrı ve dışarıdan müdahale olmadan bırakma yolu yok), iki sahiplik mesajı ve iki ikinci-istek mesajı. Bunlardan sahiplik/istek graph'ı çizilir: worker 0 → L2 (worker 1'de) → worker 1 → L1 (worker 0'da). Kayda geçirilmesi gerekenler: OS ve derleyici sürümleri, tam komutlar, çıktı, çıkış kodu ve graph (sl. 70). Mesajlar hiç basılmadıysa, derleme hatası varsa ya da süre çok kısaysa bunlar başka kanıtlardır. Ek bilgi: aynı deney macOS'ta <code>timeout</code> yerine <code>perl -e 'alarm 3; exec …'</code> ile çalıştırıldığında çıkış kodu 142 oldu (128 + SIGALRM). Kod deadlock'a değil, onu durduran watchdog'a aittir.
+(b) Rendezvous, iki ikinci istekten önce iki birinci kilidin de tutulmasını garanti eder ve kötü durumu zamanlama tahminine (sleep) dayanmadan kurar. Kaldırılırsa ters sıra yine deadlock'a izin verir ama bazı çalıştırmalar biter. Başarılı bir çalıştırma yalnızca o seferde kötü interleaving'in olmadığını gösterir, protokolün deadlock'tan arındığını göstermez. Bir çalıştırmadan elde edilen kanıt bir protokol ispatı değildir (sl. 2).
+(c) İki worker da L1'i sonra L2'yi alır; bütün edinme kenarları L1 → L2 yönündedir ve döngü kapanamaz (S4'teki rank ispatı). Birinci kilidi beklerken bir rendezvous da yoktur. Başarılı çalıştırma bu argümanı örnekler; kanıtın kendisi argümandır.
+(d) Hatalı değil; iki sıra da geçerli tanıktır. <code>safe()</code> her geçişte i = 0…4 döngüsünü sürdürür ve bir eşleşmeden sonra başa dönmez. 1. geçiş, Work = (3, 3, 2): T0 (7, 4, 3) uymaz. T1 (1, 2, 2) uyar → (5, 3, 2). T2 (6, 0, 0): A'da 6 &gt; 5, uymaz. T3 (0, 1, 1) uyar → (7, 4, 3). T4 (4, 3, 1) uyar → (7, 4, 5). 2. geçiş: T0 (7, 4, 3) ≤ (7, 4, 5) → (7, 5, 5). T2 (6, 0, 0) → (10, 5, 7) = toplam. Her yerel karşılaştırma ve güncelleme doğru olduğu sürece farklı bir uygun thread seçmek hata değildir; çıktı slaytla karakter karakter eşleşmek zorunda değildir.</p>
+</details><h2 id="s13-tespit-available-0-ortazor-sl-5760">S13 (tespit: Available = 0, orta–zor) — sl. 57–60<a class="headerlink" href="#s13-tespit-available-0-ortazor-sl-5760" title="Permanent link">#</a></h2>
+<p>Farklı bir sistem: kaynak tipleri X, Y, Z. Available = (0, 0, 0). Request, şu an bekleyen talebi gösterir.</p>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Allocation X Y Z</th>
+<th>Request X Y Z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>1 0 1</td>
+<td>0 0 0</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>0 2 0</td>
+<td>1 1 1</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>1 0 1</td>
+<td>0 2 0</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>0 1 0</td>
+<td>1 0 0</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>0 0 0</td>
+<td>0 0 1</td>
+</tr>
+</tbody>
+</table>
+<p>(a) Toplam kaynak vektörü nedir? (b) Tespit algoritmasını Work'ü her adımda yazarak çalıştırın. (c) Bir arkadaşınız "Available sıfır, her kaynak kullanımda, T1–T4 bekliyor; demek ki deadlock" diyor. Değerlendirin. (d) T4'e algoritma nasıl davranır, T4 Z'yi almaya garantili mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Toplam = (0, 0, 0) + (2, 3, 2) = <strong>(2, 3, 2)</strong>.
+(b) Work = (0, 0, 0). T4'ün Allocation'ı sıfır, bu yüzden baştan bitti işaretlenir. Bir tutucunun Request ≤ Work koşulu bileşen bileşen aranır:</p>
+<table>
+<thead>
+<tr>
+<th>Bitiş</th>
+<th>Request ≤ Work?</th>
+<th>Work önce</th>
+<th>Work sonra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>0 0 0 ≤ 0 0 0</td>
+<td>0 0 0</td>
+<td><strong>1 0 1</strong></td>
+</tr>
+<tr>
+<td>T3</td>
+<td>1 0 0 ≤ 1 0 1</td>
+<td>1 0 1</td>
+<td><strong>1 1 1</strong></td>
+</tr>
+<tr>
+<td>T1</td>
+<td>1 1 1 ≤ 1 1 1</td>
+<td>1 1 1</td>
+<td><strong>1 3 1</strong></td>
+</tr>
+<tr>
+<td>T2</td>
+<td>0 2 0 ≤ 1 3 1</td>
+<td>1 3 1</td>
+<td><strong>2 3 2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Work = (1, 0, 1) iken T1 (1, 1, 1) Y'de ve T2 (0, 2, 0) Y'de uymaz. Taramayı orada kesmemek gerekir, çünkü T3'ün bitişi Y'yi getirir. Bütün tutucular biter; son Work toplam vektöre eşit. <strong>Deadlock yok.</strong>
+(c) Yanlış. Sıfır Available deadlock kanıtı değildir. Şu anki isteği olmayan T0 bitip kaynak bırakır ve bırakma zinciri herkesi çözer. Varsayım: isteği karşılanan thread sonlu sürede biter ve modelde olmayan yeni istek yapmaz. Snapshot tutarlı olmalıdır; toplama sırasında sahiplik değişirse yanıltıcı bir matris çıkar (sl. 57).
+(d) Algoritma T4'ü baştan bitti sayar, çünkü T4 kümenin ihtiyaç duyduğu hiçbir instance'ı tutmaz. Gerçek sistemde T4 şu an bloklu, ama zincir sonunda Work'te Z = 2 olduğu için isteği karşılanabilir hâle gelir. Z'yi gerçekten ne zaman alacağı kabul politikasına bağlıdır; tespit algoritması fairness garantisi vermez.</p>
+</details><h2 id="s14-tespit-kurtarma-zor-sl-57-6163-66">S14 (tespit + kurtarma, zor) — sl. 57, 61–63, 66<a class="headerlink" href="#s14-tespit-kurtarma-zor-sl-57-6163-66" title="Permanent link">#</a></h2>
+<p>S13'teki snapshot'ta <strong>yalnızca T0'ın Request'ini</strong> (0, 0, 0)'dan (0, 1, 0)'a değiştirin. Allocation ve Available aynı kalsın.
+(a) Tespiti yeniden çalıştırın. Deadlock kümesi hangisi, T4'ün durumu ne?
+(b) Bu değişiklik "T0'ın Max'ı arttı" demekle aynı şey mi?
+(c) Biri Request yerine Banker'ın Need matrisini kullanmak istiyor. Neden yanlış?
+(d) Kurtarma için iki öneri var: "T4'ü sonlandır" ve "en az kaynak tutan T3'ü sonlandır". Her birini tespiti yeniden çalıştırarak değerlendirin.
+(e) Müdahaleden sonra ne yapılmalı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Work = (0, 0, 0); T4 baştan bitti sayılır. T0 (0, 1, 0): Y'de 1 &gt; 0. T1 (1, 1, 1): X, Y, Z eksik. T2 (0, 2, 0): Y eksik. T3 (1, 0, 0): X eksik. Hiçbir aday yok. <strong>Deadlock kümesi {T0, T1, T2, T3}</strong>, yani kaynak tutan ve indirgemeyi engelleyen küme. T4 kümede değil ama bu kümenin arkasında bloklu, etkilenen bir bekleyici; ayrıca raporlanır (sl. 58).
+(b) Hayır. Değişen şey şu anda bloklu olan bir istektir; artan bir maksimum iddia değildir (sl. 61). Tespit yalnızca şu anki beklemelerle ilgilenir.
+(c) Need = Max − Allocation olası gelecekteki en büyük talebi temsil eder. Onu kullanmak "durum safe mi?" sorusunu sorar ve unsafe ama hâlâ ilerleyen bir durumu, maksimum talepleri zaten bloklu istekmiş gibi deadlock sayabilir. Avoidance ve detection farklı soruların cevabıdır. Ayrıca bu snapshot'ta Max verilmemiştir.
+(d) T4'ü sonlandırmak hiçbir şey bırakmaz (Allocation = 0). Work (0, 0, 0) kalır ve deadlock sürer; bu yanlış kurbandır. T3'ü sonlandırmak (0, 1, 0)'ı bırakır. Work = (0, 1, 0) → T0: (0, 1, 0) ≤ (0, 1, 0) → <strong>(1, 1, 1)</strong> → T1: (1, 1, 1) ≤ (1, 1, 1) → <strong>(1, 3, 1)</strong> → T2: (0, 2, 0) ≤ (1, 3, 1) → <strong>(2, 3, 2)</strong>. Deadlock çözülür; T3 sonra yeniden başlatılır. Bu örnekte tutuculardan herhangi biri tek başına yeterli olurdu, ama seçim maliyete göre yapılır: öncelik, yapılmış iş, yeniden başlatma maliyeti, tutulan kaynaklar, kullanıcıya etkisi ve geçmiş rollback sayısı (sl. 63, 66).
+(e) Durum yeniden kurulup tespit tekrar çalıştırılmalı; cycle'lar örtüşebilir ve bir kurban hepsini çözmeyebilir (sl. 62, 66). T3'ün yarım güncellemeleri tutarlı bir checkpoint'e geri alınmalı; sadece sahipliği bırakmak yetmez (sl. 64). Yeniden denemede tekrarlanan dış etkiler önlenmeli. "En ucuz kurban" kuralı T3'ü her seferinde seçip onu aç bırakabilir, bu yüzden rollback geçmişi maliyete eklenmeli.</p>
+</details><h2 id="s15-tasarmkarslastrma-zor-sl-27-31-38-51-6366-73">S15 (tasarım/karşılaştırma, zor) — sl. 27, 31, 38, 51, 63–66, 73<a class="headerlink" href="#s15-tasarmkarslastrma-zor-sl-27-31-38-51-6366-73" title="Permanent link">#</a></h2>
+<p>Bir para transferi servisinde her iş hesap kilitlerini ve havuzdan veritabanı bağlantılarını tutuyor; bir iş bir bağlantıyı tutarken ikincisini isteyebiliyor.
+(a) Üç çözümü karşılaştırın (sl. 73'teki üçüncü review sorusu): (i) circular wait'i global bir kilit sırasıyla kaldırmak, (ii) unsafe bir bağlantı isteğini Banker ile reddetmek, (iii) deadlock'u tespit edip bir işlemi (transaction) iptal etmek. Her biri için gereken bilgiyi, işin davranışına ne zaman müdahale ettiğini, bedelini ve neyi garanti etmediğini yazın.
+(b) A'dan B'ye 10 birimlik transfer A'dan düşüldükten sonra iptal ediliyor. Kurtarma kilidi bırakmaktan başka ne yapmalı?
+(c) Kurban seçimi "her zaman en ucuz işi iptal et" kuralına göre yapılıyor. Sorun ne?
+(d) İptal edilen iş yeniden denenirken ilk denemenin yanıtı kaybolmuştu. Hangi tehlike var?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>(i) Global kilit sırası (prevention)</th>
+<th>(ii) Banker reddi (avoidance)</th>
+<th>(iii) Tespit + iptal (detection + recovery)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gereken bilgi</td>
+<td>Her kilide bir rank; thread başına maksimum talep gerekmez</td>
+<td>Her işin her tip için beyan ettiği Max, Allocation, Available; kararların serileştirilmesi</td>
+<td>Tutarlı bir anlık snapshot: sahiplikler ve şu anki Request'ler; geri alınabilir bir işlem sınırı</td>
+</tr>
+<tr>
+<td>Ne zaman müdahale eder</td>
+<td>Kod yazılırken: izin verilen protokolü kısıtlar</td>
+<td>Her istekte: geçici tahsisi safety testinden geçirir</td>
+<td>Deadlock oluştuktan sonra: periyodik, bloklu bir istekte ya da gecikmeyle</td>
+</tr>
+<tr>
+<td>Bedel</td>
+<td>Erişim kısıtı; bütün yollar (callback, hata yolları) denetlenmeli</td>
+<td>Max'ın doğru ve önceden bilinmesi; güvenli ama reddedilen istekler yüzünden düşük kullanım</td>
+<td>İzleme maliyeti, kaybolan iş, rollback ve yeniden deneme</td>
+</tr>
+<tr>
+<td>Garanti etmediği</td>
+<td>Fairness ve sınırlı bekleme; modelde olmayan bekleyişler (havuz, rendezvous)</td>
+<td>Fairness (bir iş tekrar tekrar reddedilebilir); Max yanlışsa garanti kalkar</td>
+<td>Kurbanın aç kalmaması; örtüşen cycle'ların tek müdahaleyle bitmesi; tespit edicinin görmediği bağımlılıklar</td>
+</tr>
+</tbody>
+</table>
+<p>Ortak varsayım: kaynaklar yeniden kullanılabilir ve işler sonlu sürede bırakır. Üçü de yalnızca modellenmiş bağımlılıklar için konuşur. Yalnızca bağlantı havuzuna bakan bir analiz, uygulama kilitleri modelde değilse geçersiz kalabilir (sl. 11, 62).
+(b) Durum onarımı ile bırakma birlikte koordine edilmeli. Tutarlı bir checkpoint'e dönülür, yani A'nın bakiyesi transfer öncesine getirilir, ve kontrollü bir yeniden deneme yapılır (sl. 64–65). Sıradan bir mutex korunan işlemi kendiliğinden geri almaz; bunun için uygulamanın tanımladığı bir işlem ya da görev sınırı gerekir. Rastgele bir thread'i durdurmak paylaşılan durumu tutarsız bırakabilir (sl. 63).
+(c) Aynı iş her seferinde kurban seçilip aç kalabilir (starvation). Rollback ve yeniden deneme geçmişi maliyet politikasına katılmalıdır (sl. 66; OSC: rollback sayısını maliyete ekle).
+(d) Yanıtın kaybolması ilk işlemin etkisiz kaldığı anlamına gelmez. Körlemesine yeniden deneme transferi iki kez uygulayabilir. Yinelenen dış etkiler önlenmelidir (sl. 66). Ek bilgi: pratikte bu, işlem kimliğiyle tekrarlanabilir (idempotent) istek tasarımıyla yapılır.</p>
+</details><hr /></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ders 4 ilerleme</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: Ders 4 ilerleme">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-04-ilerleme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-04.html">Anlatım</a> <a href="ders-04-ozet.html">Özet</a> <a href="ders-04-sorular.html">Soru bankası</a> <a href="ders-04-deneme.html">Deneme sınavı</a> <a href="ders-04-ilerleme.html" aria-current="page">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></aside>
+  <main><h1 id="ders-4-ilerleme">Ders 4 ilerleme<a class="headerlink" href="#ders-4-ilerleme" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></details>
+<h2 id="2026-11-03-oturum-1">2026-11-03 · Oturum 1<a class="headerlink" href="#2026-11-03-oturum-1" title="Permanent link">#</a></h2>
+<p><strong>Materyal kontrolü.</strong> Hocanın sitesine 2026-11-03'te bakıldı. Ders sayfası, okuma, slayt PDF'i, okumanın bağlantı verdiği 20 dosya ve OSTEP <code>threads-bugs.pdf</code> yerel kopyayla bayt bayt aynı çıktı. Yerel kopyada değişiklik gerekmedi. OSC ch8.pptx siteden yeniden indirilemedi (os-book.com IPv4'te de IPv6'da da TLS bağlantısını kesti); yerel kopya kullanıldı.</p>
+<p><strong>Hazırlık tamam.</strong> Dört uzman ajan paralel çalıştı: model ve tespit, önleme/kaçınma/kurtarma, Linux ve C pratiği, sınav ve pedagoji. Ardından bir denetçi notları kaynaklara karşı kontrol etti ve bütün Banker, safe-state ve tespit hesaplarını kendi betiğiyle yeniden yaptı. Graph kenarlarını slayt görsellerini açarak doğruladı.</p>
+<p>Denetçi <strong>0 kritik, 3 orta, 9 düşük</strong> bulgu çıkardı. Bütün sayısal hesaplar doğru çıktı: her Work adımı, 16, 8 ve 30 geçerli sıra sayısı ve soru bankasındaki 13 yeni sayısal örnek.</p>
+<table>
+<thead>
+<tr>
+<th>Bulgu</th>
+<th>Önem</th>
+<th>Konu</th>
+<th>Düzeltme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D-01</td>
+<td>orta</td>
+<td>"Dört şart gerekli ama yeterli değil" gerekçesi</td>
+<td>Tasarımın şartlara izin vermesi ile şartların şu an sağlanması ayrıldı; "yeterli değil" kanıtı çok instance'lı örnekler (sl. 20, sl. 23). <code>anlatim.md</code> §2.1 baştan doğruydu, soru bankası düzeltildi.</td>
+</tr>
+<tr>
+<td>D-02</td>
+<td>orta</td>
+<td>Okumada <code>banker.c</code> sırası tutarsızlığı iddiası</td>
+<td>Tutarsızlık yok: okuma o sırayı <code>banker.c</code>'ye atfetmiyor. Anlatıma girmedi.</td>
+</tr>
+<tr>
+<td>D-03</td>
+<td>orta</td>
+<td>"Önlemede çalışma anında karar yok"</td>
+<td>Yalnız kilit sırası için doğru. <code>anlatim.md</code> §4.1'e not ve diyagrama düzeltme eklendi.</td>
+</tr>
+<tr>
+<td>D-04</td>
+<td>düşük</td>
+<td>Tespitteki 30 sıra "T0 ve T2 ile başlar"</td>
+<td>"T0 <strong>ya da</strong> T2 ile başlar" olarak düzeltildi (§6.3).</td>
+</tr>
+<tr>
+<td>D-05…D-09, D-12</td>
+<td>düşük</td>
+<td>Soru bankası: kurban kuralı sorusu, bekleyen istek varsayımı, <code>banker.c</code> assert davranışı, ek bilgi etiketleri</td>
+<td>Soru bankası şablona çevrilirken düzeltildi.</td>
+</tr>
+<tr>
+<td>D-10</td>
+<td>düşük</td>
+<td>Filozoflar izinde tek durum</td>
+<td>İki durum da yazıldı (§3.6).</td>
+</tr>
+<tr>
+<td>D-11</td>
+<td>düşük</td>
+<td>Linux ayrıntılarında "<span class="ek">ek bilgi</span>" etiketi eksik</td>
+<td>Eklendi (§8.3).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beş dosya hazır.</strong></p>
+<ul>
+<li><code>soru-bankasi.md</code>: 55 soru. Seviye 1: Q1–Q6, Seviye 2: Q7–Q26, Seviye 3: Q27–Q44, Seviye 4: Q45–Q55. Cevaplar İngilizce. Denetim bulguları işlendi; Q50(a)'nın güncel istekleri değişti ve izi betikle yeniden hesaplandı.</li>
+<li><code>deneme-sinavi.md</code>: 15 soru, notlara bakılmadan yalnız slayt, okuma ve kodlardan yazıldı. S8–S11 yeni bir Banker sistemi (toplam (6,4,5)), S13–S14 yeni bir tespit sistemi (toplam (2,3,2)) kullanıyor; sayılar iki ayrı betikle doğrulandı, S8 elle de kontrol edildi.</li>
+<li><code>ozet.md</code>: İngilizce tek sayfalık tekrar notu.</li>
+</ul>
+<p><strong>Site:</strong> 2026-11-03'te tam <code>build.py</code> durdu, çünkü <code>ders-02/anlatim.md</code> henüz eklenmemiş bir şekil (<code>fig/d02-karar-anlari.svg</code>) istiyor. Bu dosya Ders 02 oturumuna ait, dokunulmadı. Ders 04'ün beş sayfası <code>build.py</code>'nin kendi <code>build_md</code> fonksiyonuyla üretildi. <code>index.html</code>'deki Ders 04 kartı, tam build bir sonraki çalıştığında güncellenecek.</p>
+<p>Ham ajan notları oturumun geçici klasöründeydi, kalıcı değil. Uzmanların macOS'ta yazıp çalıştırdığı deney programları <code>notlar/ders-04/kod/</code> altına kopyalandı.</p>
+<p><strong>Bölüm planı</strong> (hocanın slayt sırası):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sorun: dışlama ilerleme demek değil; iki kilit, kaynak modeli, köprü</td>
+<td>2–8</td>
+<td>tamam (kontrol soruları uzmanlarca cevaplandı)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Dört şart; deadlock, starvation, livelock</td>
+<td>9–16</td>
+<td>tamam (kontrol soruları uzmanlarca cevaplandı)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Resource-allocation graph, wait-for graph, filozoflar</td>
+<td>17–26</td>
+<td>tamam (kontrol soruları uzmanlarca cevaplandı)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dört yaklaşım ve önleme (kilit sırası ispatı, trylock, timeout)</td>
+<td>27–37</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Kaçınma: safe state ve Banker's algorithm</td>
+<td>38–56</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Tespit</td>
+<td>57–62</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kurtarma</td>
+<td>63–66</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Laboratuvar: <code>lock-order.c</code>, lockdep, <code>banker.c</code>, review</td>
+<td>67–74</td>
+<td>bekliyor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kontrol soruları ve cevaplar:</strong></p>
+<ul>
+<li><strong>K1.1, K1.2 (2026-11-03):</strong> Emre kendisi cevaplamak yerine "uzmanlarla karar verin" dedi ve kontrol sorularını seçti. İki uzman çalıştı: biri ideal cevabı, öbürü ölçütü ve sık yanlışları yazdı. Özet:</li>
+<li>K1.1: bağımlılık işlemci zamanında değil, kilit <strong>sahipliğinde</strong>. İkinci çekirdek döngüdeki hiçbir oku değiştirmez, çakışan ilk edinimleri aynı anda bile yaptırabilir. Çare protokolü değiştirmek (global kilit sırası). Yarım puanlık cevap: "kilitler yine ters sırada alınıyor" (mekanizma yok). Sınav varyantı: spinlock ile iki çekirdekte CPU %100 → yine deadlock, CPU kullanımı ilerleme göstergesi değil <span class="ek">ek bilgi</span>.</li>
+<li>K1.2: dört bilgi tutarlı bir anlık görüntüden: kim bloklu, neyi tutuyor, neyi bekliyor, bırakmayı kim yapabilir ve o da aynı kapalı kümede mi <span class="src">Okuma §2; sl. 36</span>. Başka nedenler: uzun hesaplama, yavaş disk/I/O, dış olay, starvation, livelock. Yanlışlar: "timeout = deadlock", "CPU %0 ise kesin deadlock", "restart düzeltti, demek deadlock'tu". Sınav varyantı: bağlantı havuzu ile uygulama kilidi arasında katmanlar arası hold-and-wait; havuz çok instance'lı olduğu için instance sayıları ve indirgeme gerekir <span class="src">sl. 11</span>.</li>
+<li>Soru bankasında ilişkili sorular: Q1, Q2, Q9, Q16, Q17, Q26, Q47, Q53.</li>
+<li><strong>K2.1, K2.2 (2026-11-03, uzmanlar):</strong></li>
+<li>K2.1: iki hata. (1) CPU preemption ≠ kaynak preemption; zamanlayıcı thread'i askıya alır, mutex sahipliği değişmez <span class="src">sl. 12</span>. (2) Şart kaynak tipi başına değerlendirilir; mutex sahibinden alınamaz, çünkü yarım güncellenmiş veri geri gelmez. Kaynak preemption'ı yalnız durum kaydedilip geri yüklenebiliyorsa pratik. Çıkarımın biçimi doğru (şart gerçekten kalksa deadlock olamazdı), öncülü yanlış; doğru sonuç "deadlock mümkün", "kesin olur" değil. Varyant: "çekirdek bellek sayfalarını swap ile geri alabiliyor" → şart kaynak tipi başına; döngüdeki mutex için yine sağlanır.</li>
+<li>K2.2: (a) deadlock (bağımlılık kapalı, thread'ler uyuyor), (b) starvation (başka işler bitiyor; kilit sırası çözmez, adalet kuralı gerekir) <span class="src">sl. 15</span>, (c) livelock (durum değişiyor, iş bitmiyor; rastgele backoff yalnız olasılıksal) <span class="src">sl. 16</span>. %100 CPU tek başına livelock kanıtı değil. Varyant: yalnız timeout ve çıktısız iz → belirlenemez <span class="src">sl. 36; Okuma §4</span>.</li>
+<li>İlişkili sorular: Q1, Q2, Q9, Q15(d), Q16, Q26(c), Q30(c), Q33, Q44(c); yanılgılar 13, 14, 15, 17, 19, 24, 28.</li>
+<li><strong>K3.1, K3.2 (2026-11-03, uzmanlar; sayılar Python ile ve moderatörce elle doğrulandı):</strong></li>
+<li>K3.1: tipler birbirinin yerine geçmez, karşılaştırma bileşen bileşen. Work = (0,0,0,3) iken T1 (R1), T2 (R3), T3 (R2) isteklerinden hiçbiri sığmaz. R2'nin iki sahibi de (T1, T2) kümede, dışarıdan bırakma yolu yok → {T1, T2, T3} kapalı küme <span class="src">sl. 19</span>. Yarım puan: "R4'ü kimse istemiyor" deyip R2'nin iki instance'ının neden kurtarmadığını göstermemek. Varyant: R4'e instance eklemek hiçbir şeyi değiştirmez; bir R2 eklenirse sıra T3, T2, T1; bir R1 eklenirse T1, T3, T2.</li>
+<li>K3.2: C → Y eklenince Available (0,0); A (0,1), B (1,0), C (0,1) isteklerinden hiçbiri sığmaz → {A, B, C} deadlocked. C bir X tuttuğu için tespitte baştan bitmiş sayılmaz <span class="src">sl. 58</span>. Sl. 23'teki kurtuluş C'nin tamamlanma yoluna dayanıyordu <span class="src">Okuma §5</span>; yol kapanınca ikinci X'in sahibi de kümede kalır (sl. 19'daki R2 durumunun aynısı). Yarım puan: "yeni döngü oluştu, o yüzden deadlock" (orijinal State B'de de döngü vardı). Varyant: C, Y yerine Z beklerse sonuç Z'nin sahibine bağlı; "duruma bağlı" deyince sonucu değiştiren varsayımı adıyla söyle <span class="src">Okuma §17</span>. Bu varyant kaynakta yok, okumadaki "completion path" cümlesinden türetildi.</li>
+<li>İlişkili sorular: Q10, Q11, Q12, Q13, Q27, Q29, Q52(c).</li>
+</ul>
+<p><strong>Soru bankası çalıştırması:</strong> (henüz başlamadı)</p>
+<p><strong>Zayıf noktalar:</strong> (henüz yok)</p>
+<p><strong>Emre'nin tercihi (2026-11-03):</strong> Kontrol sorularını Emre kendisi cevaplamıyor, <strong>uzmanlar cevaplasın</strong> istedi. Her bölüm sonunda iki uzman paralel çalışır (biri ideal cevap, öbürü ölçüt ve sık yanlışlar); moderatör birleştirip gösterir, sonra sonraki bölüme geçer.</p>
+<p><strong>Yeni oturum için:</strong> Bu dosyayı oku, durumu "anlatılıyor" olan bölümden devam et. Anlatım metni <code>anlatim.md</code>'de, her bölümün sonunda iki kontrol sorusu (K1.1, K1.2, …) var. Anlatım bitince soruları <code>soru-bankasi.md</code> C bölümünden seviye sırasıyla sor; ağırlık Banker hesabında (Bölüm 5) ve graph okumada (Bölüm 3). Hocanın hazırlık paketi <span class="src">Okuma §17</span>: bir graph karşı örneği, bir tam safe-state izi, durumu değiştirmeyen bir ret, bir kilit sırası ispatı. Emre bu dördünü notsuz yapabiliyorsa ders hazır sayılır.</p></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

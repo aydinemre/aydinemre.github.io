@@ -1,0 +1,1528 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 Ders 1: Soru bankası ve cevap anahtarı</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 Ders 1: Soru bankası ve cevap anahtarı">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-01-sorular.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-01.html">Anlatım</a> <a href="ders-01-ozet.html">Özet</a> <a href="ders-01-sorular.html" aria-current="page">Soru bankası</a> <a href="ders-01-deneme.html">Deneme sınavı</a> <a href="ders-01-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#0-hocann-soru-uslubu-snava-girmeden-bilinmesi-gereken">0. Hocanın soru üslubu (sınava girmeden bilinmesi gereken)</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a><ul><li><a href="#a1-merkez-sl-64teki-karstlklar">A.1 Merkez: sl. 64'teki karşıtlıklar</a></li><li><a href="#a2-bolum-bolum-harita">A.2 Bölüm bölüm harita</a></li><li><a href="#a3-oscde-olup-hoca-slaytnda-olmayanlar-dusuk-oncelik">A.3 OSC'de olup hoca slaytında olmayanlar (düşük öncelik)</a></li></ul></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a><ul><li><a href="#seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap</a></li><li><a href="#seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz</a></li><li><a href="#seviye-3-cok-adml-kod-izi-hata-bulma">Seviye 3 — Çok adımlı kod izi, hata bulma</a></li><li><a href="#seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak</a></li><li><a href="#seviye-5-ikinci-incelemede-eklenenler-2026-11-03">Seviye 5 — İkinci incelemede eklenenler (2026-11-03)</a></li><li><a href="#soru-bankas-ozeti">Soru bankası özeti</a></li></ul></li><li><a href="#d-bolum-sonu-kontrol-sorular-anlatm-srasnda-kolayorta">D) Bölüm sonu kontrol soruları (anlatım sırasında, kolay–orta)</a></li><li><a href="#moderatore-notlar">Moderatöre notlar</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-1-soru-bankas-ve-cevap-anahtar">CSE 513 Ders 1: Soru bankası ve cevap anahtarı<a class="headerlink" href="#cse-513-ders-1-soru-bankas-ve-cevap-anahtar" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#0-hocann-soru-uslubu-snava-girmeden-bilinmesi-gereken">0. Hocanın soru üslubu (sınava girmeden bilinmesi gereken)</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a></li><li><a href="#d-bolum-sonu-kontrol-sorular-anlatm-srasnda-kolayorta">D) Bölüm sonu kontrol soruları (anlatım sırasında, kolay–orta)</a></li><li><a href="#moderatore-notlar">Moderatöre notlar</a></li></ul></details>
+<p>Kaynak: sınav/pedagoji uzman ajanının notu, denetçi raporuna göre düzeltildi (2026-11-02). Düzeltilenler: Q13(b) (D-03), Q49 (D-09), Q47 notu, tampon etiketleri (D-15).</p>
+<p><strong>Etiket notu (D-15):</strong> "Terminal satır tamponlu, dosya/pipe tam tamponlu" ayrımı glibc ve BSD libc'nin uygulama davranışıdır. C standardı yalnızca stdout'un etkileşimli bir cihaza bağlı değilse tam tamponlu olacağını söyler. Hoca bu konuya sadece sl. 9 ve 37'de dolaylı değiniyor. Q12(g), Q21, Q26, Q27, Q41 ve Q50 bu yüzden <strong>ileri/bonus</strong> düzeyde; temel ölçüt değil.</p>
+<p>Okunan kaynaklar: <code>CSE513-Lecture01.pdf</code> (65 slayt, pypdf ile metin), <code>_site-kopyasi/lecture-01-reading.html</code> (okuma kitapçığı, 15 bölüm, "Questions with worked answers" kısmındaki 12 soru dahil), <code>lecture-01.html</code> (öğrenme hedefleri), <code>kod/launch.c</code>, <code>kod/thread_join.c</code>, OSC-10 ch3 ve ch4 slayt metinleri, OSTEP cpu-api / cpu-intro / threads-api "Homework" bölümleri.</p>
+<p>Kısaltmalar: "sl. N" = hocanın slaytı; "Okuma §N" = okuma kitapçığının bölümü; "Okuma S-N" = okumanın 12. bölümündeki N numaralı çalışılmış soru; "OSC ch3 sl. N" = Silberschatz slaytı. "<span class="ek">ek bilgi</span>" = hocanın materyalinde yok, genel bilgi.</p>
+<p><strong>Deney doğrulaması.</strong> Şu kod-çıktı soruları macOS'ta derlenip çalıştırıldı, gerektiğinde hem terminalde (pty) hem dosyaya/pipe'a yönlendirilerek: Q15, Q16, Q24, Q25, Q26, Q27, Q28, Q30, Q35 (launch.c'nin yol değiştirilmiş kopyası), Q37 (orphan kısmı), Q41, Q42, Q50, Q51. Cevap anahtarındaki çıktılar ölçülen çıktılarla aynı. Q28'in "dosyaya yönlendirilince hep C P done" notu da ölçüldü (pipe'a yönlendirmede 5/5 koşu). Q32, Q34, Q40 yarış içerdiği için çalıştırılmadı (sonuç vaat edilemez, sl. 50). Ubuntu'da aynı davranış beklenir (stdio tamponlama kuralı C standardı ve glibc için aynı), ama Ubuntu'da ayrıca koşulmadı.</p>
+<hr />
+<h2 id="0-hocann-soru-uslubu-snava-girmeden-bilinmesi-gereken">0. Hocanın soru üslubu (sınava girmeden bilinmesi gereken)<a class="headerlink" href="#0-hocann-soru-uslubu-snava-girmeden-bilinmesi-gereken" title="Permanent link">#</a></h2>
+<p>Slaytlar 19, 25, 26–27, 36–37, 41, 50, 60–62 ve okumadaki 12 çalışılmış soru tek bir kalıbı izliyor:</p>
+<ol>
+<li><strong>"Kanıtlar mı / gerekir mi?" soruları.</strong> "Must another process run?", "Does that prove parallelism?", "Is it now running?". Doğru cevap çoğu zaman <strong>"Not necessarily"</strong> artı gerekçedir. Mutlak cümle ("always", "immediately", "proves") kuran cevap büyük ihtimalle puan kaybeder.</li>
+<li><strong>"İki ayrı soruyu ayır" kuralı.</strong> sl. 24: "did privilege change; did the task change?". sl. 19: "eligibility to run and current CPU ownership". sl. 62: her gecikmede ready mi waiting mi, her kernel girişinde başka task gerçekten seçildi mi. Cevapta iki ekseni ayrı ayrı adlandırmak tam puanın şartıdır.</li>
+<li><strong>"Explain each answer using state, mode or CPU ownership"</strong> (sl. 26). Cevap mekanizma terimiyle verilmeli: state adı, mode adı, hangi olayın eksik olduğu.</li>
+<li><strong>Tahmin et, sonra açıkla</strong> (sl. 11 "Prediction:", sl. 63). Kod sorularında çıktıyı yazmak yetmez, sıralamayı neyin garanti ettiği (waitpid, pthread_join) söylenmeli.</li>
+<li><strong>Kavramsal model ile ölçüm ayrımı.</strong> sl. 19 "a possible execution order, not a measured trace"; sl. 46 "our diagrams are not benchmark results"; sl. 50 "do not promise this exact result from a racy C experiment". Racy kod için kesin sayı vermek yanlış sayılabilir.</li>
+<li><strong>Başarısızlıkları ayır.</strong> sl. 37: exec başarısızlığı, wait başarısızlığı ve fork başarısızlığı ayrı şeylerdir.</li>
+</ol>
+<p>Sınav İngilizce. Cevaplarda bu kalıp cümleler işe yarar: "not necessarily", "becomes eligible (ready), but must still be selected", "kernel entry is not evidence of a task switch", "waiting orders completion; it does not merge address spaces", "joining establishes order, not mutual exclusion", "EOF requires that no write-end references remain".</p>
+<p>Not (sl. 3–4): ara sınav 7. haftada (%30), final %40. Final sorularının yarısı sunumlardan, öbür yarısı derslerden gelir. Ders 1, ara sınavın kapsamındaki 1–6. derslerin ilki.</p>
+<p><strong>Öncelik.</strong> Hocanın slaytına dayanan sorular çekirdektir. Şunlar <strong>bonus</strong> <span class="ek">ek bilgi ya da hocanın sormadığı tür</span>: fork sayma ve stdio tamponu (Q12(g), Q15, Q21, Q24–Q28, Q41, Q50), Q39 (<code>waitpid(-1)</code>), Q52 (çok thread'li fork). Zamanın azsa önce çekirdeği, sonra Seviye 5'i çalış.</p>
+<hr />
+<h2 id="a-kapsam-haritas">A) Kapsam haritası<a class="headerlink" href="#a-kapsam-haritas" title="Permanent link">#</a></h2>
+<h3 id="a1-merkez-sl-64teki-karstlklar">A.1 Merkez: sl. 64'teki karşıtlıklar<a class="headerlink" href="#a1-merkez-sl-64teki-karstlklar" title="Permanent link">#</a></h3>
+<p>sl. 64 beş satırdır ama yedi karşıtlık içerir. Sınavın omurgası bunlar.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Karşıtlık (sl. 64)</th>
+<th>Çekirdek ayrım (tek cümle)</th>
+<th>Hocanın kanıt slaytları</th>
+<th>En olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Program vs process</td>
+<td>Program pasif tanımdır (kod + statik veri); process durumu ve kaynakları olan çalışan örnektir. Aynı executable iki kez → iki bağımsız process.</td>
+<td>10, 11</td>
+<td>Tanım ayrımı; "bir editör çökerse öteki de ölür mü?"</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Process vs thread</td>
+<td>Process kaynak ve koruma bağlamı (ayrı adres alanı); thread o bağlam içinde yürütme akışı (kendi PC, register, stack; adres alanı ortak).</td>
+<td>42, 43</td>
+<td>Karşılaştırma tablosu; tasarım (izolasyon mu kolay iletişim mi)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ready vs running vs waiting</td>
+<td>Running: CPU'da. Ready: çalışabilir, seçilmeyi bekliyor (engel CPU). Waiting: bir olay eksik, CPU yardım etmez.</td>
+<td>16–19, 26–27</td>
+<td>Durum izi tablosu; sınıflandırma</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Kernel entry vs task switch</td>
+<td>Kernel'e girmek ayrıcalık değişimidir; başka task'ın seçilmesi ayrı bir karardır.</td>
+<td>7, 8, 24, 25, 27</td>
+<td>Olay sınıflandırma (Case A/B/C)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>fork vs exec vs wait</td>
+<td>fork yeni process (yeni PID) yaratır; exec aynı PID'de imajı değiştirir; wait sonlanmayı gözler ve status toplar.</td>
+<td>28, 30–39</td>
+<td>Kod çıktısı tahmini; hata yolu (127); zombie</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Concurrency vs parallelism</td>
+<td>Concurrency: zaman aralıkları örtüşür (tek çekirdekte interleaving yeter). Parallelism: farklı çekirdeklerde eşzamanlı yürütme.</td>
+<td>44–46, 27</td>
+<td>"Aynı anda bitti, paralel mi?"; hızlanma modeli</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Shared memory vs pipe</td>
+<td>Shared memory ortak bölge verir, senkronizasyon vermez. Pipe bayt akışıdır, mesaj sınırı korumaz, EOF kuralı vardır.</td>
+<td>53–58, 61</td>
+<td>Tasarım seçimi; pipe hatası bulma</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-bolum-bolum-harita">A.2 Bölüm bölüm harita<a class="headerlink" href="#a2-bolum-bolum-harita" title="Permanent link">#</a></h3>
+<p>Vurgu ölçütü: <strong>Yüksek</strong> = sl. 64'te geçiyor ve/veya çalışılmış soru/checkpoint var. <strong>Orta</strong> = slaytta açıkça anlatılmış, çalışılmış soru yok. <strong>Düşük</strong> = slaytta tek cümle ya da yalnızca OSC/OSTEP'te.</p>
+<table>
+<thead>
+<tr>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Kavram</th>
+<th>Vurgu</th>
+<th>Olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 Tazeleme / mode / kernel entry</td>
+<td>6</td>
+<td>OS soyutlamaları: process, sanal bellek, dosya, socket; shell kullanıcı alanı programıdır</td>
+<td>Düşük–orta</td>
+<td>Kısa cevap ("shell kernel'in parçası mı?")</td>
+</tr>
+<tr>
+<td></td>
+<td>7</td>
+<td>User mode / kernel mode; system call = kontrollü giriş; kernel aynı process'e dönebilir; <strong>root ≠ kernel mode</strong></td>
+<td>Yüksek</td>
+<td>Doğru/yanlış + gerekçe</td>
+</tr>
+<tr>
+<td></td>
+<td>8</td>
+<td>Kernel'e girişin üç nedeni: system call, exception (page fault), device interrupt; interrupt process değişimi gerektirmez</td>
+<td>Yüksek</td>
+<td>Sınıflandırma</td>
+</tr>
+<tr>
+<td></td>
+<td>9</td>
+<td>Library call ≠ system call; buffered printf birkaç çağrıyı tek write'a birleştirir; strace sayısı kaynak koddaki çağrı sayısıyla eşleşmez</td>
+<td>Orta</td>
+<td>"strace neden tek write gösteriyor?"</td>
+</tr>
+<tr>
+<td></td>
+<td>Okuma §1–2</td>
+<td>Mechanism vs policy; timer interrupt "fırsat"tır, zorunlu geçiş değil; limited direct execution (OSTEP 6)</td>
+<td>Orta</td>
+<td>Kısa cevap, tasarım</td>
+</tr>
+<tr>
+<td>2 Program–process–PCB</td>
+<td>10–11</td>
+<td>Program vs process; aynı executable iki process; salt okunur sayfaların paylaşılması değişkenleri paylaşmaz; izolasyon</td>
+<td>Yüksek</td>
+<td>Tanım ayrımı, tahmin sorusu</td>
+</tr>
+<tr>
+<td></td>
+<td>12–13</td>
+<td>Adres alanı bölgeleri (text, data, heap, stack) kavramsal; register/PC bölge değil; yerel değişken ömrü; pointer sahiplik değildir; pointer'ı başka process'e kopyalamak paylaşım kurmaz</td>
+<td>Orta</td>
+<td>Kısa cevap, "hatayı bul" (ömür)</td>
+</tr>
+<tr>
+<td></td>
+<td>14–15</td>
+<td>PCB: kimlik, durum, saklanan bağlam, kaynak referansları; <strong>PCB bellek fotoğrafı değildir</strong>; thread başına bağlam vs process başına kaynak</td>
+<td>Orta–yüksek</td>
+<td>"Context switch tüm belleği kopyalar mı?"</td>
+</tr>
+<tr>
+<td>3 Durumlar / kuyruklar</td>
+<td>16–17</td>
+<td>Running / ready / waiting; waiting'e CPU yardım etmez; olay gelince ready olur, hemen çalışmaz</td>
+<td>Yüksek</td>
+<td>Tanım, sınıflandırma</td>
+</tr>
+<tr>
+<td></td>
+<td>18–19</td>
+<td>Durum izi (P tek başına; A ve B tek CPU)</td>
+<td>Yüksek</td>
+<td>İz tablosu doldurma</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td>Ready queue vs wait queue; scheduling policy yalnız ready arasında seçer</td>
+<td>Orta</td>
+<td>Kısa cevap</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>CPU burst / I/O wait; CPU-bound ve I/O-bound kalıcı etiket değildir; multiprogramming motivasyonu</td>
+<td>Orta (Hafta 2'de derinleşir)</td>
+<td>Kısa cevap</td>
+</tr>
+<tr>
+<td>4 Context switch</td>
+<td>22–23</td>
+<td>Kaydet, seç, geri yükle; adres alanı değişir ama tüm bellek kopyalanmaz; doğrudan ve dolaylı (cache, TLB) maliyet</td>
+<td>Yüksek</td>
+<td>Mekanizma açıklaması</td>
+</tr>
+<tr>
+<td></td>
+<td>24–25</td>
+<td><strong>Kernel entry is not a context switch</strong>; Case A/B/C</td>
+<td>Yüksek</td>
+<td>Sınıflandırma</td>
+</tr>
+<tr>
+<td></td>
+<td>26–27</td>
+<td>Checkpoint: ağ cevabı bekleyen process; hemen biten read; aynı anda biten iki program</td>
+<td>Çok yüksek (hoca sorusu)</td>
+<td>Aynen sorulabilir</td>
+</tr>
+<tr>
+<td>5 fork/exec/wait</td>
+<td>28–29</td>
+<td>Üç ayrı işlem; process tree ilişki haritasıdır, kimin çalıştığını göstermez</td>
+<td>Orta</td>
+<td>Kısa cevap</td>
+</tr>
+<tr>
+<td></td>
+<td>30–31</td>
+<td>fork dönüş değerleri (child PID / 0 / −1); sıra garantisi yok</td>
+<td>Yüksek</td>
+<td>Kod izi, sayma</td>
+</tr>
+<tr>
+<td></td>
+<td>32</td>
+<td>Copy-on-write optimizasyondur, paylaşım kanalı değildir</td>
+<td>Yüksek</td>
+<td>Tuzak sorusu</td>
+</tr>
+<tr>
+<td></td>
+<td>33–34</td>
+<td>exec PID'i değiştirmez; başarıda dönmez; fd'ler close-on-exec yoksa kalır; shell exec'ten önce yönlendirme yapar</td>
+<td>Yüksek</td>
+<td>Kod izi, shell yönlendirmesi</td>
+</tr>
+<tr>
+<td></td>
+<td>35–37</td>
+<td>launch.c: başarılı çıktı ve exec hata yolu (127); <code>_exit</code></td>
+<td>Çok yüksek (çalışılmış)</td>
+<td>Çıktı tahmini, hata yolu</td>
+</tr>
+<tr>
+<td></td>
+<td>38–39</td>
+<td>wait = senkronizasyon + temizlik; zombie sonlanmıştır; orphan ≠ zombie; reparenting</td>
+<td>Yüksek</td>
+<td>Tanım ayrımı</td>
+</tr>
+<tr>
+<td></td>
+<td>40–41</td>
+<td><code>ps -o pid,ppid,stat,comm</code>; Linux'ta R = running veya runnable; satır yoksa zamanlama sonucu olabilir</td>
+<td>Orta</td>
+<td>Gözlem yorumlama</td>
+</tr>
+<tr>
+<td>6 Thread / concurrency / race / join</td>
+<td>42–43</td>
+<td>Thread'in kendi PC, register, stack'i; adres alanı ve açık dosyalar ortak; stack koruma sınırı değil; hata izolasyonu ödünleşimi</td>
+<td>Yüksek</td>
+<td>Karşılaştırma, doğru/yanlış</td>
+</tr>
+<tr>
+<td></td>
+<td>44–45</td>
+<td>Concurrency vs parallelism; tek çekirdek çok adımlı işlemi bölünmez yapmaz</td>
+<td>Yüksek</td>
+<td>Tanım, "kanıtlar mı"</td>
+</tr>
+<tr>
+<td></td>
+<td>46</td>
+<td>Fazla thread hız getirmez: seri aşama, kilit, bant genişliği</td>
+<td>Orta</td>
+<td>Hesap (okumadaki 2 + 8/4 örneği), yorum</td>
+</tr>
+<tr>
+<td></td>
+<td>47–48</td>
+<td>Thread'li sunucu; bounded worker pool; sahiplik, dolu kuyruk, kapanış kuralları; event-driven alternatif</td>
+<td>Orta</td>
+<td>Tasarım sorusu</td>
+</tr>
+<tr>
+<td></td>
+<td>49–50</td>
+<td>Lost update izi; korumak ya da atomic; racy C undefined behavior</td>
+<td>Yüksek (çalışılmış)</td>
+<td>İz tablosu, "kesin sonuç söyleyebilir misin"</td>
+</tr>
+<tr>
+<td></td>
+<td>51–52</td>
+<td>thread_join.c; <strong>join sıra kurar, mutual exclusion değil</strong>; argüman nesnesinin ömrü</td>
+<td>Yüksek (çalışılmış)</td>
+<td>Kod okuma, hatayı bul</td>
+</tr>
+<tr>
+<td>7 IPC / pipe</td>
+<td>53–54</td>
+<td>Shared memory vs message passing; ikisi de protokol ister; ortak bayrak yetmez</td>
+<td>Yüksek</td>
+<td>Karşılaştırma, tasarım</td>
+</tr>
+<tr>
+<td></td>
+<td>55–56</td>
+<td><code>printf 'alpha\nbeta\n' \| wc -l</code> → 2; bayt akışı, mesaj sınırı yok; framing; printf builtin olabilir</td>
+<td>Yüksek (çalışılmış)</td>
+<td>Çıktı tahmini, process sayısı tuzağı</td>
+</tr>
+<tr>
+<td></td>
+<td>57–58</td>
+<td>Boş pipe + yazar var → read bekler; yazar yok → EOF; dolu pipe → writer bekler; kullanılmayan uçları kapat; backpressure</td>
+<td>Yüksek</td>
+<td>Durum sınıflandırma, hatayı bul</td>
+</tr>
+<tr>
+<td>8 Uçtan uca</td>
+<td>59, 62</td>
+<td>Komutu baştan sona izle: hazırlık, exec, hesap/kernel/bekleme, interleaving, status toplama; kimlik, imaj, açık uçlar; yaşam döngüsü yükümlülükleri</td>
+<td>Çok yüksek (sentez)</td>
+<td>Uzun cevap, tam iz</td>
+</tr>
+<tr>
+<td></td>
+<td>60–61</td>
+<td>Çalışılmış: x=10/20 (cevap 10); takılan pipe okuyucu</td>
+<td>Çok yüksek</td>
+<td>Aynen ya da varyant</td>
+</tr>
+<tr>
+<td></td>
+<td>63</td>
+<td>Pratik: arka plan process gözlemi, iki C örneği, tahmin-sonra-çalıştır</td>
+<td>Düşük (notsuz)</td>
+<td>Laboratuvar tarzı yorum</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-oscde-olup-hoca-slaytnda-olmayanlar-dusuk-oncelik">A.3 OSC'de olup hoca slaytında olmayanlar (düşük öncelik)<a class="headerlink" href="#a3-oscde-olup-hoca-slaytnda-olmayanlar-dusuk-oncelik" title="Permanent link">#</a></h3>
+<p>Bunlar <code>OSC-10-slaytlar/ch3.pptx</code> ve <code>ch4.pptx</code> içinde var, hocanın 65 slaytında yok. Okumanın kaynak rehberi de çoğunu "seçili bölüm" dışında bırakıyor. Önce yukarıdakileri bitir, bunlara sonra bak:</p>
+<ul>
+<li>Multithreading modelleri (many-to-one, one-to-one, many-to-many, two-level), user vs kernel threads (OSC ch4 sl. 14–20). Linux one-to-one ve <code>clone()</code> (ch4 sl. 62) kısa bir "ek bilgi" olarak yararlı.</li>
+<li>Amdahl yasası formülü (ch4 sl. 12). Hoca bunu formül olarak vermiyor; okuma §8'de aynı fikri sayısal örnekle veriyor (seri 2 + paralel 8, 4 işçi → 4 birim, hızlanma 2,5). Sayısal örnek orta öncelik, formül düşük.</li>
+<li>Direct/indirect communication, mailbox, rendezvous, buffering kapasiteleri (ch3 sl. 41–50); POSIX shm, Mach, Windows ALPC (sl. 51–59); named pipe (sl. 62); socket ve RPC (sl. 63–70).</li>
+<li>Android process önem hiyerarşisi, Chrome çok-process mimarisi, iOS çoklu görev (ch3 sl. 18, 27, 28).</li>
+<li>Thread cancellation, sinyaller, TLS, scheduler activations, implicit threading (OpenMP, GCD, TBB, fork-join, Java Executor) (ch4 sl. 30–57).</li>
+<li>Bounded buffer shared-memory kodu (ch3 sl. 33–39): yarış örneği (counter++ / counter--) hocanın sl. 49–50 lost-update iziyle aynı fikir; Ders 3'te (senkronizasyon) yükselir.</li>
+</ul>
+<hr />
+<h2 id="b-kavram-yanlglar">B) Kavram yanılgıları<a class="headerlink" href="#b-kavram-yanlglar" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Yanılgı</th>
+<th>Doğrusu</th>
+<th>Kaynak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"Her system call (her kernel girişi) bir context switch'tir."</td>
+<td>Kernel'e girmek ayrıcalık değişimidir. Sonuç hazırsa kernel aynı task'a döner, task değişmez. Task ancak bloklanma ya da scheduling kararıyla değişir.</td>
+<td>sl. 7, 24, 25 (Case A); Okuma S-2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>"Root olarak çalışan process kernel mode'dadır."</td>
+<td>Root bir kullanıcı kimliğidir, izin kararlarını etkiler. Root process'in normal komutları da user mode'da çalışır. Kernel mode CPU'nun yürütme modudur.</td>
+<td>sl. 7; Okuma §2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Interrupt gelince mutlaka başka process çalışır."</td>
+<td>Interrupt bir olayın kanıtıdır. Handler durumu güncelleyip aynı task'a dönebilir; timer interrupt'ta bile scheduler P'yi tutabilir.</td>
+<td>sl. 8, 24, 25 (Case C)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>"printf bir system call'dur; 3 printf = 3 write."</td>
+<td>printf kütüphane fonksiyonudur. Tamponlanmış çıktı birkaç printf'i tek write'ta birleştirebilir; API adları ile tracer'ın gösterdiği işlemler farklı olabilir.</td>
+<td>sl. 9; Okuma §2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>"Aynı executable'dan iki process değişkenlerini paylaşır" ya da "biri çökerse öteki de çöker."</td>
+<td>Her process'in kendi PID'i, PC'si ve yazılabilir verisi var. Kernel salt okunur kod sayfalarını fiziksel olarak paylaşabilir ama bu bir uygulama seçimidir; değişkenler ayrıdır. Normalde biri çökünce öteki ölmez.</td>
+<td>sl. 10, 11</td>
+</tr>
+<tr>
+<td>6</td>
+<td>"PCB process'in belleğinin kopyasını tutar; context switch tüm adres alanını kaydedip geri yükler."</td>
+<td>PCB bir kayıttır: kimlik, durum, saklanan register/PC, kaynak referansları (mapping'ler, açık dosyalar). Adres alanı mapping'ler ve bellek/backing store'da durur; her switch'te kopyalanmaz.</td>
+<td>sl. 14, 15, 23; Okuma §5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>"Beklenen olay gelince waiting process hemen çalışmaya başlar."</td>
+<td>Olay gelince waiting → <strong>ready</strong> olur. Çalışması için scheduler'ın onu seçmesi gerekir. İki ayrı engel: olay ve CPU seçimi.</td>
+<td>sl. 16, 18, 19; Okuma S-3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>"Waiting process'e boş bir CPU (ya da daha çok çekirdek) yardım eder."</td>
+<td>Waiting'in engeli eksik olaydır. CPU olayı üretemez. Daha çok çekirdek uzak sunucunun cevap süresini kısaltmaz.</td>
+<td>sl. 17, 26, 27; Okuma §4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>"CPU-bound ve I/O-bound bir programın sabit özelliğidir."</td>
+<td>İş yüküne ve sisteme göre gözlenen dengedir. Aynı program farklı fazlarda ya da önbellek durumuna göre farklı davranır.</td>
+<td>sl. 21; Okuma §4</td>
+</tr>
+<tr>
+<td>10</td>
+<td>"fork'tan sonra önce parent (ya da önce child) çalışır."</td>
+<td>Genel bir garanti yok. Sıra önemliyse senkronizasyonla (waitpid gibi) kurulmalı.</td>
+<td>sl. 31; Okuma §6</td>
+</tr>
+<tr>
+<td>11</td>
+<td>"Copy-on-write sayesinde parent ve child değişkenleri paylaşır."</td>
+<td>COW kopyalama semantiğinin optimizasyonudur. Gözlenen kural değişmez: child'ın ataması parent'ın değişkenini güncellemez. COW iletişim kanalı değildir.</td>
+<td>sl. 32; sl. 60</td>
+</tr>
+<tr>
+<td>12</td>
+<td>"fork her şeyi bağımsız kopyalar."</td>
+<td>Sıradan bellek mantıksal olarak bağımsızdır, ama miras alınan fd'ler aynı open file description'a işaret edebilir ve <strong>dosya ofsetini paylaşır</strong>.</td>
+<td>Okuma §6 ("Copy on write and inherited resources")</td>
+</tr>
+<tr>
+<td>13</td>
+<td>"exec yeni bir process (yeni PID) yaratır" ya da "exec'ten sonraki satır her zaman çalışır."</td>
+<td>exec aynı process'in imajını değiştirir, PID aynı kalır. Başarılı exec eski programa dönmez; exec'ten sonraki kod yalnızca exec başarısız olursa çalışır.</td>
+<td>sl. 33, 34, 62</td>
+</tr>
+<tr>
+<td>14</td>
+<td>"waitpid başarılı döndüyse child işini başarıyla yaptı."</td>
+<td>Başarılı wait yalnızca child'ın sonucunun toplandığını gösterir. Status 127 child'ın exec hata yoluna girdiğini gösterir. Wait hatası, exec hatası ve fork hatası ayrı şeylerdir.</td>
+<td>sl. 37; Okuma S-7</td>
+</tr>
+<tr>
+<td>15</td>
+<td>"Zombie hâlâ çalışan ya da takılmış bir process'tir" ya da "zombie = orphan."</td>
+<td>Zombie sonlanmıştır, program çalışmaz; sadece PID ve sonlanma bilgisi parent toplayana kadar kalır. Parent'ı ölen process (orphan) ayrı bir durumdur: yeniden ebeveynlenir ve sonunda toplanır.</td>
+<td>sl. 38, 39</td>
+</tr>
+<tr>
+<td>16</td>
+<td>"ps'te R görmek process'in CPU'da çalıştığını gösterir"; "ps satırı yoksa başlatma başarısız oldu."</td>
+<td>Linux'ta R = running <strong>veya</strong> runnable; ders kitabındaki ready/running ayrımını göstermez. Satırın olmaması process'in zaten bitmiş olmasından olabilir (zamanlama sonucu).</td>
+<td>sl. 41; Okuma §7</td>
+</tr>
+<tr>
+<td>17</td>
+<td>"Her thread'in stack'i diğer thread'lerden korunur."</td>
+<td>Ayrı stack'ler yürütmeyi düzenler, koruma sınırı koymaz. Geçerli bir pointer'la başka thread canlı bir stack nesnesine erişebilir.</td>
+<td>sl. 42; Okuma S-5</td>
+</tr>
+<tr>
+<td>18</td>
+<td>"Aynı anda biten iki program paralel çalışmıştır"; "tek çekirdekte çok adımlı işlem bölünmezdir."</td>
+<td>Benzer bitiş zamanı paralelliği kanıtlamaz; tek çekirdek interleave edebilir. Tek çekirdekte de çok adımlı işlem arasında geçiş olabilir.</td>
+<td>sl. 27, 44, 45; Okuma S-6</td>
+</tr>
+<tr>
+<td>19</td>
+<td>"Daha çok thread = daha hızlı."</td>
+<td>Seri aşama, ortak kilit, bellek bant genişliği, yavaş depolama sınırlar; fazla thread çekişme ve geçiş ekler.</td>
+<td>sl. 46; Okuma §8 (2,5 hızlanma örneği)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>"pthread_join bir kilittir" ya da "sonradan join etmek yarışı onarır."</td>
+<td>Join sıra kurar: sonucu okumanın güvenli olduğu noktayı belirler. Eşzamanlı çalışan işçiler arasındaki çakışan erişimleri korumaz, olmuş yarışı geri almaz.</td>
+<td>sl. 52; Okuma §9, S-9</td>
+</tr>
+<tr>
+<td>21</td>
+<td>"Kilitsiz iki thread counter++ yapınca sonuç kesin 1 (ya da kesin 2) çıkar."</td>
+<td>sl. 49–50 kavramsal izdir. C'de senkronize olmayan çakışan erişim undefined behavior olabilir; deneyden kesin sonuç vaat edilmez.</td>
+<td>sl. 49, 50; Okuma §9</td>
+</tr>
+<tr>
+<td>22</td>
+<td>"Shared memory kullanınca senkronizasyon kendiliğinden gelir"; "paylaşılan bir bayrak yeter."</td>
+<td>Paylaşılan depolama senkronizasyon sağlamaz. Düzen, sahiplik ve "veri hazır" sinyali için protokol ve doğru senkronizasyon gerekir.</td>
+<td>sl. 53, 54; Okuma §9 ("Visibility must follow the language rules")</td>
+</tr>
+<tr>
+<td>23</td>
+<td>"Pipe her write'ı ayrı mesaj olarak korur; her read bir write döndürür."</td>
+<td>Pipe bayt akışıdır, uygulama mesaj sınırını korumaz. Kayıt alışverişi için framing (ayraç ya da uzunluk alanı) gerekir.</td>
+<td>sl. 55, 56</td>
+</tr>
+<tr>
+<td>24</td>
+<td>"Pipe boşsa okuyucu EOF alır."</td>
+<td>Boş pipe ve yazar hâlâ varsa bloklayan read bekler. EOF ancak tüm write-end referansları kapandığında ve tampon tükendiğinde gelir.</td>
+<td>sl. 57, 58</td>
+</tr>
+<tr>
+<td>25</td>
+<td>"Write ucunu yalnızca yazan process kapatmalı."</td>
+<td>Kullanılmayan uçlar <strong>her</strong> katılımcı process'te kapatılmalı. Parent'ın unuttuğu tek bir write fd okuyucunun EOF görmesini engeller.</td>
+<td>sl. 57, 61; Okuma S-4</td>
+</tr>
+<tr>
+<td>26</td>
+<td>"sleep(1) koyarsam child bitmiş olur."</td>
+<td>Sabit gecikme geçen zamanı ifade eder, koşulu değil. Yük altında yetmeyebilir. Doğru araç waitpid (ya da başka senkronizasyon).</td>
+<td>Okuma §6, S-10</td>
+</tr>
+<tr>
+<td>27</td>
+<td>"Process ağacı hangi process'in çalıştığını ve bitiş sırasını gösterir."</td>
+<td>Ağaç parent–child ilişkisini gösterir. Kimin çalıştığını, iletişim yollarını, paylaşılan veriyi ya da bitiş sırasını göstermez.</td>
+<td>sl. 29</td>
+</tr>
+<tr>
+<td>28</td>
+<td>"Bir pointer'ı başka process'e gönderirsem aynı nesneye erişir."</td>
+<td>Adres, o process'in adres alanı mapping'leriyle yorumlanır. Pointer kopyalamak paylaşılan bellek kurmaz.</td>
+<td>sl. 13; Okuma S-12</td>
+</tr>
+<tr>
+<td>29</td>
+<td>"Dolu pipe'a yazmaya çalışan producer ready'dir, CPU bekliyor."</td>
+<td>Producer waiting'dir: CPU değil, tamponda yer (iletişim koşulu) bekliyor.</td>
+<td>sl. 58; Okuma S-11</td>
+</tr>
+<tr>
+<td>30</td>
+<td>"127 exec'in dönüş değeridir."</td>
+<td>exec başarısızlıkta −1 döner (errno ayarlanır). 127, örneğin child'ı <code>_exit(127)</code> ile bitirirken seçtiği kuraldır.</td>
+<td>sl. 37</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-soru-bankas">C) Soru bankası<a class="headerlink" href="#c-soru-bankas" title="Permanent link">#</a></h2>
+<p>Biçim: her soru İngilizce (sınav dili), altında gerekirse Türkçe not. <strong>Zorluk</strong> 1 (tanım) → 4 (sentez/tasarım/ince tuzak). <strong>Bölüm</strong> 1–8 (görevdeki numaralama). <strong>Ölçüt</strong> = tam puan için şart.</p>
+<h3 id="seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap<a class="headerlink" href="#seviye-1-tanm-ve-ksa-cevap" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q1.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım ayrımı · Kaynak: sl. 10–11</em></p>
+<blockquote>
+<p>Distinguish a program from a process. If two users start the same text-editor executable, how many processes exist, and what do they share?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A program is a passive description: executable instructions and static data stored in a file. A process is a running instance with its own state (PID, program counter, registers), its own address space contents and kernel-recorded resources. Two users → two processes with different PIDs, instruction positions and writable data. The kernel may share physical pages of read-only code, but this does not make their ordinary writable variables shared. If one crashes, the other normally continues (isolation), although both may depend on the same file or service.</p>
+<p><strong>Ölçüt.</strong> (1) pasif/aktif ayrımı, (2) iki ayrı PID ve ayrı yazılabilir veri, (3) salt okunur kod paylaşımının değişken paylaşımı anlamına gelmediği. Üçü de gerekli.</p>
+</details><hr />
+<p><strong>Q2.</strong> <em>Zorluk 1 · Bölüm 1 · Kısa cevap · Kaynak: sl. 8; Okuma §2</em></p>
+<blockquote>
+<p>Name the three reasons execution enters the kernel and give one example of each.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) System call: the running program requests a service (e.g., <code>read</code>, <code>fork</code>). (2) Exception: the current instruction causes an event (e.g., page fault, division by zero <span class="src">OSC ch1 sl. 29</span>). (3) Device interrupt: hardware signals an event independent of the current instruction (e.g., disk I/O completion, timer).</p>
+<p><strong>Ölçüt.</strong> Üç kategori + doğru örnek. Page fault'u "hata" diye nitelemek yanlış değil ama tam cevap "a page fault need not mean the program is erroneous" farkındalığını taşır (Okuma §2).</p>
+</details><hr />
+<p><strong>Q3.</strong> <em>Zorluk 1 · Bölüm 1 · Doğru/yanlış + gerekçe · Kaynak: sl. 7</em></p>
+<blockquote>
+<p>True or false: "A process running as root executes in kernel mode." Justify.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> False. Root is a user identity that affects permission checks. The CPU's execution mode is separate: a root process's ordinary instructions run in user mode and enter kernel mode only through controlled entry (system call, exception, interrupt).</p>
+<p><strong>Ölçüt.</strong> "False" + kimlik/izin vs CPU modu ayrımı. Yalnız "false" yarım puan.</p>
+</details><hr />
+<p><strong>Q4.</strong> <em>Zorluk 1 · Bölüm 3 · Tanım · Kaynak: sl. 16–17</em></p>
+<blockquote>
+<p>Define running, ready and waiting. For which of the non-running states would a faster or additional CPU help, and why?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Running: currently executing on a CPU. Ready: able to execute, awaiting selection by the scheduler. Waiting: an event is missing (input, I/O completion, reply); more CPU time cannot complete the operation. Additional CPU capacity helps ready tasks (their obstacle is processor allocation). It does not help waiting tasks until the event occurs and they become ready.</p>
+<p><strong>Ölçüt.</strong> Üç tanım + "ready'nin engeli CPU, waiting'in engeli olay" cümlesi.</p>
+</details><hr />
+<p><strong>Q5.</strong> <em>Zorluk 1 · Bölüm 5 · Kısa cevap · Kaynak: sl. 30–31</em></p>
+<blockquote>
+<p>What does <code>fork()</code> return in the parent, in the child, and on failure? After a successful fork, where does each process continue?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Parent: the child's PID (positive). Child: 0. Failure: −1 in the original process, no child created. Both continue from the instruction after the fork call; typically an <code>if</code> on the return value selects different branches.</p>
+<p><strong>Ölçüt.</strong> Üç dönüş değeri + "ikisi de fork'tan sonra devam eder". −1'de child olmadığını söylemek şart.</p>
+</details><hr />
+<p><strong>Q6.</strong> <em>Zorluk 1 · Bölüm 5 · Kısa cevap · Kaynak: sl. 33–34</em></p>
+<blockquote>
+<p>What does a successful <code>exec</code> change and what does it keep? When does <code>exec</code> return?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Replaces the program image: code, data and execution stack. Keeps the process identity (same PID, same parent). Open file descriptors generally survive unless marked close-on-exec; some other attributes survive, others reset per API rules. A successful exec never returns to the old program; exec returns only on failure (−1), and the caller must handle the error.</p>
+<p><strong>Ölçüt.</strong> PID aynı + imaj değişir + başarıda dönmez + fd'ler kalır (close-on-exec istisnası).</p>
+</details><hr />
+<p><strong>Q7.</strong> <em>Zorluk 1 · Bölüm 5 · Tanım ayrımı · Kaynak: sl. 38–39</em></p>
+<blockquote>
+<p>What is a zombie process? Is it executing? How does it differ from an orphan?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A zombie is a child that has terminated but whose status has not yet been collected by its parent. Its program no longer executes; only a small kernel record (PID, termination information) remains. An orphan is a process whose parent has exited; Unix-like systems reparent it, and the new parent eventually reaps it. The responsible process depends on the environment (init/PID 1 or a subreaper <span class="ek">ek bilgi: "subreaper" terimi</span>). Neither condition should be inferred merely from "not running".</p>
+<p><strong>Ölçüt.</strong> "Sonlanmış, çalışmıyor, status bekliyor" + orphan'ın ayrı durum olduğu + reparenting.</p>
+</details><hr />
+<p><strong>Q8.</strong> <em>Zorluk 1 · Bölüm 6 · Karşılaştırma · Kaynak: sl. 42–43; Okuma §8 tablo</em></p>
+<blockquote>
+<p>List what each thread has privately and what threads of one process share.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Private per thread: instruction position (PC), register state, stack (for its active calls). Shared: virtual address space (code, globals, heap), and many process resources including open files. Note: separate stacks are not protection boundaries; another thread can reach a stack object via a pointer.</p>
+<p><strong>Ölçüt.</strong> Üç özel + adres alanı ve açık dosyalar ortak. "Stack korunur" demek puan kaybettirir.</p>
+</details><hr />
+<p><strong>Q9.</strong> <em>Zorluk 1 · Bölüm 6 · Tanım · Kaynak: sl. 44–45</em></p>
+<blockquote>
+<p>Define concurrency and parallelism. Can a single-core machine exhibit concurrency? Parallelism?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Concurrency: several activities make progress over overlapping time periods. Parallelism: activities execute simultaneously on different cores. A single core can provide concurrency by interleaving, but not parallelism (one core executes one thread at a time).</p>
+<p><strong>Ölçüt.</strong> İki tanım + tek çekirdek: concurrency evet, parallelism hayır.</p>
+</details><hr />
+<p><strong>Q10.</strong> <em>Zorluk 1 · Bölüm 7 · Kısa cevap · Kaynak: sl. 57</em></p>
+<blockquote>
+<p>A process calls a blocking <code>read</code> on a pipe. What happens if (a) the pipe is empty and a writer still holds the write end, (b) the pipe is empty and no write-end descriptors remain, (c) the pipe holds 3 bytes and no writers remain?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) read blocks (the reader waits). (b) read returns 0 = EOF. (c) read returns the buffered bytes (up to 3); the next read returns 0 (EOF).</p>
+<p><strong>Ölçüt.</strong> Üçü doğru. (c)'de "önce veri, sonra EOF" sırası şart.</p>
+</details><hr />
+<p><strong>Q11.</strong> <em>Zorluk 1 · Bölüm 4 · Mekanizma · Kaynak: sl. 22–23; sl. 15</em></p>
+<blockquote>
+<p>What does a context switch save and restore? Does it copy the process's address space into the PCB?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> It saves the outgoing task's execution context (program counter, register values needed for correct continuation, plus scheduling/state bookkeeping), selects a runnable task, restores its saved context and resumes it where it stopped. It does not copy the address space: memory stays represented by mappings and resident/backing storage; for a different process the environment must select the appropriate mappings. Costs: direct save/restore time and indirect cache/translation (working-set) effects.</p>
+<p><strong>Ölçüt.</strong> Kaydet-seç-geri yükle + "tüm belleği kopyalamaz, mapping değişir" + maliyetin iki türü (en az birini adlandırmak).</p>
+</details><hr />
+<h3 id="seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz<a class="headerlink" href="#seviye-2-uygulama-snflandrma-basit-iz" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q12.</strong> <em>Zorluk 2 · Bölüm 1+4 · Sınıflandırma · Kaynak: sl. 8, 9, 24–25; Okuma §2 tablo</em></p>
+<blockquote>
+<p>For each event, answer two separate questions: (i) Does execution enter the kernel? (ii) Must a different task run as a consequence?
+(a) P calls <code>getpid()</code> (assume it is a real system call).
+(b) P calls <code>strlen()</code> on a string in its own memory.
+(c) P calls <code>read()</code> on an empty pipe whose writer is still open.
+(d) A timer interrupt occurs while P runs; no other task is runnable.
+(e) P touches a page that must be read from disk.
+(f) While P runs, a keyboard interrupt delivers input that Q was waiting for.
+(g) P calls <code>printf("x")</code> (no newline) with stdout connected to a terminal.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Kernel entry?</th>
+<th>Different task must run?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a)</td>
+<td>Yes (system call)</td>
+<td>No; the result is available, the kernel returns to P (Case A)</td>
+</tr>
+<tr>
+<td>(b)</td>
+<td>No; pure user-space library work</td>
+<td>No</td>
+</tr>
+<tr>
+<td>(c)</td>
+<td>Yes (system call)</td>
+<td>P blocks → P is waiting. Another ready task <em>may</em> run; if none, the CPU idles. P cannot continue (Case B)</td>
+</tr>
+<tr>
+<td>(d)</td>
+<td>Yes (interrupt)</td>
+<td>No; the scheduler keeps P (Case C)</td>
+</tr>
+<tr>
+<td>(e)</td>
+<td>Yes (exception: page fault)</td>
+<td>P waits for the disk; another task may run meanwhile. Not "must" if nothing else is ready</td>
+</tr>
+<tr>
+<td>(f)</td>
+<td>Yes (device interrupt)</td>
+<td>No; Q becomes ready, P may continue. I/O completion does not prove an immediate switch</td>
+</tr>
+<tr>
+<td>(g)</td>
+<td>Usually no: the text stays in the stdio buffer until a newline/flush <span class="ek">ek bilgi: terminal line buffering</span>; slide 9 only says buffered output can combine calls</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ölçüt.</strong> Her satırda iki eksen ayrı. (c) ve (e)'de "may run / CPU may idle" inceliği; (f)'de "Q ready, not running". 7'den 6 doğru tam puana yakın; (a)/(d)/(f)'de "evet, switch olur" demek ana yanılgıdır.</p>
+</details><hr />
+<p><strong>Q13.</strong> <em>Zorluk 2 · Bölüm 3 · Sınıflandırma · Kaynak: sl. 16–17, 38, 41, 58; Okuma S-8, S-11</em></p>
+<blockquote>
+<p>Classify each as running, ready, waiting, or terminated (in the textbook model):
+(a) A process blocked in <code>read()</code> on a socket with no data.
+(b) A process whose time slice has just expired, and the scheduler has selected another ready task.
+(c) A parent blocked in <code>waitpid()</code> for a child that is still computing.
+(d) A producer blocked in <code>write()</code> on a full pipe.
+(e) A process with all its input in memory while all four cores are busy with other work.
+(f) A child that has exited but whose parent has not called wait.
+(g) A process shown with STAT <code>R</code> in <code>ps</code> on Linux.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) waiting. (b) ready. (c) waiting (for child termination). (d) waiting (for buffer space, not for CPU). (e) ready. (f) terminated (zombie): not ready, not waiting. (g) cannot be decided: Linux R means running or runnable.</p>
+<p><strong>Ölçüt.</strong> (d), (f), (g) ayırt edici. (g)'ye "running" demek yanlış. (b) "başka görev seçildi" eki olmadan sorulursa, "başka çalışabilir iş yoksa running kalabilir (sl. 25 Case C)" inceliğini yazan cevap tam puan alır.</p>
+</details><hr />
+<p><strong>Q14.</strong> <em>Zorluk 2 · Bölüm 3 · Durum izi · Kaynak: sl. 18</em></p>
+<blockquote>
+<p>Process P: (1) is selected and computes; (2) requests input that is not available; (3) the input arrives; (4) is selected again; (5) its time slice expires. Give the state transition at each step.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) ready → running. (2) running → waiting. (3) waiting → ready (not running). (4) ready → running. (5) running → ready.</p>
+<p><strong>Ölçüt.</strong> Beşi doğru; (3)'te "running" yazmak ana hata.</p>
+</details><hr />
+<p><strong>Q15.</strong> <em>Zorluk 2 · Bölüm 5 · Kod çıktısı · Kaynak: sl. 30–31 (genelleme)</em></p>
+<pre><code class="language-c">int main(void) {
+    fork();
+    fork();
+    printf(&quot;hi\n&quot;);
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>How many processes exist in total (including the original), and how many lines are printed? Assume no fork fails.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> 4 processes (original + 3 created), 4 lines of <code>hi</code>. First fork: 2 processes; each executes the second fork: 4. Order of lines is not determined, but all lines are identical.</p>
+<p><strong>Ölçüt.</strong> 4 ve 4 + ağaç gerekçesi (2 × 2).</p>
+</details><hr />
+<p><strong>Q16.</strong> <em>Zorluk 2 · Bölüm 5 · Kod çıktısı · Kaynak: sl. 60; sl. 13; Okuma S-1, S-12</em></p>
+<pre><code class="language-c">int x = 10;
+int main(void) {
+    pid_t p = fork();
+    if (p == 0) { x = 20; printf(&quot;child %p %d\n&quot;, (void *)&amp;x, x); return 0; }
+    waitpid(p, NULL, 0);
+    printf(&quot;parent %p %d\n&quot;, (void *)&amp;x, x);
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>Predict the output. Are the two printed addresses equal? Does that mean the variable is shared?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Output (ölçüldü):</p>
+<pre><code>child 0x...A 20
+parent 0x...A 10
+</code></pre>
+<p>The child line always comes first (parent prints only after waitpid). The addresses are typically identical because the child's address space starts as a duplicate view of the parent's, so <code>x</code> sits at the same virtual address. But the same virtual address in two processes refers to logically separate storage: the parent still prints 10. Waiting orders completion; it does not merge address spaces. COW may let them share a physical page until the child's write, but that is an optimization, not sharing.</p>
+<p><strong>Ölçüt.</strong> 20 sonra 10 + sıranın waitpid'den geldiği + "aynı sanal adres ≠ paylaşım". "Aynı adres → paylaşıyorlar" demek sıfır.</p>
+</details><hr />
+<p><strong>Q17.</strong> <em>Zorluk 2 · Bölüm 5 · Kod çıktısı · Kaynak: sl. 35–36; <code>kod/launch.c</code></em></p>
+<blockquote>
+<p>Predict the successful output of <code>launch.c</code> and explain why the order is guaranteed. Does the result depend on whether parent or child runs first after fork?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>child
+parent: child exit status = 0
+</code></pre>
+<p>The child execs <code>/bin/echo child</code>, which prints and terminates. The parent prints only after <code>waitpid</code> has collected that termination and <code>WIFEXITED</code>/<code>WEXITSTATUS</code> confirm a normal exit with 0. Waiting creates the ordering; the result does not depend on which process gets the CPU first.</p>
+<p><strong>Ölçüt.</strong> İki satır, doğru sıra, "waitpid sırayı kurar, scheduler değil".</p>
+</details><hr />
+<p><strong>Q18.</strong> <em>Zorluk 2 · Bölüm 5 · Kod okuma · Kaynak: sl. 33, 37</em></p>
+<pre><code class="language-c">if (fork() == 0) {
+    execl(&quot;/bin/ls&quot;, &quot;ls&quot;, &quot;-l&quot;, (char *)NULL);
+    printf(&quot;after exec\n&quot;);
+    _exit(1);
+}
+wait(NULL);
+</code></pre>
+<blockquote>
+<p>Under what condition is <code>after exec</code> printed? What is the PID of the process running <code>ls</code>?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Only if <code>execl</code> fails (e.g., the path does not exist or is not executable); a successful exec never returns, so the old program's next statement is gone. The process running <code>ls</code> is the child itself: same PID as returned to the parent by fork. Exec does not create an extra process.</p>
+<p><strong>Ölçüt.</strong> "Yalnız exec başarısızsa" + "PID child'ınki". Ek: <code>_exit(1)</code> öncesi printf'in terminalde göründüğü, dosyaya yönlendirmede <code>_exit</code> tamponu boşaltmadığı için kaybolabileceği <span class="ek">ek bilgi</span> bonus.</p>
+</details><hr />
+<p><strong>Q19.</strong> <em>Zorluk 2 · Bölüm 6 · Kod okuma · Kaynak: sl. 51–52; <code>kod/thread_join.c</code>; Okuma §9</em></p>
+<blockquote>
+<p>In <code>thread_join.c</code>, what is printed? What would go wrong if the <code>pthread_join</code> call were removed (the <code>printf</code> stays)?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> <code>result = 49</code>. Without join: main could read <code>job.result</code> before, during or after the worker writes it, so it might print 0 or 49; the unsynchronized conflicting access is a data race (undefined behavior in C), so no output can be promised. Also, returning from main ends the whole process, possibly before the worker runs. Join provided both the completion guarantee and the basis for reading the result safely; it also guarantees the <code>job</code> object (on main's stack) is alive while the worker uses it.</p>
+<p><strong>Ölçüt.</strong> 49 + "join'siz garanti yok, data race" + en az bir ek nokta (main'den dönüş process'i bitirir ya da nesne ömrü).</p>
+</details><hr />
+<p><strong>Q20.</strong> <em>Zorluk 2 · Bölüm 7 · Çıktı + tuzak · Kaynak: sl. 55–56; Okuma §10</em></p>
+<blockquote>
+<p>What does <code>printf 'alpha\nbeta\n' | wc -l</code> print? Does the answer depend on scheduling order? How many new external processes does the shell create?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> <code>2</code> (whitespace may vary). It follows from the input (two newline bytes), not from scheduling: wc counts newlines it reads until EOF, whatever the interleaving. The number of new processes cannot be inferred from the command text alone: <code>printf</code> may be a shell builtin; the shell arranges the pipe connection and creates at least the process for <code>wc</code> <span class="ek">ek bilgi: bash genellikle pipeline'ın her öğesi için bir child fork eder, builtin olsa bile; hoca yalnızca "metinden sayılamaz" diyor</span>.</p>
+<p><strong>Ölçüt.</strong> 2 + "girdiden gelir, scheduling'den değil" + "builtin olabilir, sayı metinden çıkmaz". "Kesin 2 process" demek puan kaybı.</p>
+</details><hr />
+<p><strong>Q21.</strong> <em>Zorluk 2 · Bölüm 1 · Kısa cevap · Kaynak: sl. 9; Okuma §2</em></p>
+<blockquote>
+<p>A program calls <code>printf</code> three times, each with a short string ending in <code>\n</code>, with stdout redirected to a file. <code>strace</code> shows a single <code>write</code>. Explain.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> printf is a library function; it formats text in user space and appends it to a stdio buffer. With a file (fully buffered <span class="ek">ek bilgi</span>), the buffer is written with one <code>write</code> system call later (e.g., at exit or when full). Source-level calls and system-call traces describe different levels; their names and counts need not match.</p>
+<p><strong>Ölçüt.</strong> Kütüphane vs system call + tamponlama + "seviyeler farklı".</p>
+</details><hr />
+<p><strong>Q22.</strong> <em>Zorluk 2 · Bölüm 5 · Gözlem yorumu · Kaynak: sl. 40–41; Okuma §7</em></p>
+<blockquote>
+<p>A student runs <code>sleep 20 &amp; demo_pid=$!; ps -o pid,ppid,stat,comm -p "$demo_pid"</code> and sees <code>STAT = S</code>. Another student sees no row at all. Interpret both observations. What can neither observation establish?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> <code>S</code> (sleeping) is consistent with the prediction that sleep spends most of its life waiting (here: a timer, not CPU). It does not by itself identify the precise missing event. No row: the process may already have terminated (timing outcome), e.g., if ps ran late; it is not proof that the launch failed. Neither snapshot is a complete execution trace: it shows one moment, not history or CPU time used. PPID shows the current parent (the shell).</p>
+<p><strong>Ölçüt.</strong> S = bekleme türü + satır yokluğu = zamanlama + "snapshot ≠ trace".</p>
+</details><hr />
+<p><strong>Q23.</strong> <em>Zorluk 2 · Bölüm 2 · Kısa cevap · Kaynak: sl. 12–15</em></p>
+<blockquote>
+<p>Which of the following belong in the textbook PCB, and which do not? PID; parent PID; saved program counter; a copy of the heap; the list of open files; scheduling priority; the full contents of the stack.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> In the PCB (conceptually): PID, parent relationship, saved program counter (and registers), open-file references, scheduling information. Not in it: a copy of the heap, the full stack contents. Memory is referenced through mappings, not copied into the PCB. (Real kernels split this across structures, e.g., Linux <code>task_struct</code> (OSC ch3 sl. 12); per-thread context differs from process-wide resources.)</p>
+<p><strong>Ölçüt.</strong> Beş doğru, iki yanlış ayrımı + "PCB bellek fotoğrafı değil".</p>
+</details><hr />
+<h3 id="seviye-3-cok-adml-kod-izi-hata-bulma">Seviye 3 — Çok adımlı kod izi, hata bulma<a class="headerlink" href="#seviye-3-cok-adml-kod-izi-hata-bulma" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q24.</strong> <em>Zorluk 3 · Bölüm 5 · Sayma · Kaynak: sl. 30–31 (genelleme); OSTEP cpu-api</em></p>
+<pre><code class="language-c">for (int i = 0; i &lt; 3; i++)
+    fork();
+printf(&quot;x\n&quot;);
+</code></pre>
+<blockquote>
+<p>How many processes exist in total? How many are children created by fork? How many <code>x</code> lines are printed? (Assume stdout is a terminal and no fork fails.)</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Each iteration doubles the population: 2³ = 8 processes total, 7 created by fork, 8 lines of <code>x</code>.</p>
+<p><strong>Ölçüt.</strong> 8 / 7 / 8. "7 process" ya da "3 process" tipik hata.</p>
+</details><hr />
+<p><strong>Q25.</strong> <em>Zorluk 3 · Bölüm 5 · Sayma (kısa devre) · Kaynak: sl. 30–31 (genelleme)</em></p>
+<pre><code class="language-c">/* (a) */  fork() &amp;&amp; fork();          printf(&quot;a\n&quot;);
+/* (b) */  (fork() &amp;&amp; fork()) || fork();  printf(&quot;b\n&quot;);
+</code></pre>
+<blockquote>
+<p>For each program separately, how many processes print? (C evaluates <code>&amp;&amp;</code> and <code>||</code> with short-circuiting.)</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 3 (ölçüldü). Original: first fork returns PID (true) → evaluates second fork → creates another child. First child: first fork returns 0 (false) → <code>&amp;&amp;</code> short-circuits, no second fork. Second child: second fork returns 0, done. Total: original + 2 = 3.
+(b) 5 (ölçüldü). Original: both forks true → <code>||</code> short-circuits, no third fork. Child C1 (0 from first fork) → <code>&amp;&amp;</code> false → executes third fork → creates C3. Child C2 (0 from second fork) → <code>&amp;&amp;</code> false → third fork → creates C4. Total: original, C1, C2, C3, C4 = 5.</p>
+<p><strong>Ölçüt.</strong> 3 ve 5 + her process için hangi fork'un çağrıldığını gösteren ağaç. Sadece sayı yarım puan.</p>
+</details><hr />
+<p><strong>Q26.</strong> <em>Zorluk 3 · Bölüm 5 + 1 · Kod çıktısı (tampon tuzağı) · Kaynak: sl. 9, 37; Okuma §6</em></p>
+<pre><code class="language-c">for (int i = 0; i &lt; 2; i++) {
+    fork();
+    printf(&quot;%d\n&quot;, i);
+}
+</code></pre>
+<blockquote>
+<p>(a) What is printed when stdout is a terminal? (b) What does the output file contain when run as <code>./a.out &gt; out.txt</code>? Explain the difference.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Terminal (line-buffered): 6 lines: two <code>0</code> and four <code>1</code>. Iteration 0: after the fork there are 2 processes, each prints <code>0</code> and the newline flushes immediately. Iteration 1: each of the 2 forks → 4 processes, each prints <code>1</code>. Line order may vary (ölçülen örnek: <code>0 0 1 1 1 1</code>).
+(b) File (fully buffered): 8 lines: four <code>0</code> and four <code>1</code>. When the second fork happens, <code>"0\n"</code> is still in each process's unflushed stdio buffer, so it is duplicated into the children. Each of the 4 final processes flushes <code>"0\n1\n"</code> at exit. (ölçüldü: <code>0 1 0 1 0 1 0 1</code>)
+Why: stdio buffers are ordinary user-space memory and are copied by fork. Slide 9 (buffered output combines printf calls) and slide 37 (<code>_exit</code> avoids an additional flush of inherited stdio buffers) point to this. Terminal line-buffered vs file fully-buffered is ek bilgi (glibc/BSD libc behavior; see the label note at the top).</p>
+<p><strong>Ölçüt.</strong> (a) 6, (b) 8, + "tampon fork'la kopyalanır". Seviye 4'e yakın; tam gerekçesiz 8 yarım puan.</p>
+</details><hr />
+<p><strong>Q27.</strong> <em>Zorluk 3 · Bölüm 5 + 1 · Kod çıktısı · Kaynak: sl. 9, 37</em></p>
+<pre><code class="language-c">printf(&quot;A&quot;);
+fork();
+printf(&quot;B\n&quot;);
+</code></pre>
+<blockquote>
+<p>Predict the output on a terminal.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (ölçüldü) Two lines <code>AB</code>:</p>
+<pre><code>AB
+AB
+</code></pre>
+<p><code>"A"</code> has no newline, so it is still in the buffer at fork; both processes have <code>"A"</code> and then append <code>"B\n"</code>. Students often expect <code>A B B</code> or <code>AB B</code>.</p>
+<p><strong>Ölçüt.</strong> "AB" iki kez + tampon kopyalanma gerekçesi.</p>
+</details><hr />
+<p><strong>Q28.</strong> <em>Zorluk 3 · Bölüm 5 · Olası çıktılar · Kaynak: sl. 31, 36, 38</em></p>
+<pre><code class="language-c">pid_t p = fork();
+if (p == 0) { printf(&quot;C\n&quot;); exit(0); }
+printf(&quot;P\n&quot;);
+waitpid(p, NULL, 0);
+printf(&quot;done\n&quot;);
+</code></pre>
+<blockquote>
+<p>Assume stdout is a terminal and fork succeeds. List every possible output. Which order is impossible, and why?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Possible: <code>C P done</code> or <code>P C done</code> (each on its own line). Impossible: any order where <code>done</code> precedes <code>C</code>: the parent prints <code>done</code> only after waitpid collected the child's termination, and the child printed <code>C</code> before terminating. The relative order of <code>C</code> and <code>P</code> is not guaranteed: no synchronization orders them.
+(Ek bilgi: stdout dosyaya yönlendirilirse parent'ın <code>P\n</code>'i process sonuna kadar tamponda kalır; dosya her zaman <code>C P done</code> olur. Child <code>exit</code> yerine <code>_exit</code> kullansaydı ve çıktı dosyaya gitseydi <code>C</code> kaybolurdu, bkz. Q50.)</p>
+<p><strong>Ölçüt.</strong> İki olası sıra + "done her zaman C'den sonra" + gerekçe (waitpid). Tek sıra vermek yarım puan.</p>
+</details><hr />
+<p><strong>Q29.</strong> <em>Zorluk 3 · Bölüm 3 + 4 · Durum izi + sınıflandırma · Kaynak: sl. 18–19, 24–25, 38, 58; Okuma §4 tablo</em></p>
+<blockquote>
+<p>One CPU. Processes A, B, C. At t0, A is running; B and C are ready. Fill in each process's state after each event, and for each event say whether kernel entry occurred and whether the running task changed.
+t1: A calls <code>read()</code> on a disk file whose data is not in memory; the scheduler selects B.
+t2: A timer interrupt occurs; the scheduler selects C.
+t3: The disk interrupt for A's data arrives while C runs; the scheduler keeps C.
+t4: C calls <code>getpid()</code>, which returns immediately.
+t5: C calls <code>write()</code> on a pipe whose buffer is full (B is the reader); the scheduler selects A.
+t6: A calls <code>exit()</code>; its parent has not yet called wait. The scheduler selects B.
+t7: B reads from the pipe, freeing space. B keeps running.
+t8: B's time slice expires; the scheduler selects C.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<table>
+<thead>
+<tr>
+<th>t</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>Kernel entry?</th>
+<th>Running task changed?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Running</td>
+<td>Ready</td>
+<td>Ready</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Waiting</td>
+<td>Running</td>
+<td>Ready</td>
+<td>Yes (system call)</td>
+<td>Yes (A blocked)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Waiting</td>
+<td>Ready</td>
+<td>Running</td>
+<td>Yes (timer interrupt)</td>
+<td>Yes (scheduler decision)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Ready</strong></td>
+<td>Ready</td>
+<td>Running</td>
+<td>Yes (device interrupt)</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ready</td>
+<td>Ready</td>
+<td>Running</td>
+<td>Yes (system call)</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Running</td>
+<td>Ready</td>
+<td>Waiting</td>
+<td>Yes (system call)</td>
+<td>Yes (C blocked)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Terminated (zombie)</td>
+<td>Running</td>
+<td>Waiting</td>
+<td>Yes (system call)</td>
+<td>Yes (A exited)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Zombie</td>
+<td>Running</td>
+<td><strong>Ready</strong></td>
+<td>Yes (system call)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Zombie</td>
+<td>Ready</td>
+<td>Running</td>
+<td>Yes (timer interrupt)</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Key points: at t3 A is eligible but does not own the CPU; at t4 kernel entry without a switch; at t5 C waits for space, not for CPU; at t6 A remains a zombie until its parent waits; at t7 B's read makes C ready but does not switch to it.</p>
+<p><strong>Ölçüt.</strong> 27 durum hücresinden ≥ 25 doğru + son iki sütunda t3, t4, t7 doğru. t3'te A'yı "Running" yazmak ya da t4'te "switch" demek ana hata.</p>
+</details><hr />
+<p><strong>Q30.</strong> <em>Zorluk 3 · Bölüm 7 · Hatayı bul · Kaynak: sl. 57, 61; Okuma §10, S-4</em></p>
+<pre><code class="language-c">int fd[2];
+pipe(fd);
+pid_t p = fork();
+if (p == 0) {
+    close(fd[0]);
+    write(fd[1], &quot;hello&quot;, 5);
+    close(fd[1]);
+    _exit(0);
+}
+char buf[16]; ssize_t n; size_t total = 0;
+while ((n = read(fd[0], buf, sizeof buf)) &gt; 0)
+    total += n;
+printf(&quot;total = %zu\n&quot;, total);
+waitpid(p, NULL, 0);
+</code></pre>
+<blockquote>
+<p>The parent receives all 5 bytes but never prints <code>total</code>. Find the bug, explain it in terms of process state and pipe semantics, and fix it.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The parent never closes its own copy of the write end <code>fd[1]</code> (it created the pipe and kept both ends after fork). After the child closes its end and exits, a write-end reference still exists (in the parent itself), so EOF cannot arrive. After reading the 5 bytes, the parent's next <code>read</code> finds an empty pipe with a live writer and blocks: the parent is waiting, forever (it is waiting on itself). Fix: <code>close(fd[1]);</code> in the parent right after fork (in the parent branch, before the read loop). Rule: close every unused end in every participating process. (Ölçüldü: program takılıyor; <code>alarm(2)</code> ile öldü.)</p>
+<p><strong>Ölçüt.</strong> Eksik <code>close(fd[1])</code> parent'ta + "yazar referansı kaldıkça EOF gelmez" + parent'ın waiting olduğu. Sleep eklemek ya da child'a dokunmak yanlış çözüm.</p>
+</details><hr />
+<p><strong>Q31.</strong> <em>Zorluk 3 · Bölüm 7 + 5 · Hatayı bul · Kaynak: sl. 34, 57, 59, 61–62</em></p>
+<pre><code class="language-c">int fd[2]; pipe(fd);
+pid_t a = fork();
+if (a == 0) { dup2(fd[1], STDOUT_FILENO); close(fd[0]); close(fd[1]);
+              execlp(&quot;ls&quot;, &quot;ls&quot;, (char *)NULL); _exit(127); }
+pid_t b = fork();
+if (b == 0) { dup2(fd[0], STDIN_FILENO); close(fd[0]);
+              execlp(&quot;wc&quot;, &quot;wc&quot;, &quot;-l&quot;, (char *)NULL); _exit(127); }
+waitpid(a, NULL, 0);
+waitpid(b, NULL, 0);
+</code></pre>
+<blockquote>
+<p>This should behave like <code>ls | wc -l</code>, but it hangs. Identify every descriptor that must be closed and in which process. Which process is stuck, and in which state?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Missing closes: (1) child b (wc) still holds <code>fd[1]</code> (it closed only fd[0] after dup2), so wc keeps a write end to its own input; (2) the parent holds both <code>fd[0]</code> and <code>fd[1]</code> and never closes them. After <code>ls</code> exits, write-end references remain (in wc itself and in the parent), so wc never sees EOF: wc is waiting in <code>read</code> on an empty pipe. The parent is waiting in <code>waitpid(b)</code> for wc, which never terminates. (<code>ls</code> itself finishes; its status is collected by the first waitpid.) Fix: in child b add <code>close(fd[1])</code>; in the parent <code>close(fd[0]); close(fd[1]);</code> after both forks and before waiting. <code>dup2</code> <span class="ek">ek bilgi; hoca "connect the child's standard output to a pipe" diyor, sl. 34</span> makes fd 1 / fd 0 refer to the pipe; the setup happens before exec and survives exec because descriptors are inherited unless close-on-exec.</p>
+<p><strong>Ölçüt.</strong> İki ayrı eksik (wc'de fd[1], parent'ta ikisi) + takılan process'ler: wc (read'de waiting) ve parent (waitpid'de waiting). Yalnız birini bulmak yarım puan.</p>
+</details><hr />
+<p><strong>Q32.</strong> <em>Zorluk 3 · Bölüm 6 · Yarış · Kaynak: sl. 49–50, 52; Okuma S-9</em></p>
+<pre><code class="language-c">int counter = 0;
+void *inc(void *arg) { for (int i = 0; i &lt; 1000000; i++) counter++; return NULL; }
+int main(void) {
+    pthread_t t1, t2;
+    pthread_create(&amp;t1, NULL, inc, NULL);
+    pthread_create(&amp;t2, NULL, inc, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    printf(&quot;%d\n&quot;, counter);
+}
+</code></pre>
+<blockquote>
+<p>A student says: "Both threads are joined before printing, so the result is 2000000." Evaluate the claim. What value is printed?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The claim is wrong. Joining orders main's read after both workers completed, but it does not provide mutual exclusion while both workers run. <code>counter++</code> is a read–add–write sequence; two workers can interleave so that updates are lost (sl. 49–50). No exact value can be promised: in practice results are often below 2000000 <span class="ek">ek bilgi</span>, and formally the unsynchronized conflicting access is a data race, undefined behavior in C. Fix: protect the whole increment (mutex) or use an atomic increment (details: Lecture 3).</p>
+<p><strong>Ölçüt.</strong> "Join sıra kurar, dışlama değil" + read-add-write gerekçesi + "kesin sayı söylenemez / UB". "Sonuç 1000000 ile 2000000 arası" gibi kesin aralık vermek hocanın uyarısına aykırı; "tipik olarak 2000000'dan az" kabul.</p>
+</details><hr />
+<p><strong>Q33.</strong> <em>Zorluk 3 · Bölüm 6 · Lost update izi · Kaynak: sl. 49–50; Okuma §9 tablo</em></p>
+<blockquote>
+<p>Counter starts at 0. Threads A and B each perform one increment as three steps: read, add 1, write. (a) Give an interleaving that ends with 1, step by step. (b) Give one that ends with 2. (c) What are the only possible final values in this conceptual model?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) A reads 0; B reads 0; A writes 1; B writes 1 → 1 (B's write replaces rather than adds). (b) A reads 0, adds, writes 1; then B reads 1, writes 2 → 2. (c) 1 or 2. The lesson: protect the complete operation or use an atomic operation. In real C code, unsynchronized conflicting accesses can be undefined behavior; this model is a conceptual trace.</p>
+<p><strong>Ölçüt.</strong> İki iz + {1, 2} + "kavramsal model, C'de UB uyarısı".</p>
+</details><hr />
+<p><strong>Q34.</strong> <em>Zorluk 3 · Bölüm 6 · Hatayı bul (argüman ömrü/paylaşımı) · Kaynak: sl. 42, 51–52; Okuma §9 (OSTEP 27 notu)</em></p>
+<pre><code class="language-c">void *show(void *arg) { printf(&quot;%d\n&quot;, *(int *)arg); return NULL; }
+int main(void) {
+    pthread_t t[4];
+    for (int i = 0; i &lt; 4; i++)
+        pthread_create(&amp;t[i], NULL, show, &amp;i);
+    for (int k = 0; k &lt; 4; k++)
+        pthread_join(t[k], NULL);
+}
+</code></pre>
+<blockquote>
+<p>The programmer expects <code>0 1 2 3</code> in some order. What can actually be printed? Fix it.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> All threads receive the address of the same variable <code>i</code>, which main keeps modifying. A thread may start after the loop has advanced, so duplicates and skips are possible (e.g., <code>2 2 4 4</code>); values such as <code>4</code> can appear because <code>i</code> reaches 4 at loop exit; and after the loop the variable <code>i</code> is out of scope, so the pointer refers to an object whose lifetime has ended (undefined behavior). It is also an unsynchronized read/write race on <code>i</code>. Fix: give each thread its own argument object that outlives the thread, e.g., <code>int args[4]; args[i] = i; pthread_create(..., &amp;args[i]);</code> with <code>args</code> declared outside the loop and joined before it goes out of scope.</p>
+<p><strong>Ölçüt.</strong> Ortak <code>&amp;i</code> + "thread geç başlayabilir" + ömür sorunu + doğru düzeltme. Yalnız "sıra karışık olur" demek yetmez (sorun sıra değil, değerler).</p>
+</details><hr />
+<p><strong>Q35.</strong> <em>Zorluk 3 · Bölüm 5 · Hata yolu · Kaynak: sl. 37; Okuma §6, S-7</em></p>
+<blockquote>
+<p>In a copy of <code>launch.c</code>, <code>/bin/echo</code> is replaced by <code>/bin/nonexistent</code>. Predict everything printed (stdout and stderr) and the program's exit status. Did <code>waitpid</code> fail?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>execl: No such file or directory          (stderr, from perror in the child)
+parent: child exit status = 127           (stdout, from the parent)
+</code></pre>
+<p>The program returns <code>EXIT_FAILURE</code> (1) because the status is nonzero. <code>waitpid</code> did not fail: it successfully collected the child's termination. Exec failed (returned −1 with errno ENOENT), the child reached its error path and called <code>_exit(127)</code>. 127 is the example's chosen convention, not exec's return value.</p>
+<p><strong>Ölçüt.</strong> İki satır + "wait başarılı, exec başarısız" + 127'nin kural olduğu. Programın dönüş kodunu söylemek bonus.</p>
+</details><hr />
+<p><strong>Q36.</strong> <em>Zorluk 3 · Bölüm 6 · Hesap + yorum · Kaynak: sl. 46; Okuma §8 (çalışılmış örnek); OSC ch4 sl. 12 (ek)</em></p>
+<blockquote>
+<p>A job has a serial stage of 2 time units and a perfectly divisible parallel stage of 8 units. Ignoring overhead, compute the completion time and speedup for 1, 4 and 8 workers, and the limit as workers → ∞. Why does the lecture call this a model, not a measurement?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> 1 worker: 2 + 8 = 10. 4 workers: 2 + 8/4 = 4 → speedup 10/4 = 2.5 (okumadaki sayı). 8 workers: 2 + 1 = 3 → 3.33. ∞: → 2 → speedup ≤ 5. The serial dependency cannot be removed by adding workers. It is a model under stated assumptions: real workers cost creation, scheduling, memory and coordination; a shared lock, memory bandwidth or storage can become the limit; a fair claim needs a stated workload, environment and measurement method.</p>
+<p><strong>Ölçüt.</strong> Dört sayı doğru + en az iki gerçek dünya sınırlayıcısı. (Amdahl adı ve formülü ek bilgi; bilmek zorunlu değil.)</p>
+</details><hr />
+<p><strong>Q37.</strong> <em>Zorluk 3 · Bölüm 5 · Zombie ve orphan · Kaynak: sl. 38–39, 41</em></p>
+<blockquote>
+<p>Program Z: the child exits immediately; the parent sleeps 30 s and then calls <code>wait</code>. Program O: the parent exits immediately; the child sleeps 1 s and prints <code>getppid()</code>. During the 30 s of Z, what does <code>ps</code> show for the child? What does O print? Which program has a zombie and which an orphan?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Z: during the 30 s the child is a zombie: terminated, not executing, still has a PID; <code>ps</code> shows state <code>Z</code> / <code>&lt;defunct&gt;</code> <span class="ek">ek bilgi: ps gösterim biçimi</span>. After <code>wait</code>, the record is reaped and the row disappears. O: the child is an orphan; it is reparented, so <code>getppid()</code> prints a different PID than the original parent: often 1, or a subreaper depending on the environment (ölçüldü macOS'ta: 1). Z has a zombie; O has an orphan. The orphan is alive and running; the zombie is not.</p>
+<p><strong>Ölçüt.</strong> Z'de zombie + O'da orphan + reparenting + "ortama göre değişir" ihtiyatı.</p>
+</details><hr />
+<p><strong>Q38.</strong> <em>Zorluk 3 · Bölüm 5 · Hatayı bul · Kaynak: Okuma §6 ("Order is a property to establish"), S-10</em></p>
+<pre><code class="language-c">pid_t p = fork();
+if (p == 0) { compute_and_write_file(&quot;result.txt&quot;); _exit(0); }
+sleep(1);                          /* give the child time to finish */
+read_file(&quot;result.txt&quot;);
+</code></pre>
+<blockquote>
+<p>What is wrong? Fix it, and state what the fix guarantees that the original did not.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> <code>sleep(1)</code> expresses elapsed time, not the condition "the child has finished". Under load, with large input, or on a slower machine the child may still be running, so the parent reads a partial or missing file. Also the child is never reaped (zombie until parent exits). Fix: <code>waitpid(p, &amp;status, 0)</code> (retry on EINTR as in launch.c), check <code>WIFEXITED</code> and <code>WEXITSTATUS == 0</code>, then read. This guarantees ordering (child termination happens-before the read) and that the child succeeded; it also collects the status (no zombie).</p>
+<p><strong>Ölçüt.</strong> "Zaman ≠ koşul" + waitpid + status kontrolü. Zombie'yi anmak bonus.</p>
+</details><hr />
+<p><strong>Q39.</strong> <em>Zorluk 3 · Bölüm 5 · Hatayı bul · Kaynak: sl. 31 ("Error handling must happen before treating the result as a valid child identifier"); waitpid(2) <span class="ek">ek bilgi</span></em></p>
+<pre><code class="language-c">pid_t child = fork();
+if (child == 0) { execl(&quot;/bin/echo&quot;, &quot;echo&quot;, &quot;hi&quot;, (char *)NULL); _exit(127); }
+waitpid(child, &amp;status, 0);
+</code></pre>
+<blockquote>
+<p>What happens if fork fails? Why does slide 31 insist on checking −1 first?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> On failure, <code>child</code> is −1, no child exists, and the parent falls through to <code>waitpid(-1, ...)</code>. In waitpid, −1 is not "an error value": it means "wait for any child" (ek bilgi: waitpid(2)). If the program has other children, it silently reaps an unrelated child and misinterprets its status; if it has none, waitpid fails with ECHILD and the original fork error is lost. Using −1 as a PID in other calls can be dangerous too (ek bilgi: <code>kill(-1, sig)</code> signals every permitted process). Fix: <code>if (child == -1) { perror("fork"); ... }</code> before any use.</p>
+<p><strong>Ölçüt.</strong> "−1 geçerli PID gibi kullanılıyor" + waitpid(-1) anlamı <span class="ek">ek bilgi; bilinmiyorsa "fork hatası raporlanmaz, yanlış teşhis" yeterli</span> + doğru düzeltme.</p>
+</details><hr />
+<p><strong>Q40.</strong> <em>Zorluk 3 · Bölüm 6 · Hatayı bul (görünürlük) · Kaynak: Okuma §9 ("Visibility must follow the language rules"); sl. 54</em></p>
+<pre><code class="language-c">int ready = 0; int data;
+void *producer(void *a) { data = 42; ready = 1; return NULL; }
+void *consumer(void *a) { while (!ready) ; printf(&quot;%d\n&quot;, data); return NULL; }
+</code></pre>
+<blockquote>
+<p>Why is this "flag" protocol incorrect even though both threads share the address space?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Both threads can address the same bytes, but the accesses to <code>ready</code> and <code>data</code> are unsynchronized conflicting accesses: a data race. Compilers and hardware may reorder or transform operations (e.g., the loop may never re-read <code>ready</code>, or <code>ready = 1</code> may become visible before <code>data = 42</code>). One successful run proves nothing. Also the spinning consumer burns CPU while it is logically waiting. Use proper synchronization primitives (mutex + condition variable, or atomics with appropriate ordering; covered later). Slide 54 states the same for shared memory between processes: "merely sharing the flag is insufficient".</p>
+<p><strong>Ölçüt.</strong> "Ortak adres ≠ senkronizasyon" + yeniden sıralama/görünürlük + "bir başarılı koşu kanıt değil". Spin'in CPU israfı bonus.</p>
+</details><hr />
+<h3 id="seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak<a class="headerlink" href="#seviye-4-sentez-tasarm-ince-tuzak" title="Permanent link">#</a></h3>
+<hr />
+<p><strong>Q41.</strong> <em>Zorluk 4 · Bölüm 5 + 1 · Kod çıktısı (exit vs _exit) · Kaynak: sl. 37; Okuma §6</em></p>
+<pre><code class="language-c">printf(&quot;start &quot;);
+pid_t p = fork();
+if (p == 0) {
+    execl(&quot;/no/such/program&quot;, &quot;x&quot;, (char *)NULL);
+    exit(127);                  /* note: exit, not _exit */
+}
+int s; waitpid(p, &amp;s, 0);
+printf(&quot;status=%d\n&quot;, WEXITSTATUS(s));
+</code></pre>
+<blockquote>
+<p>Predict the output on a terminal. Then explain why <code>launch.c</code> uses <code>_exit</code> instead of <code>exit</code> in the child.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (ölçüldü) <code>start start status=127</code>. <code>"start "</code> has no newline, so it remains in the stdio buffer and is copied into the child by fork. Exec fails, so the child's image (and buffer) survives; <code>exit(127)</code> flushes the inherited buffer → first <code>start</code>. The parent later flushes its own copy together with <code>status=127</code>. With <code>_exit(127)</code> the child terminates without flushing stdio buffers, so the output is <code>start status=127</code>. That is exactly slide 37's point: <code>_exit</code> "avoids an additional flush of inherited stdio buffers". (Successful exec would have discarded the child's buffer copy anyway, because exec replaces the image.)</p>
+<p><strong>Ölçüt.</strong> "start" iki kez + tampon kopyası + exit tamponu boşaltır / _exit boşaltmaz. Başarılı exec'te tamponun atıldığını söylemek bonus.</p>
+</details><hr />
+<p><strong>Q42.</strong> <em>Zorluk 4 · Bölüm 5 · Kaynak mirası · Kaynak: Okuma §6 ("Inherited file descriptors ... share an offset"); OSTEP cpu-api Homework Q2</em></p>
+<pre><code class="language-c">int f = open(&quot;out.txt&quot;, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+pid_t p = fork();
+if (p == 0) { write(f, &quot;child\n&quot;, 6); _exit(0); }
+waitpid(p, NULL, 0);
+write(f, &quot;parent\n&quot;, 7);
+</code></pre>
+<blockquote>
+<p>What does <code>out.txt</code> contain? Contrast with what would happen to an ordinary variable <code>int off = 0;</code> modified by the child.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (ölçüldü)</p>
+<pre><code>child
+parent
+</code></pre>
+<p>The parent's write does not overwrite the child's: both descriptors refer to the same open file description, so they share the file offset; the child's write advanced it to 6, and the parent writes at offset 6. An ordinary variable, by contrast, is logically copied: the child's change to <code>off</code> would not be visible to the parent. "Fork copies everything independently" is too broad; resource inheritance has different rules from variable copying.</p>
+<p><strong>Ölçüt.</strong> Doğru içerik + paylaşılan ofset + değişkenle karşıtlık.</p>
+</details><hr />
+<p><strong>Q43.</strong> <em>Zorluk 4 · Bölüm 7 · Tasarım (framing) · Kaynak: sl. 55–56, 54</em></p>
+<blockquote>
+<p>A producer sends records to a consumer over a pipe with two calls: <code>write(fd, "ALICE", 5); write(fd, "BOB", 3);</code>. The consumer does <code>n = read(fd, buf, 100);</code> and treats <code>buf[0..n)</code> as one name. Describe two different outcomes that are possible and design a correct protocol.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A pipe is a byte stream without application message boundaries. The first read may return <code>ALICEBOB</code> (8 bytes, both writes merged) → one wrong name; or <code>ALICE</code> (5) and then <code>BOB</code>; or in principle a partial chunk. Reads may return chunks different from the producer's writes. Protocol: define framing, e.g., a delimiter (<code>ALICE\nBOB\n</code>, consumer splits on <code>\n</code> and keeps leftover bytes for the next read) or a length prefix (<code>5ALICE3BOB</code> / fixed-size binary length field); loop on read until a complete record is assembled; treat read = 0 (EOF) as end of stream, and an EOF in the middle of a record as an error. Also agree on what the consumer does if the producer stops (sl. 54).</p>
+<p><strong>Ölçüt.</strong> En az iki olası read sonucu + framing (ayraç ya da uzunluk) + kısmi okumayı biriktirme. EOF ele alımı bonus.</p>
+</details><hr />
+<p><strong>Q44.</strong> <em>Zorluk 4 · Bölüm 6 + 2 · Tasarım/karşılaştırma · Kaynak: sl. 43, 47–48; Okuma §8</em></p>
+<blockquote>
+<p>You are designing a server that handles independent client requests. Compare: (a) one thread per request, created on arrival; (b) a bounded worker pool with a request queue; (c) one process per request. Then answer: the server must run third-party image-decoding plugins that sometimes crash or corrupt memory. Which design do you choose for the decoding part, and why?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) Simple; a blocked request does not stop others; but unbounded thread count under load: each thread costs memory, creation, scheduling; contention can dominate; an erroneous thread can corrupt shared memory and crash the whole process.
+(b) The queue separates arrival from service and bounds active execution streams. Needs explicit rules: who owns each request, who may change the queue (synchronization), what happens when the queue is full (wait, reject, drop), how shutdown wakes waiting workers. Sharing a queue does not answer these automatically.
+(c) Strongest isolation: separate address spaces, a crash is contained; but higher creation cost and data must cross an explicit IPC interface.
+Plugins: run decoding in separate processes (possibly a bounded pool of worker processes), communicating via a pipe or explicit shared mapping, because the process boundary gives fault containment that threads do not (sl. 43: "an erroneous thread can corrupt shared memory used by other threads"). The main server can still use a thread pool for non-risky work. Event-driven designs are another option for overlapping waits (sl. 48).</p>
+<p><strong>Ölçüt.</strong> Üç seçeneğin artı/eksisi (her biri en az bir) + havuzun dört kuralından en az ikisi + eklenti için process izolasyonu gerekçesi.</p>
+</details><hr />
+<p><strong>Q45.</strong> <em>Zorluk 4 · Bölüm 7 · Tasarım/karşılaştırma · Kaynak: sl. 53–54, 57–58</em></p>
+<blockquote>
+<p>Two processes on one machine must exchange data. Choose shared memory or a pipe for each case and justify: (a) a camera process hands 8 MB frames, 60 per second, to an analysis process; (b) a logger process receives text lines from one producer. For your choice in (a), state what the protocol must specify.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Shared memory is reasonable: large frames, high rate; copying every frame through a pipe adds data movement. Protocol must specify: layout (frame slots, header with size/sequence number), ownership (who may write a slot, when it is handed over), readiness signaling with correct synchronization (a plain flag is insufficient), what happens when the consumer falls behind (overwrite oldest, drop, or block producer), and what the reader does if the producer dies. (b) A pipe fits: a byte stream of lines with natural framing (<code>\n</code>), built-in blocking/backpressure, EOF when the producer closes; simpler and safer. Either answer is acceptable with sound justification; the key idea is that neither model removes protocol design.</p>
+<p><strong>Ölçüt.</strong> Her iki seçim + gerekçe + (a) için protokol öğelerinden en az üçü (düzen, sahiplik, hazır sinyali+senkronizasyon, dolu/geride kalma, karşı taraf ölürse).</p>
+</details><hr />
+<p><strong>Q46.</strong> <em>Zorluk 4 · Bölüm 7 + 3 · Durum + backpressure · Kaynak: sl. 58; Okuma S-11</em></p>
+<blockquote>
+<p>In <code>producer | consumer</code>, the producer generates data much faster than the consumer processes it, and both are CPU-heavy. One CPU core. Describe how the states of the two processes evolve over time. A colleague says "the producer is slow because it is not getting enough CPU". Evaluate.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Initially both alternate between running and ready. The finite pipe buffer fills because the producer outruns the consumer; the producer's next blocking write cannot complete → producer waiting (for space, not CPU). The consumer runs, removes data → space frees → producer becomes ready, is selected, writes, fills again → waiting. In steady state the producer spends much time waiting on the pipe; throughput is set by the consumer's rate. The colleague is wrong: the producer is waiting for a communication condition, not for CPU allocation; giving it more CPU does not help. Speeding up the consumer (or adding consumers / a bigger buffer for bursts) would. Backpressure couples their progress.</p>
+<p><strong>Ölçüt.</strong> Dolu tampon → producer waiting + döngüsel geçişler + "darboğaz tüketici, CPU değil".</p>
+</details><hr />
+<p><strong>Q47.</strong> <em>Zorluk 4 · Bölüm 8 · Uçtan uca iz · Kaynak: sl. 59, 62, 55–58, 28–39</em></p>
+<blockquote>
+<p>Trace, without skipping boundaries, what happens from the moment the user presses Enter on <code>printf 'alpha\nbeta\n' | wc -l</code> until the prompt returns. For each participant, give its process identity, program image and open communication ends. Mark where kernel entries occur, where waiting occurs, and what must happen for the command to complete.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (model).</strong></p>
+<ol>
+<li>The shell (an ordinary user-space process) reads and parses the line (system calls for terminal input; while no input, the shell was waiting).</li>
+<li>It creates a pipe (system call): descriptors for read end R and write end W in the shell.</li>
+<li>It forks a child for the producer side <span class="ek">ek bilgi: bash davranışı; hoca yalnızca "process sayısı komut metninden çıkarılamaz" diyor</span> (new PID, inherited R and W). In that child: connect stdout to W, close R and the extra W. <code>printf</code> may run as a builtin inside this child (no exec); if it is the external <code>/usr/bin/printf</code>, the child execs it: same PID, new image, the stdout→W connection survives exec.</li>
+<li>It forks a child for <code>wc</code>: connect stdin to R, close W and the extra R; exec <code>wc</code> (same PID, image replaced).</li>
+<li>The shell closes both R and W in itself (otherwise wc would never see EOF), then waits for the children.</li>
+<li>Execution: the producer writes 11 bytes (two <code>\n</code>) via <code>write</code> system calls; wc reads. wc may find the pipe empty while the producer still exists → wc waiting; when data arrives it becomes ready, and runs when selected. Other runnable tasks may interleave on the CPU. Kernel entries (read/write) do not necessarily switch tasks.</li>
+<li>The producer exits → its write end closes. With no write-end references left anywhere, wc reads the remaining bytes and then gets EOF (read = 0), prints <code>2</code> (to the terminal), exits.</li>
+<li>Both children are zombies until the shell's wait collects their status; the shell then prints the prompt. Exit status of the pipeline is wc's <span class="ek">ek bilgi</span>.
+Completion depends on: closing unused ends (shell and children), EOF, and status collection. A program that computed the right bytes can still fail to finish if these lifecycle obligations are missed.</li>
+</ol>
+<p><strong>Ölçüt.</strong> (1) pipe kurulumunun fork/exec'ten önce olması, (2) her process için kimlik/imaj/uçlar, (3) exec'in yeni katılımcı yaratmadığı, (4) builtin ihtiyatı, (5) wc'nin waiting → ready → running geçişi, (6) kullanılmayan uçların kapanması ve EOF, (7) wait ile toplama. 7'den 6 tam puan.</p>
+</details><hr />
+<p><strong>Q48.</strong> <em>Zorluk 4 · Bölüm 4 + 3 + 6 · Checkpoint (hocanın kendi sorusu) · Kaynak: sl. 26–27</em></p>
+<blockquote>
+<p>Answer each, explaining using state, mode or CPU ownership:
+(a) A process is waiting for a network reply. Would a free CPU help?
+(b) A read completes immediately. Must another process run?
+(c) Two programs finish "at the same time". Does that prove parallelism?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) No. The task is waiting; the missing event is the network reply, which a CPU cannot supply. Only after the reply arrives does it become ready, and then CPU selection can help. (b) No. The read enters the kernel (mode change), the data is available, and the kernel returns to the same task. Kernel execution on behalf of P is not scheduling a different task. (c) No. Similar finish times are consistent with one core interleaving both (concurrency). Parallelism requires evidence of simultaneous execution on different execution resources.</p>
+<p><strong>Ölçüt.</strong> Üç "no" + her birinde doğru eksenin adı (state / mode / CPU ownership).</p>
+</details><hr />
+<p><strong>Q49.</strong> <em>Zorluk 4 · Bölüm 6 · Kanıt tasarımı · Kaynak: Okuma S-6; sl. 46</em></p>
+<blockquote>
+<p>A student claims "my 4-thread program ran in parallel because all four threads were alive during the same 2 seconds." What evidence would actually justify the claim? Propose one observation that would support it and one that would refute it.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Overlapping lifetimes show concurrency, not simultaneous execution. Evidence needs simultaneous execution on different execution resources. Support: per-CPU/per-thread accounting showing the threads executing on different cores during the same interval, e.g., total CPU time of the process ≈ 4 × wall-clock time for CPU-bound threads (ek bilgi: <code>time</code> user+sys &gt; real; <code>top -H</code>, <code>ps -L -o psr</code> ile çekirdek numarası). Refute (aynı koşudan gelmeli; başka bir koşu bu koşuyu çürütmez): if in the same run the total CPU time (user+sys) is not larger than wall-clock time, or per-thread samples (<code>ps -L -o psr</code>) always show the threads on the same core, or the machine/cgroup has only one CPU, then "alive during the same 2 seconds" shows only concurrency, not parallelism <span class="ek">ek bilgi: araç adları</span>. A fair claim needs a stated workload, environment and measurement method.</p>
+<p><strong>Ölçüt.</strong> "Örtüşen ömür ≠ paralellik" + bir destekleyici ve bir çürütücü gözlem + ölçüm koşullarını belirtme. Araç adları ek bilgi, şart değil.</p>
+</details><hr />
+<p><strong>Q50.</strong> <em>Zorluk 4 · Bölüm 5 + 1 · İnce tuzak · Kaynak: sl. 37; Okuma §6</em></p>
+<pre><code class="language-c">pid_t p = fork();
+if (p == 0) { printf(&quot;C\n&quot;); _exit(0); }
+printf(&quot;P\n&quot;);
+waitpid(p, NULL, 0);
+printf(&quot;done\n&quot;);
+</code></pre>
+<blockquote>
+<p>On a terminal this prints <code>C</code>, <code>P</code>, <code>done</code> (in some order of C and P). When run as <code>./a.out &gt; log.txt</code>, <code>log.txt</code> contains only <code>P</code> and <code>done</code>. Explain.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (ölçüldü) With a file, stdout is fully buffered <span class="ek">ek bilgi</span>. The child's <code>"C\n"</code> is placed in its own stdio buffer; <code>_exit</code> terminates without flushing stdio buffers, so <code>C</code> is lost. On a terminal, line buffering flushed <code>C\n</code> at the newline before <code>_exit</code>. <code>_exit</code> is right after a <em>failed exec</em> (to avoid flushing an inherited buffer twice, sl. 37), but a child that produces its own stdio output should <code>fflush(stdout)</code> before <code>_exit</code> or use <code>exit</code>. Lesson: stdio buffers are process memory, not kernel state.</p>
+<p><strong>Ölçüt.</strong> "_exit tamponu boşaltmaz" + terminal/dosya tamponlama farkı + doğru kullanım bağlamı.</p>
+</details><hr />
+<p><strong>Q51.</strong> <em>Zorluk 4 · Bölüm 5 + 6 · Karşılaştırma · Kaynak: sl. 42–43, 32, 52; Okuma §8 tablo</em></p>
+<blockquote>
+<p>The same task — increment a global <code>int g = 0</code> once, in a helper — is implemented two ways: (A) the helper is a child created with <code>fork</code>, parent calls <code>waitpid</code> then prints <code>g</code>; (B) the helper is a thread created with <code>pthread_create</code>, main calls <code>pthread_join</code> then prints <code>g</code>. What does each print, and what does the difference illustrate?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (A) prints 0: the child changed its own logically separate copy; waiting orders completion but does not merge address spaces (sl. 60). (B) prints 1: threads share the address space; join guarantees the worker's write completed before main reads, so the read is ordered and safe (single writer, no concurrent access). Illustrates process boundary vs thread boundary: separate address spaces require explicit communication; threads communicate through shared objects but must manage ordering and lifetime.</p>
+<p><strong>Ölçüt.</strong> 0 ve 1 + iki gerekçe (ayrı adres alanı / ortak adres alanı + join sırası).</p>
+</details><hr />
+<p><strong>Q52.</strong> <em>Zorluk 4 · Bölüm 5 + 6 · Kısa cevap/sentez · Kaynak: Okuma §6 ("forking a multithreaded program requires additional care"); OSC ch4 sl. 50</em></p>
+<blockquote>
+<p>A process has 4 threads. One thread calls <code>fork()</code>, and the child immediately calls <code>exec</code>. What happens to the threads in the child, and why does the lecture warn that forking a multithreaded program "requires additional care"?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> On POSIX/Linux, the child of fork contains only one thread: a copy of the calling thread <span class="ek">ek bilgi: POSIX; OSC ch4 sl. 50 says some UNIX systems have two fork versions, one duplicating all threads</span>. exec then replaces the whole process image including all threads, so the immediate fork+exec pattern is fine. The care is needed if the child does more work before exec: memory is copied as it was, including locks or data structures that other (now absent) threads were in the middle of updating, which can leave them inconsistent or permanently locked <span class="ek">ek bilgi: async-signal-safe işlemlerle sınırlı kalma kuralı</span>.</p>
+<p><strong>Ölçüt.</strong> "Child'da tek thread" + "exec tüm thread'leri değiştirir" + fork-exec arası iş yapma riskinin bir örneği. Ek bilgi kısmı bonus.</p>
+</details><hr />
+<h3 id="seviye-5-ikinci-incelemede-eklenenler-2026-11-03">Seviye 5 — İkinci incelemede eklenenler (2026-11-03)<a class="headerlink" href="#seviye-5-ikinci-incelemede-eklenenler-2026-11-03" title="Permanent link">#</a></h3>
+<p>Dört uzmanlı inceleme bankada hiç sorulmamış konular buldu: mekanizma/politika, kuyruklar, CPU-bound tanımı, process ağacı, sinyal yolu, blocking ayrımı, Corbató videosu, sl. 19'un kendi izi. Bölüm 0'ın bus ve DMA soruları da burada. Zorluk karışık, her sorunun başında yazıyor.</p>
+<p><strong>Q53.</strong> <em>Zorluk 1 · Bölüm 0 · Tanım · Kaynak: OSC ch1 sl. 12–13</em></p>
+<blockquote>
+<p>"One or more CPUs and device controllers connect through a common bus providing access to shared memory." Explain the three parts of this sentence: the bus, the device controller and the shared memory. What do the CPU and the devices compete for?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The bus is the common communication path (address, data and control lines) that connects the CPUs, the device controllers and main memory. A device controller is the hardware in charge of one device type; it has registers (command, status, data) and a local buffer, and the OS talks to it through a device driver. The shared memory is the single main memory (RAM) that both the CPU (instruction fetch, loads, stores) and the controllers (DMA transfers) access. Because CPUs and devices execute concurrently and reach the same memory, they compete for memory cycles.</p>
+<p><strong>Ölçüt.</strong> Üç parçanın her biri + "competing for memory cycles". "Shared memory"yi IPC shared memory diye açıklamak hatadır (Q55).</p>
+</details><hr />
+<p><strong>Q54.</strong> <em>Zorluk 2 · Bölüm 0 + 3 · İz · Kaynak: OSC ch1 sl. 13–19; sl. 16</em></p>
+<blockquote>
+<p>Process P calls <code>read()</code> on a disk file whose data is not in memory. The disk controller uses DMA. Put these in order and give P's state after each: (a) the controller raises an interrupt; (b) the driver writes a command to the controller's registers; (c) the controller copies the block into main memory; (d) the kernel runs the interrupt handler and marks P's request complete; (e) the controller reads the sector into its local buffer. While this happens, what can the CPU do?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> b → e → c → a → d. After (b) P is <strong>waiting</strong> (the data it needs is missing) and stays waiting through (e) and (c). After (d) P becomes <strong>ready</strong>, not necessarily running; it still has to be selected. During (e) and (c) the CPU is free to run another ready process: the data moves between the controller and memory without the CPU copying it byte by byte (DMA), and one interrupt arrives per block.</p>
+<p><strong>Ölçüt.</strong> Doğru sıra + P'nin waiting → ready geçişi ("not necessarily running") + CPU'nun başka iş yapabildiği. Sıra doğru ama durumlar eksikse yarım puan.</p>
+</details><hr />
+<p><strong>Q55.</strong> <em>Zorluk 2 · Bölüm 0 + 7 · Karşılaştırma · Kaynak: OSC ch1 sl. 12; sl. 53–54</em></p>
+<blockquote>
+<p>A student says: "OSC ch1 says the CPU and devices share memory, so devices communicate with processes through shared-memory IPC." What is wrong?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The two uses of "shared memory" are different. In ch1 the shared thing is the physical main memory that the CPU and device controllers both reach over the bus; it is a hardware organization. Shared-memory IPC (sl. 53) is an OS mechanism in which two processes map the same region into their own address spaces and must still agree on meaning, ordering and synchronization. A device writing a block into memory by DMA is not an IPC channel between processes; the kernel handles the completion and decides which buffer the data goes to.</p>
+<p><strong>Ölçüt.</strong> Donanım düzeyi (fiziksel RAM, bus) ile process'ler arası eşleme ayrımı. İkisini adlandırmak şart.</p>
+</details><hr />
+<p><strong>Q56.</strong> <em>Zorluk 2 · Bölüm 0 + 3 · Doğru/yanlış + gerekçe · Kaynak: sl. 16–17</em></p>
+<blockquote>
+<p>True or false: "A process enters the waiting state because the disk is slow." Justify, and say what the disk's slowness does explain.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> False as stated. A process waits because an event it needs is missing: the requested data is not yet available (sl. 16: "waiting means an event is missing"). The same would hold for a fast device if the data were not ready; more CPU time would not help. The disk's slowness explains why it pays to give the CPU to another ready process during that wait (multiprogramming).</p>
+<p><strong>Ölçüt.</strong> "Eksik olay" gerekçesi + yavaşlığın çoklu programlamayı kârlı kıldığı. Yalnız "false" yarım puan.</p>
+</details><hr />
+<p><strong>Q57.</strong> <em>Zorluk 1 · Bölüm 1 · Kısa cevap · Kaynak: sl. 6, 9</em></p>
+<blockquote>
+<p>Is the shell part of the kernel? Does every C library function enter the kernel?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No. The shell is an ordinary user-space program. Libraries may do useful work without entering the kernel (e.g., <code>strlen</code>, the formatting part of <code>printf</code>); some library functions are wrappers that request a kernel service through a system call (e.g., <code>read</code>, <code>write</code>), and buffering can turn several library calls into one system call.</p>
+<p><strong>Ölçüt.</strong> İki "hayır" + "may" inceliği (bazıları girer, bazıları girmez) + bir örnek. "Kütüphanelerin hiçbiri girmez" de yanlıştır.</p>
+</details><hr />
+<p><strong>Q58.</strong> <em>Zorluk 2 · Bölüm 1 + 4 · Sınıflandırma · Kaynak: Okuma §1–2; sl. 23</em></p>
+<blockquote>
+<p>Classify each as mechanism or policy: (a) saving one task's registers and restoring another's; (b) choosing which ready task runs next; (c) the timer interrupt that returns control to the kernel. Then: why must the kernel regain control without the program's cooperation, and what does a shorter time slice improve and cost?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Mechanism. (b) Policy. (c) Mechanism: it gives the kernel an <em>opportunity</em> to decide, not a command to switch. Control must not depend on voluntary cooperation, because a loop that never makes a system call would otherwise keep the CPU forever; the timer bounds how long a program runs before the kernel can decide again (limited direct execution). A shorter time slice can improve responsiveness (and fairness), but it increases the number of switches and therefore the direct and indirect switching overhead (sl. 23: "balances responsiveness and fairness against the cost of switching too frequently").</p>
+<p><strong>Ölçüt.</strong> Üç sınıflandırma + "opportunity" + işbirliğine güvenilemeyeceği + ödünleşimin iki yanı.</p>
+</details><hr />
+<p><strong>Q59.</strong> <em>Zorluk 1 · Bölüm 3 · Kısa cevap · Kaynak: sl. 20; OSC ch3 sl. 15</em></p>
+<blockquote>
+<p>What is the difference between the ready queue and the wait queues? Which one does the scheduling policy choose from? In OSC's queueing diagram, where does a process go when its I/O completes?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The ready queue holds tasks that are able to run and are competing for the CPU. Wait queues are plural, one per event or resource, and hold tasks waiting for that event. The scheduling policy chooses among ready tasks. When the I/O completes, the process moves back to the ready queue, not directly onto the CPU.</p>
+<p><strong>Ölçüt.</strong> Tekil ready queue / çoğul wait queue + politikanın ready'den seçtiği + dönüşün ready queue'ya olduğu.</p>
+</details><hr />
+<p><strong>Q60.</strong> <em>Zorluk 2 · Bölüm 3 · Tanım · Kaynak: sl. 21</em></p>
+<blockquote>
+<p>Define CPU-bound and I/O-bound in terms of process states. Is a given executable permanently CPU-bound?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A CPU-bound workload spends much of its time ready or running; an I/O-bound workload frequently waits for external operations. These descriptions are relative to the workload and the system, not permanent labels attached to an executable: the same application can change behavior across phases (e.g., parsing buffered data is CPU work; requesting unavailable input leads to a wait), and a second run with cached data may wait less.</p>
+<p><strong>Ölçüt.</strong> Durum terimleriyle tanım + "not permanent labels" + bir faz ya da önbellek örneği.</p>
+</details><hr />
+<p><strong>Q61.</strong> <em>Zorluk 2 · Bölüm 5 · Şekil yorumu · Kaynak: sl. 29; OSC ch3 sl. 22</em></p>
+<blockquote>
+<p>In OSC's Linux process tree, <code>bash</code> (pid 8416) has children <code>ps</code> and <code>vim</code>. Which of these can you conclude from the tree alone? (a) bash created ps and vim; (b) bash is currently running; (c) ps and vim communicate; (d) ps will finish before vim; (e) on your machine bash will have pid 8416.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Only (a). A process tree records parent–child relationships, not which process is currently running (b): a parent may be waiting, computing or handling other work while its children execute. The tree alone does not establish communication paths or shared data (c), or the order in which processes finish (d). The PIDs are textbook examples; on your machine names and ancestry depend on the shell, service manager and environment (e).</p>
+<p><strong>Ölçüt.</strong> Yalnız (a) + her yanlış seçenek için bir gerekçe.</p>
+</details><hr />
+<p><strong>Q62.</strong> <em>Zorluk 3 · Bölüm 5 · Kod okuma · Kaynak: sl. 35–37; Okuma §6; <code>kod/launch.c</code></em></p>
+<blockquote>
+<p>In <code>launch.c</code>, suppose the child is killed by <code>SIGKILL</code> (signal 9) before it can print anything. What does the parent print, to which stream, and with what exit code does the program end? Why must the status macros be checked in order?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> <code>waitpid</code> succeeds. <code>WIFEXITED(status)</code> is false, so the "exit status" line is not printed. <code>WIFSIGNALED(status)</code> is true, so the parent prints <code>parent: child terminated by signal 9</code> to <strong>stderr</strong> and returns <code>EXIT_FAILURE</code> (1). The encoded status is not itself an exit code: the macros first distinguish normal exit from termination by a signal, and only then can <code>WEXITSTATUS</code> or <code>WTERMSIG</code> be interpreted.</p>
+<p><strong>Ölçüt.</strong> stderr'e sinyal satırı + exit status satırının olmadığı + çıkış kodu 1 + "status ≠ exit code".</p>
+</details><hr />
+<p><strong>Q63.</strong> <em>Zorluk 3 · Bölüm 6 · Kod okuma · Kaynak: sl. 51–52; Okuma §9; <code>kod/thread_join.c</code></em></p>
+<blockquote>
+<p>In <code>thread_join.c</code>, main sets <code>job.input = 7</code>, calls <code>pthread_create</code>, then <code>pthread_join(worker, NULL)</code>, then prints <code>job.result</code>. Which two points order the accesses to <code>job</code>? Why is the second argument of <code>pthread_join</code> NULL?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Thread creation orders main's write of <code>input</code> before the worker reads it; joining orders the worker's write of <code>result</code> before main reads it ("thread creation and joining provide the synchronization needed for this use"). The <code>job</code> object stays alive until after the join. The second argument of <code>pthread_join</code> would receive the thread's return value; it is NULL because the result is passed through the shared <code>job</code> object, not through the return value.</p>
+<p><strong>Ölçüt.</strong> İki senkronizasyon noktası (create ve join) + nesne ömrü + NULL'ın gerekçesi.</p>
+</details><hr />
+<p><strong>Q64.</strong> <em>Zorluk 2 · Bölüm 7 · Tanım ayrımı · Kaynak: Okuma §10</em></p>
+<blockquote>
+<p>Distinguish blocking, nonblocking and asynchronous operations. Is "nonblocking" a synonym for "asynchronous"?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A blocking operation suspends its caller when immediate progress is impossible (e.g., a blocking receive waits until data arrives; the caller is waiting). A nonblocking operation returns without waiting for the condition and leaves the caller to decide what to do next (retry later, do other work). Asynchronous completion is a separate design question: an operation is started and its completion is reported later. "Nonblocking" should not be used as a universal synonym for every asynchronous interface.</p>
+<p><strong>Ölçüt.</strong> Üç tanım + "eş anlamlı değil". Blocking çağıranın durumunu (waiting) söylemek tam puanın parçası.</p>
+</details><hr />
+<p><strong>Q65.</strong> <em>Zorluk 2 · Bölüm 3 · Kısa cevap · Kaynak: Okuma §1, §15 (Corbató videosu)</em></p>
+<blockquote>
+<p>How do response time and processor utilization describe different goals? Use a long file conversion and an interactive terminal as the example.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Utilization measures whether the processor is kept busy; response time measures how long an interactive user waits. Letting the conversion run until completion may achieve good throughput and utilization while making the terminal feel unresponsive. Switching to the terminal more often improves response time but adds switching overhead and delays the conversion. A scheduler cannot be "best" without first stating an objective (response time, fairness or total completed work). Timesharing (Corbató, 1963) aimed at interactive response; multiprogramming at keeping the CPU busy.</p>
+<p><strong>Ölçüt.</strong> İki ölçütün tanımı + örnekte ikisinin ters yönde etkilendiği + "önce hedef".</p>
+</details><hr />
+<p><strong>Q66.</strong> <em>Zorluk 3 · Bölüm 3 · Durum izi · Kaynak: sl. 19</em></p>
+<blockquote>
+<p>One CPU. At time 0, A runs and B is ready. A requests unavailable disk data. While B runs, A's I/O completes. Then B blocks for keyboard input. Give A's and B's state after each event and say who owns the CPU. At which step is A eligible but not running?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>A</th>
+<th>B</th>
+<th>CPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time 0</td>
+<td>running</td>
+<td>ready</td>
+<td>A</td>
+</tr>
+<tr>
+<td>A requests disk data</td>
+<td>waiting</td>
+<td>running (if selected)</td>
+<td>B</td>
+</tr>
+<tr>
+<td>A's I/O completes</td>
+<td><strong>ready</strong></td>
+<td>running</td>
+<td>B</td>
+</tr>
+<tr>
+<td>B blocks for keyboard</td>
+<td>running (when selected)</td>
+<td>waiting</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<p>A is eligible but not running after its I/O completes: "I/O completion alone does not prove an immediate switch"; B may continue until a scheduling decision selects A. This is a possible execution order, not a measured trace.</p>
+<p><strong>Ölçüt.</strong> Tablo + üçüncü satırda A'nın ready olduğu + "eligibility vs CPU ownership" ayrımı + "possible order" ihtiyatı.</p>
+</details><hr />
+<p><strong>Q67.</strong> <em>Zorluk 2 · Bölüm 1 · Sınıflandırma · Kaynak: sl. 6, 8; Okuma §1</em></p>
+<blockquote>
+<p>For each operation, say which OS abstraction it uses and whether it normally enters the kernel. If it does, name the entry path (system call, exception or interrupt). (a) <code>x = x + 1;</code> on a variable already in memory. (b) <code>write(1, "a", 1)</code>. (c) The first access to a heap page that is not yet in physical memory. (d) A process that loops forever on arithmetic is paused so another process can run.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong>
+(a) Uses the address space (virtual memory). The MMU translates the address in hardware, so the access normally <strong>does not enter the kernel</strong>.
+(b) Uses the file abstraction through a file descriptor. It enters the kernel by a <strong>system call</strong>, and the kernel checks and services the request.
+(c) Address space again. It enters the kernel by an <strong>exception</strong> (page fault); the kernel arranges the page and the instruction continues.
+(d) Process (execution context). It enters the kernel by a <strong>timer interrupt</strong>. The interrupt gives the kernel an opportunity to decide; a switch is not guaranteed.</p>
+<p><strong>Ölçüt.</strong> Her şık için soyutlama ve giriş yolu. (a)'da "kernel'e girmez" demek zorunlu. (d)'de interrupt'ın bir fırsat olduğu, zorunlu geçiş olmadığı.</p>
+</details><hr />
+<p><strong>Q68.</strong> <em>Zorluk 2 · Bölüm 1–2 · Kısa cevap · Kaynak: sl. 6, 11; Okuma §3; OSTEP 13</em></p>
+<blockquote>
+<p>Two processes run the same program and both write to virtual address <code>0x601040</code>. Neither sees the other's value. Which abstraction provides this, and what implements it? The kernel shares the read-only code pages of the two processes. Does that make the variable at <code>0x601040</code> shared? Why does this separation also count as protection?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Virtual memory gives each process its own <strong>address space</strong>. The kernel sets up a separate mapping (page table) for each process, and the MMU translates every access. The same numerical virtual address can therefore refer to different physical memory. Sharing read-only code pages is an implementation choice and does not make ordinary writable variables shared <span class="src">sl. 11</span>. The separation is also protection: another process's memory is not part of your address space, so you cannot even name it. An access outside the permitted mappings raises an exception.</p>
+<p><strong>Ölçüt.</strong> "Adres alanı" ve sayfa tablosu/MMU + salt okunur paylaşımın yazılabilir değişkenleri paylaştırmadığı + korumayla bağlantı.</p>
+</details><hr />
+<h3 id="soru-bankas-ozeti">Soru bankası özeti<a class="headerlink" href="#soru-bankas-ozeti" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Seviye</th>
+<th>Sorular</th>
+<th>Adet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Q1–Q11</td>
+<td>11</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Q12–Q23</td>
+<td>12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Q24–Q40</td>
+<td>17</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Q41–Q52</td>
+<td>12</td>
+</tr>
+<tr>
+<td>5 (ikinci inceleme)</td>
+<td>Q53–Q66</td>
+<td>14</td>
+</tr>
+<tr>
+<td>5 (soyutlamalar, 2026-11-03)</td>
+<td>Q67–Q68</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Toplam</td>
+<td></td>
+<td>68</td>
+</tr>
+</tbody>
+</table>
+<p>Bölüm dağılımı (birincil + ikincil sayılınca): B1: Q2, Q3, Q12, Q21, Q26, Q27, Q41, Q50, Q67, Q68 · B2: Q1, Q23, Q44 · B3: Q4, Q13, Q14, Q29, Q46, Q48 · B4: Q11, Q12, Q29, Q48 · B5: Q5–Q7, Q15–Q18, Q22, Q24–Q28, Q35, Q37–Q39, Q41, Q42, Q50–Q52 · B6: Q8, Q9, Q19, Q32–Q34, Q36, Q40, Q44, Q49, Q51, Q52 · B7: Q10, Q20, Q30, Q31, Q43, Q45, Q46 · B8: Q47, Q48 (+ Q29, Q31 sentez).</p>
+<p>Tür dağılımı: kısa cevap/tanım: Q1–Q11, Q23 · durum izi: Q14, Q29, Q33, Q46 · kod okuma/çıktı: Q15–Q20, Q24–Q28, Q35, Q37, Q41, Q42, Q50, Q51 · sınıflandırma: Q12, Q13, Q22 · tasarım/karşılaştırma: Q36, Q43–Q45, Q49, Q51 · hatayı bul: Q30, Q31, Q34, Q38–Q40, Q50.</p>
+<hr />
+<h2 id="d-bolum-sonu-kontrol-sorular-anlatm-srasnda-kolayorta">D) Bölüm sonu kontrol soruları (anlatım sırasında, kolay–orta)<a class="headerlink" href="#d-bolum-sonu-kontrol-sorular-anlatm-srasnda-kolayorta" title="Permanent link">#</a></h2>
+<p>Her bölümün anlatımı bitince sorulacak ikişer soru. Cevap anahtarı kısa tutuldu; tam hali C'deki ilgili sorudadır.</p>
+<p><strong>Bölüm 0 — Temeller (OSC ch1–2)</strong></p>
+<ol>
+<li><em>A disk read: who moves the data into memory, who tells the CPU it is done, and who runs the handler?</em> → Controller (DMA ile), interrupt ile haber verir; handler'ı kernel çalıştırır, CPU arada başka iş yapar (Q54).</li>
+<li><em>Why is saving the PC and registers enough to resume a process, without copying its memory?</em> → Bellek yerinde kalır; makine durumunun CPU'daki kısmı (PC, register'lar) kaydedilir, adres alanı eşlemelerle temsil edilir (sl. 15, OSTEP 4.1).</li>
+<li><em>What do the CPU and device controllers share, and what do they compete for?</em> → Ana belleği bus üzerinden paylaşırlar, bellek döngüsü için yarışırlar (Q53).</li>
+</ol>
+<p><strong>Bölüm 1 — Tazeleme / mode / kernel entry (sl. 6–9)</strong></p>
+<ol>
+<li><em>"A program running as root is in kernel mode." True or false?</em> → False; root kimliktir, mode CPU'nun durumudur (Q3).</li>
+<li><em>Give one example each of a system call, an exception and a device interrupt. Does an interrupt always cause a process switch?</em> → read / page fault / disk tamamlanması; hayır (Q2, sl. 8).</li>
+</ol>
+<p><strong>Bölüm 2 — Program, process, PCB (sl. 10–15)</strong></p>
+<ol>
+<li><em>Two users run the same editor. One crashes. Must the other terminate? Why?</em> → Normalde hayır; ayrı process, ayrı yazılabilir veri, izolasyon (Q1).</li>
+<li><em>Does the PCB contain a copy of the process's memory?</em> → Hayır; kimlik, durum, saklanan PC/register ve kaynak referansları; bellek mapping'lerle temsil edilir (Q23).</li>
+</ol>
+<p><strong>Bölüm 3 — Durumlar ve kuyruklar (sl. 16–21)</strong></p>
+<ol>
+<li><em>Input arrives for a waiting process. Is it now running?</em> → Ready olur, seçilmesi gerekir (Okuma S-3).</li>
+<li><em>Can a process be ready while all cores are busy?</em> → Evet; ready uygunluktur, CPU sahipliği değil (Okuma S-8).</li>
+</ol>
+<p><strong>Bölüm 4 — Context switch (sl. 22–27)</strong></p>
+<ol>
+<li><em>P calls <code>getpid()</code> and gets the result immediately. Did a context switch occur?</em> → Gerekmiyor; kernel entry var, task değişmedi (Case A).</li>
+<li><em>A timer interrupt arrives while P runs. Does Q necessarily run next?</em> → Hayır; scheduler P'yi tutabilir (Case C).</li>
+</ol>
+<p><strong>Bölüm 5 — fork/exec/wait/zombie/ps (sl. 28–41)</strong></p>
+<ol>
+<li><em>Before fork x = 10; the child sets x = 20; the parent waits and prints x. What is printed?</em> → 10 (sl. 60).</li>
+<li><em>After a successful <code>execl("/bin/echo", ...)</code> in a child, what is the child's PID, and does the next line run?</em> → Aynı PID; sonraki satır yalnız exec başarısızsa çalışır (sl. 33).</li>
+</ol>
+<p><strong>Bölüm 6 — Thread, concurrency, race, join (sl. 42–52)</strong></p>
+<ol>
+<li><em>Does each thread's stack protect its local variables from other threads?</em> → Hayır; ortak adres alanında, pointer ile erişilebilir (Okuma S-5).</li>
+<li><em>Two workers race on a counter, then main joins both. Has joining repaired the race?</em> → Hayır; join sıra kurar, dışlama değil (Okuma S-9, sl. 52).</li>
+</ol>
+<p><strong>Bölüm 7 — IPC ve pipe (sl. 53–58)</strong></p>
+<ol>
+<li><em><code>printf 'alpha\nbeta\n' | wc -l</code> prints what, and does it depend on scheduling?</em> → 2; girdiden gelir, scheduling'den değil (sl. 56).</li>
+<li><em>The pipe is empty. When does the reader block and when does it get EOF?</em> → Yazar varken bekler; hiç write-end referansı kalmayınca ve tampon bitince EOF (sl. 57).</li>
+</ol>
+<p><strong>Bölüm 8 — Uçtan uca (sl. 59–64)</strong></p>
+<ol>
+<li><em>A child wrote everything and closed its end, yet the parent's read loop never ends. Most likely cause?</em> → Parent kendi write ucunu kapatmamış; EOF gelemez (sl. 61).</li>
+<li><em>For a shell pipeline, name the three lifecycle obligations that must be met for the command to finish.</em> → Kullanılmayan uçları kapatmak, okuyucunun EOF görmesi, child status'larının toplanması (sl. 62).</li>
+</ol>
+<hr />
+<h2 id="moderatore-notlar">Moderatöre notlar<a class="headerlink" href="#moderatore-notlar" title="Permanent link">#</a></h2>
+<ul>
+<li>Denetçi için işaretler: Q12(g), Q21, Q26, Q28 notu, Q41, Q50'deki "terminal line-buffered, dosya fully-buffered" ayrımı <strong>ek bilgi</strong> (C standart kütüphanesi). Hoca yalnızca sl. 9 ve sl. 37'de tamponlamaya değiniyor. Q39'daki <code>waitpid(-1)</code> anlamı, Q37'deki <code>Z/&lt;defunct&gt;</code> gösterimi, Q31'deki <code>dup2</code>, Q52'deki POSIX fork-thread kuralı da ek bilgi.</li>
+<li>Q20'deki "bash pipeline öğeleri için fork eder" iddiası ek bilgi ve kabuktan kabuğa değişir; hoca bilinçli olarak "metinden sayılamaz" diyor. Sınavda o ihtiyatlı cümle yazılmalı.</li>
+<li>Hocanın "now be able to explain" listesi ve checkpoint soruları ezberlenecek kalıp değil, gerekçe kalıbı istiyor. Çalıştırma aşamasında Emre'nin cevabında "not necessarily" + eksen adı yoksa puanı kır ve tekrar sor.</li>
+</ul></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

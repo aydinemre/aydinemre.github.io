@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="Bir bellek erişiminin karar yolu: TLB hit ise izin denetimi; miss ise tablo yürüyüşü, geçerlilik ve yerleşiklik denetimi, sonra TLB'ye ekleme. Unmapped ve protection reddedilir; yalnız yerleşik olmayan geçerli sayfa page fault ile Hafta 6'ya gider." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+<defs><marker id="tk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker><marker id="tkw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker></defs>
+<rect class="box" x="20" y="30" width="140" height="48" rx="8"/>
+<text x="90.0" y="59.0" text-anchor="middle" font-weight="600">VA → p, d</text>
+<rect class="box" x="200" y="30" width="170" height="48" rx="8"/>
+<text x="285.0" y="51.0" text-anchor="middle" font-weight="600">p TLB'de mi?</text>
+<text x="285.0" y="67.0" text-anchor="middle" font-size="11" class="t-mut">çeviri önbelleği</text>
+<rect class="box" x="410" y="30" width="170" height="48" rx="8"/>
+<text x="495.0" y="51.0" text-anchor="middle" font-weight="600">İzin var mı?</text>
+<text x="495.0" y="67.0" text-anchor="middle" font-size="11" class="t-mut">R/W/X, user/kernel</text>
+<rect class="box-acc" x="610" y="30" width="130" height="48" rx="8"/>
+<text x="675.0" y="51.0" text-anchor="middle" font-weight="600">PA = f·P + d</text>
+<text x="675.0" y="67.0" text-anchor="middle" font-size="11" class="t-mut">belleğe eriş</text>
+<rect class="box-plain" x="610" y="130" width="130" height="48" rx="8"/>
+<text x="675.0" y="151.0" text-anchor="middle" font-weight="600">Reddet</text>
+<text x="675.0" y="167.0" text-anchor="middle" font-size="11" class="t-mut">protection</text>
+<rect class="box" x="200" y="130" width="170" height="48" rx="8"/>
+<text x="285.0" y="151.0" text-anchor="middle" font-weight="600">Tablo yürüyüşü</text>
+<text x="285.0" y="167.0" text-anchor="middle" font-size="11" class="t-mut">PTBR'den PTE oku</text>
+<rect class="box" x="200" y="220" width="170" height="48" rx="8"/>
+<text x="285.0" y="241.0" text-anchor="middle" font-weight="600">Geçerli mi? (valid)</text>
+<text x="285.0" y="257.0" text-anchor="middle" font-size="11" class="t-mut">uzayın üyesi mi</text>
+<rect class="box-plain" x="20" y="220" width="140" height="48" rx="8"/>
+<text x="90.0" y="241.0" text-anchor="middle" font-weight="600">Reddet</text>
+<text x="90.0" y="257.0" text-anchor="middle" font-size="11" class="t-mut">unmapped</text>
+<rect class="box" x="410" y="220" width="170" height="48" rx="8"/>
+<text x="495.0" y="241.0" text-anchor="middle" font-weight="600">Bellekte mi?</text>
+<text x="495.0" y="257.0" text-anchor="middle" font-size="11" class="t-mut">resident / present</text>
+<rect class="box-plain dash" x="410" y="290" width="170" height="40" rx="8"/>
+<text x="495.0" y="315.0" text-anchor="middle">Page fault → Hafta 6</text>
+<line class="ln" x1="160" y1="54" x2="196" y2="54" marker-end="url(#tk)"/>
+<line class="ln" x1="370" y1="54" x2="406" y2="54" marker-end="url(#tk)"/>
+<text x="388" y="46" font-size="12" text-anchor="middle" class="t-acc">hit</text>
+<line class="ln" x1="580" y1="54" x2="606" y2="54" marker-end="url(#tk)"/>
+<text x="594" y="46" font-size="12" text-anchor="middle">evet</text>
+<line class="ln-warn" x1="560" y1="78" x2="620" y2="126" marker-end="url(#tkw)"/>
+<text x="600" y="104" font-size="12" text-anchor="start" class="t-warn">hayır</text>
+<line class="ln" x1="285" y1="78" x2="285" y2="126" marker-end="url(#tk)"/>
+<text x="292" y="106" font-size="12" text-anchor="start">miss</text>
+<line class="ln" x1="285" y1="178" x2="285" y2="216" marker-end="url(#tk)"/>
+<line class="ln-warn" x1="200" y1="244" x2="164" y2="244" marker-end="url(#tkw)"/>
+<text x="182" y="236" font-size="12" text-anchor="middle" class="t-warn">hayır</text>
+<line class="ln" x1="370" y1="244" x2="406" y2="244" marker-end="url(#tk)"/>
+<text x="388" y="236" font-size="12" text-anchor="middle">evet</text>
+<line class="ln" x1="495" y1="268" x2="495" y2="286" marker-end="url(#tk)"/>
+<text x="502" y="281" font-size="12" text-anchor="start">hayır</text>
+<line class="ln" x1="495" y1="220" x2="495" y2="82" marker-end="url(#tk)"/>
+<text x="502" y="150" font-size="12" text-anchor="start">evet:</text>
+<text x="502" y="166" font-size="12" text-anchor="start">TLB'ye ekle</text>
+<text x="20" y="300" font-size="12" text-anchor="start" class="t-acc">TLB miss ≠ page fault:</text>
+<text x="20" y="316" font-size="12" text-anchor="start" class="t-mut">miss çoğu zaman yalnız</text>
+<text x="20" y="332" font-size="12" text-anchor="start" class="t-mut">tablo yürüyüşüyle çözülür</text>
+</svg>

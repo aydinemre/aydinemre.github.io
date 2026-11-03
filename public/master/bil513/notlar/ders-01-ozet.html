@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 1: Son gün özeti (English cheat sheet)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 1: Son gün özeti (English cheat sheet)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-01-ozet.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-01.html">Anlatım</a> <a href="ders-01-ozet.html" aria-current="page">Özet</a> <a href="ders-01-sorular.html">Soru bankası</a> <a href="ders-01-deneme.html">Deneme sınavı</a> <a href="ders-01-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#the-seven-contrasts-sl-64">The seven contrasts</a></li><li><a href="#mechanisms-in-one-line-each">Mechanisms in one line each</a></li><li><a href="#results-to-know-by-heart">Results to know by heart</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-1-son-gun-ozeti-english-cheat-sheet">CSE 513 · Ders 1: Son gün özeti (English cheat sheet)<a class="headerlink" href="#cse-513-ders-1-son-gun-ozeti-english-cheat-sheet" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#the-seven-contrasts-sl-64">The seven contrasts</a></li><li><a href="#mechanisms-in-one-line-each">Mechanisms in one line each</a></li><li><a href="#results-to-know-by-heart">Results to know by heart</a></li></ul></details>
+<p>Sınav İngilizce. Bu sayfa hocanın kalıp cümleleriyle bir sayfalık tekrar. Her satırın gerekçesi anlatımda.</p>
+<h2 id="answer-pattern">Answer pattern<a class="headerlink" href="#answer-pattern" title="Permanent link">#</a></h2>
+<ul>
+<li>Explain using <strong>state, mode or CPU ownership</strong> <span class="src">sl. 26</span>. Name the axis you are using.</li>
+<li>Separate two questions: <strong>did privilege change? did the task change?</strong> <span class="src">sl. 24</span> · <strong>eligibility to run vs current CPU ownership</strong> <span class="src">sl. 19</span>.</li>
+<li>Predict, then state the assumptions that make the answer valid ("assuming no explicit shared memory") <span class="src">sl. 60</span>.</li>
+<li>Say "not necessarily" when the interface promises no order. A trace is "a possible execution order, not a measured trace" <span class="src">sl. 19</span>.</li>
+</ul>
+<h2 id="x-does-not-prove-y">"X does not prove Y"<a class="headerlink" href="#x-does-not-prove-y" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Does not prove</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An interrupt occurred</td>
+<td>a process switch</td>
+<td>"The interrupt is evidence of an event, not evidence that Q necessarily ran" <span class="src">sl. 25</span></td>
+</tr>
+<tr>
+<td>I/O completed</td>
+<td>an immediate switch</td>
+<td>the task becomes <strong>ready</strong>; it must still be selected <span class="src">sl. 19</span></td>
+</tr>
+<tr>
+<td>Kernel entry (system call)</td>
+<td>another task ran</td>
+<td>Case A: the kernel returns to the same task <span class="src">sl. 24, 27</span></td>
+</tr>
+<tr>
+<td>Two programs finished at the same time</td>
+<td>parallelism</td>
+<td>one core can interleave <span class="src">sl. 27, 45</span></td>
+</tr>
+<tr>
+<td><code>waitpid</code> succeeded</td>
+<td>the child succeeded</td>
+<td>exec may have failed: status 127 <span class="src">sl. 37</span></td>
+</tr>
+<tr>
+<td><code>ps</code> shows <code>R</code></td>
+<td>running</td>
+<td>Linux <code>R</code> = running <strong>or runnable</strong> <span class="src">sl. 41</span></td>
+</tr>
+<tr>
+<td>No <code>ps</code> row</td>
+<td>the launch failed</td>
+<td>the process may already have finished; a snapshot is not a history <span class="src">sl. 41</span></td>
+</tr>
+<tr>
+<td>Fork + copy-on-write</td>
+<td>shared memory</td>
+<td>COW optimizes copy semantics <span class="src">sl. 32</span></td>
+</tr>
+<tr>
+<td>The parent waited</td>
+<td>the child's writes are visible</td>
+<td>"Waiting orders completion; it does not merge address spaces" <span class="src">sl. 60</span></td>
+</tr>
+<tr>
+<td>Threads were joined</td>
+<td>mutual exclusion</td>
+<td>"Joining establishes order, not mutual exclusion" <span class="src">sl. 52</span></td>
+</tr>
+<tr>
+<td>The pipe is empty</td>
+<td>EOF</td>
+<td>EOF needs no write-end references <strong>and</strong> no buffered bytes <span class="src">sl. 57</span></td>
+</tr>
+<tr>
+<td>One successful run of racy code</td>
+<td>correctness</td>
+<td>a data race may be undefined behavior <span class="src">sl. 50</span></td>
+</tr>
+<tr>
+<td>More threads</td>
+<td>speedup</td>
+<td>serial part, coordination, contention: 2 + 8/4 → speedup 2.5, not 4 <span class="src">sl. 46</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-seven-contrasts-sl-64">The seven contrasts <span class="src">sl. 64</span><a class="headerlink" href="#the-seven-contrasts-sl-64" title="Permanent link">#</a></h2>
+<ol>
+<li><strong>Program vs process:</strong> a program is a passive description in a file; a process is a running instance with its own PID, PC, registers, address space and kernel-recorded resources.</li>
+<li><strong>Process vs thread:</strong> a process is a resource and protection context; a thread is a flow of execution inside it with its own PC, registers and stack, sharing the address space and open files.</li>
+<li><strong>Ready vs running vs waiting:</strong> ready = able to run, needs a CPU (policy matters); running = on a CPU; waiting = an event is missing, more CPU does not help.</li>
+<li><strong>Kernel entry vs task switch:</strong> entering the kernel (system call, exception, interrupt) changes privilege; a task switch changes which task owns the CPU. Either can happen without the other being implied.</li>
+<li><strong>fork vs exec vs wait:</strong> fork creates a child with a copied view (new PID); exec replaces the program image (same PID, does not return on success); wait observes termination and collects status (no new process).</li>
+<li><strong>Concurrency vs parallelism:</strong> concurrency = overlapping lifetimes, possible on one core; parallelism = simultaneous execution on different cores.</li>
+<li><strong>Shared memory vs pipe:</strong> shared memory = a common region, needs explicit synchronization; a pipe = a kernel byte stream with blocking and EOF rules, no message boundaries.</li>
+</ol>
+<h2 id="mechanisms-in-one-line-each">Mechanisms in one line each<a class="headerlink" href="#mechanisms-in-one-line-each" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Three reasons to enter the kernel</strong> <span class="src">sl. 8</span>: system call (requested), exception (caused by the current instruction, e.g. page fault), device interrupt (independent event, e.g. timer, I/O completion).</li>
+<li><strong>Timer</strong> = an <em>opportunity</em> for the kernel to decide, not a command to switch. Control must not depend on voluntary cooperation.</li>
+<li><strong>Context switch</strong> <span class="src">sl. 22–23</span>: save P's context, select a runnable task, restore Q's context. Not copying all memory. Cost = direct save/restore + indirect working-set effects (caches, translations). Policy balances responsiveness and fairness against switching cost.</li>
+<li><strong>PCB</strong> <span class="src">sl. 14–15</span>: identity, state, saved context, references to memory mappings and open files. "A process record is not a memory snapshot."</li>
+<li><strong>CPU-bound</strong> = mostly ready or running; <strong>I/O-bound</strong> = frequently waiting. Not permanent labels <span class="src">sl. 21</span>.</li>
+<li><strong>Zombie</strong> = terminated, status not collected, not executing. <strong>Orphan</strong> = parent exited, may still run, is reparented <span class="src">sl. 39</span>.</li>
+<li><strong>Pipe lifecycle</strong> <span class="src">sl. 62</span>: close unused ends in every process, readers must see EOF, child statuses must be collected.</li>
+</ul>
+<h2 id="results-to-know-by-heart">Results to know by heart<a class="headerlink" href="#results-to-know-by-heart" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Program / question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>launch.c</code></td>
+<td><code>child</code>, then <code>parent: child exit status = 0</code>; order comes from <code>waitpid</code></td>
+</tr>
+<tr>
+<td><code>launch.c</code> with a bad path</td>
+<td><code>execl: No such file or directory</code>, <code>exit status = 127</code>, program exits 1</td>
+</tr>
+<tr>
+<td><code>launch.c</code>, child killed by signal 9</td>
+<td><code>parent: child terminated by signal 9</code> on stderr, exits 1</td>
+</tr>
+<tr>
+<td><code>x = 10</code>, child sets 20, parent waits and prints</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><code>thread_join.c</code></td>
+<td><code>result = 49</code>; create and join order the accesses</td>
+</tr>
+<tr>
+<td><code>printf 'alpha\nbeta\n'</code> piped into <code>wc -l</code></td>
+<td><strong>2</strong>, determined by the input, not by scheduling</td>
+</tr>
+<tr>
+<td>Reader never ends after the child closed its end</td>
+<td>the parent kept its own write end open</td>
+</tr>
+<tr>
+<td>2 serial + 8 parallel units on 4 workers</td>
+<td>4 units, speedup 2.5</td>
+</tr>
+<tr>
+<td>Lost update: A reads 0, B reads 0, both write 1</td>
+<td>counter = 1; fix by protecting the whole read-modify-write</td>
+</tr>
+</tbody>
+</table></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 3: Son gün özeti (English cheat sheet)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 3: Son gün özeti (English cheat sheet)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-03-ozet.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-03.html">Anlatım</a> <a href="ders-03-ozet.html" aria-current="page">Özet</a> <a href="ders-03-sorular.html">Soru bankası</a> <a href="ders-03-deneme.html">Deneme sınavı</a> <a href="ders-03-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#definitions-in-one-line-each">Definitions in one line each</a></li><li><a href="#mechanisms-and-protocols">Mechanisms and protocols</a></li><li><a href="#choosing-the-tool-sl-64">Choosing the tool</a></li><li><a href="#results-to-know-by-heart">Results to know by heart</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-3-son-gun-ozeti-english-cheat-sheet">CSE 513 · Ders 3: Son gün özeti (English cheat sheet)<a class="headerlink" href="#cse-513-ders-3-son-gun-ozeti-english-cheat-sheet" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#definitions-in-one-line-each">Definitions in one line each</a></li><li><a href="#mechanisms-and-protocols">Mechanisms and protocols</a></li><li><a href="#choosing-the-tool-sl-64">Choosing the tool</a></li><li><a href="#results-to-know-by-heart">Results to know by heart</a></li></ul></details>
+<p>Sınav İngilizce. Bu sayfa, hocanın kalıp cümleleriyle hazırlanmış bir sayfalık tekrar notu. Her satırın gerekçesi anlatımda.</p>
+<h2 id="answer-pattern">Answer pattern<a class="headerlink" href="#answer-pattern" title="Permanent link">#</a></h2>
+<ul>
+<li>First name the <strong>shared object, its operations and the invariant</strong>, then choose the tool <span class="src">sl. 4; Okuma §17</span>.</li>
+<li>Trace in the lecture's model: individual reads and writes are atomic, execution is sequentially consistent. Say "this is not a promise about racy C" <span class="src">sl. 5</span>.</li>
+<li>A trace shows a <strong>possible</strong> execution. "Six abstract schedules, not six equally likely executions": never infer a probability from an enumeration <span class="src">sl. 9</span>.</li>
+<li>"One correct execution does not prove correctness for every allowed interleaving" <span class="src">sl. 7</span>. "Testing samples executions. Invariants and ordering explain why…" <span class="src">sl. 68</span></li>
+<li>For a protocol, check <strong>safety</strong> (mutual exclusion) and <strong>liveness</strong> (progress, bounded waiting) separately. State the scheduler and termination assumptions <span class="src">sl. 14–15</span>.</li>
+</ul>
+<h2 id="x-does-not-prove-y">"X does not prove Y"<a class="headerlink" href="#x-does-not-prove-y" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Does not prove</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Every access is atomic</td>
+<td>no race</td>
+<td>a race condition is a timing-dependent correctness failure; a compound operation can span several atomic accesses <span class="src">sl. 11, 34</span></td>
+</tr>
+<tr>
+<td>The counter is <code>atomic_int</code></td>
+<td>the increment is indivisible</td>
+<td>atomic load + atomic store = two operations; you need a read–modify–write such as fetch-add <span class="src">sl. 22, 67</span></td>
+</tr>
+<tr>
+<td>The ID was read atomically</td>
+<td>it is reserved</td>
+<td>check and reservation must be coordinated <span class="src">sl. 10</span></td>
+</tr>
+<tr>
+<td>The variable is <code>volatile</code></td>
+<td>synchronization</td>
+<td>it provides neither mutual exclusion nor inter-thread ordering <span class="src">sl. 11, 34</span></td>
+</tr>
+<tr>
+<td>Racy C gave 200,000 once</td>
+<td>correctness</td>
+<td>a C data race is undefined behaviour <span class="src">sl. 11</span></td>
+</tr>
+<tr>
+<td>Single CPU</td>
+<td>no race</td>
+<td>preemption interleaves the steps of a shared update <span class="src">sl. 34</span></td>
+</tr>
+<tr>
+<td>Mutual exclusion holds</td>
+<td>progress or fairness</td>
+<td>blocking every thread forever is perfectly safe but useless <span class="src">sl. 15</span></td>
+</tr>
+<tr>
+<td>Peterson is correct on paper</td>
+<td>correct on modern hardware</td>
+<td>it assumes the order of the interest and turn operations; compilers and CPUs may reorder <span class="src">sl. 19</span></td>
+</tr>
+<tr>
+<td>The lock is called "spinlock" or "mutex"</td>
+<td>how it is implemented</td>
+<td>"lock names do not prove implementation details" <span class="src">sl. 30</span></td>
+</tr>
+<tr>
+<td>Interrupts are disabled</td>
+<td>mutual exclusion on a multicore</td>
+<td>another CPU can still access the data <span class="src">sl. 31</span></td>
+</tr>
+<tr>
+<td>A semaphore initialized to 1</td>
+<td>ownership</td>
+<td>unlike a mutex, a semaphore does not identify an owner <span class="src">sl. 39</span></td>
+</tr>
+<tr>
+<td>"Unnamed" semaphore</td>
+<td>impossible between processes</td>
+<td><code>pshared ≠ 0</code> + storage in shared memory <span class="src">sl. 41</span></td>
+</tr>
+<tr>
+<td>A thread was signalled</td>
+<td>the predicate is true when it runs</td>
+<td>"a wakeup is not a reservation"; another thread may change the state first; spurious wakeups are permitted <span class="src">sl. 44–46</span></td>
+</tr>
+<tr>
+<td>A signal was sent</td>
+<td>it will be remembered</td>
+<td>a CV notification stores no permit; a semaphore post does <span class="src">sl. 39, 47</span></td>
+</tr>
+<tr>
+<td>Lock ordering removed deadlock</td>
+<td>every philosopher eats</td>
+<td>bounded waiting and fairness are separate properties <span class="src">sl. 60, 67</span></td>
+</tr>
+<tr>
+<td>Priority inheritance exists</td>
+<td>default mutexes have it</td>
+<td>it is a specific protocol, not a cure for every deadlock <span class="src">sl. 63</span></td>
+</tr>
+<tr>
+<td>The queue works with 1 producer and 1 consumer</td>
+<td>it works with many</td>
+<td>completion accounting must be revisited <span class="src">sl. 55</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="definitions-in-one-line-each">Definitions in one line each<a class="headerlink" href="#definitions-in-one-line-each" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Race condition:</strong> a correctness failure that depends on timing or ordering <span class="src">sl. 11</span>.</li>
+<li><strong>C data race:</strong> conflicting accesses in different threads, at least one non-atomic, without the required ordering → <strong>undefined behaviour</strong> <span class="src">sl. 11</span>.</li>
+<li><strong>Invariant:</strong> what valid shared state means, e.g. <code>0 ≤ count ≤ capacity</code>, <code>A + B</code> constant during a transfer <span class="src">sl. 12</span>.</li>
+<li><strong>Critical section structure:</strong> entry section → critical section → exit section → remainder <span class="src">sl. 13</span>.</li>
+<li><strong>Mutual exclusion:</strong> no two participants execute conflicting critical sections together <span class="src">sl. 14</span>.</li>
+<li><strong>Progress:</strong> when the section is free and requests exist, choosing the next entrant cannot be postponed indefinitely <span class="src">sl. 14</span>.</li>
+<li><strong>Bounded waiting:</strong> after a request, there is a bound on how many others can enter first <span class="src">sl. 14</span>.</li>
+<li><strong>Safety:</strong> something bad never happens. <strong>Liveness:</strong> useful progress eventually happens <span class="src">sl. 15</span>.</li>
+<li><strong>Deadlock:</strong> participants wait for events that only the blocked participants can cause. <strong>Starvation:</strong> one participant is perpetually denied progress while others continue. <strong>Livelock:</strong> participants keep reacting or retrying without completing useful work <span class="src">sl. 62</span>. Classify by dependency, not by whether the CPU is busy: a deadlock with spinning waiters also burns CPU.</li>
+<li><strong>Priority inversion:</strong> H waits for a lock held by L; M delays L and therefore H. Priority inheritance temporarily raises L <span class="src">sl. 63</span>.</li>
+</ul>
+<h2 id="mechanisms-and-protocols">Mechanisms and protocols<a class="headerlink" href="#mechanisms-and-protocols" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Strict alternation</strong> <span class="src">sl. 16</span>: enter only when <code>turn == i</code>; on exit give the turn to the peer. Mutual exclusion holds, <strong>progress fails</strong>: a thread that wants to enter twice in a row waits for a peer that may never want to enter.</li>
+<li><strong>Peterson</strong> <span class="src">sl. 17–18</span>: <code>flag[i] = true; turn = j; while (flag[j] &amp;&amp; turn == j) ;</code> CS; <code>flag[i] = false</code>. If both flags are true, <strong>the last writer of <code>turn</code> waits</strong>. Satisfies all three requirements under the model; it is "reasoning pseudocode, not a safe copy-and-paste C implementation" <span class="src">sl. 17</span>. Swapping the order of the <code>flag</code> and <code>turn</code> writes breaks mutual exclusion <span class="src">sl. 19</span>.</li>
+<li><strong>Test-and-set</strong> atomically returns the old value and sets the flag. <strong>CAS(lock, 0, 1)</strong> returns the old value: the thread that gets 0 owns the lock, the thread that gets 1 does not and retries. "A simple retry loop does not itself guarantee bounded waiting" <span class="src">sl. 20–21</span>.</li>
+<li><strong>Mutex</strong> <span class="src">sl. 25–29</span>: acquire before touching protected state, release after restoring the invariant; the acquirer unlocks. Coarse lock = easier reasoning, more serialization. Keep the check and the dependent update together inside the lock; do independent work and long I/O outside it.</li>
+<li><strong>Spin vs block</strong> <span class="src">sl. 30</span>: spinning may suit a very short wait when the owner runs on another CPU; blocking avoids wasting a CPU on longer waits.</li>
+<li><strong>Semaphore</strong> <span class="src">sl. 36–39</span>: permits. <code>wait</code> consumes one or blocks; <code>post</code> adds one. Pool of 3 → initialize to 3. Initialization ordering → <code>ready = 0</code>; the initializer posts, the user waits.</li>
+<li><strong>Condition-wait protocol</strong> <span class="src">sl. 44</span>: lock → check predicate → <strong>while</strong> false wait → operate → unlock. <code>pthread_cond_wait</code> atomically releases the mutex and waits, and returns with the mutex reacquired.</li>
+<li><strong>Signalling</strong> <span class="src">sl. 45</span>: change the predicate <strong>while holding the same mutex</strong>, then notify. This is POSIX/Mesa style: the woken thread must reacquire the mutex. A Hoare-style monitor hands control to it immediately <span class="ek">ek bilgi: "Hoare" adı OSTEP'ten</span>.</li>
+<li><strong>Lost wakeup</strong> <span class="src">sl. 47</span>: checking "empty" without the mutex, then the producer inserts and signals, then the consumer sleeps. Fix: test under the same mutex and use the atomic release-and-wait. "The state, not a remembered signal, decides whether to sleep."</li>
+<li><strong>Bounded buffer with semaphores</strong> <span class="src">sl. 51–52</span>: <code>empty = N, full = 0, mutex = 1</code>.</li>
+<li>Producer: <code>wait(empty); wait(mutex); insert; post(mutex); post(full)</code>.</li>
+<li>Consumer: <code>wait(full); wait(mutex); remove; post(mutex); post(empty)</code>.</li>
+<li><strong>Reserve the permit before taking the mutex.</strong> In the reverse order, a consumer holding the mutex while waiting for <code>full</code> blocks the producer → deadlock.</li>
+<li><strong>Bounded buffer with CVs</strong> <span class="src">sl. 54</span>: one mutex; producers wait while <code>count == N</code>, consumers wait while <code>count == 0</code>.</li>
+<li><strong>Closing a queue</strong> <span class="src">sl. 55</span>: set <code>closed</code> under the mutex after the producer finishes. Consumers wait while <code>count == 0 &amp;&amp; !closed</code>. If closed and empty, exit; otherwise drain. <strong>Broadcast</strong> on closure.</li>
+<li><strong>Readers–writers</strong> <span class="src">sl. 56</span>: many readers or one writer. Reader preference can starve writers.</li>
+<li><strong>Dining philosophers</strong> <span class="src">sl. 57–61</span>: everyone takes the left chopstick → circular wait → deadlock. <strong>Lower-numbered chopstick first</strong> breaks the cycle (it does not prove fairness). <strong>Monitor solution:</strong> THINKING/HUNGRY/EATING states under one lock; a philosopher eats only if neither neighbour is eating.</li>
+</ul>
+<h2 id="choosing-the-tool-sl-64">Choosing the tool <span class="src">sl. 64</span><a class="headerlink" href="#choosing-the-tool-sl-64" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One invariant across several operations</td>
+<td>mutex</td>
+</tr>
+<tr>
+<td>A limited number of permits</td>
+<td>counting semaphore</td>
+</tr>
+<tr>
+<td>Wait until shared state satisfies a predicate</td>
+<td>condition variable + mutex</td>
+</tr>
+<tr>
+<td>One independent numeric update</td>
+<td>atomic operation (fetch-add)</td>
+</tr>
+<tr>
+<td>Always</td>
+<td>minimize shared mutable state, then specify the remaining protocol</td>
+</tr>
+</tbody>
+</table>
+<h2 id="results-to-know-by-heart">Results to know by heart<a class="headerlink" href="#results-to-know-by-heart" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 threads × 1 increment (R, W): six schedules</td>
+<td>AABB, BBAA → <strong>2</strong>; ABAB, ABBA, BAAB, BABA → <strong>1</strong> <span class="src">sl. 8–9</span></td>
+</tr>
+<tr>
+<td>When is the result 2?</td>
+<td>only if one thread's W comes before the other thread's R</td>
+</tr>
+<tr>
+<td>2 threads × N increments, lecture model (N ≥ 2)</td>
+<td>final value ∈ {2, …, 2N}; the minimum is <strong>2</strong>, not N <span class="ek">ek bilgi</span></td>
+</tr>
+<tr>
+<td>Transfer 10 from A = 100 to B = 50 without a lock</td>
+<td>a reader may see A + B = <strong>140</strong> in between <span class="src">sl. 28</span></td>
+</tr>
+<tr>
+<td><code>./counter mutex</code>, <code>atomic</code>, <code>split</code></td>
+<td><strong>200000, 200000, 1</strong>; split forces both workers to read 0 and store 1, without a C data race <span class="src">sl. 32–33</span></td>
+</tr>
+<tr>
+<td>CAS trace, lock = 0, A then B</td>
+<td>A gets 0 and owns the lock; B gets 1 and retries <span class="src">sl. 21</span></td>
+</tr>
+<tr>
+<td>Semaphore S = 2; A, B, C wait</td>
+<td>A → S = 1, B → S = 0, C blocks <span class="src">sl. 38</span></td>
+</tr>
+<tr>
+<td>Linux <code>atomic_t</code>: set 5, add 10, sub 4, inc, read</td>
+<td><strong>12</strong> (5 → 15 → 11 → 12) <span class="src">sl. 71</span></td>
+</tr>
+<tr>
+<td><code>./queue</code></td>
+<td>consumed = 10,000, sum = 50,005,000; same with capacity 1, only the blocking pattern changes <span class="src">sl. 65</span></td>
+</tr>
+</tbody>
+</table></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

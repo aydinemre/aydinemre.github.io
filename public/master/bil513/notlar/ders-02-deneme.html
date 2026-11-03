@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 2: Deneme sınavı (15 soru)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 2: Deneme sınavı (15 soru)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-02-deneme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-02.html">Anlatım</a> <a href="ders-02-ozet.html">Özet</a> <a href="ders-02-sorular.html">Soru bankası</a> <a href="ders-02-deneme.html" aria-current="page">Deneme sınavı</a> <a href="ders-02-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#s1-ksa-cevap-kolay-sl-1113">S1 (kısa cevap, kolay) — sl. 11–13</a></li><li><a href="#s2-dogruyanls-gerekce-kolay-sl-16-35">S2 (doğru/yanlış + gerekçe, kolay) — sl. 16, 35</a></li><li><a href="#s3-hesap-kolay-sl-2526">S3 (hesap, kolay) — sl. 25–26</a></li><li><a href="#s4-hesap-kolay-sl-65">S4 (hesap, kolay) — sl. 65</a></li><li><a href="#s5-acklama-orta-sl-4346-62">S5 (açıklama, orta) — sl. 43–46, 62</a></li><li><a href="#s6-hesap-orta-sl-3739">S6 (hesap, orta) — sl. 37–39</a></li><li><a href="#s7-acklama-orta-sl-5963-cpu-workc">S7 (açıklama, orta) — sl. 59–63, cpu-work.c</a></li><li><a href="#s8-hesap-orta-sl-17-9-21">S8 (hesap, orta) — sl. 17, 9, 21</a></li><li><a href="#s9-tasarm-hesap-orta-sl-3033">S9 (tasarım + hesap, orta) — sl. 30–33</a></li><li><a href="#s10-hesap-zor-sl-1831">S10 (hesap, zor) — sl. 18–31</a></li><li><a href="#s11-iz-orta-zor-sl-4042">S11 (iz, orta-zor) — sl. 40–42</a></li><li><a href="#s12-kavram-iz-orta-zor-sl-49-58">S12 (kavram + iz, orta-zor) — sl. 49, 58</a></li><li><a href="#s13-hesap-zor-sl-5054">S13 (hesap, zor) — sl. 50–54</a></li><li><a href="#s14-iz-zor-sl-5157">S14 (iz, zor) — sl. 51–57</a></li><li><a href="#s15-sentez-zor-sl-66-64">S15 (sentez, zor) — sl. 66, 64</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-2-deneme-snav-15-soru">CSE 513 · Ders 2: Deneme sınavı (15 soru)<a class="headerlink" href="#cse-513-ders-2-deneme-snav-15-soru" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#s1-ksa-cevap-kolay-sl-1113">S1 (kısa cevap, kolay) — sl. 11–13</a></li><li><a href="#s2-dogruyanls-gerekce-kolay-sl-16-35">S2 (doğru/yanlış + gerekçe, kolay) — sl. 16, 35</a></li><li><a href="#s3-hesap-kolay-sl-2526">S3 (hesap, kolay) — sl. 25–26</a></li><li><a href="#s4-hesap-kolay-sl-65">S4 (hesap, kolay) — sl. 65</a></li><li><a href="#s5-acklama-orta-sl-4346-62">S5 (açıklama, orta) — sl. 43–46, 62</a></li><li><a href="#s6-hesap-orta-sl-3739">S6 (hesap, orta) — sl. 37–39</a></li><li><a href="#s7-acklama-orta-sl-5963-cpu-workc">S7 (açıklama, orta) — sl. 59–63, cpu-work.c</a></li><li><a href="#s8-hesap-orta-sl-17-9-21">S8 (hesap, orta) — sl. 17, 9, 21</a></li><li><a href="#s9-tasarm-hesap-orta-sl-3033">S9 (tasarım + hesap, orta) — sl. 30–33</a></li><li><a href="#s10-hesap-zor-sl-1831">S10 (hesap, zor) — sl. 18–31</a></li><li><a href="#s11-iz-orta-zor-sl-4042">S11 (iz, orta-zor) — sl. 40–42</a></li><li><a href="#s12-kavram-iz-orta-zor-sl-49-58">S12 (kavram + iz, orta-zor) — sl. 49, 58</a></li><li><a href="#s13-hesap-zor-sl-5054">S13 (hesap, zor) — sl. 50–54</a></li><li><a href="#s14-iz-zor-sl-5157">S14 (iz, zor) — sl. 51–57</a></li><li><a href="#s15-sentez-zor-sl-66-64">S15 (sentez, zor) — sl. 66, 64</a></li></ul></details>
+<p>Bu sınavı notlara bakmadan, 60 dakikada çöz. Cevapları kâğıda yaz, Gantt şemalarını elle çiz, sonra her sorunun altındaki "Cevabı ve ölçütü göster"e tıklayıp karşılaştır.</p>
+<p>Sorular yalnızca hocanın 67 slaytı, okuma kitapçığı ve <code>cpu-work.c</code> kullanılarak, notlara bakılmadan yazıldı (2026-11-03, sınav simülasyonu uzmanı). Ders hesap ağırlıklı: 8 soru hesap ya da iz, 7 soru kavram. Slayttaki örneklerin aynısı sorulmadı, hepsi varyant. Soru metinleri Türkçe, ideal cevaplar İngilizce (gerçek sınav İngilizce). Kolaydan zora sıralı. Her hesap sorusunda hocanın kuralları ([start, end) aralıklar, eşitlik kuralı, öncelik yönü) soruda yazılı; cevabı bu kurallara göre ver. Bütün sayısal cevaplar bağımsız bir Python simülatörüyle doğrulandı.</p>
+<p>Puanlama önerisi: her soru 1 puan. Hesap sorularında Gantt doğru ama aritmetik yanlışsa yarım puan; kuralı (eşitlik, öncelik yönü, [start, end)) belirtmeyen ya da "hep, kesin" diyen cevaba en fazla yarım puan. 12 ve üstü iyi, 9–11 tekrar gerekli, 8 ve altı zayıf konulara dön.</p>
+<hr />
+<h2 id="s1-ksa-cevap-kolay-sl-1113">S1 (kısa cevap, kolay) — sl. 11–13<a class="headerlink" href="#s1-ksa-cevap-kolay-sl-1113" title="Permanent link">#</a></h2>
+<p>Scheduler ile dispatcher arasındaki farkı açıklayın. Dispatch latency nedir? İlk Gantt örneklerinde bu gecikme neden sıfır sayılır ve gerçek bir ölçümü yorumlarken bu varsayım neden geri getirilmelidir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> The scheduler applies a <strong>policy</strong> to eligible (ready) work and decides which task receives the
+CPU next; the next task need not be the one that arrived first, and the queue need not be a literal FIFO. The
+dispatcher is the <strong>mechanism</strong> that carries out that decision: it switches context (saves one task's state,
+restores another's), switches to user mode and jumps to the right place so the chosen task actually executes
+<span class="src">OSC ch5 sl. 9</span>. "Selection policy and context-switch mechanism answer different questions." Dispatch latency is
+the delay in stopping one task and starting another. It consumes time without advancing the application's
+computation, and it can disturb useful cache state (an indirect cost). The first timelines set it to zero to
+isolate the policy decision. A real measurement includes it, so a stated switch cost must be restored before
+claiming anything about real performance (e.g. the useful fraction q/(q+s)).</p>
+</details><h2 id="s2-dogruyanls-gerekce-kolay-sl-16-35">S2 (doğru/yanlış + gerekçe, kolay) — sl. 16, 35<a class="headerlink" href="#s2-dogruyanls-gerekce-kolay-sl-16-35" title="Permanent link">#</a></h2>
+<p>Her ifade için doğru/yanlış deyin ve tek cümleyle gerekçe yazın.
+(a) "Response time'ı 0 olan bir işin waiting time'ı da 0'dır."
+(b) "CPU utilization %100 ise sistem iyi tepki veriyordur."
+(c) "Ortalama waiting time'ı en düşük politika, en adil politikadır."
+(d) "İki algoritmayı karşılaştırırken her algoritmaya en uygun iş yükünü seçmek meşrudur."</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) False. Response is arrival to first CPU service; waiting accumulates all time spent ready
+but not running. A job can start immediately, be preempted later and wait in the ready queue (response 0,
+waiting positive). (b) False. Utilization is busy time over elapsed time, a resource-use metric; one long job can
+keep the CPU 100% busy while short jobs wait behind it. (c) False. A low mean can hide a few very long waits;
+fairness asks how service is distributed, and deadline requirements cannot be inferred from the mean either.
+(d) False. Keep the workload and assumptions fixed when comparing, and mark every arrival, preemption and
+completion; otherwise the comparison measures the workload choice, not the policy.</p>
+</details><h2 id="s3-hesap-kolay-sl-2526">S3 (hesap, kolay) — sl. 25–26<a class="headerlink" href="#s3-hesap-kolay-sl-2526" title="Permanent link">#</a></h2>
+<p>Bir sonraki CPU burst'ü exponential averaging ile tahmin ediliyor: τ(next) = α × t + (1 − α) × τ(previous).
+Başlangıç tahmini τ0 = 12. Gözlenen ardışık burst'ler: 4, 8, 16.
+(a) α = 0.25 için τ1, τ2, τ3'ü hesaplayın.
+(b) α = 0.75 için aynısını yapın.
+(c) Son gözlemden (16) sonra hangi α daha hızlı tepki verdi? Bunun bedeli nedir?
+(d) α = 0 ve α = 1 ne anlama gelir?
+(e) Hesapladığınız τ3, bir hard real-time görevin worst-case execution time'ı (WCET) olarak kullanılabilir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) τ1 = 0.25×4 + 0.75×12 = <strong>10</strong>; τ2 = 0.25×8 + 0.75×10 = <strong>9.5</strong>;
+τ3 = 0.25×16 + 0.75×9.5 = <strong>11.125</strong>. (b) τ1 = 0.75×4 + 0.25×12 = <strong>6</strong>; τ2 = 0.75×8 + 0.25×6 = <strong>7.5</strong>;
+τ3 = 0.75×16 + 0.25×7.5 = <strong>13.875</strong>. (c) α = 0.75 jumped from 7.5 to 13.875: a large α responds quickly but
+follows noise more closely. α = 0.25 only moved from 9.5 to 11.125: a small α smooths observations but adapts
+slowly to a sustained change. (d) α = 0 ignores new evidence (the estimate never changes); α = 1 uses only the
+latest burst. (e) No. An estimate is neither a known future burst nor a worst-case execution-time bound; here
+τ3 = 11.125 is even below the last observed burst (16). A hard guarantee needs a justified WCET.</p>
+</details><h2 id="s4-hesap-kolay-sl-65">S4 (hesap, kolay) — sl. 65<a class="headerlink" href="#s4-hesap-kolay-sl-65" title="Permanent link">#</a></h2>
+<p>Kararlı (stable) bir sistemde işler saniyede λ = 12 iş hızıyla geliyor.
+(a) Ortalama kuyruk bekleme süresi Wq = 250 ms ise kuyrukta bekleyen ortalama iş sayısı Lq kaçtır? Birimleri yazın.
+(b) Başka bir ölçüm, çalışan iş dahil sistemdeki ortalama iş sayısını L = 4.5 buluyor. Bu 4.5'i 250 ms ile aynı formüle koymak doğru mu? Sistemde geçen ortalama süre W kaçtır? W − Wq neyi gösterir?
+(c) Sunucu saniyede en fazla 10 iş bitirebiliyorsa bu hesaplar ne olur?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Lq = λ × Wq = 12 jobs/s × 0.25 s = <strong>3 jobs</strong> (jobs/s × s = jobs; units expose the
+meaning). (b) No. The boundaries must match: a count that includes running work goes with <strong>time in the system</strong>,
+not queue-only waiting. Mixing them would imply a meaningless rate of 4.5/0.25 = 18 jobs/s. W = L/λ = 4.5/12 =
+<strong>0.375 s = 375 ms</strong>. W − Wq = 125 ms is the average time spent in service per job <span class="ek">ek bilgi: interpretation of the
+difference under consistent boundaries</span>. (c) Arrivals (12/s) exceed the maximum completion rate (10/s): the queue
+is overloaded and grows without bound, so it has no steady-state averages and Little's law gives no valid Lq or Wq.</p>
+</details><h2 id="s5-acklama-orta-sl-4346-62">S5 (açıklama, orta) — sl. 43–46, 62<a class="headerlink" href="#s5-acklama-orta-sl-4346-62" title="Permanent link">#</a></h2>
+<p>4 fiziksel çekirdekli ve çekirdek başına 2 hardware thread'li (SMT) bir makine düşünün.
+(a) İşletim sistemi kaç logical CPU görür? Bu, 8 bağımsız çekirdeğin throughput'u anlamına gelir mi?
+(b) Bir öğrenci <code>taskset -c 3 ./cpu-work</code> ile işini CPU 3'e sabitliyor (pinning) ve "CPU 3 artık bana ayrıldı" diyor. Doğru mu?
+(c) <code>ps -o pid,cls,ni,psr,comm</code> çıktısında PSR = 3 görmek neyi gösterir, neyi kanıtlamaz?
+(d) Tek ortak ready queue ile CPU başına kuyruk (per-CPU queue) arasındaki ödünleşimi açıklayın. Load balancing ile affinity neden ters yönlere çeker? NUMA buna ne ekler?
+(e) 4 runnable thread'i olan bir süreç aynı anda kaç logical CPU kullanabilir? Tek bir thread?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) 8 logical CPUs <span class="src">OSC ch5 sl. 41</span>. No: a physical core and an OS-visible logical CPU are
+different units. Hardware threads on one core share execution resources; overlapping lets one stream proceed while
+another stalls (compute/stall), but two logical CPUs on one core do not guarantee the throughput of two
+independent physical cores. The gain depends on which resources they compete for. (b) False. Affinity
+<strong>constrains eligible CPUs</strong>; it does not reserve a CPU or remove interference: other tasks and interrupts may
+still run on CPU 3. (c) PSR is a <strong>sampled</strong> CPU identifier (where the task was at that instant). It is not proof
+of continuous execution there and not an exclusive reservation. (d) A common queue makes global selection
+conceptually simple but creates contention on one shared structure. Per-CPU queues reduce shared access and help
+locality but can become imbalanced. Load balancing moves runnable work to an idle CPU; affinity tries to keep a
+thread where its cache is warm, so migration can improve balance while losing cache locality. On NUMA, memory
+placement relative to the CPU adds another cost (remote memory). Scheduling domains group CPUs by shared hardware
+and locality. (e) A process with several runnable threads can use several allowed logical CPUs (here up to 4,
+limited by its affinity mask and other load). An individual thread executes on one logical CPU at a time.</p>
+</details><h2 id="s6-hesap-orta-sl-3739">S6 (hesap, orta) — sl. 37–39<a class="headerlink" href="#s6-hesap-orta-sl-3739" title="Permanent link">#</a></h2>
+<p>Tek CPU, <strong>nonpreemptive priority</strong>, geçiş maliyeti 0, aralıklar [start, end). <strong>Küçük sayı = yüksek öncelik.</strong> Eşit öncelikte önce gelen (daha erken arrival) seçilir.</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Arrival</th>
+<th>Burst</th>
+<th>Öncelik</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>(a) Gantt şemasını çizin; her işin waiting time'ını ve ortalamayı bulun.
+(b) t = 1'de en yüksek öncelikli P2 geldiği halde neden P1'i kesmez?
+(c) Aynı girdide "büyük sayı = yüksek öncelik" denseydi ortalama waiting kaç olurdu?
+(d) P3 hangi koşulda starvation'a uğrar? Aging ve aynı seviye içinde round robin yardımcı olur mu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) At 0 only P1 is ready: P1 [0,5). At 5 the ready set is P2(1), P3(4), P4(2), P5(2):
+P2 [5,8). At 8, P4 and P5 tie at priority 2; P4 arrived earlier: P4 [8,10), P5 [10,14), P3 [14,22).
+Waiting (P1…P5) = (0, 4, 12, 5, 6), mean = 27/5 = <strong>5.4</strong>. With one burst each and no preemption, response
+equals waiting. (b) Nonpreemptive: the running task keeps the CPU until its burst finishes or it blocks. A
+higher-priority arrival only affects the next selection (at 5). (c) Larger is higher: P1 [0,5), P3 [5,13),
+P4 [13,15) (tie with P5, earlier arrival), P5 [15,19), P2 [19,22). Waiting = (0, 18, 3, 10, 11), mean = 42/5 =
+<strong>8.4</strong>. The numerical convention is part of the input; write it beside the table. (d) If higher-priority work
+keeps arriving, P3 is postponed indefinitely: starvation. Aging gradually raises the priority of waiting tasks,
+but the real progress guarantee depends on how fast priorities change, ties and the admitted higher-priority
+load. Round robin within one priority level does not stop starvation caused by higher levels.</p>
+</details><h2 id="s7-acklama-orta-sl-5963-cpu-workc">S7 (açıklama, orta) — sl. 59–63, <code>cpu-work.c</code><a class="headerlink" href="#s7-acklama-orta-sl-5963-cpu-workc" title="Permanent link">#</a></h2>
+<p>(a) Bir öğrenci şöyle diyor: "Linux 6.6'dan beri EEVDF 'virtual deadline' kullanıyor, yani EDF yapıyor; normal bir sürece wall-clock deadline garantisi verir." EEVDF, EDF ve SCHED_DEADLINE'ı ayırarak düzeltin.
+(b) Nice aralığı nedir; nice 10 neyi değiştirir, neyi değiştirmez? SCHED_FIFO ile SCHED_RR farkı nedir?
+(c) Okumadaki deneyde iki <code>cpu-work</code> aynı CPU'ya sabitlenip biri nice 0, diğeri nice 10 ile başlatılıyor. Her birinin <code>cpu_s</code> ve <code>elapsed_s</code> değeri için tahmininiz nedir? Bu deney hangi iddiaları kanıtlayamaz?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) EEVDF selects eligible fair-class work using <strong>virtual deadlines and service accounting</strong>;
+these are fairness/latency mechanisms. A virtual deadline is not an application's promise to finish by a
+wall-clock deadline. Classroom EDF picks the job with the earliest <strong>absolute</strong> (real) deadline; under the
+single-CPU, preemptible, D = T model U ≤ 1 is its exact condition. Linux SCHED_DEADLINE is a separate policy that
+uses EDF with bandwidth reservation machinery. A normal fair-class process gets no deadline guarantee. (CFS and
+vruntime are historical background; the installed kernel version matters.) (b) −20 to +19. Nice influences
+<strong>relative service</strong>, not a hard completion deadline; raising nice to 10 lowers the worker's priority and needs no
+privilege. SCHED_FIFO and SCHED_RR use static real-time priorities; RR time-slices peers at the same priority,
+FIFO does not <span class="src">OSC ch5 sl. 55</span>. Linux real-time priorities use the opposite numerical direction to the textbook
+example. (c) Both have the same CPU demand, so <code>cpu_s</code> ≈ 0.75 s for each (slightly above, because the clock is
+checked only after each batch of arithmetic). Under contention elapsed &gt; CPU time. The nice-0 worker is likely to
+accumulate its 0.75 s first (shorter elapsed); the nice-10 worker takes longer in elapsed time, and once the first
+finishes the survivor faces less competition. The experiment can reveal contention and relative service; it
+cannot prove an exact CPU-share ratio, identify the scheduler from timing alone or establish a hard real-time
+bound. A single run is not enough: repeat, reverse the launch order, compare with two equal-nice workers, and
+record <code>uname -r</code>, <code>lscpu</code>, the allowed CPUs and VM vCPU allocation (launches are not exactly simultaneous;
+background load, power management and compiler behaviour also matter).</p>
+</details><h2 id="s8-hesap-orta-sl-17-9-21">S8 (hesap, orta) — sl. 17, 9, 21<a class="headerlink" href="#s8-hesap-orta-sl-17-9-21" title="Permanent link">#</a></h2>
+<p>Tek CPU, <strong>FCFS (nonpreemptive)</strong>. Ready queue, işin kuyruğa <strong>(yeniden) girdiği</strong> zamana göre sıralanır. I/O cihazı ayrıdır ve istek hemen başlar (cihaz kuyruğu yok). Geçiş maliyeti 0, aralıklar [start, end).</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Arrival</th>
+<th>Davranış</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>CPU 3 → I/O 4 → CPU 2</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>CPU 5</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>CPU 2</td>
+</tr>
+</tbody>
+</table>
+<p>(a) CPU Gantt şemasını ve P1'in I/O aralığını çizin.
+(b) Her iş için turnaround (T), waiting (W) ve response (R) değerlerini bulun. P1'in waiting'i hangi aralıktan oluşur?
+(c) Bir öğrenci P1 için W = T − (toplam CPU) = 7 buluyor. Hata nerede?
+(d) [0, 12) aralığında CPU utilization ve throughput nedir? Bu utilization değeri iyi tepki süresi anlamına gelir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) CPU: P1 [0,3), P2 [3,8), P3 [8,10), P1 [10,12). P1's I/O: [3,7). P1 re-enters the ready
+queue at 7, behind P3 (which entered at 2), while P2 is still running. (b) P1: C = 12, T = 12, CPU = 5,
+blocked = 4, <strong>W = T − CPU − blocked = 12 − 5 − 4 = 3</strong>, the ready interval [7,10); R = 0.
+P2: C = 8, T = 7, W = 2, R = 2. P3: C = 10, T = 8, W = 6, R = 6. Mean W = 11/3 ≈ 3.67, mean T = 9.
+(c) With I/O, turnaround also contains blocked time. 7 = 3 (ready) + 4 (blocked on the device); subtracting only
+CPU time counts device waiting as ready-queue waiting. Match the accounting formula to the workload model.
+(d) The CPU is busy for all of [0,12): utilization 12/12 = <strong>100%</strong>; throughput = 3 jobs / 12 units = <strong>0.25
+jobs per unit</strong>. Multiprogramming overlapped P1's I/O with P2's CPU work; it did not make the device faster. 100%
+utilization does not imply good responsiveness: the 2-unit job P3 waited 6 units behind longer work.</p>
+</details><h2 id="s9-tasarm-hesap-orta-sl-3033">S9 (tasarım + hesap, orta) — sl. 30–33<a class="headerlink" href="#s9-tasarm-hesap-orta-sl-3033" title="Permanent link">#</a></h2>
+<p>Tek CPU'da 5 görev sürekli runnable, eşit öncelikli ve CPU-bound; dışarıdan yeni varış yok. Round robin kullanılıyor.
+(a) Geçiş maliyeti 0 iken q = 20 ms için bir görevin iki turu arasındaki en büyük boşluk kaç ms'dir?
+(b) Her görevin iki turu arasında en fazla 50 ms geçmesi isteniyor. q en fazla kaç olabilir?
+(c) Geçiş maliyeti s = 0.5 ms olsun. Yoğun (saturated) dönüşümlü çalışmada q = 12.5 ms ve q = 2 ms için yararlı iş oranı yaklaşık kaçtır?
+(d) (a)'daki sınırı hangi durumlar geçersiz kılar?
+(e) "Quantum küçüldükçe ortalama turnaround hep iyileşir" ifadesini ve "q çok büyükse RR, FCFS'ye yaklaşır" ifadesini değerlendirin.
+(f) Ready kuyruğunda tek görev kaldığında quantum dolması bir görev değişimi (switch) gerektirir mi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) Gap ≤ (n − 1)q = 4 × 20 = <strong>80 ms</strong>. (b) 4q ≤ 50 ⇒ <strong>q ≤ 12.5 ms</strong>. (c) Useful
+fraction ≈ q/(q + s): 12.5/13 ≈ <strong>96.15%</strong>; 2/2.5 = <strong>80%</strong>. A smaller quantum spends a larger share switching.
+(d) The bound assumes n continuously runnable equal peers, zero overhead and no outside arrivals. Switching cost,
+higher-priority work, additional tasks or a changing ready set (arrivals, tasks that block and return) invalidate
+it. (e) The first is false: turnaround versus quantum is not monotonic, because jobs finish at different
+boundaries and change later queue positions. The second is right with conditions: if q exceeds every burst in
+an all-ready, single-burst workload, each job finishes on its first turn in queue order, i.e. FCFS; with arrivals,
+blocking or other policy layers, restate the conditions. A tiny quantum wastes time switching; a textbook rule of
+thumb is not a universal Linux setting. (f) No. If no other task is runnable, quantum expiry need not cause a
+task-to-task switch; chart boundaries mark possible preemption points, not actual switches.</p>
+</details><h2 id="s10-hesap-zor-sl-1831">S10 (hesap, zor) — sl. 18–31<a class="headerlink" href="#s10-hesap-zor-sl-1831" title="Permanent link">#</a></h2>
+<p>Tek CPU, I/O yok, geçiş maliyeti 0, aralıklar [start, end): t'de biten iş CPU'yu t'de bırakır.</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Arrival</th>
+<th>Burst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>7</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>5</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Kurallar:</p>
+<ul>
+<li><strong>FCFS ve SJF (nonpreemptive):</strong> eşitlikte önce gelen, sonra küçük indeks.</li>
+<li><strong>SRTF:</strong> her varış ve bitişte <em>kalan</em> süreler karşılaştırılır; <strong>eşit kalan sürede mevcut iş devam eder</strong>.</li>
+<li><strong>RR, q = 3:</strong> aynı anda hem yeni bir iş geliyor hem çalışan işin quantum'u bitiyorsa <strong>önce yeni iş kuyruğa girer</strong>, sonra quantum'u biten iş kuyruğun sonuna eklenir.</li>
+</ul>
+<p>(a) Dört politika için Gantt şemasını çizin.
+(b) Her politika için ortalama waiting, ortalama response ve ortalama turnaround değerlerini bulun.
+(c) SRTF'de t = 2'de ne olur? RR'de t = 3'te ve t = 6'da kuyruk sırası nedir?
+(d) RR kuralı ters olsaydı (quantum'u biten iş yeni gelenden önce kuyruğa girseydi) P3'ün response'u ve ortalama waiting kaç olurdu?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a), (b)</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Gantt</th>
+<th>W (P1–P4)</th>
+<th>mean W</th>
+<th>mean R</th>
+<th>mean T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FCFS</td>
+<td>P1 [0,7) P2 [7,12) P3 [12,15) P4 [15,17)</td>
+<td>0, 5, 9, 10</td>
+<td>6</td>
+<td>6</td>
+<td>10.25</td>
+</tr>
+<tr>
+<td>SJF</td>
+<td>P1 [0,7) P4 [7,9) P3 [9,12) P2 [12,17)</td>
+<td>0, 10, 6, 2</td>
+<td>4.5</td>
+<td>4.5</td>
+<td>8.75</td>
+</tr>
+<tr>
+<td>SRTF</td>
+<td>P1 [0,3) P3 [3,6) P4 [6,8) P1 [8,12) P2 [12,17)</td>
+<td>5, 10, 0, 1</td>
+<td>4</td>
+<td>2.75</td>
+<td>8.25</td>
+</tr>
+<tr>
+<td>RR q=3</td>
+<td>P1 [0,3) P2 [3,6) P3 [6,9) P1 [9,12) P4 [12,14) P2 [14,16) P1 [16,17)</td>
+<td>10, 9, 3, 7</td>
+<td>7.25</td>
+<td>2.75</td>
+<td>11.5</td>
+</tr>
+</tbody>
+</table>
+<p>Completions: FCFS (7, 12, 15, 17); SJF (7, 17, 12, 9); SRTF (12, 17, 6, 8); RR (17, 16, 9, 14). SJF must start
+P1 at 0 because it is the only ready job; at 7 it picks P4 (2), then P3 (3), then P2 (5). SRTF responses are
+(0, 10, 0, 1); RR responses are (0, 1, 3, 7). Every policy finishes all 17 units at 17 (no idle time, zero
+overhead). Check: each job's executed time equals its burst and nothing runs before its arrival.
+(c) SRTF at 2: P1 has 7 − 2 = 5 left and P2 needs 5, an exact tie, so P1 continues. At 3: P3 (3) &lt; P1's 4,
+so P3 preempts. At 5: P4 (2) arrives but P3 has 1 left and continues to 6. At 6: P1 4, P2 5, P4 2 → P4, then P1,
+then P2. P1 shows response 0 but waiting 5. RR at 3: P3 arrives and P1's quantum expires; queue = <strong>P2, P3, P1</strong>.
+P4 joins at 5 (P3, P1, P4); at 6 P2 (2 left) goes to the tail: <strong>P3, P1, P4, P2</strong>. (d) Queue at 3 becomes
+P2, P1, P3: P1 runs [6,9) and P3 [9,12), so P3's response is <strong>6</strong> instead of 3 and mean waiting becomes <strong>8</strong>
+(mean response 3.5). The tie rule is part of the input. SRTF has the lowest mean waiting here; SJF's optimality
+claim is for jobs available together, not arrivals over time.</p>
+</details><h2 id="s11-iz-orta-zor-sl-4042">S11 (iz, orta-zor) — sl. 40–42<a class="headerlink" href="#s11-iz-orta-zor-sl-4042" title="Permanent link">#</a></h2>
+<p>Hocanın MLFQ öğretim politikası: Q0 round robin q = 8, Q1 round robin q = 16, Q2 FCFS. Yeni iş Q0'a girer. Bir seviyedeki quantum'unu tamamen kullanıp bitmeyen iş bir alt kuyruğa iner. <strong>Üst kuyruk önceliklidir:</strong> Q0'a yeni iş gelirse Q1 ya da Q2'de çalışan işi hemen keser. <strong>Kesilen iş kendi kuyruğunun başına döner ve o seviyedeki quantum'unun kalanını korur.</strong> Aynı kuyruktaki iş, çalışan işi kesmez. I/O yok, geçiş maliyeti 0, aralıklar [start, end).</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Arrival</th>
+<th>CPU ihtiyacı</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>30</td>
+</tr>
+<tr>
+<td>B</td>
+<td>4</td>
+<td>6</td>
+</tr>
+<tr>
+<td>C</td>
+<td>12</td>
+<td>20</td>
+</tr>
+<tr>
+<td>D</td>
+<td>30</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>(a) Her aralığın hangi kuyrukta çalıştığını gösteren Gantt şemasını çizin.
+(b) Her işin completion, turnaround, waiting ve response değerlerini ve ortalama waiting'i bulun.
+(c) Alternatif kural: kesilen iş kuyruğunun <strong>sonuna</strong> gider ve o seviyede sonra <strong>taze, tam</strong> bir quantum alır. Ne değişir? Bu, sl. 42'deki "policy'yi kandırma (gaming)" ve "toplam pay (total allotment)" fikriyle nasıl ilişkilidir?
+(d) A tek başına çalışsaydı ne zaman biterdi?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) A@Q0 [0,8) (B arrives at 4 into Q0 but does not preempt a Q0 job); A demoted to Q1 with
+22 left. B@Q0 [8,14), finishes. C@Q0 [14,22), demoted to Q1 with 12 left. A@Q1 [22,30): D arrives at 30 and
+preempts it (A has used 8 of its 16, 14 left). D@Q0 [30,34), finishes. A@Q1 [34,42) uses the remaining 8 of its
+quantum, still has 6 left → Q2. C@Q1 [42,54), finishes. A@Q2 [54,60).
+(b) Completion A 60, B 14, C 54, D 34. Turnaround = (60, 10, 42, 4). Waiting = T − CPU = (30, 4, 22, 0),
+mean = 56/4 = <strong>14</strong>. Response = (0, 4, 2, 0). The last completion, 60, equals the total demand
+30 + 6 + 20 + 4: no idle time.
+(c) At 34 Q1 = [C, A]: C@Q1 [34,46) finishes; A gets a fresh 16 and runs [46,60), finishing <strong>in Q1</strong>; it never
+reaches Q2. C completes at 46 (W = 14), A still at 60, mean waiting 12. A received 8 + 14 = 22 units at Q1 although
+the level allows 16, because the interruption reset its budget. A job that yields just before demotion could keep
+a high level the same way. A complete implementation must define this: account for the total CPU allotment at a
+level across runs, and define I/O return, promotion and periodic boost rules. (d) 8 in Q0 + 16 in Q1 + 6 in Q2:
+it completes at <strong>30</strong>. Queue changes alone do not add useful work (zero overhead).</p>
+</details><h2 id="s12-kavram-iz-orta-zor-sl-49-58">S12 (kavram + iz, orta-zor) — sl. 49, 58<a class="headerlink" href="#s12-kavram-iz-orta-zor-sl-49-58" title="Permanent link">#</a></h2>
+<p>Tek CPU, preemptive sabit öncelik: H &gt; M &gt; L. Kilit işlemleri sıfır sürer. Aralıklar [start, end).</p>
+<ul>
+<li>L, t = 0'da gelir: 1 birim çalışır, kilidi alır, kritik bölümde 3 birim çalışır, kilidi bırakır, 1 birim daha çalışır.</li>
+<li>H, t = 2'de gelir ve hemen aynı kilidi ister; kilidi alınca 1 birim çalışır, bırakır, 1 birim daha çalışır.</li>
+<li>M, t = 3'te gelir, kilit kullanmaz, 6 birim çalışır.</li>
+</ul>
+<p>(a) Priority inheritance olmadan Gantt şemasını çizin. H ne zaman biter, kilidi kaç birim bekler?
+(b) Priority inheritance ile aynısını yapın.
+(c) "H'nin önceliğini daha da yükseltmek sorunu çözer" ifadesi neden yanlış? H beklerken hangi durumdadır?
+(d) Priority inheritance gerçek zamanlı bir garanti için yeterli midir?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) L [0,3) (takes the lock at 1; at 2 H arrives, requests the lock and <strong>blocks</strong>, so L
+continues). At 3 M (higher than L) preempts L: M [3,9). L [9,10) finishes its critical section and releases the
+lock at 10; H wakes and preempts: H [10,12). L [12,13). H completes at <strong>12</strong>, blocked from 2 to 10 = <strong>8 units</strong>;
+6 of them come from M, which does not even use the lock. This is priority inversion: medium-priority work
+indirectly delays high-priority work through the lock owner. (b) At 2 L inherits H's priority. M arrives at 3
+but cannot preempt L: L [0,4), releases at 4 and drops back to its own priority. H [4,6), M [6,12), L [12,13).
+H completes at <strong>6</strong>, blocked only <strong>2 units</strong> (the rest of L's critical section). (c) H's priority alone cannot
+make the lock available; the dependency passes through L. While it waits for the lock H is blocked (waiting),
+not ready, so no selection rule can run it; only the owner's progress helps. (d) No. Inheritance temporarily
+raises the owner's priority, but full bounds still depend on the locking rules and critical-section lengths.
+Deadline reasoning also needs bounded interrupt latency, handler work, dispatch delay and nonpreemptible
+sections, not only a scheduler's selection rule. The simple RTA recurrence excludes blocking.</p>
+</details><h2 id="s13-hesap-zor-sl-5054">S13 (hesap, zor) — sl. 50–54<a class="headerlink" href="#s13-hesap-zor-sl-5054" title="Permanent link">#</a></h2>
+<p>sl. 50'deki model: tek işlemci, bağımsız periyodik görevler, hepsi t = 0'da salınır, D = T, tam preemptible, blocking ve overhead yok, C değerleri bilinen worst-case sınırlar. Rate-monotonic (RM) öncelik. Birim ms.</p>
+<p>τ1 = (C = 10, T = 30), τ2 = (C = 15, T = 50), τ3 = (C = 15, T = 80)</p>
+<p>(a) U'yu ve n = 3 için Liu–Layland sınırını hesaplayın. Test ne söyler?
+(b) Response-time analysis (RTA) ile τ2 ve τ3'ün en kötü response time'ını bulun. Deadline'lar tutar mı?
+(c) C3 = 25 olursa U ve τ3'ün RTA'sı ne olur? RM ne yapar, EDF ne yapar?
+(d) τ3'ün RM altında deadline'ını tutturduğu en büyük tamsayı C3 kaçtır?
+(e) RTA'daki R neyi ölçer ve bu hesap hangi varsayımlara dayanır?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) U = 10/30 + 15/50 + 15/80 = 0.3333 + 0.3 + 0.1875 = <strong>0.8208</strong>. Bound
+3(2^(1/3) − 1) ≈ <strong>0.7798</strong>. U is above the bound, so the test is <strong>inconclusive</strong>: it is sufficient, not
+necessary, and failing it does not mean a deadline miss. (b) R(next) = Ci + Σ over higher-priority j of
+ceil(R/Tj) × Cj. τ1: R = 10 ≤ 30. τ2: R0 = 15 → 15 + ceil(15/30)×10 = 25 → 25 (fixed) ≤ 50. τ3: R0 = 15 →
+15 + 1×10 + 1×15 = 40 → 15 + ceil(40/30)×10 + ceil(40/50)×15 = 15 + 20 + 15 = 50 → 50 (fixed) ≤ 80. All
+deadlines hold: the set is RM-schedulable although it fails the Liu–Layland test. (c) U = 0.3333 + 0.3 + 0.3125 =
+<strong>0.9458</strong> &lt; 1. RTA τ3: 25 → 50 → 60 → 75 → <strong>85</strong> &gt; 80: τ3's first job misses. RM timeline: τ1 [0,10), τ2
+[10,25), τ3 [25,30), τ1 [30,40), τ3 [40,50), τ2 [50,60), τ1 [60,70), τ2 [70,75), τ3 [75,85): it completes at 85,
+5 late. EDF: U ≤ 1 with D = T on one preemptible processor is the exact condition, so EDF meets every deadline.
+"U &lt; 1 does not prove RM deadlines." (d) <strong>C3 = 20</strong>: R = 20 → 45 → 55 → 70 → 80 → 80 ≤ 80 (with [start, end),
+finishing at 80 meets deadline 80). C3 = 21 gives 21 → 46 → 56 → 71 → 81 &gt; 80. (e) R is
+<strong>release-to-completion</strong> time, not first service; each ceiling counts the higher-priority jobs that can
+interfere during the response window. The recurrence assumes the independent, fully preemptible task model with
+simultaneous release, known worst-case C, and no blocking, overhead or release jitter.</p>
+</details><h2 id="s14-iz-zor-sl-5157">S14 (iz, zor) — sl. 51–57<a class="headerlink" href="#s14-iz-zor-sl-5157" title="Permanent link">#</a></h2>
+<p>Aynı model (tek işlemci, D = T, hepsi 0'da salınır, tam preemptible, overhead yok). Birim ms.</p>
+<p>P1 = (C = 20, T = 50), P2 = (C = 40, T = 75)</p>
+<p>(a) U ve n = 2 için Liu–Layland sınırı. RM ve EDF hakkında ne söylenebilir?
+(b) RM ile [0, 150) izini çıkarın. İlk deadline kaçırma nerede? (Geç kalan iş tamamlanana kadar çalışmaya devam etsin.)
+(c) EDF ile [0, 150) izini çıkarın. <strong>Eşit mutlak deadline'da çalışan iş devam eder (kesilmez).</strong> Her karar anında karşılaştırdığınız deadline'ları yazın.
+(d) Eşitlik kuralı ters olsaydı (küçük indeks kazanır) EDF izinde ne değişirdi? Bir deadline kaçar mı?
+(e) 150 neden doğal bir kontrol ufku? [0, 150) içindeki boşta kalma süresi U ile tutarlı mı?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> (a) U = 20/50 + 40/75 = 0.4 + 0.5333 = <strong>0.9333</strong>. The two-task bound ≈ 0.8284, so the RM
+test is inconclusive (not a proof of failure). U ≤ 1, so EDF is feasible under this model. (b) RM: P1 has the
+shorter period, so the fixed higher priority. P1 [0,20), P2 [20,50) (30 of 40 done), P1's second job (released
+50) preempts: P1 [50,70), P2 [70,80): P2's first job completes at <strong>80 &gt; 75</strong>, a miss by 5. RTA agrees:
+40 → 40 + ceil(40/50)×20 = 60 → 40 + ceil(60/50)×20 = 80 &gt; 75. Continuing: P2's second job (released 75,
+deadline 150) [80,100), P1 [100,120), P2 [120,140) done, idle [140,150). (c) EDF: at 0, P1 d = 50 &lt; P2 d = 75 →
+P1 [0,20); P2 [20,…). At 50, P1's new job has d = 100 but P2 has d = 75 → <strong>P2 continues</strong> and completes at 60.
+P1 [60,80) (d = 100, met). At 75 P2's second job is released (d = 150); at 80 it runs. At 100 P1's third job
+arrives with d = 150 = P2's d = 150: tie, so P2 continues and completes at 120. P1 [120,140) (d = 150, met).
+Idle [140,150). All deadlines met. RM and EDF disagree at 50: RM compares periods, EDF compares absolute
+deadlines of released, unfinished jobs. (d) P1 preempts at 100: P1 [100,120), P2 [120,140). P2 still meets
+150; only the order changes, not feasibility. (e) 150 = lcm(50, 75), the hyperperiod: after it the release
+pattern repeats. Demand in [0,150) = 3×20 + 2×40 = 140 = U × 150, so idle time = 10, matching [140,150). A
+finite trace illustrates decisions; the EDF theorem gives the guarantee under the stated model.</p>
+</details><h2 id="s15-sentez-zor-sl-66-64">S15 (sentez, zor) — sl. 66, 64<a class="headerlink" href="#s15-sentez-zor-sl-66-64" title="Permanent link">#</a></h2>
+<p>Hocanın "gizli varsayımı bul" alıştırması. Aşağıdaki dört iddianın her biri için (i) hangi gizli varsayıma ya da
+ölçüte dayandığını, (ii) bir karşı örneği, (iii) doğru ifadeyi yazın.</p>
+<ol>
+<li>"SJF her zaman en iyisidir."</li>
+<li>"U &lt; 1 ise RM deadline'ları tutar."</li>
+<li>"Pinning bir CPU'yu ayırır."</li>
+<li>"EDF ile EEVDF aynı garantiyi verir."</li>
+</ol>
+<p>Son olarak (e): bir scheduling politikasını değerlendirirken deterministic timeline, simulation ve measurement her biri hangi soruyu cevaplar?</p>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap (ideal).</strong> 1. Best according to which criterion, with what arrival information and burst knowledge?
+SJF minimizes average waiting only for a fixed set of jobs available together, with known bursts and zero
+overhead. Counterexamples: with arrivals over time nonpreemptive SJF must commit to a long job already running
+(S10: SJF 4.5 vs SRTF 4); bursts are only estimated; repeated short arrivals can starve a long ready job; round
+robin gives the long job earlier first service. Correct: "SJF minimizes mean waiting under those assumptions;
+choose a policy by the stated objective." 2. False: the slides' Example B has U = 0.9375 and misses at 80 (S13's
+C3 = 25 set also misses with U ≈ 0.946). The Liu–Layland bound n(2^(1/n) − 1) is sufficient, not necessary;
+exceeding it does not prove failure either (the harmonic set (1,2), (2,4) has U = 1 and meets every RM
+deadline). Use RTA for the model; EDF's U ≤ 1 holds for D = T only. 3. False: affinity restricts placement but
+permits other work and interrupts on the same CPU; it is not a reservation, and PSR is only a sample.
+Correct: "pinning makes competitors meet on a chosen CPU; it does not isolate it." 4. False: EDF orders jobs by
+application (absolute, wall-clock) deadlines; EEVDF's virtual deadlines are service-accounting devices for
+fairness and latency among fair-class tasks. Linux SCHED_DEADLINE is the separate EDF policy with bandwidth
+reservation. (e) A deterministic timeline answers a precise question for a stated workload: easy to check, narrow
+in scope. A simulation varies arrivals and burst distributions, but its output depends on the model and input
+traces and includes only the modeled mechanisms. Measurement includes real overhead and interference but needs
+reproducible conditions. In all three, keep the workload and metric fixed and compare more than the mean.</p>
+</details><hr />
+<!--
+Doğrulama (2026-11-03): sayısal cevapların hepsi bağımsız bir birim adımlı Python simülatörüyle kontrol edildi
+(anaconda python 3.12; scratchpad/deneme/sim.py, alt.py, inversion.py). Simülatör önce slayt örnekleriyle
+sınandı: FCFS 24/3/3 (W 17), RR q=4 (W 5.67, R 3.67), SRTF sl. 27-29 (W 6.5, R 4.25), öncelik sl. 38 (W 8.2),
+RM Example B (P2 85'te biter), EDF Example B izi (sl. 55-57), RTA 35 -> 60 -> 85. Hepsi tuttu.
+Doğrulanan sorular:
+
+- S3: alpha 0.25 -> 10, 9.5, 11.125; alpha 0.75 -> 6, 7.5, 13.875
+- S4: Lq = 3; W = 0.375 s; W - Wq = 0.125 s
+- S6: küçük=yüksek W (0,4,12,5,6) ort 5.4; büyük=yüksek W (0,18,3,10,11) ort 8.4
+- S8: Gantt P1[0,3) P2[3,8) P3[8,10) P1[10,12); W (3,2,6); P1 naif 7; utilization 12/12
+- S9: (n-1)q = 80; q <= 12.5; 12.5/13 = 96.15 %; 2/2.5 = 80 %
+- S10: FCFS W 6 / SJF 4.5 / SRTF 4 (R 2.75) / RR q=3 W 7.25 (R 2.75); ters RR kuralı W 8, P3 R 6
+- S11: MLFQ (başa dön) W (30,4,22,0) ort 14; (sona dön, taze quantum) C 46, ort W 12; tek başına A 30'da biter
+- S12: kalıtımsız H 12'de biter (8 birim blok); kalıtımla H 6'da biter (2 birim blok)
+- S13: U 0.8208, LL3 0.7798; RTA tau2 25, tau3 50; C3=25 -> 85 (RM 85'te biter, kaçırır), EDF 1200 ms hiperperiyotta kaçırmaz; en büyük C3 = 20 (R = 80)
+- S14: U 0.9333; RM P2 80'de biter (75'i kaçırır); EDF iki eşitlik kuralında da [0,150) tüm deadline'lar tutar, boşta [140,150)
+Kavram soruları (S1, S2, S5, S7, S15) sayısal değil; slayt/okuma metnine karşı tek tek kontrol edildi.
+--></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

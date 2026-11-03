@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 256" role="img" aria-label="Fork descriptor tablosunu kopyalar. Parent'ın ve child'ın 3 numaralı fd'si aynı open file description'ı gösterir; bu yüzden dosya ofsetini paylaşırlar. Child'da close(3) yalnızca child'ın okunu siler." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="fd-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="fd-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="100" y="28" text-anchor="middle" font-weight="600">parent fd tablosu</text>
+  <rect class="box-plain" x="30" y="40" width="140" height="30"/>
+  <text x="100" y="60" text-anchor="middle" font-size="12" class="t-mut">0 · 1 · 2</text>
+  <rect class="box" x="30" y="70" width="140" height="30"/>
+  <text x="100" y="90" text-anchor="middle" font-weight="600">3</text>
+  <text x="100" y="148" text-anchor="middle" font-weight="600">child fd tablosu</text>
+  <text x="100" y="164" text-anchor="middle" font-size="12" class="t-mut">(fork'ta kopyalandı)</text>
+  <rect class="box-plain" x="30" y="174" width="140" height="30"/>
+  <text x="100" y="194" text-anchor="middle" font-size="12" class="t-mut">0 · 1 · 2</text>
+  <rect class="box" x="30" y="204" width="140" height="30"/>
+  <text x="100" y="224" text-anchor="middle" font-weight="600">3</text>
+  <rect class="box-acc" x="300" y="100" width="210" height="64" rx="6"/>
+  <text x="405" y="126" text-anchor="middle" font-weight="600" class="t-acc">open file description</text>
+  <text x="405" y="146" text-anchor="middle" font-size="12" class="t-acc">ofset = 6 (ortak)</text>
+  <rect class="box" x="600" y="110" width="140" height="44" rx="6"/>
+  <text x="670" y="137" text-anchor="middle" font-weight="600">out.txt</text>
+  <line class="ln" x1="170" y1="85" x2="296" y2="118" marker-end="url(#fd-a)"/>
+  <line class="ln" x1="170" y1="219" x2="296" y2="150" marker-end="url(#fd-a)"/>
+  <text x="250" y="250" text-anchor="middle" font-size="12" class="t-mut">child'da close(3) yalnız bu oku siler</text>
+  <line class="ln-acc" x1="510" y1="132" x2="596" y2="132" marker-end="url(#fd-b)"/>
+</svg>

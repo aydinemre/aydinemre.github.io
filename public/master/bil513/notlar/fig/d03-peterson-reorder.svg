@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="Peterson'ın bozan izi: P0 önce turn = 1, sonra flag[0] = true yazar. Arada P1 turn = 0 ve flag[1] = true yazar, flag[0]'ı false görür ve kritik bölüme girer. Sonra P0 flag[0] = true yazar, turn 0 olduğu için beklemez ve o da girer. İki kritik bölüm üst üste biner." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <text x="380" y="20" text-anchor="middle" font-weight="600" font-size="12.5">P0 yazılarını ters sırada yapar (önce turn, sonra flag); P1 doğru sırada [sl. 19; OSC ch6 sl. 19]</text>
+  <text x="92" y="44" text-anchor="middle" font-size="11.5" class="t-mut">başta</text>
+  <text x="145" y="44" text-anchor="middle" font-size="11.5" class="t-mut">1</text>
+  <text x="241" y="44" text-anchor="middle" font-size="11.5" class="t-mut">2</text>
+  <text x="337" y="44" text-anchor="middle" font-size="11.5" class="t-mut">3</text>
+  <text x="433" y="44" text-anchor="middle" font-size="11.5" class="t-mut">4</text>
+  <text x="529" y="44" text-anchor="middle" font-size="11.5" class="t-mut">5</text>
+  <text x="625" y="44" text-anchor="middle" font-size="11.5" class="t-mut">6</text>
+  <text x="714" y="44" text-anchor="middle" font-size="11.5" class="t-mut">sonra</text>
+  <text x="20" y="79" font-weight="600">P0</text>
+  <text x="20" y="135" font-weight="600">P1</text>
+
+  <rect class="f-warn" x="676" y="48" width="76" height="108" rx="6" fill-opacity="0.12"/>
+  <rect class="box-acc" x="487" y="110" width="261" height="40" rx="6"/>
+  <text x="600" y="135" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">P1 kritik bölümde (CS)</text>
+  <rect class="box-acc" x="682" y="54" width="66" height="40" rx="6"/>
+  <text x="715" y="79" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">P0 CS</text>
+  <rect class="ln-warn dash" x="676" y="48" width="76" height="108" rx="6"/>
+
+  <rect class="box" x="100" y="54" width="90" height="40" rx="6"/>
+  <text x="145" y="79" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">turn = 1</text>
+  <rect class="box" x="196" y="110" width="90" height="40" rx="6"/>
+  <text x="241" y="135" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">turn = 0</text>
+  <rect class="box" x="292" y="110" width="90" height="40" rx="6"/>
+  <text x="337" y="135" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[1] = T</text>
+  <rect class="box" x="388" y="110" width="90" height="40" rx="6"/>
+  <text x="433" y="127" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">flag[0] == F</text>
+  <text x="433" y="143" text-anchor="middle" font-size="11.5">→ gir</text>
+  <rect class="box" x="484" y="54" width="90" height="40" rx="6"/>
+  <text x="529" y="79" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[0] = T</text>
+  <rect class="box" x="580" y="54" width="90" height="40" rx="6"/>
+  <text x="625" y="71" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">turn == 0</text>
+  <text x="625" y="87" text-anchor="middle" font-size="11.5">beklemez → gir</text>
+  <line class="faint" x1="192" y1="74" x2="482" y2="74"/>
+  <text x="337" y="69" text-anchor="middle" font-size="11.5" class="t-mut">P0'ın ilgisi henüz yazılmadı (uzun boşluk)</text>
+
+  <line class="faint" x1="20" y1="168" x2="750" y2="168"/>
+  <text x="20" y="190" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[0]</text>
+  <text x="92" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="145" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="241" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="337" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="433" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="529" y="190" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">T</text>
+  <text x="625" y="190" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">T</text>
+  <text x="20" y="212" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[1]</text>
+  <text x="92" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="145" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="241" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">F</text>
+  <text x="337" y="212" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">T</text>
+  <text x="433" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">T</text>
+  <text x="529" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">T</text>
+  <text x="625" y="212" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">T</text>
+  <text x="20" y="234" font-family="ui-monospace, Menlo, monospace" font-size="12">turn</text>
+  <text x="92" y="234" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="145" y="234" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">1</text>
+  <text x="241" y="234" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">0</text>
+  <text x="337" y="234" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="433" y="234" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="529" y="234" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="625" y="234" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="714" y="212" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">iki CS</text>
+  <text x="714" y="228" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">aynı anda</text>
+
+  <text x="20" y="268" font-size="12">P1, flag[0]'ı F gördüğü için girdi; P0, turn'ün son yazanı olmadığı için (turn = 0) beklemedi.</text>
+  <text x="20" y="288" font-size="12" class="t-mut">Aynı iz kaynak kodda sırası ters Peterson'da SC altında da oluşur. volatile bunu onarmaz [sl. 19].</text>
+</svg>

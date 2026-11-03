@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" role="img" aria-label="Compare-and-swap izi: lock 0 iken A CAS(lock, 0, 1) yapar, 0 döner, lock 1 olur ve A sahip olur. B'nin CAS'ı 1 döner, yazma olmaz, B sahip değildir ve tekrar dener. A lock = 0 yaparak bırakır; B'nin yeni denemesi 0 döner ve B sahip olur." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d03cs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600" font-size="12.5">Başta lock = 0; A ve B ikisi de CAS(lock, 0, 1) dener [sl. 21]</text>
+  <text x="95" y="42" text-anchor="middle" font-size="11.5" class="t-mut">başta</text>
+  <text x="170" y="42" text-anchor="middle" font-size="11.5" class="t-mut">1</text>
+  <text x="294" y="42" text-anchor="middle" font-size="11.5" class="t-mut">2</text>
+  <text x="418" y="42" text-anchor="middle" font-size="11.5" class="t-mut">3</text>
+  <text x="542" y="42" text-anchor="middle" font-size="11.5" class="t-mut">4</text>
+  <text x="666" y="42" text-anchor="middle" font-size="11.5" class="t-mut">5</text>
+  <text x="20" y="76" font-weight="600">A</text>
+  <text x="20" y="130" font-weight="600">B</text>
+
+  <rect class="box-acc" x="114" y="50" width="112" height="42" rx="6"/>
+  <text x="170" y="68" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">CAS(lock,0,1)</text>
+  <text x="170" y="84" text-anchor="middle" font-weight="600" font-size="11.5" class="t-acc">döner 0 → sahip</text>
+  <rect class="box" x="362" y="50" width="112" height="42" rx="6"/>
+  <text x="418" y="76" text-anchor="middle" font-size="12">kritik bölüm</text>
+  <rect class="box" x="486" y="50" width="112" height="42" rx="6"/>
+  <text x="542" y="68" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">lock = 0</text>
+  <text x="542" y="84" text-anchor="middle" font-size="11.5">unlock (bırakır)</text>
+  <rect class="box-plain" x="238" y="104" width="112" height="42" rx="6"/>
+  <text x="294" y="122" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">CAS(lock,0,1)</text>
+  <text x="294" y="138" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">döner 1 → değil</text>
+  <rect class="box-plain dash" x="362" y="104" width="112" height="42" rx="6"/>
+  <text x="418" y="122" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">CAS → 1</text>
+  <text x="418" y="138" text-anchor="middle" font-size="11.5">spin (tekrar)</text>
+  <rect class="box-acc" x="610" y="104" width="112" height="42" rx="6"/>
+  <text x="666" y="122" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">CAS(lock,0,1)</text>
+  <text x="666" y="138" text-anchor="middle" font-weight="600" font-size="11.5" class="t-acc">döner 0 → sahip</text>
+  <line class="ln dash" x1="476" y1="125" x2="606" y2="125" marker-end="url(#d03cs-a)"/>
+  <text x="542" y="118" text-anchor="middle" font-size="11.5" class="t-mut">yeniden dener</text>
+
+  <line class="faint" x1="20" y1="158" x2="740" y2="158"/>
+  <text x="20" y="186" font-weight="600" font-family="ui-monospace, Menlo, monospace">lock</text>
+  <rect class="box-plain" x="65" y="166" width="60" height="40" rx="4"/>
+  <text x="95" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace">0</text>
+  <text x="95" y="200" text-anchor="middle" font-size="10.5" class="t-mut">serbest</text>
+  <rect class="box-acc" x="140" y="166" width="60" height="40" rx="4"/>
+  <text x="170" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" class="t-acc">1</text>
+  <text x="170" y="200" text-anchor="middle" font-size="10.5" class="t-mut">sahip: A</text>
+  <rect class="box-plain" x="264" y="166" width="60" height="40" rx="4"/>
+  <text x="294" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace">1</text>
+  <text x="294" y="200" text-anchor="middle" font-size="10.5" class="t-mut">sahip: A</text>
+  <rect class="box-plain" x="388" y="166" width="60" height="40" rx="4"/>
+  <text x="418" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace">1</text>
+  <text x="418" y="200" text-anchor="middle" font-size="10.5" class="t-mut">sahip: A</text>
+  <rect class="box-acc" x="512" y="166" width="60" height="40" rx="4"/>
+  <text x="542" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" class="t-acc">0</text>
+  <text x="542" y="200" text-anchor="middle" font-size="10.5" class="t-mut">serbest</text>
+  <rect class="box-acc" x="636" y="166" width="60" height="40" rx="4"/>
+  <text x="666" y="184" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" class="t-acc">1</text>
+  <text x="666" y="200" text-anchor="middle" font-size="10.5" class="t-mut">sahip: B</text>
+
+  <text x="20" y="234" font-size="12">CAS(adres, beklenen, yeni) eski değeri döndürür; yalnız eski == beklenen ise yazar. 0 = kazandı, 1 = kaybetti.</text>
+  <text x="20" y="254" font-size="12" class="t-mut">Kütüphaneler başarıyı farklı bildirebilir [sl. 21]; ör. C11 compare_exchange bool döndürür (ek bilgi).</text>
+  <text x="20" y="274" font-size="12" class="t-mut">Basit retry döngüsü bounded waiting vermez: B'nin önünden A sınırsız kez geçebilir [sl. 21].</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" role="img" aria-label="Ters sıralı bounded buffer kilitlenmesi: tüketici önce mutex'i alır, sonra full iznini bekler ve mutex'i tutarak uyur. Üretici empty'yi alır, mutex'i bekler. full iznini yalnız üretici verebilir, mutex'i yalnız tüketici bırakabilir: tutuyor ve bekliyor okları kapalı bir döngü oluşturur." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d03bd-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker>
+  </defs>
+  <text x="380" y="22" text-anchor="middle" font-weight="600" font-size="12.5">Ters sıra: tüketici önce mutex'i, sonra full iznini ister. N = 1, kuyruk boş [sl. 52]</text>
+  <rect class="box" x="40" y="60" width="150" height="50" rx="25"/>
+  <text x="115" y="81" text-anchor="middle" font-weight="600">Tüketici (T)</text>
+  <text x="115" y="99" text-anchor="middle" font-size="11" class="t-mut">mutex'i tutarak uyur</text>
+  <rect class="box-plain" x="300" y="60" width="150" height="50" rx="4"/>
+  <text x="375" y="81" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace">full = 0</text>
+  <text x="375" y="99" text-anchor="middle" font-size="11" class="t-mut">dolu yuva izni yok</text>
+  <rect class="box" x="300" y="220" width="150" height="50" rx="25"/>
+  <text x="375" y="241" text-anchor="middle" font-weight="600">Üretici (Ü)</text>
+  <text x="375" y="259" text-anchor="middle" font-size="11" class="t-mut">empty aldı, mutex'te uyur</text>
+  <rect class="box-plain" x="40" y="220" width="150" height="50" rx="4"/>
+  <text x="115" y="241" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace">mutex = 0</text>
+  <text x="115" y="259" text-anchor="middle" font-size="11" class="t-mut">sahibi: T</text>
+
+  <line class="ln-warn" x1="190" y1="85" x2="296" y2="85" marker-end="url(#d03bd-w)"/>
+  <text x="243" y="77" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">bekliyor</text>
+  <text x="243" y="101" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">wait(full)</text>
+  <line class="ln-warn dash" x1="375" y1="218" x2="375" y2="114" marker-end="url(#d03bd-w)"/>
+  <text x="383" y="160" font-size="11.5" class="t-warn">post(full)'u</text>
+  <text x="383" y="176" font-size="11.5" class="t-warn">yalnız Ü yapar</text>
+  <line class="ln-warn" x1="300" y1="245" x2="194" y2="245" marker-end="url(#d03bd-w)"/>
+  <text x="247" y="237" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">bekliyor</text>
+  <text x="247" y="261" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11.5">wait(mutex)</text>
+  <line class="ln-warn" x1="115" y1="218" x2="115" y2="114" marker-end="url(#d03bd-w)"/>
+  <text x="123" y="160" font-weight="600" font-size="11.5" class="t-warn">tutuyor</text>
+  <text x="123" y="176" font-size="11.5" class="t-warn">(T aldı)</text>
+  <text x="245" y="168" text-anchor="middle" font-weight="600" font-size="12.5" class="t-warn">kapalı döngü</text>
+
+  <rect class="box-plain" x="490" y="44" width="255" height="252" rx="10"/>
+  <text x="504" y="66" font-weight="600" font-size="12.5" class="t-warn">Ters tüketici (hatalı)</text>
+  <text x="504" y="88" font-family="ui-monospace, Menlo, monospace" font-size="12">wait(mutex);</text>
+  <text x="504" y="106" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-warn">wait(full);  /* uyur */</text>
+  <text x="504" y="124" font-size="11" class="t-mut">full = 0 iken mutex'i tutarak uyur</text>
+  <text x="504" y="154" font-weight="600" font-size="12.5" class="t-acc">Doğru sıra [sl. 52]</text>
+  <text x="504" y="176" font-family="ui-monospace, Menlo, monospace" font-size="12">wait(full);   /* izin */</text>
+  <text x="504" y="194" font-family="ui-monospace, Menlo, monospace" font-size="12">wait(mutex);  /* kilit */</text>
+  <text x="504" y="212" font-size="11" class="t-mut">izni buffer mutex'inden önce ayır</text>
+  <text x="504" y="240" font-size="11">Ters üretici de kilitlenir (tampon doluyken).</text>
+  <text x="504" y="258" font-size="11">Yalnız post'ların sırası tersse kilitlenme</text>
+  <text x="504" y="274" font-size="11">olmaz: post asla bloklanmaz.</text>
+  <text x="20" y="318" font-size="12" class="t-mut">Tutuyor/bekliyor döngüsü, 4. haftanın bekleme grafiğinin (wait-for graph) önizlemesi.</text>
+</svg>

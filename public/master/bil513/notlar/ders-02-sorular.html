@@ -1,0 +1,3295 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 Ders 2: Soru bankası ve cevap anahtarı</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 Ders 2: Soru bankası ve cevap anahtarı">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-02-sorular.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-02.html">Anlatım</a> <a href="ders-02-ozet.html">Özet</a> <a href="ders-02-sorular.html" aria-current="page">Soru bankası</a> <a href="ders-02-deneme.html">Deneme sınavı</a> <a href="ders-02-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a><ul><li><a href="#a1-merkez-sl-66daki-dort-gizli-varsaym-ve-sl-35-checkpointi">A.1 Merkez: sl. 66'daki dört gizli varsayım ve sl. 35 checkpoint'i</a></li><li><a href="#a2-bolum-bolum-harita">A.2 Bölüm bölüm harita</a></li><li><a href="#a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar</a></li></ul></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a><ul><li><a href="#seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap</a></li><li><a href="#seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz</a></li><li><a href="#seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma</a></li><li><a href="#seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak</a></li><li><a href="#soru-bankas-ozeti">Soru bankası özeti</a></li></ul></li></ul></aside>
+  <main><h1 id="cse-513-ders-2-soru-bankas-ve-cevap-anahtar">CSE 513 Ders 2: Soru bankası ve cevap anahtarı<a class="headerlink" href="#cse-513-ders-2-soru-bankas-ve-cevap-anahtar" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#0-hocann-soru-uslubu">0. Hocanın soru üslubu</a></li><li><a href="#a-kapsam-haritas">A) Kapsam haritası</a></li><li><a href="#b-kavram-yanlglar">B) Kavram yanılgıları</a></li><li><a href="#c-soru-bankas">C) Soru bankası</a></li></ul></details>
+<p>Kaynak: sınav/pedagoji uzman ajanının notu (2026-11-03), denetçi (red team) raporuna göre düzeltildi ve editör ajanı tarafından ortak şablona (<code>notlar/SABLON.md</code>) göre son hâline getirildi (2026-11-03). Denetçi bu dosyada dokuz bulgu çıkardı; hepsi düzeltildi: Q40 eşitlik anları (D-08), Q10(b) ve B#5'te cihaz kuyruğu (D-09), A.3'te OSC etiketi (D-11), §0, B#17 ve Q41'de EDF koşulunun "only" ifadesi (D-13), Q33 ölçütü (D-22), Q26 tablosunda en büyük bekleme (D-23), Q47(b) varsayım tutarlılığı (D-24), §0'daki kaynaksız puanlama iddiası (D-25), Q23(c)'de RR sınırının koşulları (D-26). Diğer notlara yönelik bulguların bu dosyadaki karşılıkları da uyarlandı: EDF eşitlik kuralının yedeği açık yazıldı (D-03), "SJF yalnız orada optimaldir" ifadesi yumuşatıldı (D-12), göç ve EEVDF cümleleri slayttaki gibi koşullu yazıldı (D-15, D-18).</p>
+<p>Okunan kaynaklar: <code>CSE513-Lecture02.pdf</code> (67 slayt, metin), okuma kitapçığı <code>lecture-02-reading.html</code> (16 bölüm; §15'teki 10 çalışılmış soru dahil), <code>lecture-02.html</code> (öğrenme hedefleri), <code>kod/cpu-work.c</code>, OSC-10 ch5 slayt metinleri, OSTEP "Scheduling: Introduction" (7) ve "MLFQ" (8) bölümleri ile bölüm sonu "Homework" soruları.</p>
+<p>Kısaltmalar: <code>[sl. N]</code> = hocanın slaytı; <code>[Okuma §N]</code> = okuma kitapçığının bölümü; <code>[S-N]</code> = okumanın §15'indeki N numaralı çalışılmış soru; <code>[OSC ch5 sl. N]</code> = Silberschatz 10e bölüm 5 slaytı; <code>[OSTEP 7]</code>, <code>[OSTEP 8]</code> = OSTEP bölümleri. "<span class="ek">ek bilgi</span>" = hocanın materyalinde yok, genel bilgi ya da bizim türetmemiz.</p>
+<p><strong>Kodla doğrulama.</strong> Sayısal cevaplar (Gantt, C/T/W/R tablosu, ortalama, RTA iterasyonu, oran) uzmanın birim adımlı simülatöründen üretildi ve <code>assert</code>'lerle metne karşı kontrol edildi; simülatör önce hocanın bütün örneklerini yeniden üretti (FCFS 24/3/3 iki sıra, SJF 6/8/7/3, SRTF 8/4/9/5, RR q = 4, öncelik 8.2, OSC sl. 27 öncelik + RR, MLFQ 30 birim, RM Example A ve B, EDF Example B, RTA 35 → 60 → 85, harmonik (1,2),(2,4)). Uzmanın kodla ürettiği sorular: Q10–Q49 ve Q53. Denetçi bunları sıfırdan yazdığı ayrı bir simülatörle (birim adımlı FCFS/SJF/SRTF/RR/öncelik, MLFQ, RM/EDF, RTA) yeniden hesapladı; Q10–Q22, Q24–Q44 ve Q46–Q48'in sayıları birebir tuttu, hiçbir sayı çürütülmedi. Editör, düzeltmelerin dokunduğu iki yeri üçüncü bir küçük betikle ayrıca doğruladı: Q40'taki EDF izi ve eşitlik anları (6, 9, 13, 15) ile Q26'daki RR en büyük beklemesi (P2 ve P4, 13). Q1–Q9, Q23, Q45, Q50–Q52 kavramsaldır (Q23 ve Q45 sayılarını başka sorulardan alır).</p>
+<p><strong>Simülatörün sabit kuralları (sorularda da yazılı):</strong> tek CPU (aksi söylenmedikçe); aralıklar <code>[başlangıç, bitiş)</code>; W = ready kuyruğunda geçen süre (bloklu I/O süresi sayılmaz); R = ilk CPU hizmeti − varış; switch maliyeti varsa switch süresi, içeri alınan işin W'sine sayılır ve S switch bittikten sonraki ilk yürütme anıdır.</p>
+<hr />
+<h2 id="0-hocann-soru-uslubu">0. Hocanın soru üslubu<a class="headerlink" href="#0-hocann-soru-uslubu" title="Permanent link">#</a></h2>
+<p>Ders 2 slaytları tek bir cümle kalıbını tekrar ediyor: <strong>"X, Y'yi kanıtlamaz / gerektirmez."</strong> Mutlak bir iddiaya ("always", "proves", "guarantees") karşı "not necessarily" demek yetmez; eksik varsayımı adlandırmak gerekir: "not necessarily, because the claim depends on …" <span class="ek">ek bilgi, tahmin: hocanın puanlama anahtarı elimizde yok</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Slayt</th>
+<th>Hocanın "kanıtlamaz" cümlesi (özet)</th>
+<th>Sınavdaki kalıp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="src">sl. 4</span></td>
+<td>Tek tamircinin arabalar arasında gidip gelmesi paralellik değildir</td>
+<td>"Interleaving on one resource is concurrency, not parallelism."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 5</span></td>
+<td>Fotoğraf, her acil işin işi hemen kesmesi gerektiğini kanıtlamaz</td>
+<td>"Priority is a policy choice; it does not establish safe preemption or a deadline."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 10</span></td>
+<td>Histogram bizim makinelerimizin ölçümü değil</td>
+<td>"A textbook distribution is an illustration, not a measurement."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 13</span></td>
+<td>İlk zaman çizelgeleri sıfır overhead varsayar</td>
+<td>"This timeline assumes zero dispatch cost."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 14</span></td>
+<td>Interrupt bir scheduling fırsatıdır, başka task'ın çalıştığının kanıtı değildir</td>
+<td>"An interrupt is a scheduling opportunity, not proof of a switch."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 16</span></td>
+<td>Düşük ortalama bekleme adaleti ve deadline'ı göstermez</td>
+<td>"Fairness and deadlines cannot be inferred from a low mean."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 26</span></td>
+<td>Tahmin ne bilinen gelecek burst ne de WCET sınırıdır</td>
+<td>"An estimate is not a known future burst nor a WCET bound."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 32</span></td>
+<td>Kuantum bitişi, başka runnable iş yoksa switch gerektirmez</td>
+<td>"Quantum expiry need not cause a task-to-task switch."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 35</span></td>
+<td>%100 utilization iyi yanıt süresi demek değildir</td>
+<td>"Full utilization does not imply responsiveness."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 46</span></td>
+<td>Affinity CPU'yu ayırmaz, paraziti kaldırmaz</td>
+<td>"Affinity constrains eligible CPUs; it does not reserve one."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 47</span></td>
+<td>Hızlı ortalama, en kötü durum garantisi değildir</td>
+<td>"A fast average does not establish a worst-case guarantee."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 52</span></td>
+<td>Sınırın üstünde olmak başarısızlık demek değildir</td>
+<td>"The test is sufficient, not necessary."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 60</span></td>
+<td>EEVDF virtual deadline uygulamaya söz değildir</td>
+<td>"A virtual deadline is not a wall-clock promise."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 62</span></td>
+<td>PSR örneklenmiş bir CPU numarasıdır</td>
+<td>"PSR is a sample, not proof of continuous execution or reservation."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 63</span></td>
+<td>Tek bir ölçüm algoritmayı belirlemez</td>
+<td>"A single result cannot identify the scheduling algorithm."</td>
+</tr>
+<tr>
+<td><span class="src">sl. 66</span></td>
+<td>Dört gizli varsayım</td>
+<td>Bkz. A.1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>"Varsayımı söyle" kuralı.</strong> Hoca her örnekte varsayımları ayrı bir slayta yazıyor (<span class="src">sl. 18</span>, <span class="src">sl. 27</span>, <span class="src">sl. 50</span>) ve "keep the workload and assumptions fixed" diyor <span class="src">sl. 35</span>. Bir iz sorusuna cevaba şu satırla başla: "Assumptions: one CPU, zero switch cost, [start, end) intervals, ties broken by …". Sorudaki varsayımı değiştirip başka cevap vermek puan kaybettirir; soruda olmayan bir varsayıma ihtiyaç varsa açıkça yaz.</p>
+<p><strong>Eşitlik (tie) kuralları.</strong> Hocanın kuralları: eşit öncelikli eşzamanlı varışlar verilen kuyruk sırasıyla <span class="src">sl. 18</span>; SRTF'de kalan süre tam eşitse çalışan iş kalır <span class="src">sl. 27</span>; RR'de kuantum sınırına denk gelen varışın sırası belirtilmelidir <span class="src">Okuma §8</span>; öncelikte sayı yönü (küçük = yüksek) girdinin parçasıdır <span class="src">sl. 37; Okuma §9</span>. Bu bankadaki sorular, hocanın vermediği durumlarda şu kuralları <strong>soruda yazarak</strong> kullanır: SJF/SRTF/öncelikte eşitlik → önce gelen, sonra küçük indeks; EDF'de eşit mutlak deadline → çalışan iş kalır; eşit deadline'lı işlerin hiçbiri çalışmıyorsa önce release edilen (o da eşitse küçük indeks). "Çalışan kalır" kuralı tek başına yetmez: eşitlerden hiçbiri çalışmıyorsa bir yedek kural gerekir, yoksa çizelge tek değildir <span class="src">Okuma §15</span>.</p>
+<p><strong>İki farklı R.</strong> Derste R iki anlam taşıyor: zaman çizelgelerinde <strong>response = ilk CPU hizmeti − varış</strong> <span class="src">sl. 16–17</span>, RTA'da <strong>release'ten tamamlanmaya</strong> süre <span class="src">sl. 54</span>. Cevapta hangisini kullandığını yaz.</p>
+<p><strong>İşe yarar İngilizce kalıplar:</strong></p>
+<ul>
+<li>"Best according to which criterion, with what arrival information and burst knowledge?" <span class="src">sl. 66</span></li>
+<li>"Compare remaining demand, not the original burst." <span class="src">sl. 27</span></li>
+<li>"Blocked time is part of turnaround but not ready-queue waiting." <span class="src">sl. 17</span></li>
+<li>"Response zero does not imply waiting zero: the job can be preempted later." <span class="src">sl. 35; S-1</span></li>
+<li>"The Liu–Layland bound is sufficient, not necessary; RTA decides." <span class="src">sl. 52–54</span></li>
+<li>"Under one CPU, independent, fully preemptible tasks with D = T, U ≤ 1 is the exact EDF condition; with D &lt; T utilization alone is insufficient." <span class="src">sl. 56</span></li>
+<li>"Priority cannot supply a missing part (or a held lock)." <span class="src">sl. 8, 58</span></li>
+<li>"Units expose the meaning of the result." <span class="src">sl. 65</span></li>
+</ul>
+<p><strong>Öncelik.</strong> Hocanın slaytına ve okumasına dayanan sorular çekirdektir. Şunlar <strong>bonus/ileri</strong> <span class="ek">ek bilgi formülü, OSTEP ödevi ya da Linux iç ayrıntısı</span>: Q15(b) ve Q46'daki (n − 1)q + n·s türetmesi, Q16(b)'deki "L − Lq = utilization" notu, Q18 (OSTEP 7 ödevi), Q47(a)'daki nice ağırlık tablosu (1024/110), Q49 (OSTEP 8 ödevi: gaming, boost periyodu). Zamanın azsa önce çekirdeği çalış.</p>
+<hr />
+<h2 id="a-kapsam-haritas">A) Kapsam haritası<a class="headerlink" href="#a-kapsam-haritas" title="Permanent link">#</a></h2>
+<h3 id="a1-merkez-sl-66daki-dort-gizli-varsaym-ve-sl-35-checkpointi">A.1 Merkez: sl. 66'daki dört gizli varsayım ve sl. 35 checkpoint'i<a class="headerlink" href="#a1-merkez-sl-66daki-dort-gizli-varsaym-ve-sl-35-checkpointi" title="Permanent link">#</a></h3>
+<p>Ders 2'nin iki "tekrar" slaytı sınavın omurgası. Bankadaki soruların çoğu bu altı cümleden birine bağlanır.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>İddia</th>
+<th>Gizli varsayım / doğrusu</th>
+<th>Hocanın kanıt slaytları</th>
+<th>Bankadaki sorular</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"SJF is always best." <span class="src">sl. 66</span></td>
+<td>Hangi ölçüte göre? SJF, birlikte hazır, burst'leri bilinen, sıfır overhead'li sabit iş kümesinde <strong>ortalama beklemeyi</strong> en aza indirir. Gelecek varışlar, bilinmeyen burst'ler, açlık ve en kötü bekleme ayrı sorulardır.</td>
+<td>22, 24, 26, 34</td>
+<td>Q11, Q20, Q26, Q34, Q35, Q45</td>
+</tr>
+<tr>
+<td>2</td>
+<td>"U &lt; 1 proves RM deadlines." <span class="src">sl. 66</span></td>
+<td>Yanlış: Example B U = 0.9375 ile 80'de kaçırır. RM için yeterli test n(2^(1/n) − 1); kesin karar RTA ile.</td>
+<td>52–54</td>
+<td>Q17, Q38, Q39, Q40, Q42</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Pinning reserves a CPU." <span class="src">sl. 66</span></td>
+<td>Yanlış: affinity yerleşimi kısıtlar, aynı CPU'da başka iş ve interrupt çalışabilir.</td>
+<td>46, 62</td>
+<td>Q7, Q47, Q52</td>
+</tr>
+<tr>
+<td>4</td>
+<td>"EDF and EEVDF mean the same guarantee." <span class="src">sl. 66</span></td>
+<td>Yanlış: EDF uygulamanın mutlak deadline'ı; EEVDF adil sınıfta sanal hizmet deadline'ı. SCHED_DEADLINE ayrı bir politika.</td>
+<td>55–56, 59–60</td>
+<td>Q8, Q45</td>
+</tr>
+<tr>
+<td>5</td>
+<td>"Response 0 ⇒ waiting 0?" <span class="src">sl. 35</span></td>
+<td>Hayır: iş hemen başlar, sonra preempt edilip ready'de bekler (SRTF'de P1: R = 0, W = 9).</td>
+<td>29, 35; S-1</td>
+<td>Q21, Q23, Q28</td>
+</tr>
+<tr>
+<td>6</td>
+<td>"100% utilization ⇒ good responsiveness?" <span class="src">sl. 35</span></td>
+<td>Hayır: tek bir uzun iş CPU'yu dolu tutarken kısa işler bekler.</td>
+<td>16, 21, 35</td>
+<td>Q11, Q23, Q53</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a2-bolum-bolum-harita">A.2 Bölüm bölüm harita<a class="headerlink" href="#a2-bolum-bolum-harita" title="Permanent link">#</a></h3>
+<p>Bölüm numaraları anlatımın planıdır. Vurgu ölçütü: <strong>Yüksek</strong> = hocanın çalışılmış örneği, checkpoint'i ya da sl. 66'da var. <strong>Orta</strong> = slaytta açıkça anlatılmış. <strong>Düşük</strong> = tek cümle ya da yalnız OSC/OSTEP.</p>
+<table>
+<thead>
+<tr>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Kavram</th>
+<th>Vurgu</th>
+<th>Olası soru tipi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 Tamirhane ve burst'ler</td>
+<td>2–5</td>
+<td>Tamirci = CPU, araba = process; multiprogramming bekleme ile işi örtüştürür; iki tamirci = paralel kapasite; öncelik bir politika</td>
+<td>Orta</td>
+<td>Kısa cevap, "kanıtlar mı"</td>
+</tr>
+<tr>
+<td></td>
+<td>6–8</td>
+<td>Sonraki CPU burst'ü (uygulama ömrü değil); uzun işin açlığı; ready vs blocked, öncelik eksik parçayı getirmez</td>
+<td>Yüksek</td>
+<td>Tanım ayrımı</td>
+</tr>
+<tr>
+<td></td>
+<td>9–10</td>
+<td>CPU/I/O burst döngüsü; iş yükü fazdan faza CPU-bound ya da I/O-bound; histogram ölçüm değil</td>
+<td>Orta</td>
+<td>Kısa cevap</td>
+</tr>
+<tr>
+<td>1 Scheduler, dispatcher, preemption</td>
+<td>11–13</td>
+<td>Scheduler seçer, dispatcher aktarır; dispatch latency; ilk izler sıfır overhead</td>
+<td>Orta</td>
+<td>Tanım, mekanizma</td>
+</tr>
+<tr>
+<td></td>
+<td>14–15</td>
+<td>Karar anları (block/terminate; timer/wake-up); interrupt fırsattır; nonpreemptive vs preemptive; preemption paylaşılan durum hatalarını açığa çıkarır</td>
+<td>Yüksek</td>
+<td>Sınıflandırma</td>
+</tr>
+<tr>
+<td>2 Ölçütler</td>
+<td>16–17</td>
+<td>Utilization, throughput, turnaround, waiting, response; T = C − A, W = T − B, R = S − A; I/O'da bloklu süre W'ye girmez</td>
+<td>Çok yüksek</td>
+<td>Hesap (her izde)</td>
+</tr>
+<tr>
+<td>3 FCFS</td>
+<td>18–21</td>
+<td>Varsayım listesi, [start, end); 24/3/3 iki sıra (17 ve 3); convoy effect</td>
+<td>Yüksek</td>
+<td>Gantt + tablo; convoy açıklaması</td>
+</tr>
+<tr>
+<td>4 SJF ve tahmin</td>
+<td>22–24</td>
+<td>SJF ortalama beklemeyi en aza indirir (koşullu); değiş-tokuş argümanı; açlık</td>
+<td>Yüksek</td>
+<td>İz, kanıt, karşı örnek</td>
+</tr>
+<tr>
+<td></td>
+<td>25–26</td>
+<td>Exponential averaging τ = α·t + (1 − α)·τ; α'nın etkisi; tahmin ≠ WCET</td>
+<td>Yüksek</td>
+<td>Sayısal dizi</td>
+</tr>
+<tr>
+<td>5 SRTF</td>
+<td>27–29</td>
+<td>Kalan süreyle kıyas; eşitlikte çalışan kalır; W ve R ayrı</td>
+<td>Çok yüksek</td>
+<td>Varışlı Gantt + tablo</td>
+</tr>
+<tr>
+<td>6 RR</td>
+<td>30–31</td>
+<td>Kuantum, kuyruk sonu; (n − 1)q sınırı ve koşulları</td>
+<td>Yüksek</td>
+<td>Gantt, sınır hesabı</td>
+</tr>
+<tr>
+<td></td>
+<td>32–33</td>
+<td>q/(q + s); kuantum bitişi switch değildir; turnaround q'da monoton değil; büyük q → FCFS</td>
+<td>Yüksek</td>
+<td>Oran hesabı, tarama</td>
+</tr>
+<tr>
+<td></td>
+<td>34–35</td>
+<td>Aynı iş yükünde politika karşılaştırması; birinci yarı checkpoint'i</td>
+<td>Çok yüksek</td>
+<td>Karşılaştırma, "kanıtlar mı"</td>
+</tr>
+<tr>
+<td>7 Öncelik ve MLFQ</td>
+<td>36–39</td>
+<td>Öncelik (küçük = yüksek bu örnekte; Linux RT API ters yönde); preemptive/nonpreemptive; açlık, aging; aynı seviyede RR açlığı önlemez</td>
+<td>Yüksek</td>
+<td>Gantt (8.2 varyantı), kısa cevap</td>
+</tr>
+<tr>
+<td></td>
+<td>40–42</td>
+<td>Multilevel queue; MLFQ Q0 = 8, Q1 = 16, Q2 = FCFS; 30 birimlik yalnız iş 30'da biter; toplam allotment muhasebesi; boost</td>
+<td>Yüksek</td>
+<td>MLFQ izi, oyun (gaming)</td>
+</tr>
+<tr>
+<td>8 Çok çekirdek</td>
+<td>43–46</td>
+<td>Thread'ler zamanlanır; ortak kuyruk vs CPU başına kuyruk; load balancing vs affinity; logical CPU ≠ çekirdek; NUMA; affinity rezervasyon değildir</td>
+<td>Orta</td>
+<td>Kısa cevap, küçük hesap</td>
+</tr>
+<tr>
+<td>9 Real-time temelleri</td>
+<td>47–50</td>
+<td>Hard vs soft; r, C, D, T, d = r + D; task vs job; gecikme kaynakları; RM/EDF modelinin varsayımları</td>
+<td>Yüksek</td>
+<td>Tanım, varsayım listesi</td>
+</tr>
+<tr>
+<td>10 RM ve RTA</td>
+<td>51–54</td>
+<td>RM sabit öncelik; Example A; Liu–Layland (yeterli); harmonik U = 1; Example B kaçırma; RTA 35 → 60 → 85</td>
+<td>Çok yüksek</td>
+<td>İz, test, RTA iterasyonu</td>
+</tr>
+<tr>
+<td>11 EDF ve priority inversion</td>
+<td>55–58</td>
+<td>EDF mutlak deadline; U ≤ 1 kesin (koşullu); D &lt; T'de yetmez; Example B izi; priority inversion, inheritance</td>
+<td>Çok yüksek</td>
+<td>İz, karşı örnek, inversion zaman çizelgesi</td>
+</tr>
+<tr>
+<td>12 Linux</td>
+<td>59–63</td>
+<td>CFS tarihsel arka plan, EEVDF geçişi Linux 6.6 ile başladı (ayrıntı sürüme bağlı); SCHED_DEADLINE; nice −20…+19; SCHED_FIFO/RR; ps/chrt/taskset; cpu-work deneyi</td>
+<td>Orta</td>
+<td>Çıktı yorumlama, deney tasarımı</td>
+</tr>
+<tr>
+<td>13 Değerlendirme ve Little</td>
+<td>64–67</td>
+<td>Deterministik / simülasyon / ölçüm; ortalamadan fazlasını karşılaştır; Lq = λ·Wq, sınırların tutarlılığı; aşırı yükte kararlı durum yok; sl. 66</td>
+<td>Yüksek</td>
+<td>Little hesabı, gizli varsayım</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a3-oscde-olup-hoca-slaytnda-olmayanlar">A.3 OSC'de olup hoca slaytında olmayanlar<a class="headerlink" href="#a3-oscde-olup-hoca-slaytnda-olmayanlar" title="Permanent link">#</a></h3>
+<p>Bunlar OSC ch5 slaytlarında var, hocanın 67 slaytında yok ya da yalnız bir cümleyle geçiyor. Önce yukarıdakileri bitir:</p>
+<ul>
+<li>Contention scope (PCS/SCS) ve Pthread scheduling API'si <span class="src">OSC ch5 sl. 33–36</span>. Hoca yalnız "user-level runtime ayrı karar verebilir" diyor <span class="src">sl. 43</span>.</li>
+<li>Chip multithreading (CMT), memory stall ve iki seviyeli zamanlama <span class="src">OSC ch5 sl. 39–42</span>; coarse/fine-grained multithreading yalnız OSC kitap metninde <span class="ek">ek bilgi</span>. Hoca yalnız "iki logical CPU iki çekirdek değildir" diyor <span class="src">sl. 45</span>.</li>
+<li>Heterogeneous multiprocessing; proportional share scheduling <span class="src">OSC ch5 sl. 54</span>; POSIX real-time API kodu <span class="src">OSC ch5 sl. 55–57</span>.</li>
+<li>Linux 2.5 O(1), CFS ayrıntıları ve performansı, Windows ve Solaris örnekleri <span class="src">OSC ch5 sl. 58–72</span>. Hoca CFS'yi "tarihsel arka plan" sayıyor <span class="src">sl. 59</span>.</li>
+<li>Kuyruk modelleri ve uygulama ile değerlendirme <span class="src">OSC ch5 sl. 75, 79</span>. Little yasası hocada var <span class="src">sl. 65</span>, kuyruk teorisi formülleri yok.</li>
+<li>OSTEP'in MLFQ kuralları (Rule 1–5) ve "gaming" örneği <span class="src">OSTEP 8</span>: hoca fikri veriyor <span class="src">sl. 42</span>, kural numaralarını vermiyor.</li>
+</ul>
+<hr />
+<h2 id="b-kavram-yanlglar">B) Kavram yanılgıları<a class="headerlink" href="#b-kavram-yanlglar" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Yanılgı</th>
+<th>Doğrusu</th>
+<th>Kaynak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>"Timer interrupt geldi, demek ki başka task çalıştı."</td>
+<td>Interrupt bir scheduling fırsatıdır. Scheduler mevcut task'ı tutabilir.</td>
+<td><span class="src">sl. 14; Okuma §3</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>"Response time 0 ise waiting de 0'dır."</td>
+<td>İş hemen başlar, sonra preempt edilip ready'de bekleyebilir. SRTF örneğinde P1: R = 0, W = 9. Tersi doğrudur: tek burst'lük işte W = 0 ise R = 0.</td>
+<td><span class="src">sl. 29, 35; S-1</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>"CPU %100 meşgulse sistem iyi yanıt veriyordur."</td>
+<td>Tek uzun iş CPU'yu dolu tutarken kısa işler bekler. Utilization kaynak kullanımıdır, yanıt değil.</td>
+<td><span class="src">sl. 16, 35</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td>"Ortalama bekleme düşükse politika adil ve deadline'lara uygundur."</td>
+<td>Ortalama birkaç çok uzun beklemeyi gizler. Adalet dağılım, deadline tek tek işler hakkında bir sorudur.</td>
+<td><span class="src">sl. 10, 16; Okuma §4</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>"I/O'lu işte de W = T − B (CPU)."</td>
+<td>Turnaround bloklu süreyi içerir. Bloklu süre ready-queue beklemesi değildir. W = T − CPU − (I/O hizmeti + cihaz kuyruğunda bekleme); cihaz paylaşılmıyorsa W = T − CPU − I/O.</td>
+<td><span class="src">sl. 17; Okuma §4</span></td>
+</tr>
+<tr>
+<td>6</td>
+<td>"SJF her zaman en iyisidir."</td>
+<td>Hangi ölçüte göre? Optimallik iddiası ortalama bekleme içindir ve birlikte hazır, burst'leri bilinen, sıfır overhead'li sabit küme varsayımlarına dayanır; bunlar bozulunca garanti yoktur. Açlık ve gelecek varışlar ayrı.</td>
+<td><span class="src">sl. 22, 66</span></td>
+</tr>
+<tr>
+<td>7</td>
+<td>"SRTF'de yeni gelen işi çalışanın orijinal burst'üyle karşılaştırırım."</td>
+<td>Çalışanın <strong>kalan</strong> süresiyle karşılaştırılır.</td>
+<td><span class="src">sl. 27; Okuma §7</span></td>
+</tr>
+<tr>
+<td>8</td>
+<td>"SJF'de 'kısa iş' uygulamanın toplam ömrüdür."</td>
+<td>Gereken, <strong>sonraki CPU burst'ü</strong>dür. Uzun yaşayan etkileşimli program çok kısa burst'lerden oluşabilir.</td>
+<td><span class="src">sl. 6; Okuma §2</span></td>
+</tr>
+<tr>
+<td>9</td>
+<td>"Exponential average gelecek burst'ü verir, WCET olarak kullanılabilir."</td>
+<td>Tipik talebin tahminidir. Ne bilinen gelecek ne de güvenli üst sınırdır.</td>
+<td><span class="src">sl. 26; Okuma §6</span></td>
+</tr>
+<tr>
+<td>10</td>
+<td>"Kuantum küçüldükçe ortalama turnaround hep iyileşir."</td>
+<td>İlişki monoton değildir. Çok büyük q FCFS'ye yaklaşır, çok küçük q switch'e zaman harcar.</td>
+<td><span class="src">sl. 33; Okuma §8</span></td>
+</tr>
+<tr>
+<td>11</td>
+<td>"Her kuantum bitişi bir context switch'tir."</td>
+<td>Başka runnable iş yoksa aynı task devam eder. Kitaptaki sınırlar olası preemption noktalarıdır.</td>
+<td><span class="src">sl. 32; Okuma §8</span></td>
+</tr>
+<tr>
+<td>12</td>
+<td>"RR'de bir task'ın iki turu arasındaki boşluk her zaman (n − 1)q'dur."</td>
+<td>Yalnız n eşit, sürekli runnable eş, sıfır overhead, dış varış yok iken. Overhead, yüksek öncelikli iş ya da değişen ready kümesi sınırı değiştirir.</td>
+<td><span class="src">sl. 30; Okuma §8</span></td>
+</tr>
+<tr>
+<td>13</td>
+<td>"Her öncelik seviyesinde RR kullanırsam açlık olmaz."</td>
+<td>Üst seviyelerden sonsuz iş gelirse alt seviye yine aç kalır. Çare aging/boost.</td>
+<td><span class="src">sl. 39, 40</span></td>
+</tr>
+<tr>
+<td>14</td>
+<td>"Bloklu bir task'a yüksek öncelik verirsem daha çabuk ilerler."</td>
+<td>Eksik parça (I/O, kilit) öncelikle gelmez. Öncelik yalnız ready işler arasında seçim yapar.</td>
+<td><span class="src">sl. 8, 58; Okuma §2</span></td>
+</tr>
+<tr>
+<td>15</td>
+<td>"U &lt; 1 ise RM bütün deadline'ları tutturur."</td>
+<td>Yanlış. Example B: U = 0.9375, P2 80'de kaçırır (85'te biter).</td>
+<td><span class="src">sl. 53, 66; S-4</span></td>
+</tr>
+<tr>
+<td>16</td>
+<td>"U, Liu–Layland sınırını aşarsa RM kaçırır."</td>
+<td>Test yeterlidir, gerekli değildir. Harmonik küme U = 1 ile bütün deadline'ları tutar. Karar RTA ile.</td>
+<td><span class="src">sl. 52; S-5</span></td>
+</tr>
+<tr>
+<td>17</td>
+<td>"EDF için U ≤ 1 her zaman yeter."</td>
+<td>Tek işlemci, bağımsız, tam preemptible, D = T modelinde U ≤ 1 EDF için kesin koşuldur; D &lt; T'de kullanım tek başına yetmez. D &lt; T, blocking, overhead, jitter, çok işlemci daha zengin analiz ister.</td>
+<td><span class="src">sl. 56; Okuma §13</span></td>
+</tr>
+<tr>
+<td>18</td>
+<td>"taskset ile CPU'ya bağladım, o CPU artık benim." / "PSR = 3 gördüm, hep 3'te çalışıyor."</td>
+<td>Affinity uygun CPU'ları kısıtlar, rezervasyon yapmaz. PSR anlık bir örnektir.</td>
+<td><span class="src">sl. 46, 62, 66; S-7</span></td>
+</tr>
+<tr>
+<td>19</td>
+<td>"EEVDF'nin virtual deadline'ı ile EDF'nin deadline'ı aynı garantidir."</td>
+<td>EEVDF adil sınıfta hizmet muhasebesi ve gecikme mekanizmasıdır. Duvar saati sözü vermez. EDF'li Linux politikası SCHED_DEADLINE'dır.</td>
+<td><span class="src">sl. 60, 66</span></td>
+</tr>
+<tr>
+<td>20</td>
+<td>"Bir çekirdekte iki hardware thread = iki çekirdeğin verimi."</td>
+<td>Hardware thread'ler yürütme kaynaklarını paylaşır. Kazanç neye çekiştiklerine bağlıdır.</td>
+<td><span class="src">sl. 45; Okuma §10</span></td>
+</tr>
+<tr>
+<td>21</td>
+<td>"Öncelik sayısı her yerde aynı yönde okunur." / "nice −20 bir deadline garantisidir."</td>
+<td>Kitap örneğinde küçük = yüksek; Linux RT API'de tersi. Nice göreli hizmeti etkiler, sert tamamlanma sınırı vermez.</td>
+<td><span class="src">sl. 37, 61</span></td>
+</tr>
+<tr>
+<td>22</td>
+<td>"Ortalama yürütme süresi hızlıysa deadline garantilidir." / "Gözlenen en büyük süre WCET'tir."</td>
+<td>Ortalama en kötü durumu göstermez. Gözlenen en büyük değer yalnız yapılan koşular hakkında kanıttır.</td>
+<td><span class="src">sl. 47; S-8</span></td>
+</tr>
+<tr>
+<td>23</td>
+<td>"RTA'daki R ile ölçütlerdeki response aynı şeydir."</td>
+<td>RTA'da R release'ten tamamlanmaya kadardır. Ölçütlerde R ilk CPU hizmetine kadardır.</td>
+<td><span class="src">sl. 16, 54</span></td>
+</tr>
+<tr>
+<td>24</td>
+<td>"MLFQ'da kuyruk değiştirmek iş ekler; 30 birimlik iş 30'dan geç biter."</td>
+<td>Yalnız iş, overhead sıfırsa 8 + 16 + 6 ile tam 30'da biter. Gecikmeyi kuyruk değişimi değil, rekabet yaratır.</td>
+<td><span class="src">sl. 42; Okuma §9</span></td>
+</tr>
+<tr>
+<td>25</td>
+<td>"Little yasasında kuyruktaki sayıyı alıp sistemdeki süreyi bulurum."</td>
+<td>Sınırlar eşleşmeli: Lq ↔ Wq, L (çalışan dahil) ↔ W. Sınırsız büyüyen kuyrukta kararlı ortalama yoktur.</td>
+<td><span class="src">sl. 65; Okuma §15</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="c-soru-bankas">C) Soru bankası<a class="headerlink" href="#c-soru-bankas" title="Permanent link">#</a></h2>
+<p>Soru metinleri Türkçe; her sorunun altında sınavdaki İngilizce kalıbı <code>&gt;</code> ile verilir. Cevaplar İngilizce (sınav İngilizce). Gantt'larda <code>idle</code> = CPU boşta, <code>cs</code> = context switch maliyeti. Real-time izlerinde <code>P2#1</code> = P2 task'ının 1. job'u.</p>
+<h3 id="seviye-1-tanm-ve-ksa-cevap">Seviye 1 — Tanım ve kısa cevap<a class="headerlink" href="#seviye-1-tanm-ve-ksa-cevap" title="Permanent link">#</a></h3>
+<p><strong>Q1.</strong> <em>Zorluk 1 · Bölüm 2 · Tanım · Kaynak: sl. 16–17; Okuma §4</em></p>
+<p>Beş zamanlama ölçütünü tanımla. Turnaround, waiting ve response'u A, S, C, B ile formül olarak yaz ve response'un uygulamanın kullanıcıya görünen ilk cevabıyla neden aynı olmayabileceğini söyle.</p>
+<blockquote>
+<p>EN: Define utilization, throughput, turnaround, waiting and response time. Give formulas in terms of arrival A, first start S, completion C and CPU demand B.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Utilization = busy time / elapsed time. Throughput = completed jobs per unit time. Turnaround T = C − A (arrival to completion). Waiting W = time spent ready but not running; for one CPU-only burst W = T − B. Response R = S − A, i.e. arrival to first CPU service in our exercises; an application's first <em>visible</em> response may need more work after that first service, so it may occur later. Utilization and throughput describe resource use and output; they do not say whether an individual request was served promptly, and none of these means alone establishes fairness or deadline satisfaction.</p>
+<p><strong>Ölçüt.</strong> Beş tanım + üç formül. "Response = first CPU service, visible response later olabilir" notu yoksa −1. W'yi "T − B" diye her durumda geçerli yazmak (I/O şartını söylememek) −1.</p>
+</details><hr />
+<p><strong>Q2.</strong> <em>Zorluk 1 · Bölüm 1 · Tanım ayrımı · Kaynak: sl. 11–13; Okuma §3</em></p>
+<p>Scheduler, dispatcher ve dispatch latency'yi ayır. Tamirhane benzetmesinde her birinin karşılığı nedir? Neden ilk zaman çizelgeleri sıfır overhead varsayar?</p>
+<blockquote>
+<p>EN: Distinguish the scheduler from the dispatcher. What is dispatch latency, and why do the first timelines assume zero overhead?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The scheduler applies a policy to eligible (ready) work and selects the next task (the service desk deciding which car gets the mechanic). The dispatcher performs the transfer so that the chosen task actually executes: save/restore context, switch execution environment (the mechanic receiving the job). Dispatch latency is the delay in stopping one task and starting another; it consumes time without advancing the application and can disturb cache state. Selection policy and switch mechanism answer different questions, so the first timelines set overhead to zero to isolate policy; later examples restore a stated switch cost.</p>
+<p><strong>Ölçüt.</strong> Seçme vs aktarma ayrımı (2 puan), latency tanımı, "policy vs mechanism" cümlesi. Dolaylı maliyet (cache) bonus.</p>
+</details><hr />
+<p><strong>Q3.</strong> <em>Zorluk 1 · Bölüm 1 · Sınıflandırma · Kaynak: sl. 14–15; Okuma §3</em></p>
+<p>Scheduling kararı hangi anlarda verilebilir? Hangileri nonpreemptive bir politikada da karar anıdır? "Timer interrupt geldi, demek ki başka process çalıştı" cümlesini değerlendir.</p>
+<blockquote>
+<p>EN: When can a scheduling decision occur? Which occasions exist even under a nonpreemptive policy? Does a timer interrupt prove that a different task ran?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (1) The running task blocks; (2) it terminates — in both cases another ready task must be chosen, so these occur under nonpreemptive policies too. (3) A timer expires; (4) a task wakes up or arrives — here a preemptive policy <em>may</em> choose to preempt the current task. Nonpreemptive execution keeps the CPU until the current burst finishes or blocks. A timer interrupt is a scheduling opportunity, not proof that a different task ran: the scheduler may keep the current task (e.g. no other ready task, or the current one still wins). Preemption returns a still-runnable task to the ready queue; it later resumes from its saved context, and the extra interleavings can expose shared-state bugs.</p>
+<p><strong>Ölçüt.</strong> Dört an + hangi ikisinin nonpreemptive'de de olduğu. "Not proof" cümlesi yoksa en çok yarım puan.</p>
+</details><hr />
+<p><strong>Q4.</strong> <em>Zorluk 1 · Bölüm 0 · Tanım ayrımı · Kaynak: sl. 6, 8, 9; Okuma §2–3</em></p>
+<p>Parça bekleyen araba ile tamirci bekleyen araba OS'de neye karşılık gelir? Parça bekleyen arabaya öncelik vermek işe yarar mı? SJF'nin "kısa iş"i neyin uzunluğudur?</p>
+<blockquote>
+<p>EN: Map "a car waiting for a part" and "a car waiting for the mechanic" to task states. Does raising the priority of the first help? What duration does SJF need?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> A car ready for the mechanic is a runnable (ready) task awaiting CPU service; a car waiting for an unavailable part is a blocked task. Priority only orders ready work, so raising a blocked task's priority cannot supply the missing part (input, device completion); its dependency must be satisfied first. The same task alternates between these states during its lifetime, and a workload can be CPU-bound in one phase and I/O-bound in another. SJF needs the length of the <strong>next CPU burst</strong>, not the total lifetime: a long-lived interactive application can consist of many short bursts.</p>
+<p><strong>Ölçüt.</strong> Ready ↔ tamirci bekleyen, blocked ↔ parça bekleyen; "priority cannot supply the part"; "next CPU burst, not lifetime". Üçünden biri eksikse −1.</p>
+</details><hr />
+<p><strong>Q5.</strong> <em>Zorluk 1 · Bölüm 0 · "Kanıtlar mı" · Kaynak: sl. 3–4, 9; Okuma §1</em></p>
+<p>Tek tamircinin üç araba arasında gidip gelmesi paralel yürütme midir? İkinci tamirci neyi değiştirir, neyi değiştirmez? Multiprogramming bekleyen cihazı hızlandırır mı?</p>
+<blockquote>
+<p>EN: Does one mechanic alternating among cars constitute parallel execution? What does a second mechanic add? Does multiprogramming accelerate the waiting device?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> No. One mechanic alternating among cars is concurrency and multiprogramming; it does not become parallel execution on that one resource. A second mechanic adds parallel capacity: two ready cars can progress simultaneously. It does not remove dependencies: shared tools (one lift) can still limit progress. Multiprogramming overlaps one task's wait with another task's useful CPU work; it does not make the device or the missing part arrive sooner.</p>
+<p><strong>Ölçüt.</strong> Concurrency vs parallelism ayrımı; ortak araç (kaynak çekişmesi) sınırı; "does not accelerate the device". Mutlak "iki tamirci iki kat hız" cümlesi −1.</p>
+</details><hr />
+<p><strong>Q6.</strong> <em>Zorluk 1 · Bölüm 9 · Tanım · Kaynak: sl. 47–48; Okuma §11</em></p>
+<p>Hard ve soft real-time'ı ayır. Task ile job farkı nedir? r, C, D, T ve d'yi tanımla. OSC şeklindeki t, d, p etiketleri hocanın gösteriminde neye karşılık gelir?</p>
+<blockquote>
+<p>EN: Distinguish hard and soft real-time requirements, and a task from a job. Define r, C, D, T and d.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Hard real time: meeting the deadline is part of correctness under stated operating assumptions. Soft real time: some lateness is tolerated with degraded quality (e.g. a dropped media frame). The distinction concerns consequences, not processor speed or average response. A task is a repeating source of jobs; a job is one released instance. Each job has release r, execution demand C, relative deadline D and absolute deadline d = r + D; a periodic task releases a job every period T. OSC's t, d, p correspond to C, D, T; the course uses C, D, T to avoid ambiguity.</p>
+<p><strong>Ölçüt.</strong> d = r + D formülü şart. Task/job ayrımı yoksa −1. "Hard = hızlı" demek puansız.</p>
+</details><hr />
+<p><strong>Q7.</strong> <em>Zorluk 1 · Bölüm 8 · Kısa cevap · Kaynak: sl. 43–46; Okuma §10</em></p>
+<p>Çok çekirdekli sistemde kernel neyi zamanlar? Ortak ready kuyruğu ile CPU başına kuyruğun artı ve eksileri neler? Load balancing ile affinity neden ters yönlere çeker?</p>
+<blockquote>
+<p>EN: What does the kernel schedule on a multicore system? Compare one shared ready queue with per-CPU queues. Why do load balancing and affinity pull in opposite directions?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> The kernel schedules runnable execution contexts — with kernel-supported threads, threads compete for CPUs; a process with several runnable threads can use several allowed logical CPUs, but one thread runs on one logical CPU at a time. A common queue makes global selection simple but creates contention on the shared structure; per-CPU queues reduce shared access and help locality but can become imbalanced. Load balancing moves runnable work to idle CPUs; affinity tries to keep a thread where its cache (and, on NUMA, its memory) is warm. Migration can improve balance while losing locality; how much it costs depends on the hierarchy <span class="ek">ek bilgi: cheap between SMT siblings, expensive across NUMA nodes</span>. An affinity mask constrains eligible CPUs; it does not reserve a CPU or remove interference. A logical CPU is not a physical core: hardware threads share a core's execution resources.</p>
+<p><strong>Ölçüt.</strong> İki kuyruk düzeninin birer artı/eksisi; balancing vs affinity gerilimi; "affinity ≠ reservation". Logical CPU ≠ core bonus.</p>
+</details><hr />
+<p><strong>Q8.</strong> <em>Zorluk 1 · Bölüm 12 · Kısa cevap · Kaynak: sl. 59–61; Okuma §14</em></p>
+<p>Linux'ta nice aralığı nedir ve neyi etkiler? SCHED_FIFO ile SCHED_RR farkı nedir? EEVDF ile SCHED_DEADLINE neden aynı şey değildir? Ubuntu'da CFS'yi anlatmadan önce neyi kontrol etmelisin?</p>
+<blockquote>
+<p>EN: What range do nice values take and what do they influence? Contrast SCHED_FIFO and SCHED_RR. Why are EEVDF and SCHED_DEADLINE different things?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Nice values range from −20 to +19 for normal scheduling; they influence relative service, not a hard completion deadline. SCHED_FIFO and SCHED_RR use static real-time priorities; SCHED_RR additionally time-slices peers at the same priority, FIFO does not. EEVDF (the fair class since the transition beginning with Linux 6.6; CFS is historical background) selects eligible work using virtual deadlines and service accounting — fairness/latency mechanisms, not an application's wall-clock promise. SCHED_DEADLINE is a separate policy using EDF with bandwidth-reservation machinery. Before explaining an Ubuntu observation, record the installed kernel version (<code>uname -r</code>) and distribution configuration.</p>
+<p><strong>Ölçüt.</strong> −20…+19; RR'nin eşler arası dilimlemesi; virtual deadline ≠ gerçek deadline; kernel sürümünü kontrol. CFS'yi "şu anki Linux zamanlayıcısı" diye kesin anlatmak −1.</p>
+</details><hr />
+<p><strong>Q9.</strong> <em>Zorluk 1 · Bölüm 13 · Karşılaştırma · Kaynak: sl. 64; Okuma §15; OSC ch5 sl. 73–79</em></p>
+<p>Bir zamanlama politikasını değerlendirmenin üç yolu nedir? Her birinin neyi yanıtladığını ve sınırını söyle.</p>
+<blockquote>
+<p>EN: Compare deterministic modeling, simulation and measurement as ways to evaluate a scheduling policy.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Deterministic timelines answer a precise question for a stated workload: easy to check, narrow in scope. Simulation varies arrivals and burst distributions; its output depends on the model and the input traces, and it only models the mechanisms included. Measurement includes real overhead and interference but requires reproducible conditions. They answer different questions; compare using the same workload and metric, and report the distribution of delays — compare more than the mean.</p>
+<p><strong>Ölçüt.</strong> Üç yöntem × (ne verir + sınırı). "Compare more than the mean" bonus.</p>
+</details><hr />
+<h3 id="seviye-2-uygulama-snflandrma-basit-iz">Seviye 2 — Uygulama, sınıflandırma, basit iz<a class="headerlink" href="#seviye-2-uygulama-snflandrma-basit-iz" title="Permanent link">#</a></h3>
+<p><strong>Q10.</strong> <em>Zorluk 2 · Bölüm 2 · Hesap · Kaynak: sl. 17; Okuma §4</em></p>
+<p>(a) Tek CPU burst'lük bir iş A = 3'te gelir, ilk kez 7'de çalışır, 20'de biter, B = 6. T, W, R nedir? (b) Bir iş A = 0'da gelir; CPU 3, I/O 5, CPU 2 talebi var ve 16'da biter. I/O beklemesiz 5 birim sürer (cihaz kuyruğu yok). T ve W nedir? "W = T − 5" hesabı neden yanlıştır?</p>
+<blockquote>
+<p>EN: (a) A = 3, S = 7, C = 20, B = 6: find T, W, R. (b) A job with CPU 3, I/O 5, CPU 2 arrives at 0 and completes at 16; the I/O takes 5 units with no device queueing. Find T and W.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) T = 20 − 3 = 17; W = T − B = 17 − 6 = 11; R = 7 − 3 = 4. R &lt; W: the job waited 4 before first service and 7 more after a later preemption. (b) T = 16. Turnaround contains the blocked I/O time, which is not ready-queue waiting, so W = T − CPU − I/O = 16 − 5 − 5 = 6. Subtracting only CPU time (16 − 5 = 11) would wrongly count 5 units of device waiting as ready-queue waiting. If the device were shared, time spent in the device queue would also be blocked time and would have to be subtracted as well: W = T − CPU − (I/O service + device queueing).</p>
+<p><strong>Ölçüt.</strong> (a) üç sayı. (b) W = 6 ve gerekçe "blocked time is not ready-queue waiting". 11 diyen (b)'den puan alamaz.</p>
+</details><hr />
+<p><strong>Q11.</strong> <em>Zorluk 2 · Bölüm 3 · Hesap · Kaynak: sl. 18–24, 35; S-2</em></p>
+<p>Varsayımlar: tek CPU, I/O yok, switch maliyeti yok, hepsi 0'da gelir, kuyruk sırası P1, P2, P3, P4. Burst'ler: P1 = 5, P2 = 18, P3 = 2, P4 = 7. (a) FCFS ve (b) SJF için Gantt ve C/T/W/R tablosu. (c) İki politikada son iş neden aynı anda biter? (d) FCFS'de CPU 0–32 boyunca %100 meşgul; bu iyi yanıt süresi demek mi?</p>
+<blockquote>
+<p>EN: FCFS and SJF for bursts 5/18/2/7, all at 0. Why do both finish all work at the same time? Does 100% utilization imply good responsiveness?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) FCFS:</p>
+<pre><code>| P1 0–5 | P2 5–23 | P3 23–25 | P4 25–32 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>18</td>
+<td>5</td>
+<td>23</td>
+<td>23</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>2</td>
+<td>23</td>
+<td>25</td>
+<td>25</td>
+<td>23</td>
+<td>23</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>7</td>
+<td>25</td>
+<td>32</td>
+<td>32</td>
+<td>25</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 85/4 ≈ 21.25; W̄ = 53/4 ≈ 13.25; R̄ = 53/4 ≈ 13.25</p>
+<p>(b) SJF (ascending burst):</p>
+<pre><code>| P3 0–2 | P1 2–7 | P4 7–14 | P2 14–32 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>2</td>
+<td>7</td>
+<td>7</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>18</td>
+<td>14</td>
+<td>32</td>
+<td>32</td>
+<td>14</td>
+<td>14</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>7</td>
+<td>7</td>
+<td>14</td>
+<td>14</td>
+<td>7</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 55/4 ≈ 13.75; W̄ = 23/4 ≈ 5.75; R̄ = 23/4 ≈ 5.75</p>
+<p>(c) Both perform the same 32 units of useful CPU work with no idle time and no overhead, so the last completion is 32 in both; only individual completion times differ, which changes the averages. (d) No: under FCFS the CPU is 100% busy, yet P4 gets first service only at 25 because a long burst (P2 = 18) sits ahead of it. Utilization measures resource use, not responsiveness.</p>
+<p><strong>Ölçüt.</strong> İki Gantt, iki tablo, ortalamalar (FCFS W̄ = 13.25; SJF W̄ = 5.75). (c) "same total work, no idle" gerekçesi. (d) "No" + örnek. Bir tablo eksikse yarım puan.</p>
+</details><hr />
+<p><strong>Q12.</strong> <em>Zorluk 2 · Bölüm 3 · Hesap · Kaynak: Okuma §5; sl. 19</em></p>
+<p>Okumadaki alıştırma: 24/3/3 iş yükünde P1'in talebini 12'ye indir (FCFS, sıra P1, P2, P3, hepsi 0'da). Throughput, ortalama bekleme ve ilk response aynı oranda mı değişir?</p>
+<blockquote>
+<p>EN: In the FCFS 24/3/3 workload, change P1's demand to 12. Do throughput, mean waiting and first response change in the same proportion?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–12 | P2 12–15 | P3 15–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>12</td>
+<td>0</td>
+<td>12</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>3</td>
+<td>12</td>
+<td>15</td>
+<td>15</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>3</td>
+<td>15</td>
+<td>18</td>
+<td>18</td>
+<td>15</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 45/3 = 15; W̄ = 27/3 = 9; R̄ = 27/3 = 9</p>
+<p>Throughput rises from 3/30 = 0.1 to 3/18 ≈ 0.167 jobs/unit (×1.67). Mean waiting falls from 17 to 9 (×0.53). P1's response stays 0, while P2's falls from 24 to 12 (halved) and P3's from 27 to 15 (×0.56). The metrics do not change in the same proportion because each combines event times differently: throughput depends only on the final completion, waiting on the start times of the queued jobs.</p>
+<p><strong>Ölçüt.</strong> Tablo + üç ölçütün sayısal karşılaştırması + "different metrics combine event times differently". Yalnız "evet/hayır" yarım puan.</p>
+</details><hr />
+<p><strong>Q13.</strong> <em>Zorluk 2 · Bölüm 4 · Hesap · Kaynak: sl. 25–26; Okuma §6</em></p>
+<p>(a) τ₀ = 12, α = 0.25 ve gözlenen burst'ler 4, 4, 16, 8. Her gözlemden sonraki tahmini yaz. α = 0 ve α = 1'de son tahmin ne olur? (b) Bir task'ın burst'leri 6'dan 14'e sıçrıyor: τ₀ = 6, gözlemler 6, 6, 6, 6, 14, 14, 14, 14. α = 0.5 ve α = 0.125 için 14'lerden sonraki tahminleri karşılaştır.</p>
+<blockquote>
+<p>EN: Apply τ(next) = α·t + (1 − α)·τ. Compare a large and a small α after a sustained change in burst length.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Sequence: 12 → 10 → 8.5 → 10.375 → 9.78125 (10, 8.5, 10.375, 9.78125). With α = 0 the estimate never changes (stays 12); with α = 1 it equals the latest burst (8). (b) The first four observations equal the estimate, so it stays 6. After the four 14s: α = 0.5 gives 10, 12, 13, 13.5; α = 0.125 gives 7, 7.875, ≈ 8.64, ≈ 9.31. A large α responds quickly but also follows noise; a small α smooths noise but adapts slowly. Either way the value is an estimate of typical demand, not a known future burst or a WCET bound.</p>
+<p><strong>Ölçüt.</strong> (a) dört doğru değer + α = 0/1 yorumu. (b) iki dizi + "fast reaction vs noise" ödünleşimi. "Tahmin = WCET" yazmak −1.</p>
+</details><hr />
+<p><strong>Q14.</strong> <em>Zorluk 2 · Bölüm 6 · Hesap · Kaynak: sl. 32; Okuma §8</em></p>
+<p>Doymuş, iki task arasında dönüşümlü RR modelinde yararlı kesir ≈ q/(q + s). (a) s = 0.25 ms için q = 2 ms ve q = 10 ms'de kesir nedir? (b) %99 yararlı kesir için q en az ne olmalı? (c) Kuantum bittiğinde başka runnable iş yoksa ne olur?</p>
+<blockquote>
+<p>EN: With switch cost s = 0.25 ms, compute the useful fraction for q = 2 ms and q = 10 ms. What q gives at least 99%?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) 2/2.25 ≈ 88.89%; 10/10.25 ≈ 97.56%. (b) q/(q + s) ≥ 0.99 ⇔ q ≥ 0.99·s/0.01 = 99·0.25 = 24.75 ms. (c) If no other task is runnable, quantum expiry need not cause a task-to-task switch: the same task continues, so the formula (which assumes saturated alternating work) overstates the cost. These are assumed costs in a simple model, not Ubuntu measurements.</p>
+<p><strong>Ölçüt.</strong> İki yüzde + 24.75 ms + "expiry need not cause a switch". Modelin "saturated alternating" varsayımını söylemek bonus.</p>
+</details><hr />
+<p><strong>Q15.</strong> <em>Zorluk 2 · Bölüm 6 · Hesap · Kaynak: sl. 30; Okuma §8</em></p>
+<p>Beş eşit öncelikli, sürekli runnable task, q = 20 ms, dışarıdan varış yok. (a) Sıfır overhead'de bir task'ın iki turu arasındaki en büyük boşluk nedir? (b) Her switch 1 ms sürerse boşluk ne olur? (c) Sınırı hangi durumlar bozar?</p>
+<blockquote>
+<p>EN: n = 5 equal peers, q = 20 ms. Bound the gap between a task's turns with zero overhead and with s = 1 ms per switch.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) (n − 1)q = 4 × 20 = 80 ms. (b) Between the end of a task's quantum and its next start there are 4 other quanta and 5 switches: 4 × 20 + 5 × 1 = 85 ms (derivation, ek bilgi; the slide only says the bound changes with overhead). (c) The bound assumes continuously runnable equal peers, zero overhead and no outside arrivals; overhead, higher-priority work or a changing ready set (new arrivals) invalidate it.</p>
+<p><strong>Ölçüt.</strong> 80 ms; 85 ms ve sayımı (4 quanta + 5 switch); üç bozucu koşul. 84 ya da 80 + 4 diyen (b)'nin yarısını alır.</p>
+</details><hr />
+<p><strong>Q16.</strong> <em>Zorluk 2 · Bölüm 13 · Hesap · Kaynak: sl. 65; Okuma §15; OSC ch5 sl. 76</em></p>
+<p>(a) λ = 5 iş/s, ortalama kuyruk bekleme Wq = 0.4 s. Lq nedir? (b) Bir sunucuda λ = 10 iş/s; çalışan iş dahil ortalama sayı L = 3, yalnız kuyruktaki ortalama sayı Lq = 2.2. W, Wq ve ortalama hizmet süresini bul; L − Lq neyi gösterir? (c) λ = 120 iş/dakika, Lq = 6. Wq saniye cinsinden nedir? (d) λ = 12 iş/s, sistem en fazla 10 iş/s tamamlayabiliyor. Little yasası ne söyler?</p>
+<blockquote>
+<p>EN: Use Lq = λ·Wq and its system-time form. Keep the boundaries consistent.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Lq = 5 × 0.4 = 2 jobs. (b) W = L/λ = 0.3 s (time in system); Wq = Lq/λ = 0.22 s (queue only); mean service ≈ W − Wq = 0.08 s. L − Lq = 0.8 is the average number in service, which for one CPU equals λ × service = 10 × 0.08 = 0.8, i.e. its utilization <span class="ek">ek bilgi</span>. Mixing L with Wq would give a wrong answer: the count must match the time boundary. (c) Wq = 6/120 min = 0.05 min = 3 s; units expose the meaning. (d) The queue grows without bound: there is no steady state, so the averages that Little's law relates do not exist.</p>
+<p><strong>Ölçüt.</strong> Dört sayı (2; 0.3/0.22/0.08; 3 s) + (d)'de "no steady state". Sınırı karıştırıp W = Lq/λ yazmak (b)'de puan kaybı.</p>
+</details><hr />
+<p><strong>Q17.</strong> <em>Zorluk 2 · Bölüm 10 · Hesap · Kaynak: sl. 50, 52; Okuma §12</em></p>
+<p>(a) n = 1…5 için Liu–Layland sınırı n(2^(1/n) − 1) nedir? n → ∞ limiti? (b) Görev kümesi (C, T): (1, 5), (2, 8), (3, 10), D = T. RM bu testle garanti edilir mi? (c) Bir küme testi geçemezse ne sonuç çıkar?</p>
+<blockquote>
+<p>EN: Compute the RM utilization bound for n = 1…5 and apply it to (1,5), (2,8), (3,10).</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a)</p>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>n(2^(1/n) − 1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1.0000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.8284</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.7798</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.7568</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.7435</td>
+</tr>
+<tr>
+<td>∞</td>
+<td>ln 2 ≈ 0.6931</td>
+</tr>
+</tbody>
+</table>
+<p>(b) U = 1/5 + 2/8 + 3/10 = 0.75 ≤ 0.7798 (n = 3), so RM schedulability is guaranteed under the model (one CPU, independent periodic tasks, D = T, known worst-case C, full preemption, zero blocking and overhead). (c) Nothing definite: the test is sufficient, not necessary. Exceeding the bound means the test has not established feasibility; it does not establish a miss (e.g. harmonic sets reach U = 1). Use response-time analysis or a timeline.</p>
+<p><strong>Ölçüt.</strong> Tablo (en az n = 2, 3 ve ln 2); U = 0.75 ve karşılaştırma; "sufficient, not necessary". Model varsayımlarını yazmak bonus.</p>
+</details><hr />
+<p><strong>Q18.</strong> <em>Zorluk 2 · Bölüm 6 · Hesap · Kaynak: OSTEP 7; sl. 34</em></p>
+<p>OSTEP bölüm 7 ödevinin ilk üç sorusu: (a) üç tane 200 birimlik iş, (b) 100, 200, 300 birimlik işler; hepsi 0'da, verilen sırada. FIFO, SJF ve RR (q = 1) için response ve turnaround hesapla. RR'nin response'u neden bu kadar iyi, turnaround'u neden kötü?</p>
+<blockquote>
+<p>EN: Three jobs of length 200 (then 100, 200, 300), all at 0. Compute response and turnaround under FIFO, SJF and RR with a time slice of 1.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>Policy</th>
+<th>Response (A, B, C)</th>
+<th>Turnaround (A, B, C)</th>
+<th>Mean R</th>
+<th>Mean T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200/200/200</td>
+<td>FIFO</td>
+<td>0, 200, 400</td>
+<td>200, 400, 600</td>
+<td>200</td>
+<td>400</td>
+</tr>
+<tr>
+<td>200/200/200</td>
+<td>SJF</td>
+<td>0, 200, 400</td>
+<td>200, 400, 600</td>
+<td>200</td>
+<td>400</td>
+</tr>
+<tr>
+<td>200/200/200</td>
+<td>RR q=1</td>
+<td>0, 1, 2</td>
+<td>598, 599, 600</td>
+<td>1</td>
+<td>599</td>
+</tr>
+<tr>
+<td>100/200/300</td>
+<td>FIFO</td>
+<td>0, 100, 300</td>
+<td>100, 300, 600</td>
+<td>≈ 133.33</td>
+<td>≈ 333.33</td>
+</tr>
+<tr>
+<td>100/200/300</td>
+<td>SJF</td>
+<td>0, 100, 300</td>
+<td>100, 300, 600</td>
+<td>≈ 133.33</td>
+<td>≈ 333.33</td>
+</tr>
+<tr>
+<td>100/200/300</td>
+<td>RR q=1</td>
+<td>0, 1, 2</td>
+<td>298, 499, 600</td>
+<td>1</td>
+<td>≈ 465.67</td>
+</tr>
+</tbody>
+</table>
+<p>With equal lengths SJF degenerates to FIFO. With 100/200/300 already in ascending order, FIFO = SJF as well. RR with q = 1 gives every job service by time 2 (mean response 1) but stretches every job almost to the end, so mean turnaround is the worst. RR trades turnaround for response; the preferred policy depends on the objective.</p>
+<p><strong>Ölçüt.</strong> Altı satırın sayıları; "equal lengths → SJF = FIFO" gözlemi; response/turnaround ödünleşimi.</p>
+</details><hr />
+<p><strong>Q19.</strong> <em>Zorluk 2 · Bölüm 3 · Hesap · Kaynak: sl. 16, 18–19</em></p>
+<p>FCFS, tek CPU, sıfır overhead. Varışlar ve burst'ler: P1 (0, 4), P2 (1, 3), P3 (2, 5), P4 (14, 2), P5 (15, 3). Gantt, C/T/W/R tablosu, CPU utilization ve throughput.</p>
+<blockquote>
+<p>EN: FCFS with arrivals 0/1/2/14/15 and bursts 4/3/5/2/3. Draw the Gantt chart, compute the table, utilization and throughput.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–4 | P2 4–7 | P3 7–12 | idle 12–14 | P4 14–16 | P5 16–19 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>7</td>
+<td>6</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>12</td>
+<td>10</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>14</td>
+<td>2</td>
+<td>14</td>
+<td>16</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>15</td>
+<td>3</td>
+<td>16</td>
+<td>19</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 26/5 ≈ 5.20; W̄ = 9/5 ≈ 1.80; R̄ = 9/5 ≈ 1.80</p>
+<p>The CPU is idle in [12, 14) because no job has arrived. Utilization = busy/elapsed = 17/19 ≈ 89.5% over [0, 19). Throughput = 5 jobs / 19 units ≈ 0.263 jobs per unit. Since FCFS is nonpreemptive with single bursts, each job's waiting equals its response.</p>
+<p><strong>Ölçüt.</strong> Idle aralığı Gantt'ta görünmeli (yoksa −1). Tablo, ortalamalar, 17/19 ve 5/19. Utilization'ı 17/17 = %100 yazmak puan kaybı.</p>
+</details><hr />
+<p><strong>Q20.</strong> <em>Zorluk 2 · Bölüm 4 · Hesap + tie · Kaynak: sl. 22, 27; Okuma §6</em></p>
+<p>Nonpreemptive SJF. P1 (A = 0, B = 8), P2 (1, 4), P3 (3, 2), P4 (4, 4), P5 (6, 3). Eşit burst'te önce gelen seçilir. Gantt ve tablo. Hangi anda eşitlik kuralı kullanılır?</p>
+<blockquote>
+<p>EN: Nonpreemptive SJF with arrivals 0/1/3/4/6 and bursts 8/4/2/4/3; equal bursts are broken by earlier arrival.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–8 | P3 8–10 | P5 10–13 | P2 13–17 | P4 17–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>8</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>13</td>
+<td>17</td>
+<td>16</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>8</td>
+<td>10</td>
+<td>7</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>17</td>
+<td>21</td>
+<td>17</td>
+<td>13</td>
+<td>13</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>10</td>
+<td>13</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 55/5 = 11; W̄ = 34/5 ≈ 6.80; R̄ = 34/5 ≈ 6.80</p>
+<p>At 0 only P1 is ready, and nonpreemptive SJF does not reconsider while P1 runs. At 8 the ready set is P2 (4), P3 (2), P4 (4), P5 (3) → P3. At 10 → P5 (3). At 13 P2 and P4 both need 4: the tie rule picks P2 (arrived at 1). Mean waiting 6.8. Note how much P2 and P4 wait behind P1's 8-unit burst.</p>
+<p><strong>Ölçüt.</strong> Karar anları 8, 10, 13 ve 13'teki eşitliğin açıkça çözülmesi. P1'i 1'de kesmek (SRTF yapmak) sıfır puan.</p>
+</details><hr />
+<p><strong>Q21.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap · Kaynak: sl. 27–29; Okuma §7</em></p>
+<p>Q20'deki iş yükü, bu kez SRTF. Kalan süre tam eşitse çalışan iş devam eder; hazır işler arasında eşitlikte önce gelen. Gantt, tablo ve P1 için response–waiting farkı.</p>
+<blockquote>
+<p>EN: SRTF on the same workload. Keep the current task on an exact remaining-time tie.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–1 | P2 1–5 | P3 5–7 | P5 7–10 | P4 10–14 | P1 14–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>21</td>
+<td>21</td>
+<td>13</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>5</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>10</td>
+<td>14</td>
+<td>10</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>7</td>
+<td>10</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 43/5 ≈ 8.60; W̄ = 22/5 ≈ 4.40; R̄ = 9/5 ≈ 1.80</p>
+<p>Decisions: at 1 P1 has 7 left and P2 needs 4 → P2 preempts. At 3 P3 needs 2 and P2 has exactly 2 left → tie, P2 continues. At 4 P4 (4) does not beat P2 (1). At 5 the ready set is P1 (7), P3 (2), P4 (4) → P3. At 6 P5 (3) does not beat P3 (1 left). At 7 → P5 (3) over P4 (4) and P1 (7); then P4 10–14 and P1 14–21. P1 responds at 0 yet waits 13 units: response and waiting are different metrics.</p>
+<p><strong>Ölçüt.</strong> 3'teki eşitlik kuralının uygulanması ve "remaining, not original" kıyası. P1'in iki aralığı ([0,1) ve [14,21)) gösterilmeli. Ortalamalar W̄ = 4.4, R̄ = 1.8.</p>
+</details><hr />
+<p><strong>Q22.</strong> <em>Zorluk 2 · Bölüm 5 · Hesap + tie · Kaynak: sl. 27</em></p>
+<p>SRTF, tam eşitlikte çalışan kalır. P1 (0, 6), P2 (2, 4), P3 (3, 1), P4 (5, 3). Gantt ve tablo. Eşitlik kuralı ters olsaydı (yeni gelen kazanır) 2'de ne olurdu?</p>
+<blockquote>
+<p>EN: SRTF with an exact remaining-time tie at time 2. What would change if the newcomer won ties?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–3 | P3 3–4 | P1 4–7 | P4 7–10 | P2 10–14 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>7</td>
+<td>7</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>2</td>
+<td>4</td>
+<td>10</td>
+<td>14</td>
+<td>12</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>5</td>
+<td>3</td>
+<td>7</td>
+<td>10</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 25/4 ≈ 6.25; W̄ = 11/4 ≈ 2.75; R̄ = 10/4 ≈ 2.50</p>
+<p>At 2 P1 has 4 left and P2 needs 4: exact tie, P1 keeps the CPU. At 3 P3 (1) preempts P1 (3 left). At 4 P1 (3) beats P2 (4); at 5 P4 (3) does not beat P1 (2 left). At 7 P4 (3) before P2 (4). If the newcomer won ties, P2 would preempt at 2, adding a switch and a different schedule — which is why the slide fixes the tie rule to make the result reproducible.</p>
+<p><strong>Ölçüt.</strong> 2'deki eşitliğin adıyla çözülmesi; 3'teki preemption; tablo ve ortalamalar (W̄ = 2.75). Tie rule'un neden belirtilmesi gerektiği.</p>
+</details><hr />
+<p><strong>Q23.</strong> <em>Zorluk 2 · Bölüm 6 · "Kanıtlar mı" · Kaynak: sl. 29, 35; S-1</em></p>
+<p>(a) Bir işin response'u 0, waiting'i pozitif olabilir mi? (b) Tek CPU burst'lük ve I/O'suz bir işte W = 0 ise R ne olmalı? (c) Q21'deki SRTF ile Q25'teki RR'den hangisi "daha responsive"? Tek bir ölçüyle karar verilebilir mi?</p>
+<blockquote>
+<p>EN: Can response be zero while waiting is positive? If W = 0 for a single CPU-only burst, what is R? Is one metric enough to call a policy "more responsive"?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Yes: the job starts immediately, is preempted later and accumulates ready waiting (P1 in Q21: R = 0, W = 13). (b) R = 0: the initial delay S − A is part of the ready waiting, so R ≤ W for a single CPU-only burst; W = 0 forces R = 0. (c) It depends on the metric. On this workload SRTF has mean response 1.8 versus RR's 4, but RR bounds the gap between turns by (n − 1)q for n continuously runnable equal peers with zero overhead and no outside arrivals, while SRTF can starve a long job if short ones keep arriving. Fix the workload and assumptions and state the objective before ranking policies.</p>
+<p><strong>Ölçüt.</strong> (a) "Yes" + mekanizma. (b) R = 0 ve R ≤ W gerekçesi. (c) "depends on the objective" + bir karşı ölçüt (açlık ya da en kötü durum).</p>
+</details><hr />
+<p><strong>Q24.</strong> <em>Zorluk 2 · Bölüm 7 · Hesap + tie · Kaynak: sl. 37–38; Okuma §9</em></p>
+<p>Nonpreemptive öncelik, <strong>küçük sayı = yüksek öncelik</strong>. (A, B, öncelik): P1 (0, 5, 3), P2 (1, 3, 1), P3 (2, 4, 3), P4 (4, 2, 2), P5 (6, 3, 1). Eşit öncelikte önce gelen. Gantt ve tablo.</p>
+<blockquote>
+<p>EN: Nonpreemptive priority with arrivals; smaller number = higher priority; equal priorities by earlier arrival.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–5 | P2 5–8 | P5 8–11 | P4 11–13 | P3 13–17 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>8</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>4</td>
+<td>13</td>
+<td>17</td>
+<td>15</td>
+<td>11</td>
+<td>11</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>2</td>
+<td>11</td>
+<td>13</td>
+<td>9</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+<td>11</td>
+<td>5</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 41/5 ≈ 8.20; W̄ = 24/5 ≈ 4.80; R̄ = 24/5 ≈ 4.80</p>
+<p>At 0 only P1 is ready, and it keeps the CPU to completion at 5. At 5 the ready set is P2 (1), P3 (3), P4 (2) → P2. At 8: P3 (3), P4 (2), P5 (1) → P5. Then P4 (2) and finally P3. Writing "smaller is higher" next to the input is part of the answer: the opposite convention gives a different schedule.</p>
+<p><strong>Ölçüt.</strong> Karar anları 5, 8, 11; sayı yönünün yazılması; W̄ = 4.8. P2'nin 1'de P1'i kesmesi = preemptive'e kaymak, sıfır puan.</p>
+</details><hr />
+<h3 id="seviye-3-cok-adml-iz-hesap-hata-bulma">Seviye 3 — Çok adımlı iz, hesap, hata bulma<a class="headerlink" href="#seviye-3-cok-adml-iz-hesap-hata-bulma" title="Permanent link">#</a></h3>
+<p><strong>Q25.</strong> <em>Zorluk 3 · Bölüm 6 · Hesap + tie · Kaynak: sl. 30–31; Okuma §8</em></p>
+<p>RR, q = 3, Q20'deki iş yükü (P1 0/8, P2 1/4, P3 3/2, P4 4/4, P5 6/3). Bir işin kuantumu tam bir varış anında biterse iki kural dene: (a) yeni gelen, kesilen işten <strong>önce</strong> kuyruğa girer; (b) kesilen iş <strong>önce</strong> girer. Her biri için Gantt ve tablo; farkı açıkla.</p>
+<blockquote>
+<p>EN: Round robin with q = 3. A complete specification must order an arrival that coincides with a quantum expiry. Trace both conventions.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Arrivals first:</p>
+<pre><code>| P1 0–3 | P2 3–6 | P3 6–8 | P1 8–11 | P4 11–14 | P5 14–17 | P2 17–18 | P1 18–20 | P4 20–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>20</td>
+<td>20</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>18</td>
+<td>17</td>
+<td>13</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>6</td>
+<td>8</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>11</td>
+<td>21</td>
+<td>17</td>
+<td>13</td>
+<td>7</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>14</td>
+<td>17</td>
+<td>11</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 70/5 = 14; W̄ = 49/5 ≈ 9.80; R̄ = 20/5 = 4</p>
+<p>(b) Preempted job first:</p>
+<pre><code>| P1 0–3 | P2 3–6 | P1 6–9 | P3 9–11 | P4 11–14 | P2 14–15 | P5 15–18 | P1 18–20 | P4 20–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>20</td>
+<td>20</td>
+<td>12</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>15</td>
+<td>14</td>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>9</td>
+<td>11</td>
+<td>8</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>11</td>
+<td>21</td>
+<td>17</td>
+<td>13</td>
+<td>7</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>15</td>
+<td>18</td>
+<td>12</td>
+<td>9</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 71/5 ≈ 14.20; W̄ = 50/5 = 10; R̄ = 24/5 ≈ 4.80</p>
+<p>The conventions collide at t = 3 (P1's quantum expires as P3 arrives) and at t = 6 (P2's expires as P5 arrives). Under (a) the queue after 3 is P2, P3, P1, so P3 runs at 6; under (b) it is P2, P1, P3, so P1 runs again at 6 and P3 waits until 9. Completion of the whole workload is 21 either way, but mean waiting changes (9.8 vs 10) and mean response changes (4 vs 4.8). The tie convention is part of the input.</p>
+<p><strong>Ölçüt.</strong> İki doğru Gantt; çakışma anlarının (3 ve 6) adıyla gösterilmesi; ortalamalar. Kuralı yazmadan tek Gantt veren yarım puan.</p>
+</details><hr />
+<p><strong>Q26.</strong> <em>Zorluk 3 · Bölüm 6 · Karşılaştırma · Kaynak: sl. 34, 35, 64; Okuma §15</em></p>
+<p>Q20'deki aynı iş yükü için FCFS Gantt'ını çiz. Sonra FCFS, SJF, SRTF ve RR (q = 3, Q25(a) kuralı) için ortalama W, R, T ve en büyük tekil beklemeyi tablola. "En iyi" politika hangisi?</p>
+<blockquote>
+<p>EN: Compare four policies on one workload. Which is "best"?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> FCFS:</p>
+<pre><code>| P1 0–8 | P2 8–12 | P3 12–14 | P4 14–18 | P5 18–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>8</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>8</td>
+<td>12</td>
+<td>11</td>
+<td>7</td>
+<td>7</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>12</td>
+<td>14</td>
+<td>11</td>
+<td>9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>14</td>
+<td>18</td>
+<td>14</td>
+<td>10</td>
+<td>10</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>18</td>
+<td>21</td>
+<td>15</td>
+<td>12</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 59/5 ≈ 11.80; W̄ = 38/5 ≈ 7.60; R̄ = 38/5 ≈ 7.60</p>
+<p>Comparison (all from the traces of Q20, Q21, Q25(a)):</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Mean W</th>
+<th>Mean R</th>
+<th>Mean T</th>
+<th>Max W (job)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FCFS</td>
+<td>38/5 ≈ 7.60</td>
+<td>38/5 ≈ 7.60</td>
+<td>59/5 ≈ 11.80</td>
+<td>12 (P5)</td>
+</tr>
+<tr>
+<td>SJF (NP)</td>
+<td>34/5 ≈ 6.80</td>
+<td>34/5 ≈ 6.80</td>
+<td>55/5 = 11</td>
+<td>13 (P4)</td>
+</tr>
+<tr>
+<td>SRTF</td>
+<td>22/5 ≈ 4.40</td>
+<td>9/5 ≈ 1.80</td>
+<td>43/5 ≈ 8.60</td>
+<td>13 (P1)</td>
+</tr>
+<tr>
+<td>RR q=3 (arrivals first)</td>
+<td>49/5 ≈ 9.80</td>
+<td>20/5 = 4</td>
+<td>70/5 = 14</td>
+<td>13 (P2, P4)</td>
+</tr>
+</tbody>
+</table>
+<p>All four finish at 21 (no idle, no overhead). SRTF minimizes mean waiting and mean response here, yet its worst individual wait (P1, 13) is larger than FCFS's (12); RR has the worst mean waiting, while its mean response (4) is second best. "Best" depends on the criterion — mean waiting, worst-case waiting, response, or fairness — so state it, keep the workload fixed, and compare more than the mean.</p>
+<p><strong>Ölçüt.</strong> FCFS tablosu + karşılaştırma tablosunun dört satırı; "aynı bitiş 21" gözlemi; "depends on the criterion" ve en büyük bekleme gözlemi. Yalnız "SRTF en iyi" demek yarım puan.</p>
+</details><hr />
+<p><strong>Q27.</strong> <em>Zorluk 3 · Bölüm 6 · Hesap · Kaynak: sl. 33; Okuma §8; S-3; OSC ch5 sl. 24</em></p>
+<p>Hepsi 0'da gelen P1 = 5, P2 = 2, P3 = 6, P4 = 3 (sıra P1…P4), RR. (a) q = 3 ve q = 4 için Gantt ve tablo. (b) q = 1…7 için ortalama turnaround tablosu. İlişki monoton mu? (c) q ≥ 6 neden FCFS ile aynı?</p>
+<blockquote>
+<p>EN: Show that average turnaround need not vary monotonically with the quantum.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) q = 3:</p>
+<pre><code>| P1 0–3 | P2 3–5 | P3 5–8 | P4 8–11 | P1 11–13 | P3 13–16 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>13</td>
+<td>13</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>6</td>
+<td>5</td>
+<td>16</td>
+<td>16</td>
+<td>10</td>
+<td>5</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>3</td>
+<td>8</td>
+<td>11</td>
+<td>11</td>
+<td>8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 45/4 ≈ 11.25; W̄ = 29/4 ≈ 7.25; R̄ = 16/4 = 4</p>
+<p>q = 4:</p>
+<pre><code>| P1 0–4 | P2 4–6 | P3 6–10 | P4 10–13 | P1 13–14 | P3 14–16 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>14</td>
+<td>14</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>16</td>
+<td>16</td>
+<td>10</td>
+<td>6</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>3</td>
+<td>10</td>
+<td>13</td>
+<td>13</td>
+<td>10</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 49/4 ≈ 12.25; W̄ = 33/4 ≈ 8.25; R̄ = 20/4 = 5</p>
+<p>(b)</p>
+<table>
+<thead>
+<tr>
+<th>q</th>
+<th>Mean turnaround</th>
+<th>Mean waiting</th>
+<th>Mean response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>11.75</td>
+<td>7.75</td>
+<td>1.50</td>
+</tr>
+<tr>
+<td>2</td>
+<td>11.75</td>
+<td>7.75</td>
+<td>3.00</td>
+</tr>
+<tr>
+<td>3</td>
+<td>11.25</td>
+<td>7.25</td>
+<td>4.00</td>
+</tr>
+<tr>
+<td>4</td>
+<td>12.25</td>
+<td>8.25</td>
+<td>5.00</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10.75</td>
+<td>6.75</td>
+<td>6.00</td>
+</tr>
+<tr>
+<td>6</td>
+<td>10.25</td>
+<td>6.25</td>
+<td>6.25</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10.25</td>
+<td>6.25</td>
+<td>6.25</td>
+</tr>
+</tbody>
+</table>
+<p>Not monotonic: going from q = 3 to q = 4 increases mean turnaround (11.25 → 12.25), then q = 5 decreases it (10.75). A change in q moves the completion boundaries and therefore later queue positions. (c) When q ≥ 6 ≥ every burst, each job finishes on its first turn, so the order and timing equal FCFS (here 10.25) — for this all-ready, single-burst workload; with arrivals or blocking, restate the conditions. Mean response grows with q here (1.5 → 6.25).</p>
+<p><strong>Ölçüt.</strong> İki Gantt + tablo; tarama tablosunda en az bir "artış sonra azalış" örneği; (c) "every burst ≤ q" koşulu ve "all-ready, single-burst" şartı.</p>
+</details><hr />
+<p><strong>Q28.</strong> <em>Zorluk 3 · Bölüm 7 · Hesap + tie · Kaynak: sl. 37, 39; Okuma §9</em></p>
+<p>Q24'teki iş yükü, bu kez <strong>preemptive</strong> öncelik (küçük = yüksek; daha yüksek öncelikli varış çalışan işi keser; eşit öncelik kesmez, eşitlikte önce gelen). Gantt, tablo ve Q24 ile karşılaştırma.</p>
+<blockquote>
+<p>EN: Preemptive priority on the same workload. Compare with the nonpreemptive schedule.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P1 0–1 | P2 1–4 | P4 4–6 | P5 6–9 | P1 9–13 | P3 13–17 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>13</td>
+<td>13</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>4</td>
+<td>13</td>
+<td>17</td>
+<td>15</td>
+<td>11</td>
+<td>11</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 36/5 ≈ 7.20; W̄ = 19/5 ≈ 3.80; R̄ = 11/5 ≈ 2.20</p>
+<p>At 1 P2 (priority 1) preempts P1 (3). At 4 P4 (2) wins over P1 and P3 (both 3). At 6 P5 (1) runs. At 9 P1 and P3 tie at priority 3; P1 arrived earlier. Compared with nonpreemptive (Q24: W̄ = 4.8, R̄ = 4.8), preemption gives W̄ = 3.8 and R̄ = 2.2: high-priority jobs wait 0, but P1 responds at 0 and still waits 8. A steady supply of priority-1 work could postpone P3 indefinitely — starvation — which aging would counter.</p>
+<p><strong>Ölçüt.</strong> 1, 4, 6, 9'daki kararlar; 9'daki eşitliğin kuralla çözülmesi; karşılaştırma; açlık notu.</p>
+</details><hr />
+<p><strong>Q29.</strong> <em>Zorluk 3 · Bölüm 7 · Hesap · Kaynak: OSC ch5 sl. 27; sl. 37, 39</em></p>
+<p>Öncelik + RR (OSC sl. 27 varyantı): hepsi 0'da, sıra P1…P5, q = 2, küçük = yüksek. (B, öncelik): P1 (3, 2), P2 (6, 1), P3 (4, 1), P4 (5, 3), P5 (2, 2). Gantt ve tablo. Aynı seviyede RR açlığı önler mi?</p>
+<blockquote>
+<p>EN: Priority scheduling with round robin among equal priorities (q = 2).</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| P2 0–2 | P3 2–4 | P2 4–6 | P3 6–8 | P2 8–10 | P1 10–12 | P5 12–14 | P1 14–15 | P4 15–20 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>3</td>
+<td>10</td>
+<td>15</td>
+<td>15</td>
+<td>12</td>
+<td>10</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>10</td>
+<td>10</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>4</td>
+<td>2</td>
+<td>8</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>0</td>
+<td>5</td>
+<td>15</td>
+<td>20</td>
+<td>20</td>
+<td>15</td>
+<td>15</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>0</td>
+<td>2</td>
+<td>12</td>
+<td>14</td>
+<td>14</td>
+<td>12</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 67/5 ≈ 13.40; W̄ = 47/5 ≈ 9.40; R̄ = 39/5 ≈ 7.80</p>
+<p>Priority 1 (P2, P3) alternates in 2-unit quanta until both finish at 10; P3 completes exactly at its quantum end at 8, then P2 runs alone. Priority 2 (P1, P5) then alternates; P4 (priority 3) runs last. RR shares the CPU fairly only among peers at the same level: it does not stop starvation caused by higher-priority levels — P4 would wait forever if priority-1 work kept arriving.</p>
+<p><strong>Ölçüt.</strong> Doğru Gantt (P3'ün tam kuantum sonunda, 8'de bitişi ve P2'nin 8–10'da yalnız devam etmesi); tablo; "RR within a level does not stop starvation".</p>
+</details><hr />
+<p><strong>Q30.</strong> <em>Zorluk 3 · Bölüm 7 · MLFQ izi · Kaynak: sl. 40–42; Okuma §9; OSTEP 8</em></p>
+<p>Üç kuyruklu MLFQ: Q0 RR q = 2, Q1 RR q = 4, Q2 FCFS. Yeni iş Q0'a girer. Bir seviyedeki toplam payını (allotment) bitiren iş bir alt seviyeye iner. Üst kuyruktaki iş alt kuyruktakini keser; kesilen iş kendi kuyruğunun sonuna gider ve o seviyede kullandığı süreyi korur (sl. 42'deki toplam pay muhasebesi). İşler: A (0, 9), B (1, 3), C (5, 6). Gantt, her olayda kuyrukların durumu ve tablo.</p>
+<blockquote>
+<p>EN: Trace a three-level MLFQ (8/16/FCFS scaled to 2/4/FCFS) with arrivals and preemption by a higher queue.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| A 0–2 | B 2–4 | A 4–5 | C 5–7 | B 7–8 | A 8–11 | C 11–15 | A 15–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>18</td>
+<td>18</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>8</td>
+<td>7</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>6</td>
+<td>5</td>
+<td>15</td>
+<td>10</td>
+<td>4</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 35/3 ≈ 11.67; W̄ = 17/3 ≈ 5.67; R̄ = 1/3 ≈ 0.33</p>
+<p>Events: A uses its 2 units in Q0 and moves to Q1 at 2. B (arrived at 1) runs 2–4 in Q0 and moves to Q1 (1 left); Q1 = A, B. A starts its Q1 allotment at 4, but C arrives at 5 into Q0 and preempts it; A has used 1 of 4 and goes to Q1's tail (Q1 = B, A). C runs 5–7 and drops to Q1 (Q1 = B, A, C). B finishes 7–8. A uses its remaining 3 units 8–11 and drops to Q2 with 3 left. C uses 4 units 11–15 and completes exactly as its allotment ends. A finishes in Q2, 15–18. New short work (B, C) gets service quickly (mean response 1/3), while the long job A sinks.</p>
+<p><strong>Ölçüt.</strong> Her demotion ve 5'teki preemption ile allotment'ın korunması (A'nın 8–11'de 3 birim alması). Kesilen işe yeni tam kuantum veren cevap, bunu varsayım olarak açıkça yazmışsa yarım puan.</p>
+</details><hr />
+<p><strong>Q31.</strong> <em>Zorluk 3 · Bölüm 7 · MLFQ izi · Kaynak: sl. 41–42; OSC ch5 sl. 32</em></p>
+<p>Hocanın politikası: Q0 q = 8, Q1 q = 16, Q2 FCFS; Q30'daki preemption ve allotment kuralları. İşler: X (0, 30), Y (12, 10), Z (30, 4). Gantt ve tablo. X yalnız olsaydı ne zaman biterdi? Kuyruk değişimleri X'in işini artırır mı?</p>
+<blockquote>
+<p>EN: Use the instructor's 8/16/FCFS policy with competing jobs. When would X finish alone?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong></p>
+<pre><code>| X 0–12 | Y 12–20 | X 20–30 | Z 30–34 | Y 34–36 | X 36–44 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>0</td>
+<td>30</td>
+<td>0</td>
+<td>44</td>
+<td>44</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>12</td>
+<td>10</td>
+<td>12</td>
+<td>36</td>
+<td>24</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>30</td>
+<td>4</td>
+<td>30</td>
+<td>34</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 72/3 = 24; W̄ = 28/3 ≈ 9.33; R̄ = 0/3 = 0</p>
+<p>X uses 8 in Q0, then 4 of its 16-unit Q1 allotment before Y arrives at 12 and preempts it from Q0. Y uses 8 and drops to Q1 behind X. X resumes with 12 units of Q1 allotment left, but Z arrives at 30 and preempts it (X has now used 14 of 16). Z finishes in Q0. Y completes its last 2 units in Q1; X uses its last 2 Q1 units and then 6 in Q2, ending at 44 = 30 + 10 + 4, the total work, since there is no idle time. Alone, X would finish at 30 (8 + 16 + 6): queue changes add no useful work; delay comes from competition.</p>
+<p><strong>Ölçüt.</strong> 12 ve 30'daki preemption'lar ve X'in allotment'ının korunması; 44 = toplam iş gözlemi; yalnız iş = 30.</p>
+</details><hr />
+<p><strong>Q32.</strong> <em>Zorluk 3 · Bölüm 2 · I/O'lu iz · Kaynak: sl. 17; Okuma §4; sl. 9</em></p>
+<p>I/O'lu iş yükü. Her işin I/O'su kendi cihazında, beklemesiz yapılır (cihaz çekişmesi yok). I/O'dan dönen iş ready kuyruğunun sonuna girer. P1: A = 0, CPU 4, I/O 6, CPU 2. P2: A = 1, CPU 3, I/O 2, CPU 3. P3: A = 2, CPU 6. (a) FCFS (b) SRTF (kalan süre = <strong>mevcut CPU burst'ünün</strong> kalanı; tam eşitlikte çalışan kalır). Gantt, I/O sütunlu tablo. FCFS'de P1 için "W = T − B" ne verir, neden yanlış?</p>
+<blockquote>
+<p>EN: Trace FCFS and SRTF with CPU/I/O bursts. Do not count blocked time as waiting.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) FCFS:</p>
+<pre><code>| P1 0–4 | P2 4–7 | P3 7–13 | P2 13–16 | P1 16–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>I/O</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>0</td>
+<td>18</td>
+<td>18</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>6</td>
+<td>2</td>
+<td>4</td>
+<td>16</td>
+<td>15</td>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>7</td>
+<td>13</td>
+<td>11</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 44/3 ≈ 14.67; W̄ = 18/3 = 6; R̄ = 8/3 ≈ 2.67</p>
+<p>P1 blocks at 4 until 10 and is ready from 10 to 16, so W = 6. P2 waits 1–4 and 9–13 (W = 7). The naive W = T − CPU = 18 − 6 = 12 for P1 is wrong: it counts its 6 blocked units as ready-queue waiting. Check: T = CPU + I/O + W for every row.</p>
+<p>(b) SRTF:</p>
+<pre><code>| P1 0–4 | P2 4–7 | P3 7–9 | P2 9–12 | P1 12–14 | P3 14–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>I/O</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>0</td>
+<td>14</td>
+<td>14</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>6</td>
+<td>2</td>
+<td>4</td>
+<td>12</td>
+<td>11</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>7</td>
+<td>18</td>
+<td>16</td>
+<td>10</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 41/3 ≈ 13.67; W̄ = 15/3 = 5; R̄ = 8/3 ≈ 2.67</p>
+<p>At 1 P2 (3) ties with P1's remaining 3 → P1 keeps the CPU. At 4 P1 blocks; P2 (3) beats P3 (6). At 9 P2 returns with a 3-unit burst and preempts P3 (4 left). At 10 P1 returns with 2 and ties P2's remaining 2 → P2 keeps. Then P1 (2) before P3 (4). The CPU is busy over [0, 18) in both schedules: multiprogramming overlapped P1's and P2's I/O with other CPU work, but did not speed up any device.</p>
+<p><strong>Ölçüt.</strong> İki Gantt; I/O sütunu ve "T = CPU + I/O + W" kontrolü; naive 12'nin neden yanlış olduğu. SRTF'de 1 ve 10'daki eşitlikler. W'ye bloklu süre katan cevap tablo başına −2.</p>
+</details><hr />
+<p><strong>Q33.</strong> <em>Zorluk 3 · Bölüm 6 · Switch maliyetli RR · Kaynak: sl. 13, 30, 32; Okuma §8</em></p>
+<p>RR. P1 (0, 9), P2 (1, 4), P3 (2, 6). Varış ile kuantum bitişi çakışırsa önce varış. Switch kuralı: farklı bir işe her geçiş s birim sürer (bir iş bittikten sonraki geçiş dahil, 0'daki ilk dispatch hariç); aynı iş devam ederse maliyet yok; switch süresi içeri alınan işin W'sine sayılır, R switch bittikten sonra ölçülür. (a) q = 4, s = 0; (b) q = 4, s = 1; (c) q = 2, s = 1. Gantt'lar ve tablolar. Yararlı kesirleri q/(q + s) tahminiyle karşılaştır.</p>
+<blockquote>
+<p>EN: Round robin with a stated switch cost. Compare useful fractions with q/(q + s).</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a)</p>
+<pre><code>| P1 0–4 | P2 4–8 | P3 8–12 | P1 12–16 | P3 16–18 | P1 18–19 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>19</td>
+<td>19</td>
+<td>10</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+<td>8</td>
+<td>7</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>6</td>
+<td>8</td>
+<td>18</td>
+<td>16</td>
+<td>10</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 42/3 = 14; W̄ = 23/3 ≈ 7.67; R̄ = 9/3 = 3</p>
+<p>(b)</p>
+<pre><code>| P1 0–4 | cs 4–5 | P2 5–9 | cs 9–10 | P3 10–14 | cs 14–15 | P1 15–19 | cs 19–20 | P3 20–22 | cs 22–23 | P1 23–24 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>24</td>
+<td>24</td>
+<td>15</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>5</td>
+<td>9</td>
+<td>8</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>6</td>
+<td>10</td>
+<td>22</td>
+<td>20</td>
+<td>14</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 52/3 ≈ 17.33; W̄ = 33/3 = 11; R̄ = 12/3 = 4</p>
+<p>(c)</p>
+<pre><code>| P1 0–2 | cs 2–3 | P2 3–5 | cs 5–6 | P3 6–8 | cs 8–9 | P1 9–11 | cs 11–12 | P2 12–14 | cs 14–15 | P3 15–17 | cs 17–18 | P1 18–20 | cs 20–21 | P3 21–23 | cs 23–24 | P1 24–27 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>9</td>
+<td>0</td>
+<td>27</td>
+<td>27</td>
+<td>18</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+<td>14</td>
+<td>13</td>
+<td>9</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>2</td>
+<td>6</td>
+<td>6</td>
+<td>23</td>
+<td>21</td>
+<td>15</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 61/3 ≈ 20.33; W̄ = 42/3 = 14; R̄ = 6/3 = 2</p>
+<p>Useful work is 19 units in all cases. (b) has 5 switches and ends at 24: useful fraction 19/24 ≈ 79.2%. (c) has 8 switches and ends at 27: 19/27 ≈ 70.4%. The saturated-model estimates are 4/5 = 80% and 2/3 ≈ 66.7%; the exact values differ because some runs end early (completions use partial quanta) and P1 runs alone at the end without switches. Overhead raises every turnaround: mean T is 14 → 17.33 → 20.33. The smaller quantum improves mean response (3 → 4 with cost at q = 4, but 2 at q = 2) at the price of turnaround and throughput.</p>
+<p><strong>Ölçüt.</strong> <code>cs</code> aralıkları Gantt'ta görünmeli; switch sayıları 5 ve 8; 19/24 ve 19/27; formülle farkın nedeni. Soru kuralını uygulamayan cevap (switch'i W'ye saymamak) tablo puanının yarısını alır.</p>
+</details><hr />
+<p><strong>Q34.</strong> <em>Zorluk 3 · Bölüm 4 · Tahminli SJF · Kaynak: sl. 22, 25–26</em></p>
+<p>Hepsi 0'da üç iş. Scheduler'ın exponential averaging tahminleri τ: P1 = 5, P2 = 3, P3 = 8. Gerçek burst'ler: P1 = 6, P2 = 9, P3 = 2. Scheduler tahmine göre SJF uygular. Gerçekleşen Gantt ve ortalama bekleme nedir? Gerçek burst'leri bilen SJF ile karşılaştır.</p>
+<blockquote>
+<p>EN: SJF ordered by predicted bursts versus true bursts.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> By estimate the order is P2 (3), P1 (5), P3 (8); with actual bursts: | P2 0–9 | P1 9–15 | P3 15–17 |. Waiting in P1/P2/P3 order = 9, 0, 15; mean = 24/3 = 8. With true burst knowledge:</p>
+<pre><code>| P3 0–2 | P1 2–8 | P2 8–17 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>6</td>
+<td>2</td>
+<td>8</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>0</td>
+<td>9</td>
+<td>8</td>
+<td>17</td>
+<td>17</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 27/3 = 9; W̄ = 10/3 ≈ 3.33; R̄ = 10/3 ≈ 3.33</p>
+<p>Mean waiting 10/3 ≈ 3.33. The optimality claim needs known burst lengths; an estimate is neither a known future burst nor a bound, so a wrong prediction (P2 looked short, was long) can make "SJF" worse than the clairvoyant order.</p>
+<p><strong>Ölçüt.</strong> Tahmine göre Gantt ve 8; gerçek SJF 3.33; "estimate ≠ known burst" cümlesi.</p>
+</details><hr />
+<p><strong>Q35.</strong> <em>Zorluk 3 · Bölüm 4 · Kanıt + karşı örnek · Kaynak: sl. 22, 24; Okuma §6</em></p>
+<p>(a) Hepsi 0'da, burst'ler 2, 9, 4, 4. 24 sıralamanın toplam beklemesi arasında en küçüğü ve en büyüğü nedir? Değiş-tokuş argümanıyla SJF sırasının neden en iyi olduğunu açıkla. (b) P1 (A = 0, B = 10), P2 (A = 1, B = 1). Nonpreemptive SJF, SRTF ve "CPU'yu 0–1'de bilerek boş bırakıp P2'yi bekleyen" çizelgenin ortalama beklemelerini hesapla. Bu, sl. 22'deki iddianın hangi varsayımını gösterir?</p>
+<blockquote>
+<p>EN: Use the exchange argument for simultaneous arrivals, then show how a future arrival breaks the nonpreemptive SJF optimality claim.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Ascending order 2, 4, 4, 9 gives total waiting 0 + 2 + 6 + 10 = 18 (mean 4.5), the minimum over all 24 orders; the descending order gives 39 (mean 9.75). Exchange argument: for adjacent ready jobs x ≤ y, running x first adds x to the second job's wait, running y first adds y; the pair finishes at the same time either way, so later jobs are unaffected. Swapping any inverted pair cannot increase the total, and repeated swaps reach ascending order. (b) Nonpreemptive SJF: only P1 is ready at 0, so | P1 0–10 | P2 10–11 |, W = (0, 9), mean 4.5. SRTF: | P1 0–1 | P2 1–2 | P1 2–11 |, W = (1, 0), mean 0.5. Deliberately idling: | idle 0–1 | P2 1–2 | P1 2–12 |, W = (2, 0), mean 1 — better than nonpreemptive SJF, but it needs to know that P2 will arrive. The theorem assumes a fixed set available together; future arrivals and unknown bursts complicate an online scheduler.</p>
+<p><strong>Ölçüt.</strong> 18 ve 39; değiş-tokuş argümanının iki cümlesi ("same finish time, later jobs unaffected"). (b) üç ortalama ve "available together" varsayımının adı.</p>
+</details><hr />
+<p><strong>Q36.</strong> <em>Zorluk 3 · Bölüm 10 · RM izi · Kaynak: sl. 50–52, 54</em></p>
+<p>İki periyodik görev, D = T, hepsi 0'da release: P1 (C = 15, T = 40), P2 (C = 20, T = 60). (a) U ve Liu–Layland testi. (b) Hiperperiyot (120) boyunca RM Gantt'ı, her job'un deadline'ı. (c) P2 için RTA.</p>
+<blockquote>
+<p>EN: Rate-monotonic schedule for (15, 40) and (20, 60) over the hyperperiod; utilization test and RTA for P2.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) U = 15/40 + 20/60 = 17/24 ≈ 0.708 ≤ 0.8284 → schedulable under RM by the sufficient test. (b) P1 has the shorter period, hence the higher fixed priority:</p>
+<pre><code>| P1#1 0–15 | P2#1 15–35 | idle 35–40 | P1#2 40–55 | idle 55–60 | P2#2 60–80 | P1#3 80–95 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1#1</td>
+<td>0</td>
+<td>40</td>
+<td>15</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#1</td>
+<td>0</td>
+<td>60</td>
+<td>35</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#2</td>
+<td>40</td>
+<td>80</td>
+<td>55</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#2</td>
+<td>60</td>
+<td>120</td>
+<td>80</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#3</td>
+<td>80</td>
+<td>120</td>
+<td>95</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>After 95 the CPU idles until 120. Total idle in [0, 120) = 35 = 120 × (1 − 17/24). (c) R0 = 20, R1 = 20 + ⌈20/40⌉·15 = 35, R2 = 20 + ⌈35/40⌉·15 = 35 → R = 35 ≤ 60 (release-to-completion), matching P2#1 completing at 35.</p>
+<p><strong>Ölçüt.</strong> U ve bound karşılaştırması; job bazında Gantt (idle aralıkları dahil); RTA iterasyonu ve 35. Gantt'ı 120'ye kadar taşımayan −1.</p>
+</details><hr />
+<p><strong>Q37.</strong> <em>Zorluk 3 · Bölüm 11 · RM vs EDF izi · Kaynak: sl. 53, 55, 57; Okuma §12–13, §15; S-6</em></p>
+<p>Okumanın önerdiği çalışma: Example B (P1 = (25, 50), P2 = (35, 80), D = T) izini RM ve EDF altında <strong>160'a kadar</strong> çıkar. Her job'un deadline'ını ve tamamlanmasını yaz. İki çizelge hangi aralıkta farklı? 50'de neden ayrışırlar?</p>
+<blockquote>
+<p>EN: Trace Example B under RM and EDF through time 160. Explain every change in the executing job and every idle interval.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> RM:</p>
+<pre><code>| P1#1 0–25 | P2#1 25–50 | P1#2 50–75 | P2#1 75–85 | P2#2 85–100 | P1#3 100–125 | P2#2 125–145 | idle 145–150 | P1#4 150–160 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1#1</td>
+<td>0</td>
+<td>50</td>
+<td>25</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#1</td>
+<td>0</td>
+<td>80</td>
+<td>85</td>
+<td>MISS (late by 5)</td>
+</tr>
+<tr>
+<td>P1#2</td>
+<td>50</td>
+<td>100</td>
+<td>75</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#2</td>
+<td>80</td>
+<td>160</td>
+<td>145</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#3</td>
+<td>100</td>
+<td>150</td>
+<td>125</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#4</td>
+<td>150</td>
+<td>200</td>
+<td>—</td>
+<td>not finished in window</td>
+</tr>
+</tbody>
+</table>
+<p>EDF:</p>
+<pre><code>| P1#1 0–25 | P2#1 25–60 | P1#2 60–85 | P2#2 85–100 | P1#3 100–125 | P2#2 125–145 | idle 145–150 | P1#4 150–160 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1#1</td>
+<td>0</td>
+<td>50</td>
+<td>25</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#1</td>
+<td>0</td>
+<td>80</td>
+<td>60</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#2</td>
+<td>50</td>
+<td>100</td>
+<td>85</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#2</td>
+<td>80</td>
+<td>160</td>
+<td>145</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#3</td>
+<td>100</td>
+<td>150</td>
+<td>125</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#4</td>
+<td>150</td>
+<td>200</td>
+<td>—</td>
+<td>not finished in window</td>
+</tr>
+</tbody>
+</table>
+<p>At 50 RM favours P1 because its period is shorter, so P2#1 is preempted and completes at 85, missing 80 by 5. EDF compares absolute deadlines: P2#1 (80) precedes P1#2 (100), so P2 continues to 60 and P1#2 runs 60–85. From 85 onward both schedules coincide in this window: P2#2 (deadline 160) runs 85–100, P1#3 (deadline 150) preempts it at 100 under both rules, P2#2 completes at 145, the CPU idles 145–150, P1#4 starts at 150. A finite trace illustrates decisions; EDF's feasibility for this set follows from U = 0.9375 ≤ 1 under the stated model.</p>
+<p><strong>Ölçüt.</strong> İki Gantt (job etiketli); 50'deki farkın gerekçesi; 145–150 idle; RM'de kaçırmanın 5 birim olması. 85–100'de iki farklı P2 job'unu ayırmayan yarım puan.</p>
+</details><hr />
+<p><strong>Q38.</strong> <em>Zorluk 3 · Bölüm 10 · RTA · Kaynak: sl. 52, 54</em></p>
+<p>Üç görev, D = T, RM: T1 (1, 4), T2 (2, 6), T3 (3, 12). (a) U ve Liu–Layland testi ne der? (b) T2 ve T3 için RTA iterasyonlarını yaz. (c) 0–12 RM Gantt'ı ile doğrula.</p>
+<blockquote>
+<p>EN: The utilization test is inconclusive; decide with response-time analysis.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) U = 1/4 + 2/6 + 3/12 = 5/6 ≈ 0.833 &gt; 0.7798 (n = 3): the sufficient test does not establish schedulability — but that is not a failure. (b) T1: R = 1. T2: R0 = 2, R1 = 2 + ⌈2/4⌉·1 = 3, R2 = 3 → R = 3 ≤ 6. T3: R0 = 3; R1 = 3 + ⌈3/4⌉·1 + ⌈3/6⌉·2 = 6; R2 = 3 + 2·1 + 1·2 = 7; R3 = 3 + 2 + 2·2 = 9; R4 = 3 + 3·1 + 2·2 = 10; R5 = 3 + 3 + 4 = 10 → R = 10 ≤ 12. All deadlines met. (c)</p>
+<pre><code>| T1#1 0–1 | T2#1 1–3 | T3#1 3–4 | T1#2 4–5 | T3#1 5–6 | T2#2 6–8 | T1#3 8–9 | T3#1 9–10 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1#1</td>
+<td>0</td>
+<td>4</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#1</td>
+<td>0</td>
+<td>6</td>
+<td>3</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T3#1</td>
+<td>0</td>
+<td>12</td>
+<td>10</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#2</td>
+<td>4</td>
+<td>8</td>
+<td>5</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#2</td>
+<td>6</td>
+<td>12</td>
+<td>8</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#3</td>
+<td>8</td>
+<td>12</td>
+<td>9</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>T3#1 completes at 10, matching its RTA fixed point.</p>
+<p><strong>Ölçüt.</strong> "Inconclusive, not a miss"; T3'ün beş iterasyonu ve 10; Gantt. İterasyonu tavan (ceil) yerine bölmeyle yapan puan kaybeder.</p>
+</details><hr />
+<p><strong>Q39.</strong> <em>Zorluk 3 · Bölüm 11 · RM vs EDF · Kaynak: sl. 53–56; S-4</em></p>
+<p>P1 (C = 15, T = 40), P2 (C = 42, T = 70), D = T. (a) U nedir? "U &lt; 1, o halde RM tutar" doğru mu? (b) P2 için RTA. (c) RM Gantt'ı 0–80. (d) EDF Gantt'ı 0–160 ve 40'taki karar. (e) Hiperperiyot 280 içinde EDF'de CPU ne kadar boşta kalır?</p>
+<blockquote>
+<p>EN: Show a set with U &lt; 1 that misses under RM but is feasible under EDF.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) U = 15/40 + 42/70 = 0.975 &lt; 1, but that does not prove RM deadlines. (b) R0 = 42, R1 = 42 + ⌈42/40⌉·15 = 72, R2 = 42 + ⌈72/40⌉·15 = 72 → R = 72 &gt; 70: miss. (c) RM:</p>
+<pre><code>| P1#1 0–15 | P2#1 15–40 | P1#2 40–55 | P2#1 55–72 | P2#2 72–80 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1#1</td>
+<td>0</td>
+<td>40</td>
+<td>15</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#1</td>
+<td>0</td>
+<td>70</td>
+<td>72</td>
+<td>MISS (late by 2)</td>
+</tr>
+<tr>
+<td>P1#2</td>
+<td>40</td>
+<td>80</td>
+<td>55</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#2</td>
+<td>70</td>
+<td>140</td>
+<td>—</td>
+<td>not finished in window</td>
+</tr>
+</tbody>
+</table>
+<p>P2#1 completes at 72, 2 units late (the late job is allowed to continue in this model). (d) EDF:</p>
+<pre><code>| P1#1 0–15 | P2#1 15–57 | P1#2 57–72 | P2#2 72–80 | P1#3 80–95 | P2#2 95–129 | P1#4 129–144 | P2#3 144–160 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1#1</td>
+<td>0</td>
+<td>40</td>
+<td>15</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#1</td>
+<td>0</td>
+<td>70</td>
+<td>57</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#2</td>
+<td>40</td>
+<td>80</td>
+<td>72</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#2</td>
+<td>70</td>
+<td>140</td>
+<td>129</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#3</td>
+<td>80</td>
+<td>120</td>
+<td>95</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P1#4</td>
+<td>120</td>
+<td>160</td>
+<td>144</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>P2#3</td>
+<td>140</td>
+<td>210</td>
+<td>—</td>
+<td>not finished in window</td>
+</tr>
+</tbody>
+</table>
+<p>At 40 the unfinished P2#1 has deadline 70 and the new P1#2 has 80, so EDF keeps P2 to 57; P1#2 still meets 80 at 72. (e) U = 0.975 ≤ 1 makes EDF feasible under the model; over 280 the CPU is idle 280 × (1 − 0.975) = 7 units (the simulator confirms all EDF deadlines in [0, 280) and 7 idle units).</p>
+<p><strong>Ölçüt.</strong> "U &lt; 1 is not proof"; RTA 72 &gt; 70; iki Gantt; 40'taki deadline kıyası; 7 birim.</p>
+</details><hr />
+<p><strong>Q40.</strong> <em>Zorluk 3 · Bölüm 11 · EDF eşitlikleri · Kaynak: sl. 52, 54–57</em></p>
+<p>T1 (1, 3), T2 (2, 6), T3 (3, 9), D = T. (a) U? RM için Liu–Layland ve RTA ne der? RM Gantt'ı 0–18. (b) EDF Gantt'ı 0–18. Eşit mutlak deadline'da kural: çalışan iş kalır; çalışmıyorsa önce release edilen. Hangi anlarda eşitlik var?</p>
+<blockquote>
+<p>EN: U = 1 and not harmonic: RM fails, EDF succeeds. Resolve equal absolute deadlines with a stated rule.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) U = 1/3 + 2/6 + 3/9 = 1 &gt; 0.7798. RTA for T3: 3 → 6 → 7 → 10 → 11 → 11; R = 11 &gt; 9: RM misses. The set is not harmonic (9 is not a multiple of 6), so the U = 1 harmonic exception does not apply. RM:</p>
+<pre><code>| T1#1 0–1 | T2#1 1–3 | T1#2 3–4 | T3#1 4–6 | T1#3 6–7 | T2#2 7–9 | T1#4 9–10 | T3#1 10–11 | T3#2 11–12 | T1#5 12–13 | T2#3 13–15 | T1#6 15–16 | T3#2 16–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1#1</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#1</td>
+<td>0</td>
+<td>6</td>
+<td>3</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T3#1</td>
+<td>0</td>
+<td>9</td>
+<td>11</td>
+<td>MISS (late by 2)</td>
+</tr>
+<tr>
+<td>T1#2</td>
+<td>3</td>
+<td>6</td>
+<td>4</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#3</td>
+<td>6</td>
+<td>9</td>
+<td>7</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#2</td>
+<td>6</td>
+<td>12</td>
+<td>9</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#4</td>
+<td>9</td>
+<td>12</td>
+<td>10</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T3#2</td>
+<td>9</td>
+<td>18</td>
+<td>18</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#5</td>
+<td>12</td>
+<td>15</td>
+<td>13</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#3</td>
+<td>12</td>
+<td>18</td>
+<td>15</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#6</td>
+<td>15</td>
+<td>18</td>
+<td>16</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>(b) U = 1 ≤ 1, so EDF is feasible under the model. EDF:</p>
+<pre><code>| T1#1 0–1 | T2#1 1–3 | T1#2 3–4 | T3#1 4–7 | T1#3 7–8 | T2#2 8–10 | T1#4 10–11 | T3#2 11–12 | T1#5 12–13 | T3#2 13–15 | T2#3 15–17 | T1#6 17–18 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1#1</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#1</td>
+<td>0</td>
+<td>6</td>
+<td>3</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T3#1</td>
+<td>0</td>
+<td>9</td>
+<td>7</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#2</td>
+<td>3</td>
+<td>6</td>
+<td>4</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#3</td>
+<td>6</td>
+<td>9</td>
+<td>8</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#2</td>
+<td>6</td>
+<td>12</td>
+<td>10</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#4</td>
+<td>9</td>
+<td>12</td>
+<td>11</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T3#2</td>
+<td>9</td>
+<td>18</td>
+<td>15</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#5</td>
+<td>12</td>
+<td>15</td>
+<td>13</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T2#3</td>
+<td>12</td>
+<td>18</td>
+<td>17</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>T1#6</td>
+<td>15</td>
+<td>18</td>
+<td>18</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Ties that decide the schedule: at 6 T1#3 (r = 6, d = 9) ties the running T3#1 (d = 9) → T3 keeps the CPU and finishes at 7. At 9 T1#4 (r = 9, d = 12) ties the running T2#2 (d = 12) → T2 keeps the CPU until 10. At 13 T2#3 and T3#2 both have d = 18 and neither is running → T3#2 (released at 9) goes first. At 15 T2#3 (r = 12) and T1#6 (r = 15) both have d = 18 and neither is running → T2#3 (released earlier) runs 15–17. (At 12 T2#3 and T3#2 also share d = 18, but T1#5 with d = 15 wins, so that tie decides nothing.) A "smaller index first" rule would change the schedule at 9 and at 15. With U = 1 the CPU is never idle in [0, 18).</p>
+<p><strong>Ölçüt.</strong> U = 1; RTA 11 &gt; 9; iki Gantt; dört eşitlik anı (6, 9, 13, 15) ve kuralın her birinde uygulanması; en az üçünü adıyla gösteren tam puan alır. "U = 1 olduğu için RM de tutar" diyen sıfır.</p>
+</details><hr />
+<p><strong>Q41.</strong> <em>Zorluk 3 · Bölüm 11 · Karşı örnek · Kaynak: sl. 56; Okuma §13</em></p>
+<p>İki görev, hepsi 0'da: A (C = 2, D = 2, T = 10), B (C = 2, D = 3, T = 10). U nedir? EDF izi. Başka bir algoritma kurtarabilir mi? Bu, "EDF için U ≤ 1 yeter" iddiasının hangi varsayımını çiğner?</p>
+<blockquote>
+<p>EN: With D &lt; T, aggregate utilization alone is insufficient. Give the trace and the reason.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> U = 2/10 + 2/10 = 0.4. EDF:</p>
+<pre><code>| A#1 0–2 | B#1 2–4 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A#1</td>
+<td>0</td>
+<td>2</td>
+<td>2</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>B#1</td>
+<td>0</td>
+<td>3</td>
+<td>4</td>
+<td>MISS (late by 1)</td>
+</tr>
+</tbody>
+</table>
+<p>B misses by 1. No algorithm can help: both jobs need 4 units of work inside the window [0, 3], which has only 3 units. Utilization averages demand over the period (10); with D &lt; T work is concentrated in shorter deadline windows, so U ≤ 1 is no longer sufficient. Under one CPU, independent, fully preemptible tasks with D = T, U ≤ 1 is the exact EDF condition; with D &lt; T utilization alone is insufficient.</p>
+<p><strong>Ölçüt.</strong> U = 0.4; iz ve B'nin kaçırması; "4 units of demand in a 3-unit window" argümanı; D = T varsayımının adı.</p>
+</details><hr />
+<p><strong>Q42.</strong> <em>Zorluk 3 · Bölüm 10 · Harmonik küme · Kaynak: sl. 52; S-5</em></p>
+<p>A (2, 4), B (2, 8), C (4, 16), D = T, RM. U ve Liu–Layland testi. 0–16 RM Gantt'ı. Sınırı aşmak kaçırma demek mi?</p>
+<blockquote>
+<p>EN: A harmonic set with U = 1 under RM. Does exceeding the bound imply a miss?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> U = 2/4 + 2/8 + 4/16 = 1 &gt; 0.7798, so the sufficient test fails.</p>
+<pre><code>| A#1 0–2 | B#1 2–4 | A#2 4–6 | C#1 6–8 | A#3 8–10 | B#2 10–12 | A#4 12–14 | C#1 14–16 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job (task#k)</th>
+<th>r</th>
+<th>d = r + D</th>
+<th>Completion</th>
+<th>Deadline met?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A#1</td>
+<td>0</td>
+<td>4</td>
+<td>2</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>B#1</td>
+<td>0</td>
+<td>8</td>
+<td>4</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>C#1</td>
+<td>0</td>
+<td>16</td>
+<td>16</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>A#2</td>
+<td>4</td>
+<td>8</td>
+<td>6</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>A#3</td>
+<td>8</td>
+<td>12</td>
+<td>10</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>B#2</td>
+<td>8</td>
+<td>16</td>
+<td>12</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>A#4</td>
+<td>12</td>
+<td>16</td>
+<td>14</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Every job meets its deadline; C#1 completes exactly at 16. Each period divides the next, so higher-priority releases align with lower-priority periods and the CPU is fully used without a miss. Exceeding the bound means the test has not established feasibility; it does not establish failure — the test is sufficient, not necessary.</p>
+<p><strong>Ölçüt.</strong> U = 1; Gantt; C'nin 16'da bitişi; "sufficient, not necessary". Harmonik olmanın nedenini (periyotlar birbirini böler) yazmak bonus.</p>
+</details><hr />
+<p><strong>Q43.</strong> <em>Zorluk 3 · Bölüm 11 · Priority inversion izi · Kaynak: sl. 49, 58; Okuma §13</em></p>
+<p>Tek CPU, preemptive öncelik, H &gt; M &gt; L. L: A = 0, 4 birim iş; 2.–4. birimleri kilit altında (kilidi 2. biriminin başında alır, 4. biriminin sonunda bırakır). H: A = 2, 2 birim, ikisi de aynı kilidi ister. M: A = 3, 5 birim, kilit kullanmaz. Kilit isteme ve bloklanma maliyeti sıfır. (a) Priority inheritance yokken (b) varken Gantt ve tamamlanma zamanları. H'nin gecikmesi kimden kaynaklanır?</p>
+<blockquote>
+<p>EN: Trace priority inversion with and without priority inheritance.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Without inheritance: | L 0–3 | M 3–8 | L 8–9 | H 9–11 |. At 2 H preempts L, requests the lock held by L and blocks; L resumes. At 3 M (higher than L) preempts L and runs 3–8; L finishes its critical section 8–9 and releases the lock; H runs 9–11. Completions: M 8, L 9, H 11. H, the highest-priority task, waited 7 units beyond its own work, 5 of them for unrelated M. (b) With inheritance: | L 0–4 | H 4–6 | M 6–11 |. At 2 L inherits H's priority, so M cannot preempt it at 3; L releases the lock at 4, H runs 4–6, M 6–11. Completions: L 4, H 6, M 11. H's blocking is now bounded by L's remaining critical section (2 units). H's priority alone cannot make the lock available — the dependency passes through L; inheritance helps, but full bounds still depend on locking rules and critical-section lengths.</p>
+<p><strong>Ölçüt.</strong> İki Gantt ve tamamlanma zamanları (11 ve 6); "M preempts L" mekanizması; inheritance'ın etkisi; "priority cannot supply the lock".</p>
+</details><hr />
+<p><strong>Q44.</strong> <em>Zorluk 3 · Bölüm 13 · Hata bulma · Kaynak: S-9; S-10; sl. 27–29, 67</em></p>
+<p>Bir yapay zekâ aracı Q20'deki iş yükü (P1 0/8, P2 1/4, P3 3/2, P4 4/4, P5 6/3) için SRTF cevabını şöyle vermiş: "| P1 0–1 | P2 1–5 | P5 5–8 | P3 8–10 | P4 10–14 | P1 14–21 |; P1 response = 14; all deadlines met." Hataları bul, bir simülatörün kontrol etmesi gereken şeyleri listele ve doğru çizelgeyi ver.</p>
+<blockquote>
+<p>EN: An AI-generated SRTF timeline is shown. Find the errors and list what a scheduling simulator must check.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Errors: (1) P5 runs from 5, but it arrives at 6 — execution before release. (2) At 5 the shortest remaining job among those actually ready is P3 (2), not P5. (3) P1's response is 0 (first service at 0), not 14; the AI confused response with its last start. (4) "Deadlines" are not part of this workload. A simulator must check: no execution before release; no negative remaining demand; no overlapping execution on one modeled CPU; conservation of each job's demand; consistent tie rules; correct deadlines; and metrics computed from events, not guessed from chart positions. Use AI to propose assumptions and the event sequence, then verify arrivals, remaining demands, first starts and completions independently. Correct schedule:</p>
+<pre><code>| P1 0–1 | P2 1–5 | P3 5–7 | P5 7–10 | P4 10–14 | P1 14–21 |
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>A</th>
+<th>B (CPU)</th>
+<th>S</th>
+<th>C</th>
+<th>T = C−A</th>
+<th>W</th>
+<th>R = S−A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>21</td>
+<td>21</td>
+<td>13</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1</td>
+<td>4</td>
+<td>1</td>
+<td>5</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>4</td>
+<td>4</td>
+<td>10</td>
+<td>14</td>
+<td>10</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>6</td>
+<td>3</td>
+<td>7</td>
+<td>10</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Means: T̄ = 43/5 ≈ 8.60; W̄ = 22/5 ≈ 4.40; R̄ = 9/5 ≈ 1.80</p>
+<p><strong>Ölçüt.</strong> Dört hatanın en az üçü (özellikle varıştan önce yürütme ve yanlış response); kontrol listesinden en az dört madde; doğru Gantt.</p>
+</details><hr />
+<h3 id="seviye-4-sentez-tasarm-ince-tuzak">Seviye 4 — Sentez, tasarım, ince tuzak<a class="headerlink" href="#seviye-4-sentez-tasarm-ince-tuzak" title="Permanent link">#</a></h3>
+<p><strong>Q45.</strong> <em>Zorluk 4 · Bölüm 13 · Gizli varsayım · Kaynak: sl. 66; sl. 22, 30, 33, 35, 52, 53, 56, 60, 62</em></p>
+<p>Her iddia için gizli varsayımı bul ve doğru/yanlış/koşullu de: (a) "SJF is always best." (b) "U &lt; 1 proves RM deadlines." (c) "Pinning reserves a CPU." (d) "EDF and EEVDF mean the same guarantee." (e) "Round robin is always more responsive than SJF." (f) "A smaller quantum always lowers average turnaround." (g) "U ≤ 1, so EDF meets every deadline on our 4-core server with locks." (h) "Every job waits at most (n − 1)q under RR."</p>
+<blockquote>
+<p>EN: Identify the hidden assumption in each statement.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Best according to which criterion, with what arrival information and burst knowledge? SJF's optimality claim (minimum mean waiting) rests on a fixed set available together, known bursts and zero overhead; when these fail there is no guarantee, and it can starve long jobs and is not optimal online (Q35). (b) False: Example B has U = 0.9375 and misses at 80; the RM test is n(2^(1/n) − 1), and it is only sufficient. (c) False: affinity restricts placement but permits other work and interrupts on the same CPU. (d) False: EDF orders jobs by application deadlines (SCHED_DEADLINE in Linux); EEVDF's virtual deadlines are fair-class service accounting, not wall-clock promises. (e) Depends on the metric and workload: on 24/3/3 RR serves every job by 7 while SJF makes P1 wait until 6 for first service but has smaller mean response (3 vs 3.67); no slogan holds. (f) False: turnaround is not monotonic in q (Q27) and tiny quanta waste time switching. (g) False: the exact EDF condition assumes one processor, independent tasks (no blocking), full preemption, D = T and zero overhead. (h) Only for n continuously runnable equal peers, zero overhead and no outside arrivals or higher-priority work.</p>
+<p><strong>Ölçüt.</strong> Her madde için "doğru/yanlış/koşullu" + varsayımın adı. Sekizde altı tam puan eşiği. Gerekçesiz "False" yarım puan.</p>
+</details><hr />
+<p><strong>Q46.</strong> <em>Zorluk 4 · Bölüm 6 · Tasarım · Kaynak: sl. 30, 32–33</em></p>
+<p>Etkileşimli bir sunucuda 10 eşit öncelikli, sürekli runnable thread var; switch maliyeti s = 0.05 ms. Hedefler: (1) overhead %2'yi geçmesin, (2) bir thread'in iki turu arasındaki boşluk 100 ms'yi geçmesin. Hangi q aralığı uygundur? Seçimin hangi varsayımlara dayandığını ve neden "evrensel bir Linux ayarı" olmadığını yaz.</p>
+<blockquote>
+<p>EN: Choose a quantum that satisfies an overhead limit and a latency bound. State the assumptions.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Overhead: q/(q + s) ≥ 0.98 ⇔ q ≥ 0.98·s/0.02 = 49·0.05 = 2.45 ms. Latency: with the saturated model the gap is (n − 1)q + n·s = 9q + 0.5 ≤ 100 ⇔ q ≤ 99.5/9 ≈ 11.06 ms (the overhead term is our derivation, ek bilgi). Any q in [2.45, 99.5/9 ≈ 11.06] ms satisfies both; a value near the middle (say 5 ms) leaves margin for both. Assumptions: equal peers that stay runnable, no higher-priority interference, no new arrivals, a constant switch cost (ignoring indirect cache effects). Real bursts that block early release the CPU sooner, while higher-priority work or more threads widen the gap. The choice follows the workload and latency goal; a textbook rule of thumb is not a universal Linux setting.</p>
+<p><strong>Ölçüt.</strong> Alt sınır 2.45 ms ve üst sınır ≈ 11.06 ms; aralığın gerekçesi; en az üç varsayım. Yalnız formül, varsayımsız cevap yarım puan.</p>
+</details><hr />
+<p><strong>Q47.</strong> <em>Zorluk 4 · Bölüm 12 · Deney yorumu · Kaynak: sl. 62–63; Okuma §14; S-7</em></p>
+<p>Okumadaki <code>cpu-work</code> deneyi aynı CPU'ya bağlı iki işçiyle (nice 0 ve nice 10) çalıştırıldı. Çıktı: normal <code>cpu_s=0.750 elapsed_s=0.830</code>; nice10 <code>cpu_s=0.751 elapsed_s=1.530</code>. İki işçinin aynı anda başladığını ve o CPU'da başka iş olmadığını varsay. (a) Çekişme süresince nice 0 işçisi CPU'nun ne kadarını aldı? (b) Nice 10 işçisi en erken ne zaman bitebilirdi? Gözlemle fark ne anlatır? (c) Bu deneyden çıkarılamayacak üç şey. (d) Deney hangi varsayımları sağlıyor, hangilerini sağlamıyor?</p>
+<blockquote>
+<p>EN: Interpret the nice 0 / nice 10 experiment. What can and cannot be concluded?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) In [0, 0.83] the normal worker consumed 0.750 CPU s, about 90.4% of the CPU; the nice-10 worker got about 0.08 s (≈ 9.6%). For comparison, Linux's fair-class weights for nice 0 and nice 10 are 1024 and 110, an ideal share of 1024/1134 ≈ 90.3% <span class="ek">ek bilgi: kernel weight table</span>. (b) After 0.83 the nice-10 worker runs alone and needs 0.751 − 0.08 = 0.671 s more, so the earliest finish is ≈ 1.501 s. The observed 1.530 s leaves ≈ 0.03 s unexplained. The calculation assumed simultaneous starts and no other work; the gap shows where real runs violate the stated assumptions: launch skew (background jobs do not start at the same instant), other runnable work or interrupts on that CPU, VM vCPU scheduling, power management. (c) It cannot prove an exact CPU-share ratio, identify the scheduling algorithm from timing alone, or establish a hard real-time bound; PSR or affinity does not show exclusive use. (d) Satisfied: same allowed CPU (affinity makes the two compete there), bounded CPU demand, recorded CPU and elapsed time. Not satisfied: simultaneous release, absence of other work (affinity is not a reservation), known overhead; repeated runs, reversed launch order and an equal-nice control are needed, and the survivor faces different competition after the first worker finishes.</p>
+<p><strong>Ölçüt.</strong> %90 civarı pay; 1.501 s alt sınırı ve farkın en az iki nedeni; (c)'de üç madde; (d)'de affinity ≠ reservation. Ağırlık tablosu bonus; tek ölçümden algoritma adı çıkaran puan kaybeder.</p>
+</details><hr />
+<p><strong>Q48.</strong> <em>Zorluk 4 · Bölüm 8 · Hesap + tasarım · Kaynak: sl. 44, 46; Okuma §10</em></p>
+<p>İki CPU, hepsi 0'da dört nonpreemptive iş: J1 = 6, J2 = 6, J3 = 6, J4 = 2. (a) CPU başına kuyruk, göç yok: CPU0'da J1, J2, J3; CPU1'de J4. (b) Ortak FCFS kuyruğu, sıra J1, J2, J3, J4, boşalan CPU sıradakini alır. (c) (a)'daki düzen, ama CPU1 2'de boşalınca J3'ü kendine çeker; göç cache ısınması için J3'e 1 birim ek iş ekler. Her biri için tamamlanma zamanları, ortalama turnaround ve son bitiş. Affinity ve load balancing gerilimini yorumla.</p>
+<blockquote>
+<p>EN: Compare per-CPU queues, a shared queue and pull migration with a migration cost.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Per-CPU: completions J1 6, J2 12, J3 18, J4 2; mean turnaround 38/4 = 9.5; makespan 18; CPU1 idles from 2. (b) Shared queue: CPU0 J1 0–6, CPU1 J2 0–6, then CPU0 J3 6–12, CPU1 J4 6–8; mean 32/4 = 8; makespan 12. (c) Pull migration: CPU0 J1 0–6, J2 6–12; CPU1 J4 0–2, J3 2–9 (6 + 1 warm-up); completions 6, 12, 9, 2; mean 29/4 = 7.25; makespan 12. Even with the migration cost, balancing beats keeping J3 near its warm cache here, because the imbalance (an idle CPU for 16 units) is much larger than the locality loss. With a larger migration cost or a smaller imbalance the answer could reverse; on a NUMA machine memory placement adds another cost. A shared queue achieves balance but adds contention on one structure.</p>
+<p><strong>Ölçüt.</strong> Üç senaryonun sayıları (9.5/18; 8/12; 7.25/12); balancing vs affinity yorumu ve "maliyet büyükse tersine dönebilir" koşulu.</p>
+</details><hr />
+<p><strong>Q49.</strong> <em>Zorluk 4 · Bölüm 7 · Tasarım + hesap · Kaynak: sl. 41–42; OSTEP 8</em></p>
+<p>MLFQ'da en üst kuyruğun kuantumu 10 ms. (a) Bir iş her seferinde 9.9 ms çalışıp 0.1 ms'lik bir I/O yapıyor. Eski kural "kuantumunu tam kullanan iner, önce bırakan seviyesinde kalır" ise ne olur? Sl. 42'deki toplam pay muhasebesi bunu nasıl önler? (b) Uzun süre çalışan, aç kalabilecek bir işin CPU'nun en az %5'ini alması için periyodik boost en fazla kaç ms'de bir yapılmalı? (c) MLFQ'yu düz RR gibi davranacak şekilde nasıl ayarlarsın?</p>
+<blockquote>
+<p>EN: Game the scheduler, then prevent it; size a boost period; configure MLFQ to behave like round robin.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Under a per-run rule the job never uses a full quantum, so it is never demoted: it stays in the top queue and takes about 99% of the CPU against lower-level work (OSTEP 8 homework). Counting the total CPU allotment used at a level across several short runs demotes it after 10 ms of cumulative use, regardless of yielding. (b) After each boost the long job reaches the top queue and gets at least one 10 ms quantum before it can be demoted again; to receive ≥ 5%, 10/S ≥ 0.05 ⇒ S ≤ 200 ms (assumption: it gets that quantum within each boost period; OSTEP 8 homework). (c) Use a single queue (or never demote, so all jobs stay in one level) with one quantum: RR among all runnable jobs (OSTEP 8 homework). In all cases the full policy must also define I/O return, promotion and boost rules; the slide's 8/16/FCFS figure is an outline.</p>
+<p><strong>Ölçüt.</strong> (a) "never demoted, ~99%" + toplam pay çaresi. (b) 200 ms ve varsayım. (c) tek kuyruk/tek kuantum. Bu soru OSTEP'ten, ders slaytı fikri veriyor; ileri düzey.</p>
+</details><hr />
+<p><strong>Q50.</strong> <em>Zorluk 4 · Bölüm 2 · Tasarım · Kaynak: sl. 16, 34, 36, 39, 47; Okuma §4</em></p>
+<p>Dört sistem için politika öner ve ölçütünü adlandır: (a) gece çalışan, burst'leri bilinen toplu (batch) işler; (b) çok sayıda etkileşimli kullanıcı; (c) ses kartına 10 ms'de bir tampon dolduran thread ile arka planda derleme; (d) hiçbir isteğin 2 saniyeden fazla aç kalmaması gereken bir web sunucusu. Her birinde hangi metrik ve hangi risk?</p>
+<blockquote>
+<p>EN: Choose a policy per objective; name the metric and the risk.</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> (a) Minimizing mean turnaround/waiting with known bursts: SJF (or SRTF if arrivals continue); risk — starvation of long jobs and dependence on burst knowledge; add aging. (b) Response and fairness: RR or an MLFQ that favours short interactive bursts; choose q by overhead and latency goals; risk — switching overhead, gaming without allotment accounting. (c) Deadline satisfaction: the audio thread is a periodic real-time task (C, T = D = 10 ms); give it a real-time policy (RM fixed priority or EDF; in Linux SCHED_FIFO/RR or SCHED_DEADLINE) and verify with WCET-based analysis; risk — blocking, interrupt and dispatch latency, priority inversion; a low average is not a guarantee. (d) Worst-case bound, not mean: RR among peers or aging/boost so waiting is bounded; measure the tail, not only the mean. Utilization alone answers none of these.</p>
+<p><strong>Ölçüt.</strong> Her sistem için politika + metrik + risk (3 × 4). (c)'de "average ≠ guarantee" ve gecikme kaynakları. "Hepsi için en iyi politika" diyen sıfır.</p>
+</details><hr />
+<p><strong>Q51.</strong> <em>Zorluk 4 · Bölüm 9 · İnce tuzak · Kaynak: sl. 47, 49–50; S-8; Okuma §11</em></p>
+<p>Bir ekip, kontrol döngüsünün 1000 test koşusunda en fazla 3.2 ms sürdüğünü ölçtü ve C = 3.2 ms alarak RM testinden geçirdi. Ayrıca "en yüksek öncelikli thread olduğu için olay gelince hemen çalışır" diyor. İki iddiayı değerlendir.</p>
+<blockquote>
+<p>EN: Can an observed maximum serve as a guaranteed WCET? Does highest priority mean immediate execution?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> An observed maximum is evidence about the runs performed; a guaranteed worst-case bound needs a justification covering relevant inputs and operating conditions, including interference and platform behaviour (caches, interrupts, power management). The RM/EDF results assume C is a valid worst-case bound, so the test is only as good as that C. Highest priority does not mean immediate execution: an external event incurs interrupt latency, handler work and dispatch delay before the task runs, and a ready high-priority task may still wait for a nonpreemptible section or a resource held elsewhere (priority inversion). Deadline reasoning needs bounded execution and interference, not only the scheduler's selection rule.</p>
+<p><strong>Ölçüt.</strong> "Observed max ≠ WCET" + gerekçe; en az üç gecikme kaynağı; "selection rule alone is not enough".</p>
+</details><hr />
+<p><strong>Q52.</strong> <em>Zorluk 4 · Bölüm 12 · Çıktı yorumu · Kaynak: sl. 61–62, 66; S-7</em></p>
+<p>Bir Ubuntu VM'de şu çıktılar alındı:</p>
+<pre><code>$ ps -o pid,cls,ni,psr,comm -p &quot;$$&quot;
+    PID CLS  NI PSR COMMAND
+   4312  TS   0   3 bash
+$ chrt -p &quot;$$&quot;
+pid 4312's current scheduling policy: SCHED_OTHER
+pid 4312's current scheduling priority: 0
+$ taskset -pc &quot;$$&quot;
+pid 4312's current affinity list: 0-7
+</code></pre>
+<p>Her alanı yorumla. Arkadaşın "shell hep CPU 3'te çalışıyor; <code>taskset -c 3</code> ile iki işçiyi oraya bağlarsam CPU 3'ü onlara ayırmış olurum" diyor. Değerlendir. Raporda başka neyi kaydetmelisin?</p>
+<blockquote>
+<p>EN: Interpret ps, chrt and taskset output. Does PSR = 3 or pinning establish a reserved CPU?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> CLS TS and SCHED_OTHER: the normal fair class (not a real-time policy); NI 0: default nice; static real-time priority 0 because it is not SCHED_FIFO/RR. PSR 3: the CPU on which the shell was last observed — a sampled identifier, not proof of continuous execution there. Affinity 0–7: the shell may run on any of eight logical CPUs. Pinning both workers with <code>taskset -c 3</code> restricts them to that CPU so they compete there; it does not reserve it, exclude other tasks or interrupts, or guarantee simultaneous starts. Record <code>uname -r</code> (CFS vs EEVDF context), <code>lscpu</code> (logical vs physical CPUs), tool versions, and the VM's virtual CPU allocation, since the host schedules the vCPUs.</p>
+<p><strong>Ölçüt.</strong> Her alanın doğru adı; "PSR is a sample"; "affinity ≠ reservation"; kayıt listesinden en az üç madde.</p>
+</details><hr />
+<p><strong>Q53.</strong> <em>Zorluk 4 · Bölüm 3 · Açıklama · Kaynak: sl. 9, 21; Okuma §5</em></p>
+<p>Convoy effect'i bir CPU-bound iş ve birkaç I/O-bound iş üzerinden adım adım anlat. Tek burst'lük FCFS çizelgesi (24/3/3) bu etkinin hangi kısmını gösterir, hangisini göstermez? Hangi politika değişikliği etkiyi azaltır ve bedeli ne olur?</p>
+<blockquote>
+<p>EN: Explain the convoy effect. What does the single-burst example show and what does it omit?</p>
+</blockquote>
+<details class="ans"><summary>Cevabı ve ölçütü göster</summary><p><strong>Cevap.</strong> Under FCFS a long CPU burst holds the CPU while several short (I/O-bound) tasks wait in the ready queue. They cannot issue their next I/O requests until they run, so the devices sit idle. When the long task finally blocks for I/O, the short tasks run their brief bursts quickly and all move to I/O, leaving the CPU idle, and the long task again returns ahead of them. CPU and device utilization both suffer. The single-burst 24/3/3 chart shows only the initial queueing delay of the short jobs (mean waiting 17 vs 3); the device utilization effect needs a fuller CPU/I/O workload. Preemptive policies (RR, SRTF, or priority to I/O-bound work as in MLFQ) let short bursts run and reissue I/O sooner, at the cost of more switches and possible starvation of the long job without aging.</p>
+<p><strong>Ölçüt.</strong> Döngünün iki yarısı (cihaz boşta, sonra CPU boşta); tek burst'lük örneğin sınırı; çare + bedel.</p>
+</details><hr />
+<h3 id="soru-bankas-ozeti">Soru bankası özeti<a class="headerlink" href="#soru-bankas-ozeti" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Seviye</th>
+<th>Sorular</th>
+<th>Sayı</th>
+<th>Not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Tanım ve kısa cevap</td>
+<td>Q1–Q9</td>
+<td>9</td>
+<td>Kavramsal</td>
+</tr>
+<tr>
+<td>2 — Uygulama, basit iz</td>
+<td>Q10–Q24</td>
+<td>15</td>
+<td>Q23 hariç hepsi hesap</td>
+</tr>
+<tr>
+<td>3 — Çok adımlı iz, hesap, hata bulma</td>
+<td>Q25–Q44</td>
+<td>20</td>
+<td>Hepsi hesap</td>
+</tr>
+<tr>
+<td>4 — Sentez, tasarım, ince tuzak</td>
+<td>Q45–Q53</td>
+<td>9</td>
+<td>Q46–Q49 hesap içerir</td>
+</tr>
+</tbody>
+</table>
+<p>Hesap ağırlığı: 53 sorunun 38'i Gantt, tablo ya da sayısal hesap içerir (yaklaşık %72), 15'i kavramsal. Okuma §15'teki on çalışılmış soru şuralarda: S-1 → Q23, S-2 → Q11, S-3 → Q27, S-4 → Q39, S-5 → Q42, S-6 → Q37, S-7 → Q47 ve Q52, S-8 → Q51, S-9 ve S-10 → Q44. Okumanın "tam çalışma turu" (FCFS, SRTF, RR'yi cevaba bakmadan kur; Example B'yi 160'a kadar iz) → Q11, Q21, Q25, Q37.</p>
+<p><strong>Varsayılan eşitlik kuralları ve açık kalan belirsizlikler:</strong></p>
+<ul>
+<li>RR'de varış ile kuantum bitişi çakışınca sıra: hoca belirtmiyor, okuma "belirtilmeli" diyor. Bankada her RR sorusunda kural soruda yazılı (varsayılan: önce varış; Q25 iki kuralı da soruyor).</li>
+<li>MLFQ'da kesilen işin kuantumu: hoca tam algoritmayı vermiyor <span class="src">sl. 41</span>. Bankada sl. 42'deki "toplam pay" muhasebesi seçildi (kesilen iş kullandığını korur). Sınavda farklı kural istenirse sayılar değişir.</li>
+<li>Switch maliyetinin sayımı (ilk dispatch, bitişten sonraki geçiş, W'ye eklenmesi) bizim seçimimiz; Q33'te yazılı.</li>
+<li>EDF'de eşit mutlak deadline: çalışan iş kalır; eşitlerden hiçbiri çalışmıyorsa önce release edilen, o da eşitse küçük indeks. Q40'ta bu kural dört anda karar verir (6, 9, 13, 15); "küçük indeks önce" kuralı 9 ve 15'te farklı çizelge verir.</li>
+<li>RM'de geç kalan job'un devam etmesi: hocanın Example B'deki davranışı (P2 85'te biter); bankada da öyle.</li>
+<li>Q15 ve Q46'daki (n − 1)q + n·s formülü bizim türetmemiz <span class="ek">ek bilgi</span>; simülatörle doğrulandı.</li>
+</ul></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

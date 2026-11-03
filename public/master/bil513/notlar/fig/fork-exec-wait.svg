@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210" role="img" aria-label="launch.c'nin zaman çizgisi: parent fork ile PID'si 101 olan bir child yaratır. Child execl ile /bin/echo olur ama PID'si 101 kalır. Child çıkınca parent toplayana kadar zombie'dir. Parent waitpid'de bekler, status'u toplar ve sonra yazdırır." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="fe-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+  </defs>
+  <text x="20" y="64" font-weight="600">parent</text>
+  <text x="20" y="81" font-size="12" class="t-mut">PID 100</text>
+  <text x="20" y="154" font-weight="600">child</text>
+  <text x="20" y="171" font-size="12" class="t-mut">PID 101</text>
+  <line class="bar" x1="130" y1="60" x2="300" y2="60"/>
+  <line class="bar dash" x1="306" y1="60" x2="636" y2="60"/>
+  <line class="bar" x1="644" y1="60" x2="740" y2="60"/>
+  <circle cx="220" cy="60" r="6" class="f-cur"/>
+  <text x="220" y="40" text-anchor="middle" font-size="12" font-weight="600">fork() → 101</text>
+  <text x="470" y="44" text-anchor="middle" font-size="12" class="t-mut">waitpid(101): waiting</text>
+  <text x="692" y="44" text-anchor="middle" font-size="12">yazdırır</text>
+  <line class="ln" x1="220" y1="66" x2="220" y2="150"/>
+  <line class="bar" x1="224" y1="150" x2="376" y2="150"/>
+  <text x="300" y="138" text-anchor="middle" font-size="12">fork → 0 · kopya image</text>
+  <circle cx="380" cy="150" r="6" class="f-cur"/>
+  <text x="380" y="178" text-anchor="middle" font-size="12" font-weight="600">execl</text>
+  <line class="bar-acc" x1="386" y1="150" x2="556" y2="150"/>
+  <text x="470" y="138" text-anchor="middle" font-size="12" class="t-acc" font-weight="600">/bin/echo · PID hâlâ 101</text>
+  <circle cx="560" cy="150" r="6" class="f-cur"/>
+  <text x="560" y="178" text-anchor="middle" font-size="12" font-weight="600">exit(0)</text>
+  <line class="bar-k dash" x1="566" y1="150" x2="636" y2="150"/>
+  <text x="600" y="138" text-anchor="middle" font-size="12" class="t-mut">zombie</text>
+  <line class="ln" x1="640" y1="146" x2="640" y2="68" marker-end="url(#fe-a)"/>
+  <text x="648" y="112" font-size="12">status toplanır</text>
+</svg>

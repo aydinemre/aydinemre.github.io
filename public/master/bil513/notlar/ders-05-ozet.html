@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 5: Son gün özeti (English cheat sheet)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 5: Son gün özeti (English cheat sheet)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-05-ozet.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-05.html">Anlatım</a> <a href="ders-05-ozet.html" aria-current="page">Özet</a> <a href="ders-05-sorular.html">Soru bankası</a> <a href="ders-05-deneme.html">Deneme sınavı</a> <a href="ders-05-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#formulas-and-steps">Formulas and steps</a></li><li><a href="#sentences-worth-writing">Sentences worth writing</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-5-son-gun-ozeti-english-cheat-sheet">CSE 513 · Ders 5: Son gün özeti (English cheat sheet)<a class="headerlink" href="#cse-513-ders-5-son-gun-ozeti-english-cheat-sheet" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#formulas-and-steps">Formulas and steps</a></li><li><a href="#sentences-worth-writing">Sentences worth writing</a></li></ul></details>
+<p>Sınav İngilizce. Bu sayfa hocanın kalıp cümleleriyle bir sayfalık tekrar. Her satırın gerekçesi anlatımda.</p>
+<h2 id="answer-pattern">Answer pattern<a class="headerlink" href="#answer-pattern" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>State the model first:</strong> page size, PTE size, levels, TLB capacity and replacement, serial lookup, residency <span class="src">sl. 4, 13, 38</span>.</li>
+<li>Keep <strong>translation</strong> (where would the access go?) separate from <strong>protection</strong> (is the operation permitted?) <span class="src">Okuma §12; sl. 28</span>.</li>
+<li>Separate four questions: <strong>TLB hit/miss · valid (member of the address space) · resident · permitted</strong> <span class="src">sl. 35, 41, 68</span>.</li>
+<li><strong>Label each arrow before calculating:</strong> entry address, entry contents, data address <span class="src">sl. 33, 48</span>.</li>
+<li>For an invalid reference: "There is no physical result to invent." Reject it explicitly <span class="src">sl. 28</span>.</li>
+<li>Check the bound before adding the base: <code>0 ≤ offset &lt; limit</code>, then <code>base + offset</code> <span class="src">sl. 10</span>.</li>
+</ul>
+<h2 id="x-does-not-prove-y">"X does not prove Y"<a class="headerlink" href="#x-does-not-prove-y" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Does not prove</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Two processes print the same pointer</td>
+<td>they share the data</td>
+<td>"A numerical address alone does not identify a unique physical byte" <span class="src">sl. 3, 31</span></td>
+</tr>
+<tr>
+<td>Two different virtual addresses</td>
+<td>different bytes</td>
+<td>different virtual addresses can reach the same frame (0x1234 and 0x7234 → 0x9234) <span class="src">sl. 43</span></td>
+</tr>
+<tr>
+<td>A TLB miss</td>
+<td>a page fault or a disk read</td>
+<td>a valid, resident mapping is recovered from the page table <span class="src">sl. 35, 67</span></td>
+</tr>
+<tr>
+<td>A TLB hit</td>
+<td>permission</td>
+<td>the cached entry carries permissions: <code>TLB=HIT PROTECTION</code> <span class="src">sl. 64; Okuma §12</span></td>
+</tr>
+<tr>
+<td>A frame number is available</td>
+<td>a write is allowed</td>
+<td>R/W/X and user/kernel checks can still reject <span class="src">sl. 41</span></td>
+</tr>
+<tr>
+<td>Read-only for process A</td>
+<td>the frame is immutable</td>
+<td>B's read/write mapping may write it <span class="src">sl. 67</span></td>
+</tr>
+<tr>
+<td>Shared writable memory</td>
+<td>safe updates</td>
+<td>"address translation does not prevent a data race" <span class="src">sl. 42</span></td>
+</tr>
+<tr>
+<td>Physical byte 15000 (or 6700) exists</td>
+<td>the access is legal</td>
+<td>existence does not establish permission <span class="src">sl. 19; Okuma §3</span></td>
+</tr>
+<tr>
+<td>Total free space ≥ request</td>
+<td>the request fits</td>
+<td>it needs one sufficiently large hole: 959 KiB free, largest 300, 426 fails <span class="src">sl. 12, 15</span></td>
+</tr>
+<tr>
+<td>Best fit won this sequence</td>
+<td>best fit is always better</td>
+<td>an example outcome, not a proof <span class="src">Okuma §4</span></td>
+</tr>
+<tr>
+<td>Paging</td>
+<td>no fragmentation</td>
+<td>removes contiguous placement; last-page internal fragmentation remains <span class="src">sl. 16, 29</span></td>
+</tr>
+<tr>
+<td>Compaction</td>
+<td>no internal fragmentation</td>
+<td>it relocates allocations; unused space inside them stays <span class="src">sl. 17</span></td>
+</tr>
+<tr>
+<td>A multilevel table</td>
+<td>less memory</td>
+<td>fully populated: 1025 pages &gt; 1024 <span class="src">sl. 50</span></td>
+</tr>
+<tr>
+<td>A 64-entry TLB covers 128 MiB</td>
+<td>no misses</td>
+<td>"nominal reach is not a guarantee of hits" <span class="src">sl. 56</span></td>
+</tr>
+<tr>
+<td>Linux names five levels</td>
+<td>five lookups per miss</td>
+<td>unused levels are folded; large-page leaves end early <span class="src">sl. 57, 53</span></td>
+</tr>
+<tr>
+<td>A <code>/proc/PID/maps</code> line</td>
+<td>residency or a frame number</td>
+<td>it reports a virtual range and permissions <span class="src">sl. 62, 63</span></td>
+</tr>
+<tr>
+<td>Dynamic linking</td>
+<td>dynamic loading</td>
+<td>different questions: what is loaded vs how references are connected <span class="src">sl. 11</span></td>
+</tr>
+<tr>
+<td>Intel 64 / x86-64</td>
+<td>IA-64</td>
+<td>IA-64 is a separate architecture <span class="src">sl. 58</span></td>
+</tr>
+<tr>
+<td>PAE</td>
+<td>a 36-bit linear address</td>
+<td>the linear address stays 32 bits; physical becomes 36 <span class="src">Okuma §17</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="formulas-and-steps">Formulas and steps<a class="headerlink" href="#formulas-and-steps" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Formula</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Split</td>
+<td><code>p = ⌊A/P⌋</code>, <code>d = A mod P</code>; bits: p = m − n, d = n</td>
+<td>0x1234, 4 KiB → p 1, d 0x234 <span class="src">sl. 21, 22, 71</span></td>
+</tr>
+<tr>
+<td>Physical address</td>
+<td><code>PA = f × P + d</code> (never <code>f × P + A</code>)</td>
+<td>frame 9 → 0x9234 <span class="src">sl. 25; Okuma §7</span></td>
+</tr>
+<tr>
+<td>Page boundary</td>
+<td>adjacent virtual ≠ adjacent physical</td>
+<td>0x0FFF → 0x3FFF, 0x1000 → 0x9000 <span class="src">sl. 27</span></td>
+</tr>
+<tr>
+<td>Last-page waste</td>
+<td>pages = ⌈S/P⌉, waste = pages·P − S</td>
+<td>72766 B, 2048 → 36 pages, 962 B <span class="src">sl. 29</span></td>
+</tr>
+<tr>
+<td>Segment</td>
+<td>check <code>d &lt; limit[s]</code>, then <code>base + d</code></td>
+<td>(0,430) → 1830; (1,400) → trap <span class="src">sl. 19</span></td>
+</tr>
+<tr>
+<td>PTE address</td>
+<td><code>PTBR + VPN × PTE size</code></td>
+<td>0x8000 + 1×8 = 0x8008; page 3 → 0x8018 <span class="src">sl. 33</span></td>
+</tr>
+<tr>
+<td>EAT (lecture model)</td>
+<td><code>h(t+m) + (1−h)(t+2m) = t + (2−h)m</code></td>
+<td>t=1, m=100, h=0.95 → 106 ns; 201 − 100h <span class="src">sl. 38–39</span></td>
+</tr>
+<tr>
+<td>EAT, k levels</td>
+<td><code>t + m + (1−h)·k·m</code></td>
+<td>k=2, h=0.95 → 111 ns <span class="src">sl. 51</span></td>
+</tr>
+<tr>
+<td>OSC model</td>
+<td>ignores t: <code>(2−h)m</code></td>
+<td>differs by exactly t; do not mix models <span class="src">Okuma §11</span></td>
+</tr>
+<tr>
+<td>Linear table</td>
+<td><code>2^(m−n) × PTE size</code></td>
+<td>2^20 × 4 B = 4 MiB <span class="src">sl. 45</span></td>
+</tr>
+<tr>
+<td>Level width</td>
+<td><code>log2(page size / PTE size)</code></td>
+<td>4096/4 → 10 (10/10/12); 4096/8 → 9 (9/9/9/9/12) <span class="src">sl. 47; OSC ch9 sl. 65</span></td>
+</tr>
+<tr>
+<td>Two-level walk</td>
+<td>outer = A &gt;&gt; 22, inner = (A &gt;&gt; 12) &amp; 0x3FF</td>
+<td>0x00403004 → 0x1004 → 0x500C → 0xA004 <span class="src">sl. 49</span></td>
+</tr>
+<tr>
+<td>Sparse hierarchy</td>
+<td>(1 root + used leaves) × 4 KiB</td>
+<td>3 regions → 16 KiB <span class="src">sl. 50</span></td>
+</tr>
+<tr>
+<td>64-bit</td>
+<td>2^52 entries; 42/10/12 outer = 2^44 B</td>
+<td>3 levels outer = 2^34 B <span class="src">sl. 52, 73</span></td>
+</tr>
+<tr>
+<td>TLB reach</td>
+<td>entries × page size</td>
+<td>64 × 4 KiB = 256 KiB; 64 × 2 MiB = 128 MiB <span class="src">sl. 56</span></td>
+</tr>
+<tr>
+<td>LRU trace</td>
+<td>a hit moves the page to MRU</td>
+<td>0,1,0,2,1 with 2 entries → 1 hit / 4 misses = 20% <span class="src">sl. 36–37</span></td>
+</tr>
+<tr>
+<td>Fit check</td>
+<td>final holes sum = initial − allocated</td>
+<td>1700 − 1167 = 533 (best fit) <span class="src">sl. 14; Okuma §4</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="sentences-worth-writing">Sentences worth writing<a class="headerlink" href="#sentences-worth-writing" title="Permanent link">#</a></h2>
+<ul>
+<li>"Mapping existence and permitted access are separate checks." <span class="src">sl. 28</span></li>
+<li>"A TLB miss is not a page fault." <span class="src">sl. 35</span></li>
+<li>"A cached decision must not outlive the state on which it depends." <span class="src">Okuma §10</span></li>
+<li>"Permissions belong to the relevant mapping." <span class="src">sl. 43</span></li>
+<li>"Savings depend on sparsity." <span class="src">sl. 50</span></li>
+<li>"Distinguish virtual-space validity, residency and cached translation." <span class="src">sl. 68</span></li>
+</ul></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 2: Son gün özeti (English cheat sheet)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 2: Son gün özeti (English cheat sheet)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-02-ozet.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-02.html">Anlatım</a> <a href="ders-02-ozet.html" aria-current="page">Özet</a> <a href="ders-02-sorular.html">Soru bankası</a> <a href="ders-02-deneme.html">Deneme sınavı</a> <a href="ders-02-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#formulas-and-calculation-steps">Formulas and calculation steps</a></li><li><a href="#slide-results-to-know">Slide results to know</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-2-son-gun-ozeti-english-cheat-sheet">CSE 513 · Ders 2: Son gün özeti (English cheat sheet)<a class="headerlink" href="#cse-513-ders-2-son-gun-ozeti-english-cheat-sheet" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#formulas-and-calculation-steps">Formulas and calculation steps</a></li><li><a href="#slide-results-to-know">Slide results to know</a></li></ul></details>
+<p>Sınav İngilizce. Bu sayfa hocanın kalıp cümleleriyle bir sayfalık tekrar: önce cevap kalıbı, sonra "X, Y'yi kanıtlamaz" tablosu, en sonda formüller ve hesap adımları. Her satırın kaynağı yanında.</p>
+<h2 id="answer-pattern">Answer pattern<a class="headerlink" href="#answer-pattern" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>State the model before the number:</strong> one CPU or several, arrivals, known or estimated bursts, switch cost, tie rule, priority direction <span class="src">sl. 18, 37; Okuma §7</span>.</li>
+<li><strong>Construct a legal schedule first, then extract S and C, then compute metrics.</strong> Never read waiting off a bar's position when a job has several bars <span class="src">Okuma §7</span>.</li>
+<li><strong>Name the criterion</strong> ("best according to which criterion?"): mean waiting, response, fairness or deadlines are different objectives <span class="src">sl. 16, 34, 66</span>.</li>
+<li><strong>Separate a sufficient test from a necessary condition</strong> and a trace from a guarantee: "A finite trace illustrates decisions. The feasibility theorem provides the guarantee" <span class="src">sl. 52, 57</span>.</li>
+<li><strong>Ready vs blocked:</strong> priority or more CPU cannot supply a missing part or a held lock <span class="src">sl. 8, 58</span>.</li>
+<li><strong>Observation answers:</strong> record the environment, say what the evidence cannot prove <span class="src">sl. 62–63</span>.</li>
+</ul>
+<h2 id="x-does-not-prove-y">"X does not prove Y"<a class="headerlink" href="#x-does-not-prove-y" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Does not prove</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One mechanic alternates among cars</td>
+<td>parallel execution</td>
+<td>interleaving on one resource is concurrency; two mechanics add capacity but still share tools <span class="src">sl. 4</span></td>
+</tr>
+<tr>
+<td>A zero-overhead timeline</td>
+<td>real performance</td>
+<td>dispatch takes time and disturbs cache state; the stated switch cost must be restored <span class="src">sl. 13</span></td>
+</tr>
+<tr>
+<td>A timer interrupt or a wake-up</td>
+<td>a different task ran</td>
+<td>"An interrupt is a scheduling opportunity, not proof that a different task ran" <span class="src">sl. 14</span></td>
+</tr>
+<tr>
+<td>An exponential-average estimate</td>
+<td>the next burst, or a WCET</td>
+<td>"An estimate is neither a known future burst nor a worst-case execution-time bound" <span class="src">sl. 26</span></td>
+</tr>
+<tr>
+<td>Response = 0</td>
+<td>waiting = 0</td>
+<td>SRTF P1 responds at 0 and waits 9 after preemption <span class="src">sl. 29</span></td>
+</tr>
+<tr>
+<td>A quantum boundary on the chart</td>
+<td>a task switch</td>
+<td>with no other runnable task, expiry need not switch <span class="src">sl. 32</span></td>
+</tr>
+<tr>
+<td>100% CPU utilization</td>
+<td>good responsiveness</td>
+<td>one long job keeps the CPU busy while others wait <span class="src">sl. 35</span></td>
+</tr>
+<tr>
+<td>Round robin inside a priority level</td>
+<td>no starvation</td>
+<td>higher-priority levels can still starve it; aging's guarantee depends on policy and load <span class="src">sl. 39</span></td>
+</tr>
+<tr>
+<td>A thread is pinned (affinity)</td>
+<td>a reserved CPU</td>
+<td>affinity constrains eligible CPUs; other work and interrupts still run there <span class="src">sl. 46, 66</span></td>
+</tr>
+<tr>
+<td>Fast average execution time</td>
+<td>a worst-case deadline guarantee</td>
+<td>priority alone ignores blocking, interrupt delays and execution-time variation <span class="src">sl. 47</span></td>
+</tr>
+<tr>
+<td>U above n(2^(1/n) − 1)</td>
+<td>an RM deadline miss</td>
+<td>the test is sufficient, not necessary: (1,2), (2,4) has U = 1 and meets RM deadlines <span class="src">sl. 52</span></td>
+</tr>
+<tr>
+<td>U &lt; 1</td>
+<td>RM meets every deadline</td>
+<td>Example B: U = 0.9375, P2 misses at 80 <span class="src">sl. 53, 66</span></td>
+</tr>
+<tr>
+<td>An EEVDF virtual deadline</td>
+<td>a wall-clock deadline</td>
+<td>fairness/latency accounting; SCHED_DEADLINE is the separate EDF policy <span class="src">sl. 60, 66</span></td>
+</tr>
+<tr>
+<td><code>ps</code> shows PSR = 3</td>
+<td>continuous execution or exclusive use</td>
+<td>PSR is a sampled CPU identifier <span class="src">sl. 62</span></td>
+</tr>
+<tr>
+<td>One <code>cpu-work</code> timing run</td>
+<td>the algorithm or an exact share ratio</td>
+<td>VM load, affinity and other runnable work affect it <span class="src">sl. 63</span></td>
+</tr>
+<tr>
+<td>SJF minimizes mean waiting</td>
+<td>"SJF is always best"</td>
+<td>only for jobs available together, known bursts, zero overhead; it can starve long jobs <span class="src">sl. 22, 66</span></td>
+</tr>
+<tr>
+<td>Two logical CPUs on one core</td>
+<td>two cores' throughput</td>
+<td>hardware threads share execution resources <span class="src">sl. 45</span></td>
+</tr>
+<tr>
+<td>Nice = −20</td>
+<td>a completion deadline</td>
+<td>nice changes relative service only <span class="src">sl. 61</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="formulas-and-calculation-steps">Formulas and calculation steps<a class="headerlink" href="#formulas-and-calculation-steps" title="Permanent link">#</a></h2>
+<p><strong>1. Per-job accounting</strong> <span class="src">sl. 16–17; Okuma §4</span>. A = arrival, S = first start, C = completion, B = total CPU demand.</p>
+<ul>
+<li>T = C − A; R = S − A (first CPU service, not first visible output); W = time ready but not running.</li>
+<li>CPU-only job: W = T − B. Slide check: A 2, S 5, C 12, B 4 → T 10, W 6, R 3 <span class="src">sl. 17</span>.</li>
+<li>Utilization = busy time / elapsed time; throughput = completed jobs / time <span class="src">sl. 16</span>.</li>
+</ul>
+<p><strong>2. With I/O</strong> <span class="src">sl. 17; Okuma §4</span>: W = T − (CPU time) − (blocked time). Blocked time is device waiting, never ready-queue waiting. Safer: add up the intervals in which the job was ready but not running.</p>
+<p><strong>3. Exponential averaging</strong> <span class="src">sl. 25–26; Okuma §6</span>: τ(next) = α × t(actual) + (1 − α) × τ(previous). α = 0.5, τ = 10, t = 6 → 8; then t = 4 → 6. α = 0: never updates; α = 1: last burst only. Large α reacts fast but follows noise; small α smooths but adapts slowly.</p>
+<p><strong>4. Round robin gap</strong> <span class="src">sl. 30; Okuma §8</span>: gap between a task's turns ≤ (n − 1)q, <strong>only if</strong> n continuously runnable equal peers, zero overhead, no outside arrivals. Overhead, higher-priority work or a changing ready set breaks it.</p>
+<p><strong>5. Quantum cost</strong> <span class="src">sl. 32; Okuma §8</span>: useful fraction ≈ q/(q + s) for saturated alternating work. q = 4 ms, s = 0.2 ms → 95.24%; q = 1 ms → 83.33%. Turnaround vs q is not monotonic; huge q → FCFS <span class="src">sl. 33</span>.</p>
+<p><strong>6. Liu–Layland (RM, sufficient)</strong> <span class="src">sl. 52; Okuma §12</span>: U = Σ Ci/Ti ≤ n(2^(1/n) − 1) ⇒ schedulable. Values: n = 1: 1.0 · n = 2: <strong>0.8284</strong> · n = 3: <strong>0.7798</strong> · n = 4: 0.7568 · n = 5: 0.7435 <span class="ek">ek bilgi: values for n = 1, 3, 4, 5 computed from the formula</span>. Above the bound → inconclusive, go to RTA.</p>
+<p><strong>7. RTA iteration (RM, D = T)</strong> <span class="src">sl. 54; Okuma §12</span>: R0 = Ci; R(next) = Ci + Σ over higher-priority j of ceil(R/Tj) × Cj. Iterate until R repeats (meets if R ≤ Di) or exceeds Di (miss). R = release-to-completion, not first service. Example B, P2: 35 → 60 → 85 &gt; 80. Assumes independent, preemptible tasks, no blocking or overhead.</p>
+<p><strong>8. EDF</strong> <span class="src">sl. 55–56; Okuma §13</span>: run the ready job with the earliest <strong>absolute</strong> deadline d = r + D. One processor, independent, fully preemptible, D = T: <strong>U ≤ 1 is exact</strong>. If D &lt; T, or with blocking, overhead, jitter or several CPUs, utilization alone is insufficient <span class="src">sl. 56</span>.</p>
+<p><strong>9. Little's law</strong> <span class="src">sl. 65; Okuma §15</span>: Lq = λ × Wq (stable queue, matching boundaries). λ = 7 jobs/s, Lq = 14 → Wq = 2 s. If the count includes running work, use time in system. Overloaded, growing queue: no steady state, no answer.</p>
+<p><strong>10. Gantt checklist</strong> <span class="src">sl. 18, 27, 35, 67; Okuma §7, §15</span></p>
+<ol>
+<li>Write the rules: [start, end) intervals, tie order, SRTF tie → current job continues <span class="src">sl. 27</span>, RR order of a new arrival vs an expired quantum <span class="src">Okuma §8</span>, priority direction (textbook: smaller = higher; Linux RT: opposite) <span class="src">sl. 37</span>.</li>
+<li>Mark every arrival, preemption and completion; at each event compare <strong>remaining</strong> demand (SRTF) or <strong>absolute</strong> deadlines (EDF), not original bursts or periods <span class="src">sl. 27, 57</span>.</li>
+<li>Nonpreemptive policies only decide when the CPU is free; a job that finishes at t frees the CPU at t <span class="src">sl. 18</span>.</li>
+<li>Conservation check: each job's executed time = its demand; nothing runs before release; no overlap on one CPU; last completion = total work + idle time <span class="src">Okuma §7, §15</span>.</li>
+<li>Then compute S, C → T, W, R per job, then the means; report the distribution too, not only the mean <span class="src">sl. 64</span>.</li>
+<li>Real-time: check up to the hyperperiod lcm(Ti); demand in it = U × hyperperiod <span class="ek">ek bilgi: hyperperiod as the check horizon</span>.</li>
+</ol>
+<h2 id="slide-results-to-know">Slide results to know<a class="headerlink" href="#slide-results-to-know" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Workload</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FCFS 24/3/3, order P1, P2, P3</td>
+<td>W (0, 24, 27), mean 17; T mean 27 <span class="src">sl. 19</span></td>
+</tr>
+<tr>
+<td>FCFS order P2, P3, P1</td>
+<td>W mean 3; T mean 13; all finish at 30 <span class="src">sl. 20</span></td>
+</tr>
+<tr>
+<td>SJF 6/8/7/3</td>
+<td>order P4, P1, P3, P2; W mean 7 <span class="src">sl. 23</span></td>
+</tr>
+<tr>
+<td>SRTF 0/1/2/3, 8/4/9/5</td>
+<td>W (9, 0, 15, 2), mean 6.5; R mean 4.25 <span class="src">sl. 29</span></td>
+</tr>
+<tr>
+<td>RR q = 4 on 24/3/3</td>
+<td>W mean 17/3 ≈ 5.67; R mean 11/3 ≈ 3.67 <span class="src">sl. 31</span></td>
+</tr>
+<tr>
+<td>Priority (10, 1, 2, 1, 5), pr (3, 1, 4, 5, 2)</td>
+<td>order P2, P5, P1, P3, P4; W mean 8.2 <span class="src">sl. 38</span></td>
+</tr>
+<tr>
+<td>MLFQ, solitary 30-unit job</td>
+<td>8 (Q0) + 16 (Q1) + 6 (Q2), done at 30 <span class="src">sl. 42</span></td>
+</tr>
+<tr>
+<td>RM Example A (20, 50), (35, 100)</td>
+<td>U 0.75 &lt; 0.8284; P2 done at 75 <span class="src">sl. 51–52</span></td>
+</tr>
+<tr>
+<td>RM Example B (25, 50), (35, 80)</td>
+<td>U 0.9375; P2 done at 85, misses 80 <span class="src">sl. 53</span></td>
+</tr>
+<tr>
+<td>EDF Example B</td>
+<td>P2 to 60, P1 60–85; later P2 done 145, 210; P1 235 <span class="src">sl. 55, 57</span></td>
+</tr>
+</tbody>
+</table></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

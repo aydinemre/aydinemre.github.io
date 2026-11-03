@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" role="img" aria-label="CPU, disk controller ve USB controller aynı ortak bus'a bağlı; bus'a bağlı tek bir ana bellek var. CPU belleğe load/store ile gider, disk controller ise DMA ile bloğu CPU'ya uğramadan aynı belleğe yazar. CPU controller'a komut yazar, controller iş bitince interrupt gönderir. Bus'ı aynı anda tek taraf kullanabildiği için CPU ile DMA bellek döngüsü için yarışır." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="bp-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="bp-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+    <marker id="bp-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker>
+  </defs>
+  <!-- cihazlar -->
+  <rect class="box-plain" x="310" y="16" width="160" height="40" rx="6"/>
+  <text x="390" y="41" text-anchor="middle" font-weight="600">Disk</text>
+  <rect class="box-plain" x="570" y="16" width="150" height="40" rx="6"/>
+  <text x="645" y="41" text-anchor="middle">klavye · fare</text>
+  <line class="ln" x1="370" y1="56" x2="370" y2="92" marker-start="url(#bp-a)" marker-end="url(#bp-a)"/>
+  <text x="380" y="80" font-size="12">② cihazı sürer</text>
+  <line class="ln" x1="645" y1="56" x2="645" y2="96"/>
+  <!-- CPU ve controller'lar -->
+  <rect class="box" x="40" y="96" width="170" height="70" rx="6"/>
+  <text x="125" y="125" text-anchor="middle" font-weight="600">CPU</text>
+  <text x="125" y="145" text-anchor="middle" font-size="12" class="t-mut">çekirdekler · cache</text>
+  <rect class="box" x="300" y="96" width="180" height="70" rx="6"/>
+  <text x="390" y="125" text-anchor="middle" font-weight="600">Disk controller</text>
+  <text x="390" y="145" text-anchor="middle" font-size="12" class="t-mut">register'lar · yerel tampon</text>
+  <rect class="box-plain" x="560" y="96" width="170" height="70" rx="6"/>
+  <text x="645" y="136" text-anchor="middle" font-weight="600">USB controller</text>
+  <!-- komut ve interrupt -->
+  <line class="ln" x1="210" y1="114" x2="296" y2="114" marker-end="url(#bp-a)"/>
+  <text x="253" y="107" text-anchor="middle" font-size="12">① komut</text>
+  <line class="ln-warn dash" x1="300" y1="150" x2="214" y2="150" marker-end="url(#bp-w)"/>
+  <text x="257" y="166" text-anchor="middle" font-size="12" class="t-warn" font-weight="600">④ interrupt</text>
+  <!-- ortak bus -->
+  <line class="ln" x1="105" y1="166" x2="105" y2="212"/>
+  <line class="ln" x1="345" y1="166" x2="345" y2="212"/>
+  <line class="ln" x1="645" y1="166" x2="645" y2="212"/>
+  <line class="bar" x1="60" y1="215" x2="710" y2="215"/>
+  <text x="60" y="238" font-size="12" class="t-mut">ortak bus: adres, veri ve kontrol hatları</text>
+  <line class="ln" x1="300" y1="218" x2="300" y2="262"/>
+  <!-- belleğe giden iki yol -->
+  <polyline class="ln" points="150,166 150,198 350,198 350,262" marker-end="url(#bp-a)"/>
+  <text x="160" y="191" font-size="12">CPU: load/store, komut getirme</text>
+  <line class="ln-acc" x1="430" y1="166" x2="430" y2="262" marker-end="url(#bp-b)"/>
+  <text x="440" y="186" font-size="12" class="t-acc" font-weight="600">③ DMA: blok → RAM</text>
+  <text x="440" y="202" font-size="12" class="t-acc">CPU'ya uğramaz</text>
+  <!-- ana bellek -->
+  <rect class="box-acc" x="260" y="266" width="220" height="58" rx="6"/>
+  <text x="370" y="291" text-anchor="middle" font-weight="600">Ana bellek (RAM)</text>
+  <text x="370" y="310" text-anchor="middle" font-size="12">herkesin eriştiği tek bellek</text>
+  <text x="496" y="290" font-size="12" class="t-mut">bus'ı aynı anda tek taraf kullanır:</text>
+  <text x="496" y="306" font-size="12" class="t-mut">CPU ile DMA bellek döngüsü için yarışır</text>
+  <text x="40" y="290" font-size="12" class="t-warn" font-weight="600">≠ IPC shared memory</text>
+  <text x="40" y="306" font-size="12" class="t-warn">(o Bölüm 7'de, process'ler arası)</text>
+</svg>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ders 1 ilerleme</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: Ders 1 ilerleme">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-01-ilerleme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-01.html">Anlatım</a> <a href="ders-01-ozet.html">Özet</a> <a href="ders-01-sorular.html">Soru bankası</a> <a href="ders-01-deneme.html">Deneme sınavı</a> <a href="ders-01-ilerleme.html" aria-current="page">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#2026-11-02-oturum-1">2026-11-02 · Oturum 1</a></li><li><a href="#2026-11-03-ikinci-inceleme-dort-uzman">2026-11-03 · İkinci inceleme (dört uzman)</a></li></ul></aside>
+  <main><h1 id="ders-1-ilerleme">Ders 1 ilerleme<a class="headerlink" href="#ders-1-ilerleme" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#2026-11-02-oturum-1">2026-11-02 · Oturum 1</a></li><li><a href="#2026-11-03-ikinci-inceleme-dort-uzman">2026-11-03 · İkinci inceleme (dört uzman)</a></li></ul></details>
+<h2 id="2026-11-02-oturum-1">2026-11-02 · Oturum 1<a class="headerlink" href="#2026-11-02-oturum-1" title="Permanent link">#</a></h2>
+<p><strong>Hazırlık tamam.</strong> Dört uzman ajan ve bir denetçi çalıştı. Denetçi 2 kritik, 7 orta ve 15 düşük bulgu çıkardı; hepsi <code>anlatim.md</code> ve <code>soru-bankasi.md</code>'de düzeltildi.</p>
+<p>Ham ajan notları oturumun geçici klasöründeydi, kalıcı değil. Kalıcı olanlar bu klasördeki üç dosya.</p>
+<p><strong>Bölüm planı</strong> (hocanın slayt sırası):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Temeller (Emre istedi): donanım, CPU döngüsü, stack, bellek hiyerarşisi, I/O-interrupt-DMA, derleme/yükleme, boot, multiprogramming, fd</td>
+<td>OSC ch1–2</td>
+<td>anlatıldı, kontrol sorusu bekliyor</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Tazeleme: modlar, kernel'e giriş, system call</td>
+<td>6–9</td>
+<td>anlatıldı, kontrol sorusu (S1, S2) bekliyor</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Program, process, adres alanı, PCB</td>
+<td>10–15</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Durumlar, kuyruklar, burst'ler</td>
+<td>16–21</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Context switch, kernel entry ≠ task switch</td>
+<td>22–27</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>5</td>
+<td>fork / exec / wait, zombie, ps</td>
+<td>28–41</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Thread, concurrency, race, join</td>
+<td>42–52</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>7</td>
+<td>IPC ve pipe</td>
+<td>53–58</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Uçtan uca</td>
+<td>59–64</td>
+<td>bekliyor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Yerel site (2026-11-02):</strong> <code>notlar/site/ders-01.html</code>. 11 kavram diyagramı ve hocanın okumasından 8 OSC şekli var. Soru bankası sayfasında cevaplar gizli, tıklayınca açılıyor.</p>
+<p><strong>Gerçek fotoğraflar (2026-11-03):</strong> Bölüm 0'a OSC ch1 sl. 57'deki anakart fotoğrafı ve sl. 12 şeması eklendi. Ayrıca Wikimedia Commons'tan 5 fotoğraf eklendi: CPU, DDR4 RAM, NVMe SSD, açık HDD, IBM 7090 salonu (NASA). 7094 konsol yakın çekimi Emre'nin isteğiyle bununla değiştirildi. Bunlar Emre'nin onayıyla indirildi ve <code>img/foto/</code> altında; her birinin açıklamasında yazar ve lisans var. Aynı gün Emre'nin onayıyla iki fotoğraf daha eklendi: S-100 bus kartı (<code>bus-s100.jpg</code>) ve WD1002 disk controller kartı (<code>controller-wd1002.jpg</code>); yanlarına driver ≠ controller tuzağı yazıldı. Dar ekranda sayfa başında açılır bir "Bölümler" listesi çıkıyor, ana sayfadaki ders kartı da bölümleri listeliyor.</p>
+<h2 id="2026-11-03-ikinci-inceleme-dort-uzman">2026-11-03 · İkinci inceleme (dört uzman)<a class="headerlink" href="#2026-11-03-ikinci-inceleme-dort-uzman" title="Permanent link">#</a></h2>
+<p>Emre "sınav için bu haliyle yeterli mi?" diye sordu. Dört uzman paralel inceledi: slayt kapsamı, okuma ve alıştırmalar, sınav simülasyonu, doğruluk (red team).</p>
+<ul>
+<li><strong>Sonuç:</strong> kritik hata yok. Slayt metninin yaklaşık %90'ı zaten tam karşılanmıştı. Sınav simülasyonunda 15 sorudan 14'ü yalnızca notlarla tam cevaplanabildi.</li>
+<li><strong>Düzeltilenler:</strong></li>
+<li>Slayt 6'daki "may" ifadesi düzeltildi.</li>
+<li>Slayt 19'un kendi izi eklendi; slayt 21'in CPU-bound tanımı, slayt 23'teki fairness ve slayt 29'daki process ağacı eklendi.</li>
+<li>HDD açıklamasındaki "waiting sebebi yavaşlık" hatası düzeltildi; waiting'in sebebi eksik olaydır.</li>
+<li>OSTEP makine durumu düzeltildi, pipe için OSC'nin parent–child tanımı yazıldı, driver'ın her controller tipi için olduğu yazıldı, cache ile TLB eklendi.</li>
+<li>launch.c'ye sinyal yolu eklendi; pthread_create'in senkronizasyon rolü ile blocking, nonblocking ve asenkron ayrımı yazıldı.</li>
+<li>Corbató videosunun soruları, sınav düzeni (slayt 3–4) ve slayt 63 ile 65 eklendi.</li>
+<li>Eksik 7 OSC şekli eklendi: slayt 9, 14, 20, 29, 44, 45 ve 47.</li>
+<li><strong>Yeni:</strong></li>
+<li>Bus ve paylaşılan bellek açıklaması ile diyagramı eklendi (Emre sordu).</li>
+<li>Soru bankası Q53–Q66 eklendi (14 soru, toplam 66), Bölüm 0 kontrol soruları da yazıldı.</li>
+<li>İngilizce özet sayfası eklendi (<code>ozet.md</code>).</li>
+<li>Deneme sınavı eklendi (<code>deneme-sinavi.md</code>, 15 soru, cevaplar gizli).</li>
+<li>Öncelik notu eklendi: fork sayma ve stdio tamponu soruları bonus.</li>
+<li><strong>Sınav kapsamı:</strong> ara sınav 7. haftada ve büyük olasılıkla 1–6. dersleri kapsıyor. Ders 1 bunun yalnızca bir parçası.</li>
+<li><strong>Sınav tarihi (2026-11-03'te bakıldı):</strong> Ders sitesinde tarih yok ("Exact date and coverage will be announced"). GTÜ 2026-2027 akademik takvimine göre güz dersleri 21 Eylül 2026'da başlıyor, 25 Aralık'ta bitiyor (14 hafta). Buna göre 7. hafta <strong>2–6 Kasım 2026</strong>. Ancak 2 Kasım'da 6. dersin materyali henüz yayınlanmamıştı. Bu, dersin bir hafta geç başlamış olabileceğini gösteriyor; o durumda 7. hafta 9–13 Kasım olur (10 Kasım tatil). Kesin tarih hocanın duyurusundan (Teams) teyit edilmeli.</li>
+</ul>
+<p><strong>Materyal kontrolü (2026-11-03):</strong> Ortak şablon (<code>notlar/SABLON.md</code>) gereği canlı site yerel kopyayla karşılaştırıldı. Karşılaştırılanlar: lecture-01 sayfaları, slayt PDF'i, iki kod dosyası, 6 OSTEP bölümü, okumadaki 8 şekil ve OSC ch1–4 pptx. Hepsi bayt bayt aynı, güncelleme gerekmedi. <code>anlatim.md</code> başına "Ders materyalleri" listesi eklendi. Not: os-book.com bugün IPv6'da (<code>curl -6</code>) SSL hatası verdi, IPv4 ve varsayılan bağlantı çalıştı.</p>
+<p><strong>Akış düzeltmesi (2026-11-03, Emre "dağıldı" dedi):</strong> Bölüm 0 yedi alt başlığa ayrıldı: 0.1 parçalar ve bus, 0.2 I/O, interrupt, DMA, 0.3 CPU, 0.4 bellek hiyerarşisi, 0.5 derleme ve boot, 0.6 multiprogramming, 0.7 fd. Interrupt ve DMA, controller'ın hemen arkasına taşındı. Bölümün sonuna kontrol soruları kondu. §1.1'de sl. 7 şekli sezginin yanına, K1–K2 bölüm sonuna alındı. İçerik değişmedi, yalnız sıra ve başlıklar değişti. Ayrıca bellek hiyerarşisine OSC ch1 sl. 26, 42 ve 43 şekilleri ile iki fotoğraf eklendi (Emre onayıyla: Skylake yongası, teyp kartuşları).</p>
+<p><strong>Zorunlu izleme taraması (2026-11-03):</strong> Canlı sitedeki bütün sayfalara bakıldı: ana sayfa, ders listesi, kaynaklar, syllabus, ödevler, sunumlar, lecture-01…09 ve yayımlanmış okumalar 01–05. Tek zorunlu izleme 1. haftanın Corbató filmi. 2. hafta okuması "Required viewing has not been assigned", 3. ve 4. hafta okumaları "No additional required viewing" diyor. 5. hafta okuması izlemeden hiç söz etmiyor, 6–9. haftaların okumaları henüz yayımlanmadı. Yerel kopya canlıyla aynı. Teams duyurularına bakılamadı.</p>
+<p><strong>Kontrol soruları ve cevaplar:</strong> (henüz yok; Bölüm 0'da T1 ve T2, Bölüm 1'de S1, S2 ile §1.1'in K1 ve K2 soruları bekliyor; ayrıca bus sorusu: DMA olmasa waiting durumu gerekir miydi?)</p>
+<p><strong>§1.1 genişletildi (2026-11-03, Emre istedi):</strong> üç soyutlama programın gördüğü / kernel'in aracı / gerçek donanım / kernel'e giriş yolu olarak ayrı ayrı anlatıldı. Diyagram <code>fig/os-soyutlama.svg</code>; soru bankasına Q67–Q68 eklendi. Hocanın kapsam haritasında sl. 6 "düşük–orta" vurgulu.</p>
+<p><strong>Soru bankası çalıştırması:</strong> (henüz başlamadı)</p>
+<p><strong>Zayıf noktalar:</strong> (henüz yok)</p>
+<p><strong>Yeni oturum için:</strong> Bu dosyayı oku, durumu "anlatılıyor" olan bölümden devam et. Anlatım metni <code>anlatim.md</code>'de. Soruları <code>soru-bankasi.md</code> C bölümünden seviye sırasıyla sor. Q12(g), Q21, Q26, Q27, Q41 ve Q50 bonus sorular.</p></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

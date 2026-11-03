@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 372" role="img" aria-label="Sayaç 0'dan başlar; A ve B birer artırma yapar, her artırma R (oku) ve W (yaz) adımıdır. Altı soyut sıra: AABB ve BBAA 2 ile biter, ABAB, ABBA, BAAB ve BABA 1 ile biter çünkü iki thread de birisi yazmadan 0 okur. Altı soyut sıra altı eşit olasılıklı yürütme değildir." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <text x="380" y="22" text-anchor="middle" font-weight="600" font-size="12.5">İki thread, birer artırma: R = oku (özel registera), W = register + 1'i yaz. Sayaç 0'dan başlar [sl. 8–9]</text>
+
+  <rect class="box-acc" x="14" y="40" width="236" height="134" rx="8"/>
+  <text x="26" y="62" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13" class="t-acc">AABB</text>
+  <text x="238" y="62" text-anchor="end" font-weight="600" class="t-acc">sonuç 2</text>
+  <text x="72" y="82" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="118" y="82" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="164" y="82" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="210" y="82" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="28" y="107" font-weight="600">A</text>
+  <line class="faint" x1="48" y1="102" x2="238" y2="102"/>
+  <text x="28" y="137" font-weight="600">B</text>
+  <line class="faint" x1="48" y1="132" x2="238" y2="132"/>
+  <rect class="box-plain" x="51" y="90" width="42" height="24" rx="4"/>
+  <text x="72" y="106.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="97" y="90" width="42" height="24" rx="4"/>
+  <text x="118" y="106.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box-plain" x="143" y="120" width="42" height="24" rx="4"/>
+  <text x="164" y="136.5" text-anchor="middle" font-size="12">R→1</text>
+  <rect class="box" x="189" y="120" width="42" height="24" rx="4"/>
+  <text x="210" y="136.5" text-anchor="middle" font-size="12">W 2</text>
+  <text x="26" y="164" font-size="11.5" class="t-acc">A bitmeden B okumuyor</text>
+
+  <rect class="box-plain" x="262" y="40" width="236" height="134" rx="8"/>
+  <text x="274" y="62" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13">ABAB</text>
+  <text x="486" y="62" text-anchor="end" font-weight="600">sonuç 1</text>
+  <text x="320" y="82" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="366" y="82" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="412" y="82" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="458" y="82" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="276" y="107" font-weight="600">A</text>
+  <line class="faint" x1="296" y1="102" x2="486" y2="102"/>
+  <text x="276" y="137" font-weight="600">B</text>
+  <line class="faint" x1="296" y1="132" x2="486" y2="132"/>
+  <rect class="box-plain" x="299" y="90" width="42" height="24" rx="4"/>
+  <text x="320" y="106.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box-plain" x="345" y="120" width="42" height="24" rx="4"/>
+  <text x="366" y="136.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="391" y="90" width="42" height="24" rx="4"/>
+  <text x="412" y="106.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box" x="437" y="120" width="42" height="24" rx="4"/>
+  <text x="458" y="136.5" text-anchor="middle" font-size="12">W 1</text>
+  <text x="274" y="164" font-size="11.5" class="t-mut">ikisi de 0 okudu: bir güncelleme kayıp</text>
+
+  <rect class="box-plain" x="510" y="40" width="236" height="134" rx="8"/>
+  <text x="522" y="62" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13">ABBA</text>
+  <text x="734" y="62" text-anchor="end" font-weight="600">sonuç 1</text>
+  <text x="568" y="82" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="614" y="82" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="660" y="82" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="706" y="82" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="524" y="107" font-weight="600">A</text>
+  <line class="faint" x1="544" y1="102" x2="734" y2="102"/>
+  <text x="524" y="137" font-weight="600">B</text>
+  <line class="faint" x1="544" y1="132" x2="734" y2="132"/>
+  <rect class="box-plain" x="547" y="90" width="42" height="24" rx="4"/>
+  <text x="568" y="106.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box-plain" x="593" y="120" width="42" height="24" rx="4"/>
+  <text x="614" y="136.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="639" y="120" width="42" height="24" rx="4"/>
+  <text x="660" y="136.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box" x="685" y="90" width="42" height="24" rx="4"/>
+  <text x="706" y="106.5" text-anchor="middle" font-size="12">W 1</text>
+  <text x="522" y="164" font-size="11.5" class="t-mut">ikisi de 0 okudu: bir güncelleme kayıp</text>
+
+  <rect class="box-plain" x="14" y="188" width="236" height="134" rx="8"/>
+  <text x="26" y="210" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13">BAAB</text>
+  <text x="238" y="210" text-anchor="end" font-weight="600">sonuç 1</text>
+  <text x="72" y="230" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="118" y="230" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="164" y="230" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="210" y="230" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="28" y="255" font-weight="600">A</text>
+  <line class="faint" x1="48" y1="250" x2="238" y2="250"/>
+  <text x="28" y="285" font-weight="600">B</text>
+  <line class="faint" x1="48" y1="280" x2="238" y2="280"/>
+  <rect class="box-plain" x="51" y="268" width="42" height="24" rx="4"/>
+  <text x="72" y="284.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box-plain" x="97" y="238" width="42" height="24" rx="4"/>
+  <text x="118" y="254.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="143" y="238" width="42" height="24" rx="4"/>
+  <text x="164" y="254.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box" x="189" y="268" width="42" height="24" rx="4"/>
+  <text x="210" y="284.5" text-anchor="middle" font-size="12">W 1</text>
+  <text x="26" y="312" font-size="11.5" class="t-mut">ikisi de 0 okudu: bir güncelleme kayıp</text>
+
+  <rect class="box-plain" x="262" y="188" width="236" height="134" rx="8"/>
+  <text x="274" y="210" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13">BABA</text>
+  <text x="486" y="210" text-anchor="end" font-weight="600">sonuç 1</text>
+  <text x="320" y="230" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="366" y="230" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="412" y="230" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="458" y="230" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="276" y="255" font-weight="600">A</text>
+  <line class="faint" x1="296" y1="250" x2="486" y2="250"/>
+  <text x="276" y="285" font-weight="600">B</text>
+  <line class="faint" x1="296" y1="280" x2="486" y2="280"/>
+  <rect class="box-plain" x="299" y="268" width="42" height="24" rx="4"/>
+  <text x="320" y="284.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box-plain" x="345" y="238" width="42" height="24" rx="4"/>
+  <text x="366" y="254.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="391" y="268" width="42" height="24" rx="4"/>
+  <text x="412" y="284.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box" x="437" y="238" width="42" height="24" rx="4"/>
+  <text x="458" y="254.5" text-anchor="middle" font-size="12">W 1</text>
+  <text x="274" y="312" font-size="11.5" class="t-mut">ikisi de 0 okudu: bir güncelleme kayıp</text>
+
+  <rect class="box-acc" x="510" y="188" width="236" height="134" rx="8"/>
+  <text x="522" y="210" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13" class="t-acc">BBAA</text>
+  <text x="734" y="210" text-anchor="end" font-weight="600" class="t-acc">sonuç 2</text>
+  <text x="568" y="230" text-anchor="middle" font-size="11" class="t-mut">1</text>
+  <text x="614" y="230" text-anchor="middle" font-size="11" class="t-mut">2</text>
+  <text x="660" y="230" text-anchor="middle" font-size="11" class="t-mut">3</text>
+  <text x="706" y="230" text-anchor="middle" font-size="11" class="t-mut">4</text>
+  <text x="524" y="255" font-weight="600">A</text>
+  <line class="faint" x1="544" y1="250" x2="734" y2="250"/>
+  <text x="524" y="285" font-weight="600">B</text>
+  <line class="faint" x1="544" y1="280" x2="734" y2="280"/>
+  <rect class="box-plain" x="547" y="268" width="42" height="24" rx="4"/>
+  <text x="568" y="284.5" text-anchor="middle" font-size="12">R→0</text>
+  <rect class="box" x="593" y="268" width="42" height="24" rx="4"/>
+  <text x="614" y="284.5" text-anchor="middle" font-size="12">W 1</text>
+  <rect class="box-plain" x="639" y="238" width="42" height="24" rx="4"/>
+  <text x="660" y="254.5" text-anchor="middle" font-size="12">R→1</text>
+  <rect class="box" x="685" y="238" width="42" height="24" rx="4"/>
+  <text x="706" y="254.5" text-anchor="middle" font-size="12">W 2</text>
+  <text x="522" y="312" font-size="11.5" class="t-acc">B bitmeden A okumuyor</text>
+
+  <text x="380" y="340" text-anchor="middle" font-weight="600" font-size="12.5" class="t-warn">6 soyut sıra ≠ 6 eşit olasılık: bu listeden “4/6 başarısızlık olasılığı” çıkarılamaz [sl. 9].</text>
+  <text x="380" y="360" text-anchor="middle" font-size="12" class="t-mut">Kural: bir thread'in W'si ötekinin R'sinden önce gelirse sonuç 2; iki R arasında W yoksa güncelleme kaybolur.</text>
+</svg>

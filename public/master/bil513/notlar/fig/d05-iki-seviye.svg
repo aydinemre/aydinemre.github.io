@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 370" role="img" aria-label="0x00403004 adresinin iki seviyeli yürüyüşü: dış indeks 1, iç indeks 3, offset 4. Dış girdi 0x1004 iç tabloyu 0x5000'de gösterir; iç girdi 0x500C frame 0xA'yı verir; veri adresi 0xA004." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+<defs><marker id="tw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker><marker id="tww" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker></defs>
+<text x="20" y="30" font-weight="600">VA = 0x00403004</text>
+<rect class="box" x="170" y="12" width="180" height="34"/>
+<text x="260.0" y="29" text-anchor="middle" font-weight="600">dış = 1</text>
+<text x="260.0" y="42" text-anchor="middle" font-size="11" class="t-mut">bit 31–22</text>
+<rect class="box" x="350" y="12" width="180" height="34"/>
+<text x="440.0" y="29" text-anchor="middle" font-weight="600">iç = 3</text>
+<text x="440.0" y="42" text-anchor="middle" font-size="11" class="t-mut">bit 21–12</text>
+<rect class="box" x="530" y="12" width="210" height="34"/>
+<text x="635.0" y="29" text-anchor="middle" font-weight="600">offset = 4</text>
+<text x="635.0" y="42" text-anchor="middle" font-size="11" class="t-mut">bit 11–0</text>
+<text x="125" y="88" text-anchor="middle" font-weight="600">Dış tablo</text>
+<text x="125" y="103" text-anchor="middle" font-size="11" class="t-mut">taban 0x1000 (kök, PTBR)</text>
+<rect class="box-plain" x="60" y="110" width="130" height="30"/>
+<text x="68" y="129" font-size="11" class="t-mut">[0]</text>
+<rect class="box-acc" x="60" y="140" width="130" height="30"/>
+<text x="68" y="159" font-size="11" class="t-mut">[1]</text>
+<text x="182" y="160" text-anchor="end" font-weight="600">→ 0x5000</text>
+<rect class="box-plain" x="60" y="170" width="130" height="30"/>
+<text x="68" y="189" font-size="11" class="t-mut">[2]</text>
+<rect class="box-plain" x="60" y="200" width="130" height="30"/>
+<text x="68" y="219" font-size="11" class="t-mut">…</text>
+<text x="375" y="88" text-anchor="middle" font-weight="600">İç tablo</text>
+<text x="375" y="103" text-anchor="middle" font-size="11" class="t-mut">taban 0x5000</text>
+<rect class="box-plain" x="310" y="110" width="130" height="30"/>
+<text x="318" y="129" font-size="11" class="t-mut">[0]</text>
+<rect class="box-plain" x="310" y="140" width="130" height="30"/>
+<text x="318" y="159" font-size="11" class="t-mut">[1]</text>
+<rect class="box-plain" x="310" y="170" width="130" height="30"/>
+<text x="318" y="189" font-size="11" class="t-mut">[2]</text>
+<rect class="box-acc" x="310" y="200" width="130" height="30"/>
+<text x="318" y="219" font-size="11" class="t-mut">[3]</text>
+<text x="432" y="220" text-anchor="end" font-weight="600">frame 0xA</text>
+<rect class="box-plain" x="310" y="230" width="130" height="30"/>
+<text x="318" y="249" font-size="11" class="t-mut">…</text>
+<text x="625" y="88" text-anchor="middle" font-weight="600">Frame 0xA</text>
+<text x="625" y="103" text-anchor="middle" font-size="11" class="t-mut">taban 0xA000</text>
+<rect class="box-plain" x="560" y="110" width="130" height="30"/>
+<text x="568" y="129" font-size="11" class="t-mut">+0</text>
+<rect class="box-acc" x="560" y="140" width="130" height="30"/>
+<text x="568" y="159" font-size="11" class="t-mut">+4</text>
+<text x="682" y="160" text-anchor="end" font-weight="600">veri</text>
+<rect class="box-plain" x="560" y="170" width="130" height="30"/>
+<text x="568" y="189" font-size="11" class="t-mut">…</text>
+<line class="ln" x1="190" y1="155" x2="306" y2="125" marker-end="url(#tw)"/>
+<line class="ln" x1="440" y1="215" x2="556" y2="155" marker-end="url(#tw)"/>
+<text x="60" y="290" font-size="12" text-anchor="start" class="t-acc">girdi adresi: 0x1000 + 1·4 = 0x1004</text>
+<text x="60" y="306" font-size="12" text-anchor="start" class="t-mut">içeriği: 0x5000 (iç tablonun tabanı)</text>
+<text x="310" y="290" font-size="12" text-anchor="start" class="t-acc">girdi adresi: 0x5000 + 3·4 = 0x500C</text>
+<text x="310" y="306" font-size="12" text-anchor="start" class="t-mut">içeriği: frame 0xA</text>
+<text x="560" y="290" font-size="12" text-anchor="start" class="t-acc">veri adresi:</text>
+<text x="560" y="306" font-size="12" text-anchor="start" class="t-mut">0xA·4096 + 4 = 0xA004</text>
+<text x="20" y="340" font-size="12" text-anchor="start" class="t-mut">Dört adres, dört rol: 0x1004 ve 0x500C tablo girdilerinin adresi, 0x5000 bir girdinin içeriği (tablo tabanı), 0xA004 veri adresi.</text>
+<text x="20" y="358" font-size="12" text-anchor="start" class="t-mut">TLB miss maliyeti (hocanın modeli): 2 PTE okuması + 1 veri erişimi = 3 bellek erişimi [sl. 51].</text>
+</svg>

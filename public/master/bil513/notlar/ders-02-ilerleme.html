@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ders 2 ilerleme</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: Ders 2 ilerleme">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-02-ilerleme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-02.html">Anlatım</a> <a href="ders-02-ozet.html">Özet</a> <a href="ders-02-sorular.html">Soru bankası</a> <a href="ders-02-deneme.html">Deneme sınavı</a> <a href="ders-02-ilerleme.html" aria-current="page">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></aside>
+  <main><h1 id="ders-2-ilerleme">Ders 2 ilerleme<a class="headerlink" href="#ders-2-ilerleme" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></details>
+<h2 id="2026-11-03-oturum-1">2026-11-03 · Oturum 1<a class="headerlink" href="#2026-11-03-oturum-1" title="Permanent link">#</a></h2>
+<p><strong>Materyal kontrolü (2026-11-03).</strong> Hocanın canlı sitesi yerel kopyayla karşılaştırıldı. Karşılaştırılanlar:</p>
+<ul>
+<li><code>lecture-02.html</code> ve <code>lecture-02-reading.html</code></li>
+<li>slayt PDF'i (67 slayt)</li>
+<li><code>cpu-work.c</code></li>
+<li>okumanın 26 şekli</li>
+<li>iki OSTEP bölümü (<code>cpu-sched.pdf</code>, <code>cpu-sched-mlfq.pdf</code>)</li>
+<li>OSC <code>ch5.pptx</code></li>
+</ul>
+<p>Hepsi yerel kopyayla birebir aynı, güncellenecek dosya yok. os-book.com IPv6'da TLS hatası verdi, IPv4 ile indirildi.</p>
+<p><strong>Hazırlık tamam.</strong> Dört uzman ajan paralel çalıştı:</p>
+<ul>
+<li>algoritmalar ve ölçütler</li>
+<li>çok çekirdek ve real-time</li>
+<li>Linux ve C pratiği</li>
+<li>sınav ve pedagoji</li>
+</ul>
+<p>Her biri hocanın bütün sayısal örneklerini kendi simülatörüyle yeniden hesapladı. Slaytla uyuşmayan bir sayı çıkmadı.</p>
+<p>Ardından denetçi ajan dört notu kaynaklara karşı kontrol etti ve 172 örneği sıfırdan yazdığı simülatörle bağımsız olarak yeniden hesapladı. Sonuç: 2 kritik, 9 orta ve 15 düşük bulgu (D-01…D-26). Hepsi <code>anlatim.md</code>'de ve <code>soru-bankasi.md</code>'de düzeltildi.</p>
+<p>Kritik bulgular uzmanların kendi kurduğu ek örneklerdeydi:</p>
+<ul>
+<li><strong>D-01:</strong> <code>pthread_create</code>, <code>PTHREAD_EXPLICIT_SCHED</code> verilmeden EPERM dönmez.</li>
+<li><strong>D-02:</strong> U &gt; 1 örneğindeki RM izi bir job salınımını atlamıştı.</li>
+</ul>
+<p>Ham ajan notları oturumun geçici klasöründeydi, kalıcı değil. Kalıcı olanlar bu klasördeki beş dosya.</p>
+<p><strong>Kaynaklarda belirsiz kalan kurallar</strong> (sınavda varsayım olarak yazılmalı):</p>
+<ul>
+<li>RR'de aynı anda gelen yeni iş ile quantum'u biten işin kuyruk sırası. Hoca "belirtilmeli" diyor <span class="src">Okuma §8</span>. Soru bankasında varsayılan kural "önce yeni gelen".</li>
+<li>MLFQ'da kesilen işin allotment'ı koruyup korumadığı ve I/O dönüşü kuralı <span class="src">sl. 41</span>.</li>
+<li>EDF'de eşit mutlak deadline tie-break'i.</li>
+<li>Okumadaki "instructor slide N" atıfları eski destenin numaraları. Notlar mevcut 67 slaytlık numaralamayı kullanıyor.</li>
+</ul>
+<p><strong>Bölüm planı</strong> (hocanın slayt sırası):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Tamirhane benzetmesi, ready ve blocked, CPU ve I/O burst'leri</td>
+<td>2–10</td>
+<td>anlatıldı, kontrol sorusu bekliyor</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Scheduler, dispatcher, dispatch latency, karar anları, preemptive ve nonpreemptive</td>
+<td>11–15</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ölçütler ve zaman muhasebesi</td>
+<td>16–17</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>3</td>
+<td>FCFS ve convoy effect</td>
+<td>18–21</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SJF, optimallik argümanı, burst tahmini</td>
+<td>22–26</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>5</td>
+<td>SRTF</td>
+<td>27–29</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Round robin ve birinci yarı karşılaştırması</td>
+<td>30–35</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Öncelik, starvation, aging, multilevel queue, MLFQ</td>
+<td>36–42</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Çok çekirdek: ne zamanlanır, kuyruklar, affinity, NUMA, SMT</td>
+<td>43–46</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Real-time temelleri: hard ve soft, r/C/D/T, latency, RM/EDF modeli</td>
+<td>47–50</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Rate-monotonic, Liu–Layland, response-time analysis</td>
+<td>51–54</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>11</td>
+<td>EDF ve priority inversion</td>
+<td>55–58</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Linux: CFS'ten EEVDF'e, sınıflar, nice, FIFO/RR/DEADLINE, Ubuntu gözlemi</td>
+<td>59–63</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Politika değerlendirme, Little's law, gizli varsayımlar</td>
+<td>64–67</td>
+<td>bekliyor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Linux deneyleri.</strong> Bu makine macOS. <code>cpu-work.c</code> burada derlenip koşuldu (macOS'ta ölçüldü). <code>chrt</code>, <code>taskset</code>, <code>/proc</code> ve CFS/EEVDF davranışı burada doğrulanamadı. Anlatımdaki Linux çıktıları "Ubuntu'da beklenen" diye işaretli. Ek bölümdeki deneyler Emre'nin Ubuntu VM'inde koşulacak.</p>
+<p><strong>Yerel site (2026-11-03):</strong> beş sayfa üretildi (<code>ders-02.html</code>, <code>-ozet</code>, <code>-sorular</code>, <code>-deneme</code>, <code>-ilerleme</code>). Anlatımda 26 hoca/OSC görseli (<code>img/hoca/d02-*</code>) ve 3 SVG (<code>fig/d02-zaman-muhasebesi.svg</code>, <code>d02-karar-anlari.svg</code>, <code>d02-rm-edf.svg</code>) var; SVG'ler açık ve koyu temada kontrol edildi. Soru bankasında 53, deneme sınavında 15 gizli cevap var.</p>
+<p><strong>Kontrol soruları ve cevaplar:</strong> §0 için iki soru soruldu (tarayıcı ve hesap programı: hangisi "kısa iş"; disk bekleyen işin önceliği), cevap bekleniyor.</p>
+<p><strong>Soru bankası çalıştırması:</strong> (henüz başlamadı)</p>
+<p><strong>Zayıf noktalar:</strong> (henüz yok)</p>
+<p><strong>Yeni oturum için:</strong> Bu dosyayı oku, durumu "anlatılıyor" olan bölümden devam et. Anlatım metni <code>anlatim.md</code>'de. Soruları <code>soru-bankasi.md</code>'nin C bölümünden seviye sırasıyla sor. Deneme sınavı (<code>deneme-sinavi.md</code>) anlatım bittikten sonra, notlara bakılmadan çözülür.</p>
+<p><strong>Bonus/ileri sorular</strong> (kaynak dışı türetme ya da OSTEP ödevi; zaman azsa atla): Q15(b) ve Q46 ((n − 1)q + n·s türetmesi), Q16(b) (L − Lq notu), Q18 (OSTEP 7 ödevi), Q47(a) (nice ağırlıkları 1024/110), Q49 (OSTEP 8 ödevi: gaming ve boost periyodu).</p>
+<p><strong>Denetim notu:</strong> D-08'de soru bankası yazıcısı denetçiden ayrıldı. Q40'ın EDF izinde üç değil dört eşitlik anı var (6, 9, 13, 15). Moderatör izi elle yeniden kurdu ve dört anı doğruladı.</p></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

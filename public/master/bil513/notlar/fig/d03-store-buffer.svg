@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 352" role="img" aria-label="Store buffer ile doğru sıralı Peterson'ın bozulması: her çekirdek flag[i] = 1 ve turn yazısını kendi store buffer'ına koyar, bunlar henüz belleğe boşalmamıştır. Ortak bellekte flag[0] ve flag[1] hâlâ 0. Her çekirdek ötekinin bayrağını bellekten 0 okur ve ikisi de kritik bölüme girer. Store'lar ile load arasına konan fence bunu engeller (ek bilgi)." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d03sb-w" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600" font-size="12.5">Program sırası doğru olsa bile: yazmalar tamponda bekler, okumalar bellekten gelir (ek bilgi; OSC ch6 sl. 16)</text>
+
+  <rect class="box" x="30" y="36" width="280" height="70" rx="8"/>
+  <text x="170" y="56" text-anchor="middle" font-weight="600">Çekirdek 0 · P0</text>
+  <text x="170" y="75" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[0] = 1;  turn = 1;</text>
+  <text x="170" y="94" text-anchor="middle" font-size="12" class="t-warn">flag[1] oku → 0 → CS'ye gir</text>
+  <line class="ln" x1="170" y1="106" x2="170" y2="130" marker-end="url(#d03sb-a)"/>
+  <text x="178" y="122" font-size="11.5" class="t-mut">store</text>
+  <rect class="box-plain" x="70" y="132" width="200" height="64" rx="8"/>
+  <text x="82" y="148" font-size="11.5" class="t-mut">store buffer 0</text>
+  <rect class="box-acc" x="82" y="158" width="92" height="28" rx="4"/>
+  <text x="128" y="177" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">flag[0]=1</text>
+  <rect class="box-acc" x="182" y="158" width="76" height="28" rx="4"/>
+  <text x="220" y="177" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">turn=1</text>
+
+  <rect class="box" x="450" y="36" width="280" height="70" rx="8"/>
+  <text x="590" y="56" text-anchor="middle" font-weight="600">Çekirdek 1 · P1</text>
+  <text x="590" y="75" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">flag[1] = 1;  turn = 0;</text>
+  <text x="590" y="94" text-anchor="middle" font-size="12" class="t-warn">flag[0] oku → 0 → CS'ye gir</text>
+  <line class="ln" x1="590" y1="106" x2="590" y2="130" marker-end="url(#d03sb-a)"/>
+  <text x="598" y="122" font-size="11.5" class="t-mut">store</text>
+  <rect class="box-plain" x="490" y="132" width="200" height="64" rx="8"/>
+  <text x="502" y="148" font-size="11.5" class="t-mut">store buffer 1</text>
+  <rect class="box-acc" x="502" y="158" width="92" height="28" rx="4"/>
+  <text x="548" y="177" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">flag[1]=1</text>
+  <rect class="box-acc" x="602" y="158" width="76" height="28" rx="4"/>
+  <text x="640" y="177" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">turn=0</text>
+
+  <rect class="box" x="220" y="240" width="320" height="54" rx="8"/>
+  <text x="380" y="258" text-anchor="middle" font-size="11.5" class="t-mut">ortak bellek (önbellek tutarlılık alanı)</text>
+  <text x="380" y="281" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="13">flag[0] = 0 · flag[1] = 0</text>
+  <line class="ln dash" x1="170" y1="196" x2="262" y2="238"/>
+  <line class="ln dash" x1="590" y1="196" x2="498" y2="238"/>
+  <text x="380" y="222" text-anchor="middle" font-size="11.5" class="t-mut">henüz boşaltılmadı</text>
+  <path class="ln-warn" d="M220,272 H42 V108" marker-end="url(#d03sb-w)"/>
+  <path class="ln-warn" d="M540,272 H718 V108" marker-end="url(#d03sb-w)"/>
+  <text x="52" y="226" font-weight="600" font-size="12" class="t-warn">load flag[1] → 0</text>
+  <text x="708" y="226" text-anchor="end" font-weight="600" font-size="12" class="t-warn">load flag[0] → 0</text>
+  <text x="380" y="66" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">ikisi de</text>
+  <text x="380" y="82" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">CS'de</text>
+
+  <text x="20" y="322" font-size="12">Fence (ek bilgi): store'lar ile load arasına seq_cst fence (x86'da mfence) konursa load, kendi tamponu boşalmadan</text>
+  <text x="20" y="340" font-size="12" class="t-mut">yapılmaz; en az biri ötekinin 1'ini görür. Bariyer bir sıralama garantisidir, sihirli “her şeyi görünür yap” düğmesi değil [Okuma §6].</text>
+</svg>

@@ -1,0 +1,1869 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 4: Deadlocks and resource allocation (birleşik anlatım)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 4: Deadlocks and resource allocation (birleşik anlatım)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-04.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-04.html" aria-current="page">Anlatım</a> <a href="ders-04-ozet.html">Özet</a> <a href="ders-04-sorular.html">Soru bankası</a> <a href="ders-04-deneme.html">Deneme sınavı</a> <a href="ders-04-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#ders-materyalleri">Ders materyalleri</a></li><li><a href="#1-sorun-dslama-ilerleme-demek-degil-sl-28">1. Sorun: dışlama ilerleme demek değil</a><ul><li><a href="#11-exclusion-progress-sl-3-okuma-1">1.1 Exclusion ≠ progress</a></li><li><a href="#12-iki-kilit-ters-edinme-sras-sl-46-okuma-1">1.2 İki kilit, ters edinme sırası</a></li><li><a href="#13-kaynak-tipi-instance-ve-yasam-dongusu-sl-7-okuma-2">1.3 Kaynak tipi, instance ve yaşam döngüsü</a></li><li><a href="#14-kopru-ornegi-yol-bolumleri-kaynak-sl-8-okuma-2">1.4 Köprü örneği: yol bölümleri kaynak</a></li></ul></li><li><a href="#2-dort-gerekli-sart-deadlock-starvation-livelock-sl-916">2. Dört gerekli şart; deadlock, starvation, livelock</a><ul><li><a href="#21-coffmann-dort-sart-sl-913-okuma-3">2.1 Coffman'ın dört şartı</a></li><li><a href="#22-cpu-preemption-kaynak-preemption-sl-12-okuma-3">2.2 CPU preemption ≠ kaynak preemption</a></li><li><a href="#23-trafik-ornegi-sl-14-okuma-3">2.3 Trafik örneği</a></li><li><a href="#24-deadlock-starvation-livelock-sl-1516-okuma-4">2.4 Deadlock, starvation, livelock</a></li></ul></li><li><a href="#3-resource-allocation-graph-okuma-sl-1726">3. Resource-allocation graph okuma</a><ul><li><a href="#31-notasyon-sl-17-okuma-5">3.1 Notasyon</a></li><li><a href="#32-dongu-neyi-kantlar-sl-21-osc-ch8-sl-11-okuma-5">3.2 Döngü neyi kanıtlar</a></li><li><a href="#33-uc-osc-graph-sl-1820-okuma-5">3.3 Üç OSC graph'ı</a></li><li><a href="#34-graph-alstrmas-once-karar-ver-sonra-mudahale-et-sl-2223-okuma-5">3.4 Graph alıştırması: önce karar ver, sonra müdahale et</a></li><li><a href="#35-resource-graphtan-wait-for-grapha-sl-24-okuma-6-osc-ch8-sl-3334">3.5 Resource graph'tan wait-for graph'a</a></li><li><a href="#36-dining-philosophers-yeniden-sl-2526-okuma-6">3.6 Dining philosophers yeniden</a></li></ul></li><li><a href="#4-dort-yaklasm-ve-onleme-sl-2737">4. Dört yaklaşım ve önleme</a><ul><li><a href="#41-dort-yaklasm-sl-27-okuma-7">4.1 Dört yaklaşım</a></li><li><a href="#42-paylasm-ya-da-rezervasyonla-onleme-sl-2829-okuma-7">4.2 Paylaşım ya da rezervasyonla önleme</a></li><li><a href="#43-brak-ve-geri-al-no-preemption-krmak-sl-30-okuma-7">4.3 Bırak ve geri al: no preemption'ı kırmak</a></li><li><a href="#44-global-kilit-sras-circular-waiti-krmak-sl-3133-okuma-8">4.4 Global kilit sırası: circular wait'i kırmak</a></li><li><a href="#45-dinamik-secilen-kaynaklar-sl-34-okuma-8">4.5 Dinamik seçilen kaynaklar</a></li><li><a href="#46-try-lock-ve-backoff-sl-35-okuma-8">4.6 Try-lock ve backoff</a></li><li><a href="#47-timeout-kanttr-teshis-degil-sl-36-okuma-16">4.7 Timeout kanıttır, teşhis değil</a></li><li><a href="#48-birinci-yar-kontrol-noktas-sl-37">4.8 Birinci yarı kontrol noktası</a></li></ul></li><li><a href="#5-kacnma-safe-state-ve-bankers-algorithm-sl-3856">5. Kaçınma: safe state ve Banker's algorithm</a><ul><li><a href="#51-kacnma-neden-ayr-bir-fikir-sl-38-okuma-9">5.1 Kaçınma neden ayrı bir fikir</a></li><li><a href="#52-safe-unsafe-deadlocked-sl-39-osc-ch8-sl-1719-okuma-9">5.2 Safe, unsafe, deadlocked</a></li><li><a href="#53-tek-tipli-10-birim-ornegi-sl-4043-okuma-9">5.3 Tek tipli 10 birim örneği</a></li><li><a href="#54-claim-edgeli-graph-tek-instanceta-kacnma-sl-4445-okuma-10-osc-ch8-sl-2024">5.4 Claim edge'li graph: tek instance'ta kaçınma</a></li><li><a href="#55-bankers-algorithm-anlk-goruntu-ve-need-sl-4648-okuma-11-osc-ch8-sl-2630">5.5 Banker's algorithm: anlık görüntü ve Need</a></li><li><a href="#56-tam-safety-izi-sl-4950-okuma-12">5.6 Tam safety izi</a></li><li><a href="#57-yeni-bir-istegi-kontrol-etmek-sl-51-okuma-13-osc-ch8-sl-28">5.7 Yeni bir isteği kontrol etmek</a></li><li><a href="#58-uc-istek-sl-5255-okuma-13-osc-ch8-sl-31">5.8 Üç istek</a></li><li><a href="#59-safety-hesabndaki-sk-hatalar-sl-56-okuma-13">5.9 Safety hesabındaki sık hatalar</a></li></ul></li><li><a href="#6-tespit-detection-sl-5762">6. Tespit (detection)</a><ul><li><a href="#61-tespit-baska-bir-soru-sorar-sl-57-okuma-14">6.1 Tespit başka bir soru sorar</a></li><li><a href="#62-cok-instancel-tespit-algoritmas-sl-58-osc-ch8-sl-3537-okuma-14">6.2 Çok instance'lı tespit algoritması</a></li><li><a href="#63-tespit-anlk-goruntusu-sl-5961-osc-ch8-sl-3839">6.3 Tespit anlık görüntüsü</a></li><li><a href="#64-tespitin-maliyeti-ve-kapsam-sl-62-okuma-15-osc-ch8-sl-40">6.4 Tespitin maliyeti ve kapsamı</a></li></ul></li><li><a href="#7-kurtarma-recovery-sl-6366">7. Kurtarma (recovery)</a><ul><li><a href="#71-isi-sonlandrarak-sl-63-osc-ch8-sl-41">7.1 İşi sonlandırarak</a></li><li><a href="#72-preemption-ve-rollback-sl-6465-osc-ch8-sl-42">7.2 Preemption ve rollback</a></li><li><a href="#73-bir-gorevi-tekrar-tekrar-cezalandrma-sl-66-okuma-15">7.3 Bir görevi tekrar tekrar cezalandırma</a></li></ul></li><li><a href="#8-laboratuvar-lock-orderc-lockdep-bankerc-sl-6774">8. Laboratuvar: lock-order.c, lockdep, banker.c</a><ul><li><a href="#81-kilit-deneyi-uc-mod-sl-6769-okuma-16">8.1 Kilit deneyi: üç mod</a></li><li><a href="#82-saklanacak-kant-sl-70-okuma-16">8.2 Saklanacak kanıt</a></li><li><a href="#83-askdaki-deadlocku-gozlemlemek">8.3 Askıdaki deadlock'u gözlemlemek</a></li><li><a href="#84-linuxta-lockdep-sl-71-okuma-15">8.4 Linux'ta lockdep</a></li><li><a href="#85-safety-pratigi-bankerc-sl-72-okuma-16">8.5 Safety pratiği: banker.c</a></li><li><a href="#86-review-modeli-ve-careyi-ackla-sl-73">8.6 Review: modeli ve çareyi açıkla</a></li></ul></li><li><a href="#ek-ubuntuda-denenecek-kucuk-deneyler-once-tahmin-et-sonra-calstr">Ek: Ubuntu'da denenecek küçük deneyler (önce tahmin et, sonra çalıştır)</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-4-deadlocks-and-resource-allocation-birlesik-anlatm">CSE 513 · Ders 4: Deadlocks and resource allocation (birleşik anlatım)<a class="headerlink" href="#cse-513-ders-4-deadlocks-and-resource-allocation-birlesik-anlatm" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#ders-materyalleri">Ders materyalleri</a></li><li><a href="#1-sorun-dslama-ilerleme-demek-degil-sl-28">1. Sorun: dışlama ilerleme demek değil</a></li><li><a href="#2-dort-gerekli-sart-deadlock-starvation-livelock-sl-916">2. Dört gerekli şart; deadlock, starvation, livelock</a></li><li><a href="#3-resource-allocation-graph-okuma-sl-1726">3. Resource-allocation graph okuma</a></li><li><a href="#4-dort-yaklasm-ve-onleme-sl-2737">4. Dört yaklaşım ve önleme</a></li><li><a href="#5-kacnma-safe-state-ve-bankers-algorithm-sl-3856">5. Kaçınma: safe state ve Banker's algorithm</a></li><li><a href="#6-tespit-detection-sl-5762">6. Tespit (detection)</a></li><li><a href="#7-kurtarma-recovery-sl-6366">7. Kurtarma (recovery)</a></li><li><a href="#8-laboratuvar-lock-orderc-lockdep-bankerc-sl-6774">8. Laboratuvar: lock-order.c, lockdep, banker.c</a></li><li><a href="#ek-ubuntuda-denenecek-kucuk-deneyler-once-tahmin-et-sonra-calstr">Ek: Ubuntu'da denenecek küçük deneyler (önce tahmin et, sonra çalıştır)</a></li></ul></details>
+<p>Hazırlık 2026-11-03. Dört uzman ajanın notları birleştirildi: model ve tespit, önleme/kaçınma/kurtarma, Linux ve C pratiği, sınav ve pedagoji. Ardından bir denetçi ajan notları kaynaklara karşı kontrol etti ve bütün Banker, safe-state ve tespit hesaplarını kendi betiğiyle bağımsız olarak yeniden yaptı. Bulguları (D-01…) ve nasıl düzeltildikleri <code>ilerleme.md</code>'de. <code>banker.c</code> ile <code>lock-order.c</code> bu makinede (macOS) derlenip çalıştırıldı. Linux'a özgü her şey "Linux'ta doğrulanmadı" diye işaretli.</p>
+<h2 id="ders-materyalleri">Ders materyalleri<a class="headerlink" href="#ders-materyalleri" title="Permanent link">#</a></h2>
+<p>Hocanın sitesine en son 2026-11-03'te bakıldı. Ders sayfası, okuma, slayt PDF'i, okumanın bağlantı verdiği 20 dosya (iki kod dosyası ve 18 görsel) ve OSTEP bölümü yerel kopyayla bayt bayt aynı çıktı. OSC ch8 slaytları aynı gün siteden yeniden indirilemedi (os-book.com IPv4'te de IPv6'da da TLS bağlantısını kesti), bu yüzden yerel kopya kullanıldı.</p>
+<table>
+<thead>
+<tr>
+<th>Materyal</th>
+<th>Bağlantı</th>
+<th>Yerel kopya</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ders sayfası</td>
+<td>https://mehmetgokturk.com/cse513/lecture-04.html</td>
+<td><code>materyaller/_site-kopyasi/lecture-04.html</code></td>
+</tr>
+<tr>
+<td>Okuma kitapçığı (18 bölüm)</td>
+<td>https://mehmetgokturk.com/cse513/lecture-04-reading.html</td>
+<td><code>materyaller/_site-kopyasi/lecture-04-reading.html</code>, görselli PDF <code>materyaller/Ders-04_Deadlocks/CSE513-Lecture04-Okuma.pdf</code></td>
+</tr>
+<tr>
+<td>Slaytlar (74 slayt)</td>
+<td>https://mehmetgokturk.com/cse513/materials/lecture04/CSE513-Lecture04.pdf</td>
+<td><code>materyaller/Ders-04_Deadlocks/CSE513-Lecture04.pdf</code></td>
+</tr>
+<tr>
+<td>OSC 10e Bölüm 8 (Deadlocks)</td>
+<td>https://os-book.com/OS10/slide-dir/index.html</td>
+<td><code>materyaller/Ders-04_Deadlocks/OSC-10-slaytlar/ch8.pptx</code></td>
+</tr>
+<tr>
+<td>OSC 10e Bölüm 7 sl. 12 (filozoflar şekli)</td>
+<td>aynı dizin</td>
+<td>okumanın görseli: <code>materyaller/_site-kopyasi/booklets/lecture04/ch7-s12-1.jpeg</code></td>
+</tr>
+<tr>
+<td>OSTEP Bölüm 32, Common Concurrency Problems</td>
+<td>https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf</td>
+<td><code>materyaller/Ders-04_Deadlocks/OSTEP/threads-bugs.pdf</code></td>
+</tr>
+<tr>
+<td><code>lock-order.c</code></td>
+<td>https://mehmetgokturk.com/cse513/booklets/lecture04/lock-order.c</td>
+<td><code>materyaller/Ders-04_Deadlocks/kod/lock-order.c</code></td>
+</tr>
+<tr>
+<td><code>banker.c</code></td>
+<td>https://mehmetgokturk.com/cse513/booklets/lecture04/banker.c</td>
+<td><code>materyaller/Ders-04_Deadlocks/kod/banker.c</code></td>
+</tr>
+<tr>
+<td>Okumanın verdiği belgeler</td>
+<td><a href="https://docs.kernel.org/locking/lockdep-design.html">lockdep tasarımı</a>, <a href="https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html"><code>pthread_mutex_lock</code> (POSIX)</a>, <a href="https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html">GNU <code>timeout</code></a></td>
+<td>yalnız çevrim içi</td>
+</tr>
+</tbody>
+</table>
+<p><strong>İzleme:</strong> bu hafta için zorunlu izleme yok ("No additional required viewing is assigned for this week" <span class="src">Okuma §18</span>; siteye 2026-11-03'te bakıldı). Okuma, tamamlayıcı okuma olarak OSTEP'in Common Concurrency Problems bölümünü öneriyor.</p>
+<p>Ders sayfasının okuma listesi: "Operating System Concepts, 10th edition: Chapter 8. We use selected sections rather than every slide in each chapter." OSTEP bölümüne okuma bağlantı veriyor. Uzmanların macOS'ta yazıp çalıştırdığı ek deney programları <code>notlar/ders-04/kod/</code> altında (§8 ve Ek).</p>
+<p><strong>Son gün rotası:</strong> §5.4–5.6 Banker izi ve üç istek (sl. 46–56) → §3.2–3.5 graph okuma (sl. 17–24) → §6.2–6.3 tespit izi (sl. 59–61) → §4.4 kilit sırası ispatı (sl. 31) → §2 dört şart ve deadlock/starvation/livelock → §5.2–5.3 safe/unsafe → sl. 73'ün üç sorusu (§8.5). Hocanın kendi hazırlık paketi <span class="src">Okuma §17</span>: bir graph karşı örneği, bir tam safe-state izi, durumu değiştirmeyen bir ret, bir kilit sırası ispatı.</p>
+<p>Kaynak etiketleri:</p>
+<ul>
+<li><strong><span class="src">sl. N</span></strong>: hocanın slaytı (birinci kaynak).</li>
+<li><strong><span class="src">Okuma §N</span></strong>: okuma kitapçığının bölümü. <strong>[S-N]</strong>: okumadaki çalışılmış soru.</li>
+<li><strong><span class="src">OSC chX</span></strong>, <strong><span class="src">OSTEP</span></strong>: ikincil kaynaklar.</li>
+<li><strong><span class="ek">ek bilgi</span></strong>: kaynaklarda yok, genel bilgi.</li>
+</ul>
+<p>Hocanın bu dersteki yöntemi: <strong>önce kaynak modelini söyle</strong> (tipler, instance sayıları, kim neyi tutuyor, kim neyi istiyor, bırakma varsayımları), sonra doğru soruyu seç <span class="src">Okuma §17</span>. Tek instance'lı bir döngü deadlock teşhisini destekler. Çok instance'lı bir durum sayı ve indirgeme ister. Maksimum talepli bir tahsis sorusu safety testi ister. "Duruma bağlı" diyorsan sonucu değiştiren varsayımı adıyla söyle <span class="src">Okuma §17</span>. Slaytların çoğu yine "X, Y'yi kanıtlamaz" kalıbında: döngü deadlock'u, timeout deadlock'u, Available = 0 deadlock'u, unsafe deadlock'u kanıtlamaz.</p>
+<p>Dersin merkez sorusu <span class="src">sl. 1</span>: <em>Süreçler ne zaman sonsuza kadar bekleyebilir, buna karşı ne yapabiliriz?</em> Dersin iki yarısı <span class="src">sl. 2</span>:</p>
+<ol>
+<li>Birinci yarı: deadlock'u tanı, resource graph oku, önlemeyi kilit sırasıyla açıkla.</li>
+<li>İkinci yarı: safe state, Banker's algorithm, tespit ve kurtarma.</li>
+<li>Pratik: bir <strong>protokol hakkındaki ispatı</strong>, tek bir çalıştırmadan elde edilen <strong>kanıttan</strong> ayır.</li>
+</ol>
+<hr />
+<h2 id="1-sorun-dslama-ilerleme-demek-degil-sl-28">1. Sorun: dışlama ilerleme demek değil <span class="src">sl. 2–8</span><a class="headerlink" href="#1-sorun-dslama-ilerleme-demek-degil-sl-28" title="Permanent link">#</a></h2>
+<h3 id="11-exclusion-progress-sl-3-okuma-1">1.1 Exclusion ≠ progress <span class="src">sl. 3; Okuma §1</span><a class="headerlink" href="#11-exclusion-progress-sl-3-okuma-1" title="Permanent link">#</a></h3>
+<p><strong>Sezgi.</strong> 3. derste paylaşılan durumu mutex, semaphore ve monitor ile koruduk. Bu araçlar tek bir soruyu cevaplar: <em>kim girebilir?</em> (mutual exclusion). Ama kusursuz dışlayan bir kilit, kimsenin kıpırdayamadığı bir sistemin parçası olabilir <span class="src">sl. 3</span>.</p>
+<p>Hoca iki soruyu birlikte sorduruyor <span class="src">sl. 3</span>:</p>
+<ol>
+<li>Kim girebilir? (dışlama, exclusion)</li>
+<li>Bekleyen thread ilerleyebilsin diye <strong>önce kimin bir şey yapması gerekir</strong>? (ilerleme, progress)</li>
+</ol>
+<p>İkisi ayrı yükümlülük <span class="src">Okuma §1</span>. Bu ders ikinci soruyla ilgili.</p>
+<h3 id="12-iki-kilit-ters-edinme-sras-sl-46-okuma-1">1.2 İki kilit, ters edinme sırası <span class="src">sl. 4–6; Okuma §1</span><a class="headerlink" href="#12-iki-kilit-ters-edinme-sras-sl-46-okuma-1" title="Permanent link">#</a></h3>
+<pre><code>Thread A          Thread B
+lock(L1)          lock(L2)
+lock(L2)          lock(L1)
+update            update
+unlock(L2)        unlock(L1)
+unlock(L1)        unlock(L2)
+</code></pre>
+<p>İki kilit başta boş. Her worker güncellemeden önce ikisine de ihtiyaç duyuyor <span class="src">sl. 4</span>. Kötü serpiştirme (interleaving) <span class="src">sl. 5</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Thread A</th>
+<th>Thread B</th>
+<th>Sahiplik / istek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>L1'i alır</td>
+<td></td>
+<td>L1 → A</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>L2'yi alır</td>
+<td>L2 → B</td>
+</tr>
+<tr>
+<td>3</td>
+<td>L2'yi bekler</td>
+<td></td>
+<td>A → L2 (istek)</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>L1'i bekler</td>
+<td>B → L1 (istek): <strong>döngü kapandı</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<ol start="4">
+<li>adımdan sonra A'nın <code>unlock</code> satırları L2'ye, B'ninkiler L1'e bağlı. <strong>Release kodu erişilemez</strong> <span class="src">sl. 4</span>.</li>
+</ol>
+</li>
+<li>"Daha fazla CPU zamanı kilidi boşaltmaz: gereken bırakma, bloklu bir worker'a bağlı" <span class="src">sl. 5</span>. Okumanın tahmin sorusu: worker'ları farklı çekirdeklere koymak düzeltir mi? <strong>Hayır.</strong> Bağımlılık kilit sahipliğinde, işlemci zamanında değil. İki çekirdek çakışan ilk edinimleri aynı anda bile yaptırabilir <span class="src">Okuma §1</span>.</li>
+<li>Doğruluk, protokolün izin verdiği <strong>her</strong> yürütmeyi kapsamalı. A'nın B başlamadan bitirdiği yürütmelerin varlığı protokolü güvenli yapmaz <span class="src">Okuma §1</span>. OSTEP aynı kodu verir: deadlock "olmak zorunda değil, olabilir" <span class="src">OSTEP 32.3</span>.</li>
+</ul>
+<figure class="fig photo"><a href="img/hoca/d04-mg-s6-iki-kilit-dongu.png"><img src="img/hoca/d04-mg-s6-iki-kilit-dongu.png" alt="İki kilitli bağımlılık döngüsü: istek okları kilide, sahiplik okları sahibine gider. A → L2 → B → L1 → A. Hocanın görseli [sl. 6]." loading="lazy"></a><figcaption>İki kilitli bağımlılık döngüsü: istek okları kilide, sahiplik okları sahibine gider. A → L2 → B → L1 → A. Hocanın görseli <span class="src">sl. 6</span>.</figcaption></figure>
+<p>Okları okumayı burada öğren <span class="src">sl. 6</span>: <strong>istek oku thread'den kilide</strong>, <strong>sahiplik oku kilitten sahibine</strong> gider. A → L2 → B → L1 → A kapalı bir döngü.</p>
+<h3 id="13-kaynak-tipi-instance-ve-yasam-dongusu-sl-7-okuma-2">1.3 Kaynak tipi, instance ve yaşam döngüsü <span class="src">sl. 7; Okuma §2</span><a class="headerlink" href="#13-kaynak-tipi-instance-ve-yasam-dongusu-sl-7-okuma-2" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Resource type</strong>, birbirinin yerine geçebilen (interchangeable) <strong>instance</strong>'ları gruplar: bir mutex (1 instance), üç özdeş cihaz (3 instance), bir bağlantı havuzu <span class="src">sl. 7</span>. Farklı işe yarayan iki cihazı "ikisi de cihaz" diye aynı tipe koyma <span class="src">Okuma §2</span>. OSC'de tipler R1…Rm, Ri'nin Wi instance'ı vardır <span class="src">OSC ch8 sl. 4</span>.</li>
+<li>Yaşam döngüsü: <strong>request → use → release</strong>. Gereken instance yoksa request bloklayabilir <span class="src">sl. 7</span>.</li>
+<li>Ders kitabı modeli: kaynaklar <strong>yeniden kullanılabilir</strong> (reusable) ve iş bitince bırakılır. Bir durumun deadlock olup olmadığına karar verirken <strong>dış müdahale hesaba katılmaz</strong> <span class="src">sl. 7</span>. Kill ya da kurtarma durumu değiştirebilir ama protokolü deadlock'tan arındırmaz <span class="src">Okuma §1</span>.</li>
+<li>Okumanın açık varsayımları: bilinen allocation, bloklayan request, <strong>tutarlı bir anlık görüntü</strong> (snapshot), tamamlanınca bırakma <span class="src">Okuma §2</span>.</li>
+<li>Modelin <strong>kapsamadıkları</strong>: timeout, iptal (cancellation), donanım hatası, tüketilen (consumable) mesajlar, "X ya da Y" türü alternatif istekler, uzak servisteki gizli bağımlılıklar. Bunlar daha zengin bir model ister <span class="src">Okuma §2</span>.</li>
+</ul>
+<p>İyi bir teşhis dört şeyi adlandırır: <strong>kim bloklu, neyi tutuyor, neyi bekliyor, gereken bırakmayı kim yapabilir</strong> <span class="src">Okuma §2</span>.</p>
+<p><strong>Tuzak.</strong> Yavaş ya da yanıt vermeyen bir program bir <strong>gözlemdir</strong>, deadlock kanıtı değil. Hâlâ hesap yapıyor, yavaş diski bekliyor, bir admission politikası onu aç bırakıyor ya da dış bir olay bekliyor olabilir <span class="src">Okuma §2</span>.</p>
+<h3 id="14-kopru-ornegi-yol-bolumleri-kaynak-sl-8-okuma-2">1.4 Köprü örneği: yol bölümleri kaynak <span class="src">sl. 8; Okuma §2</span><a class="headerlink" href="#14-kopru-ornegi-yol-bolumleri-kaynak-sl-8-okuma-2" title="Permanent link">#</a></h3>
+<figure class="fig photo"><a href="img/hoca/d04-osc2002-kopru.png"><img src="img/hoca/d04-osc2002-kopru.png" alt="Tek şeritli köprü: her yol bölümü bir kaynak. OSC 2002, slayt 8.3 [sl. 8]." loading="lazy"></a><figcaption>Tek şeritli köprü: her yol bölümü bir kaynak. OSC 2002, slayt 8.3 <span class="src">sl. 8</span>.</figcaption></figure>
+<ul>
+<li>Her dolu yol bölümü bir kaynak. Karşı yönden gelen arabalar kendi bölümlerini tutarken öndeki bölümü bekler (hold and wait) <span class="src">sl. 8</span>.</li>
+<li>Geri çekilmek bölümleri boşaltır ama ilerlemeyi geri alır (rollback). Birden çok arabanın geri çekilmesi gerekebilir <span class="src">sl. 8</span>.</li>
+<li>Aynı anda tek yöne izin vermek bu çatışmayı önler. <strong>Starvation'ı önlemek için yine adil sıra (fair turn-taking) gerekir</strong> <span class="src">sl. 8</span>.</li>
+<li>"Her girişe trafik lambası koymak çözer mi?" Ancak lambalar koordineli bir admission kuralı uygularsa. İki bağımsız yeşil ışık karşı trafiği aynı darboğaza sokabilir <span class="src">Okuma §2</span>.</li>
+<li><strong>Model kontrolü</strong> <span class="src">Okuma §2</span>: köprünün tamamı tek bir kaynak mı, her bölüm ayrı bir kaynak mı? İkisi de olabilir ama farklı protokolleri anlatır. Tek kaynakta denetleyici girişten önce rezerve eder; bölüm bölüm modelde araba bir bölümü tutup sonrakini ister ve hold-and-wait doğar. <strong>Argümanın ortasında model değiştirme.</strong></li>
+</ul>
+<p><strong>Kontrol soruları (Bölüm 1)</strong></p>
+<ul>
+<li><strong>K1.1</strong> İki kilit örneğinde "her worker'a ayrı çekirdek vermek" deadlock'u neden çözmez? Cevabında "sahiplik" kelimesini kullan.</li>
+<li><strong>K1.2</strong> Bir web servisi 30 saniyedir yanıt vermiyor. Bunun deadlock olduğunu söylemek için hangi dört bilgiyi toplaman gerekir?</li>
+</ul>
+<hr />
+<h2 id="2-dort-gerekli-sart-deadlock-starvation-livelock-sl-916">2. Dört gerekli şart; deadlock, starvation, livelock <span class="src">sl. 9–16</span><a class="headerlink" href="#2-dort-gerekli-sart-deadlock-starvation-livelock-sl-916" title="Permanent link">#</a></h2>
+<h3 id="21-coffmann-dort-sart-sl-913-okuma-3">2.1 Coffman'ın dört şartı <span class="src">sl. 9–13; Okuma §3</span><a class="headerlink" href="#21-coffmann-dort-sart-sl-913-okuma-3" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Şart</th>
+<th>Hocanın tanımı <span class="src">sl. 9</span></th>
+<th>Hocanın ek vurgusu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mutual exclusion</strong></td>
+<td>En az bir ilgili kaynak eşzamanlı paylaşılamaz.</td>
+<td>Mutex'in tek sahibi var; salt okunur paylaşılan nesne aynı kısıtı gerektirmez. Şart kaynağın <strong>semantiğiyle</strong> ilgili, makinede bir ya da çok CPU olmasıyla değil. Kilidi koruma koymadan kaldırmak beklemeyi kaldırır ama veri bozar <span class="src">sl. 10</span>.</td>
+</tr>
+<tr>
+<td><strong>Hold and wait</strong></td>
+<td>Thread ayrılmış bir kaynağı tutarken başka birini bekler.</td>
+<td>L1'i tutarken L2'yi ister; L1 bekleme boyunca başkasına kapalı. Hepsini birlikte istemek bu kalıbı kaldırabilir, <strong>yeter ki rezervasyonun kendisi koordineli olsun</strong>. Katmanlar arası da olur: veritabanı ya da uygulama kilidini tutarken boş bağlantı beklemek <span class="src">sl. 11</span>.</td>
+</tr>
+<tr>
+<td><strong>No preemption</strong></td>
+<td>Kaynak sahibinden öylece alınamaz.</td>
+<td>Aşağıda §2.2 <span class="src">sl. 12</span>.</td>
+</tr>
+<tr>
+<td><strong>Circular wait</strong></td>
+<td>Thread'lerin kapalı zinciri: her biri bir sonrakinin tuttuğu kaynağı bekler.</td>
+<td>A, B'nin tuttuğunu; B, C'ninkini; C, A'nınkini bekler. Döngü, gereken her bırakmanın neden aynı zincirdeki başka bir ilerlemeye bağlı olduğunu açıklar <span class="src">sl. 13</span>.</td>
+</tr>
+</tbody>
+</table>
+<figure class="fig photo"><a href="img/hoca/d04-mg-banyo-anahtari.png"><img src="img/hoca/d04-mg-banyo-anahtari.png" alt="Hocanın banyo anahtarı benzetmesi: tek instance&#x27;lı, dışlayıcı, yeniden kullanılabilir bir kaynak [sl. 10; Okuma §3]." loading="lazy"></a><figcaption>Hocanın banyo anahtarı benzetmesi: tek instance'lı, dışlayıcı, yeniden kullanılabilir bir kaynak <span class="src">sl. 10; Okuma §3</span>.</figcaption></figure>
+<p>Banyo anahtarı için kuyruk <strong>deadlock değildir</strong>: sahibi işini bitirip anahtarı bırakabilir. Deadlock için iadeyi engelleyen ek bir bağımlılık gerekir. Örneğin anahtarı tutan kişi, anahtarı bekleyen birinin tuttuğu başka bir kaynağı bekliyor olmalı <span class="src">Okuma §3</span>.</p>
+<p><strong>"Gerekli ama yeterli değil."</strong> "Bu modelde dört şartın hepsi deadlock için <strong>gereklidir</strong>. Bir tasarımın onlara <strong>izin vermesi</strong> her yürütmenin kilitleneceği anlamına gelmez" <span class="src">sl. 13</span>. Ayrım şu:</p>
+<ul>
+<li><strong>Tasarım</strong> dört şarta izin veriyorsa açık bir zafiyet taşır. Önleme, izin verilen protokolden en az bir şartı kaldırır <span class="src">Okuma §3</span>.</li>
+<li><strong>Durum</strong>: dört şart şu an sağlanıyor mu? OSC: dört şart <strong>aynı anda</strong> sağlanırsa deadlock <strong>ortaya çıkabilir</strong> <span class="src">OSC ch8 sl. 6</span>. OSTEP kontrapozitifini söyler: biri bile sağlanmazsa deadlock olamaz <span class="src">OSTEP 32.3</span>.</li>
+<li>Neden yeterli değil? Çok instance'lı kaynaklarda dairesel bekleme olup yine de deadlock olmayabilir (sl. 20 ve sl. 22–23'teki State B, §3.3–3.4). Tek instance'lı kaynaklarda döngü deadlock'a denk düşer <span class="ek">ek bilgi; sl. 21'den çıkarım</span>.</li>
+</ul>
+<p>OSC'nin no-preemption tanımı daha dardır: kaynak yalnızca onu tutan thread tarafından, işini bitirdikten sonra gönüllü olarak bırakılabilir <span class="src">OSC ch8 sl. 6</span>. Circular wait'i OSTEP ters yönden okur ("her thread zincirdeki bir sonrakinin istediği kaynağı tutar"); aynı döngüdür <span class="src">OSTEP 32.3</span>.</p>
+<h3 id="22-cpu-preemption-kaynak-preemption-sl-12-okuma-3">2.2 CPU preemption ≠ kaynak preemption <span class="src">sl. 12; Okuma §3</span><a class="headerlink" href="#22-cpu-preemption-kaynak-preemption-sl-12-okuma-3" title="Permanent link">#</a></h3>
+<ul>
+<li>CPU zamanlayıcısı bir thread'i <strong>mutex'ini bıraktırmadan</strong> kesebilir. İşlemci preemption'ı ile kaynak preemption'ı farklı şeylerdir <span class="src">sl. 12</span>.</li>
+<li>Kilidi zorla almak, koruduğu <strong>yarı güncellenmiş veriyi geri getirmez</strong> <span class="src">sl. 12</span>.</li>
+<li>Kaynak preemption'ı ancak kaynağın durumu kaydedilebiliyor, geri yüklenebiliyor ya da güvenle geri alınabiliyorsa pratiktir <span class="src">sl. 12</span>.</li>
+<li>Okumanın sorusu: preemptive bir OS'de preemptible olmayan kaynak olur mu? <strong>Evet.</strong> İşlemci preemption'ı yürütmeyi askıya alır, kilit sahipliğini değiştirmez <span class="src">Okuma §3</span>.</li>
+</ul>
+<p><strong>Tuzak.</strong> "Linux preemptive bir çekirdek, demek ki no-preemption şartı sağlanmaz" yanlış. Şart <strong>kaynak</strong> hakkında konuşur <span class="ek">ek bilgi; sl. 12'nin uygulaması</span>.</p>
+<h3 id="23-trafik-ornegi-sl-14-okuma-3">2.3 Trafik örneği <span class="src">sl. 14; Okuma §3</span><a class="headerlink" href="#23-trafik-ornegi-sl-14-okuma-3" title="Permanent link">#</a></h3>
+<figure class="fig photo"><a href="img/hoca/d04-osc2002-trafik.png"><img src="img/hoca/d04-osc2002-trafik.png" alt="Sokak ızgarasında trafik kilitlenmesi. OSC 2002, slayt 8.41 / Exercise 8.4 [sl. 14]." loading="lazy"></a><figcaption>Sokak ızgarasında trafik kilitlenmesi. OSC 2002, slayt 8.41 / Exercise 8.4 <span class="src">sl. 14</span>.</figcaption></figure>
+<p>Her araç yol alanı tutar ve öndeki alanı bekler. Çıkışı boş tutmak, yani kavşağa ancak çıkış boşsa girmek, kilitlenmeyi önler <span class="src">sl. 14</span>. Dört şart resimde <span class="src">Okuma §3</span>:</p>
+<ul>
+<li><strong>Mutual exclusion:</strong> bir yol bölümünde iki araç olamaz.</li>
+<li><strong>Hold and wait:</strong> araç kendi alanını tutarken öndeki alanı bekler.</li>
+<li><strong>No preemption:</strong> yalnız ileri gidilen protokolde kimse aracı alanından kaldıramaz.</li>
+<li><strong>Circular wait:</strong> bloğu dönen bloklu çıkışlar döngüyü kapatır.</li>
+</ul>
+<p>"Daha çok yeşil ışık boş çıkış alanı yaratmaz." Önleme kuralı girişi blokaj oluşmadan <strong>önce</strong> kısıtlamalı. Döngü oluştuktan sonra koordineli bir geri çekilme gerekir; "herkes tekrar denesin" yetmez <span class="src">Okuma §3</span>.</p>
+<h3 id="24-deadlock-starvation-livelock-sl-1516-okuma-4">2.4 Deadlock, starvation, livelock <span class="src">sl. 15–16; Okuma §4</span><a class="headerlink" href="#24-deadlock-starvation-livelock-sl-1516-okuma-4" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Tanım</th>
+<th>Durum değişiyor mu?</th>
+<th>Başka işler bitiyor mu?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Deadlock</strong></td>
+<td>Bir katılımcı kümesi ilerleyemez, çünkü ihtiyaç duydukları olaylar aynı kümenin bloklu üyelerine bağlı <span class="src">sl. 15</span>.</td>
+<td>Küme içinde hayır</td>
+<td>Küme dışındakiler bitebilir, küme bitemez</td>
+</tr>
+<tr>
+<td><strong>Starvation</strong></td>
+<td>Bir katılımcı süresiz bekler, <strong>bu arada diğer işler devam edebilir</strong>; örneğin admission hep yeni gelenleri kayırıyor <span class="src">sl. 15</span>.</td>
+<td>Sistem ilerliyor</td>
+<td>Evet</td>
+</tr>
+<tr>
+<td><strong>Livelock</strong></td>
+<td>Yarışanlar tekrar tekrar bırakır, yeniden dener, yine çarpışır. <strong>Durumları değişir ama yararlı iş hiç tamamlanmaz</strong> <span class="src">sl. 16</span>.</td>
+<td>Evet</td>
+<td>İlgili iş için hayır</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Circular wait'i kırmak <strong>bu sınıf</strong> deadlock'u önler; sınırlı bekleme (bounded waiting) ya da adil zamanlama <strong>sağlamaz</strong> <span class="src">sl. 15</span>. Dairesel bekleme olmadan da starvation olabilir.</li>
+<li>try-lock başarısız olunca hemen ve senkron biçimde yeniden denemek bloklayan deadlock'tan kaçınır ama yine ilerleyemeyebilir: bu livelock'tur <span class="src">sl. 16</span>. OSTEP aynı try-lock kalıbını gösterip "deadlock değil ama ilerleme yok" der <span class="src">OSTEP 32.3</span>.</li>
+<li>Rastgele backoff tekrarlanan çarpışmaları azaltır. Tam bir ilerleme argümanı için yine bir <strong>admission kuralı</strong> ve açıkça yazılmış <strong>zamanlama varsayımları</strong> gerekir <span class="src">sl. 16</span>. Tek başarılı deney deterministik bir bekleme sınırı kanıtlamaz <span class="src">Okuma §4</span>.</li>
+</ul>
+<p>Okumanın <strong>ayırt edici üç sorusu</strong> <span class="src">Okuma §4</span>:</p>
+<ol>
+<li>Hangi durum hâlâ değişebiliyor?</li>
+<li>Yararlı işlemler tamamlanıyor mu?</li>
+<li>Bekleyenin ilerlemesine hangi varsayımlar izin verirdi?</li>
+</ol>
+<p>Okumanın sınıflandırma alıştırması <span class="src">Okuma §4</span>: kapalı kilit döngüsü → deadlock; sonsuza kadar atlanan istek (başka işler bitiyor) → starvation; senkron release-and-retry (durum değişiyor, iş bitmiyor) → livelock. <strong>Çıktısız bir iz bunlardan hangisi olduğunu göstermez.</strong> Etiketlemeden önce sahipliği, istekleri ve tamamlanan işi belirle.</p>
+<p><strong>Linux'ta nasıl görünür.</strong> Uzman deneyi (macOS'ta ölçüldü, <code>kod/backoff.c</code>): deadlock'ta thread'ler çekirdekte uyur ve CPU sıfırdır. Senkron livelock modelinde 10 000 turda <strong>sıfır</strong> başarı oldu ve CPU yandı (1,95 saniyenin 1,63'ü sistem zamanı). Yine de CPU kullanımı tek başına teşhis değildir.</p>
+<p><strong>Kontrol soruları (Bölüm 2)</strong></p>
+<ul>
+<li><strong>K2.1</strong> "Bu sistem preemptive bir çekirdekte çalışıyor, o yüzden no-preemption şartı sağlanmaz, deadlock olamaz." Bu cümledeki hata ne?</li>
+<li><strong>K2.2</strong> Üç gözlem: (a) iki thread de uyuyor, ikisi de diğerinin tuttuğu kilidi bekliyor; (b) bir yazıcı işi saatlerdir sırada, diğer işler basılıyor; (c) iki thread sürekli kilit alıp bırakıyor, CPU %100, iş bitmiyor. Hangisi deadlock, hangisi starvation, hangisi livelock? Her birinde ayırt edici soruyu söyle.</li>
+</ul>
+<hr />
+<h2 id="3-resource-allocation-graph-okuma-sl-1726">3. Resource-allocation graph okuma <span class="src">sl. 17–26</span><a class="headerlink" href="#3-resource-allocation-graph-okuma-sl-1726" title="Permanent link">#</a></h2>
+<h3 id="31-notasyon-sl-17-okuma-5">3.1 Notasyon <span class="src">sl. 17; Okuma §5</span><a class="headerlink" href="#31-notasyon-sl-17-okuma-5" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Daireler thread</strong>, <strong>dikdörtgenler resource type</strong>, <strong>noktalar instance</strong> <span class="src">sl. 17</span>.</li>
+<li><strong>T → R</strong>: şu anki istek (request edge). <strong>R → T</strong>: ayrılmış instance (assignment edge); ok, dikdörtgenin içindeki noktadan sahibine çıkar <span class="src">sl. 17; OSC ch8 sl. 7</span>.</li>
+<li>Bir döngüyü yorumlamadan önce <strong>ok yönünü oku</strong>. Yönü ters çevirirsen bağımlılık argümanı da tersine döner <span class="src">sl. 17</span>.</li>
+<li>Graph bir bağımlılık <strong>anlık görüntüsüdür</strong>, CPU zaman çizelgesi değil <span class="src">sl. 17</span>.</li>
+</ul>
+<h3 id="32-dongu-neyi-kantlar-sl-21-osc-ch8-sl-11-okuma-5">3.2 Döngü neyi kanıtlar <span class="src">sl. 21; OSC ch8 sl. 11; Okuma §5</span><a class="headerlink" href="#32-dongu-neyi-kantlar-sl-21-osc-ch8-sl-11-okuma-5" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Durum</th>
+<th>Sonuç</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Şu anki reusable-resource graph'ında döngü yok</td>
+<td>Bu modelde kaynak deadlock'u yok. Döngü <strong>gerekli</strong>.</td>
+</tr>
+<tr>
+<td>Her tipte <strong>tek instance</strong> ve döngü var</td>
+<td><strong>Deadlock var.</strong> Döngü <strong>yeterli</strong>.</td>
+</tr>
+<tr>
+<td>Bazı tiplerde <strong>birden çok instance</strong> ve döngü var</td>
+<td>Deadlock <strong>olası</strong>. Sayılara ve olası tamamlanmalara bak (indirgeme ya da matris).</td>
+</tr>
+<tr>
+<td>Döngüde kesikli <strong>claim edge</strong> var</td>
+<td>Şu anki bir deadlock değil. Avoidance yorumu: unsafe (§5.3).</td>
+</tr>
+</tbody>
+</table>
+<p>Sezgi <span class="ek">ek bilgi</span>: tek instance'ta "R'yi bekliyorum", "R'nin <strong>tek</strong> sahibini bekliyorum" demektir. Çok instance'ta "R'nin <strong>herhangi bir</strong> instance'ını bekliyorum" demektir; sahiplerden biri bırakırsa yeter. Döngü dışındaki bir sahip kaçış yolu olabilir.</p>
+<p><strong>Graph indirgeme (reduction) yöntemi</strong> (her örnekte kullanacağız): isteği şu anki boş instance'larla karşılanabilen bir thread bul → onun bitip <strong>bütün</strong> instance'larını bıraktığını varsay → tekrar et. Herkes silinirse deadlock yok; silinemeyen kaynak sahipleri deadlocked küme. Bu, §6'daki tespit algoritmasının ta kendisi.</p>
+<h3 id="33-uc-osc-graph-sl-1820-okuma-5">3.3 Üç OSC graph'ı <span class="src">sl. 18–20; Okuma §5</span><a class="headerlink" href="#33-uc-osc-graph-sl-1820-okuma-5" title="Permanent link">#</a></h3>
+<p><strong>Sl. 18: ilerleme mümkün.</strong> R1 = 1, R2 = 2, R3 = 1, R4 = 3 instance.</p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s8-rag.jpeg"><img src="img/hoca/d04-osc-ch8-s8-rag.jpeg" alt="T3 bitip R3&#x27;ü bırakabilir ve ilerleme zincirini başlatır. OSC 10e, Ch.8 slayt 8 [sl. 18]." loading="lazy"></a><figcaption>T3 bitip R3'ü bırakabilir ve ilerleme zincirini başlatır. OSC 10e, Ch.8 slayt 8 <span class="src">sl. 18</span>.</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Tutar</th>
+<th>İster</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>R2'den 1</td>
+<td>R1</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>R1, R2'nin diğeri</td>
+<td>R3</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>R3</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Kenarlar: T1→R1, R1→T2, T2→R3, R3→T3, R2→T1, R2→T2. R4'e kenar yok.</li>
+<li>Döngü yok: zincir T1→R1→T2→R3→T3'te biter, çünkü T3'ün giden kenarı yok.</li>
+<li>İndirgeme: T3 biter, R3'ü bırakır → T2 R3'ü alır, biter, R1 ile bir R2'yi bırakır → T1 R1'i alır, biter. Sıra <strong>T3, T2, T1</strong> <span class="src">sl. 18</span>.</li>
+<li><strong>R4'ün üç boş instance'ı eksik bir R1 ya da R3'ün yerini tutmaz</strong> <span class="src">sl. 18</span>. Tipler birbirinin yerine geçmez.</li>
+</ul>
+<p><strong>Sl. 19: tek istek deadlock yaratır.</strong> Tek değişiklik: <strong>T3 → R2</strong>.</p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s9-rag-deadlock.jpeg"><img src="img/hoca/d04-osc-ch8-s9-rag-deadlock.jpeg" alt="Tek ek istek bağımlılık kümesini kapatır. OSC 10e, Ch.8 slayt 9 [sl. 19]." loading="lazy"></a><figcaption>Tek ek istek bağımlılık kümesini kapatır. OSC 10e, Ch.8 slayt 9 <span class="src">sl. 19</span>.</figcaption></figure>
+<ul>
+<li>R2'nin iki instance'ı da T1 ve T2'de. T1, T2'nin tuttuğu R1'i bekler; T2, T3'ün tuttuğu R3'ü bekler; T3, bu bloklu kümeden bir R2 bırakılmasını bekler <span class="src">sl. 19</span>.</li>
+<li>İki döngü var <span class="ek">ek bilgi; graph'tan okunur, OSC kitap metni de ikisini listeler</span>: T1→R1→T2→R3→T3→R2→T1 ve T2→R3→T3→R2→T2.</li>
+<li>R2 çok instance'lı olduğu için karar döngüden değil sayılardan gelir: R2'nin <strong>iki sahibi de</strong> bloklu kümede, kümenin dışında R1, R2, R3 bırakabilecek kimse yok. <strong>{T1, T2, T3} deadlocked.</strong></li>
+<li>R4 hâlâ boş: "herhangi bir boş kaynak var mı?" yanlış soru. <strong>Kapalı bağımlılık kümesini bul</strong> <span class="src">sl. 19</span>.</li>
+</ul>
+<p><strong>Sl. 20: döngü var, deadlock yok.</strong> R1 = 2, R2 = 2 instance.</p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s10-dongu-deadlocksuz.jpeg"><img src="img/hoca/d04-osc-ch8-s10-dongu-deadlocksuz.jpeg" alt="Döngü, döngü dışındaki bir tamamlanmayla birlikte var olabilir. OSC 10e, Ch.8 slayt 10 [sl. 20]." loading="lazy"></a><figcaption>Döngü, döngü dışındaki bir tamamlanmayla birlikte var olabilir. OSC 10e, Ch.8 slayt 10 <span class="src">sl. 20</span>.</figcaption></figure>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Tutar</th>
+<th>İster</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>R2'den 1</td>
+<td>R1</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>R1'den 1</td>
+<td>—</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>R1'den 1</td>
+<td>R2</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>R2'den 1</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Döngü: <strong>T1 → R1 → T3 → R2 → T1</strong> <span class="src">sl. 20</span>.</li>
+<li>Ama T2 ya da T4 döngüyü beklemeden bitebilir. T2 biterse bir R1 boşalır → T1 R1'i alır, biter, R2'yi bırakır → T3 R2'yi alır, biter. Deadlock yok.</li>
+<li><strong>Çok instance'ta döngü tek başına yeterli bir deadlock testi değildir</strong> <span class="src">sl. 20</span>.</li>
+</ul>
+<h3 id="34-graph-alstrmas-once-karar-ver-sonra-mudahale-et-sl-2223-okuma-5">3.4 Graph alıştırması: önce karar ver, sonra müdahale et <span class="src">sl. 22–23; Okuma §5</span><a class="headerlink" href="#34-graph-alstrmas-once-karar-ver-sonra-mudahale-et-sl-2223-okuma-5" title="Permanent link">#</a></h3>
+<p><strong>State A:</strong> X = 1, Y = 1. A, X'i tutar ve Y ister; B, Y'yi tutar ve X ister.</p>
+<ul>
+<li>Döngü: A → Y → B → X → A. Her tip tek instance → <strong>deadlock</strong>. İkisi de, belirtilen protokolle, bırakmaya ulaşamaz <span class="src">sl. 23</span>.</li>
+</ul>
+<p><strong>State B:</strong> X = 2, Y = 1. A bir X tutar ve Y ister; B, Y'yi tutar ve X ister; <strong>C diğer X'i tutar ve bir şey istemez</strong>.</p>
+<ul>
+<li>Döngü yine var: A → Y → B → X → A.</li>
+<li>Ama C biter ve X'i bırakır → B X'i alır, biter, Y'yi bırakır → A biter. <strong>Deadlock yok.</strong> Sıra C, B, A <span class="src">sl. 23</span>.</li>
+<li>"Döngü iki durumda da var. <strong>İkinci X instance'ı sonucu değiştiriyor</strong>" <span class="src">sl. 23</span>.</li>
+</ul>
+<p>İnce nokta <span class="src">Okuma §5</span>: bu sonuç <strong>C'nin bir tamamlanma yolu olmasına</strong> bağlı. Kâğıtta instance sayısını artırmak, o instance'ın sahibi de bloklu ise yetmez.</p>
+<h3 id="35-resource-graphtan-wait-for-grapha-sl-24-okuma-6-osc-ch8-sl-3334">3.5 Resource graph'tan wait-for graph'a <span class="src">sl. 24; Okuma §6; OSC ch8 sl. 33–34</span><a class="headerlink" href="#35-resource-graphtan-wait-for-grapha-sl-24-okuma-6-osc-ch8-sl-3334" title="Permanent link">#</a></h3>
+<p><strong>Yalnız tek instance'lı kaynaklar için:</strong> Ti → R → Tj kenarını <strong>Ti → Tj</strong> ile değiştir. Anlamı: Ti, gereken kaynağı bırakması için Tj'yi bekliyor <span class="src">sl. 24</span>.</p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s34-wait-for.jpeg"><img src="img/hoca/d04-osc-ch8-s34-wait-for.jpeg" alt="Her kaynak düğümünü kaldır, isteyen thread&#x27;i sahibine bağla. Solda resource graph, sağda wait-for graph. OSC 10e, Ch.8 slayt 34 [sl. 24]." loading="lazy"></a><figcaption>Her kaynak düğümünü kaldır, isteyen thread'i sahibine bağla. Solda resource graph, sağda wait-for graph. OSC 10e, Ch.8 slayt 34 <span class="src">sl. 24</span>.</figcaption></figure>
+<p>Şekildeki resource graph (hepsi tek instance):</p>
+<table>
+<thead>
+<tr>
+<th>Kaynak</th>
+<th>Sahibi</th>
+<th>Bekleyen(ler)</th>
+<th>Wait-for kenarı</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>T2</td>
+<td>T1</td>
+<td>T1 → T2</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>T1</td>
+<td>T4</td>
+<td>T4 → T1</td>
+</tr>
+<tr>
+<td>R3</td>
+<td>T5</td>
+<td>T2</td>
+<td>T2 → T5</td>
+</tr>
+<tr>
+<td>R4</td>
+<td>T3</td>
+<td>T2</td>
+<td>T2 → T3</td>
+</tr>
+<tr>
+<td>R5</td>
+<td>T4</td>
+<td>T2, T3</td>
+<td>T2 → T4, T3 → T4</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Döngüler: <strong>T1 → T2 → T4 → T1</strong> (slaytın dediği) ve <strong>T1 → T2 → T3 → T4 → T1</strong>. Döngüler <strong>örtüşebilir</strong> <span class="src">Okuma §6</span>.</li>
+<li>"<strong>T5 bitse bile T1 → T2 → T4 → T1 döngüsü kalır</strong>" <span class="src">sl. 24</span>. T5 R3'ü bırakır, R3 T2'ye gider, ama T2 hâlâ R4'ü (T3'te) ve R5'i (T4'te) bekliyor. {T1, T2, T3, T4} deadlocked.</li>
+<li>Okumanın dersi: çalışabilecek bir thread bulmak yetmez; <strong>bıraktığı kaynakların ilgili beklemeleri çözmesi gerekir</strong> <span class="src">Okuma §6</span>.</li>
+<li>Maliyet: OSC "n² mertebesinde işlem" der <span class="src">OSC ch8 sl. 33</span>. Hoca "adjacency list ile O(V + E)" der <span class="src">sl. 62</span>. Çelişki değil, gösterim farkı: yoğun matriste karesel iş çıkar. <strong>Karmaşıklık söylerken gösterimi de söyle</strong> <span class="src">Okuma §6</span>.</li>
+<li><strong>Tuzak:</strong> wait-for graph'ı çok instance'lı kaynağa uygulama. Orada "Ti kimi bekliyor?" sorusunun tek cevabı yok <span class="src">sl. 24</span>.</li>
+</ul>
+<h3 id="36-dining-philosophers-yeniden-sl-2526-okuma-6">3.6 Dining philosophers yeniden <span class="src">sl. 25–26; Okuma §6</span><a class="headerlink" href="#36-dining-philosophers-yeniden-sl-2526-okuma-6" title="Permanent link">#</a></h3>
+<figure class="fig photo"><a href="img/hoca/d04-mg-filozoflar.png"><img src="img/hoca/d04-mg-filozoflar.png" alt="
+dersin filozoflar benzetmesi, sahiplik ve istek graph&#x27;ı olarak [sl. 25].
+" loading="lazy"></a><figcaption><ol>
+<li>dersin filozoflar benzetmesi, sahiplik ve istek graph'ı olarak <span class="src">sl. 25</span>.</li>
+</ol></figcaption></figure>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch7-s12-filozoflar.jpeg"><img src="img/hoca/d04-osc-ch7-s12-filozoflar.jpeg" alt="Ders kitabının paylaşılan çubuk modeli: her filozofun iki komşu çubuğa ihtiyacı var. OSC 10e, Ch.7 slayt 12 [sl. 26]." loading="lazy"></a><figcaption>Ders kitabının paylaşılan çubuk modeli: her filozofun iki komşu çubuğa ihtiyacı var. OSC 10e, Ch.7 slayt 12 <span class="src">sl. 26</span>.</figcaption></figure>
+<ul>
+<li>Her çatal tek instance. Beş filozofun hepsi birer çatal tutup diğerini bekliyorsa <strong>dört şart da sağlanır</strong> ve kimse yiyemez <span class="src">sl. 25–26</span>.</li>
+<li>Wait-for graph (ek bilgi; filozof i'nin çatalları i ve (i+1) mod 5 kabulüyle): P0 → P1 → P2 → P3 → P4 → P0, beş düğümlü tek döngü.</li>
+<li><strong>Çözüm</strong> <span class="src">sl. 25</span>: çatalları 0–4 numarala. Önce küçük numaralıyı, sonra büyüğü al; yedikten sonra ikisini bırak. Dairesel edinme kalkar.</li>
+<li>Neden işe yarar <span class="ek">ek bilgi</span>: 4 ile 0 arasındaki filozof (P4) önce 0'ı almak zorunda. P4 ve P0 ikisi de önce C0'ı ister; alamayan <strong>hiçbir şey tutmadan</strong> bekler. İki durum var:</li>
+<li>P0 C0'ı alırsa P4 elinde hiçbir şey olmadan bekler. C4'ü isteyen tek kişi P3 kalır; P3 yer, bırakır, zincir geriye doğru çözülür.</li>
+<li>P4 C0'ı alırsa sonra C4'ü ister ve P3 ile C4 için yarışır. Hangisi kazanırsa iki çatalını da tutmuş olur ve yer. Kaybeden yalnız bekler; döngü yine kapanamaz.
+  Her iki durumda da en yüksek numaralı çatalı tutan biri ikinci çatalını alabilir, çünkü ondan büyük numaralı çatal isteyen yok.</li>
+<li>Bu bir önleme kuralıdır, adalet garantisi değil: her filozofun sınırlı sürede yiyeceğini söylemez <span class="src">Okuma §6</span>.</li>
+</ul>
+<p><strong>Kontrol soruları (Bölüm 3)</strong></p>
+<ul>
+<li><strong>K3.1</strong> Sl. 19'da üç boş R4 instance'ı varken neden deadlock var? Cevabı "tip" ve "kapalı küme" kavramlarıyla ver.</li>
+<li><strong>K3.2</strong> State B'de C de bir şey bekliyor olsaydı (örneğin Y'yi), sonuç ne olurdu? Neden?</li>
+</ul>
+<hr />
+<h2 id="4-dort-yaklasm-ve-onleme-sl-2737">4. Dört yaklaşım ve önleme <span class="src">sl. 27–37</span><a class="headerlink" href="#4-dort-yaklasm-ve-onleme-sl-2737" title="Permanent link">#</a></h2>
+<h3 id="41-dort-yaklasm-sl-27-okuma-7">4.1 Dört yaklaşım <span class="src">sl. 27; Okuma §7</span><a class="headerlink" href="#41-dort-yaklasm-sl-27-okuma-7" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Yaklaşım</th>
+<th>Karar</th>
+<th>Ana maliyet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prevention</strong> (önleme)</td>
+<td>Gerekli bir şartı yasakla</td>
+<td>Erişim kısıtları</td>
+</tr>
+<tr>
+<td><strong>Avoidance</strong> (kaçınma)</td>
+<td>Yalnız durum safe kalırsa ver</td>
+<td>Maksimum talep bilgisi</td>
+</tr>
+<tr>
+<td><strong>Detection + recovery</strong></td>
+<td>İzin ver, tespit et, sonra onar</td>
+<td>İzleme ve kaybedilen iş</td>
+</tr>
+<tr>
+<td><strong>Riski kabul et</strong></td>
+<td>Genel bir mekanizma yok</td>
+<td>Hataları uygulama yönetir</td>
+</tr>
+</tbody>
+</table>
+<p>Kaynak: <span class="src">sl. 27</span>. OSC aynı üçlüyü verir ve çoğu OS'nin (Linux, Windows dahil) sorunu yok saydığını söyler <span class="src">OSC ch8 sl. 12</span>. OSTEP'in pragmatik notu: deadlock nadirse ve bedeli düşükse yok saymak makul olabilir <span class="src">OSTEP 32.3</span>.</p>
+<figure class="fig"><div class="svgwrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="Dört yaklaşımın karar anı: önleme tasarım anında protokolü kısıtlar; kaçınma her istekte tahsisten önce safety testi yapar; tespit ve kurtarma deadlock oluştuktan sonra şu anki istekleri inceler ve onarır; riski kabul etmek genel bir mekanizma kurmaz." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04dy-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d04dy-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="380" y="22" text-anchor="middle" font-weight="600">Karar ne zaman verilir? [sl. 27]</text>
+  <line class="ln" x1="30" y1="60" x2="730" y2="60" marker-end="url(#d04dy-a)"/>
+  <text x="732" y="50" text-anchor="end" class="t-mut" font-size="12">zaman</text>
+  <circle cx="110" cy="60" r="5" class="f-cur"/>
+  <text x="110" y="45" text-anchor="middle" font-size="12">tasarım / kod yazımı</text>
+  <circle cx="310" cy="60" r="5" class="f-cur"/>
+  <text x="310" y="45" text-anchor="middle" font-size="12">her istek, tahsisten önce</text>
+  <circle cx="520" cy="60" r="5" class="f-warn"/>
+  <text x="520" y="45" text-anchor="middle" font-size="12" class="t-warn">deadlock oluştu</text>
+  <circle cx="650" cy="60" r="5" class="f-cur"/>
+  <text x="650" y="45" text-anchor="middle" font-size="12">sonra</text>
+
+  <rect class="box-acc" x="30" y="90" width="160" height="120" rx="8"/>
+  <text x="110" y="112" text-anchor="middle" font-weight="600">Önleme</text>
+  <text x="110" y="132" text-anchor="middle" font-size="12">bir şartı yasakla</text>
+  <text x="110" y="150" text-anchor="middle" font-size="12">kural tasarımda konur</text>
+  <text x="110" y="168" text-anchor="middle" font-size="11" class="t-mut">rezervasyon, bırak-dene:</text>
+  <text x="110" y="182" text-anchor="middle" font-size="11" class="t-mut">çalışma anında uygulanır</text>
+  <text x="110" y="200" text-anchor="middle" font-size="12" class="t-mut">bedel: erişim kısıtı</text>
+
+  <rect class="box" x="220" y="90" width="180" height="120" rx="8"/>
+  <text x="310" y="112" text-anchor="middle" font-weight="600">Kaçınma</text>
+  <text x="310" y="132" text-anchor="middle" font-size="12">safe kalırsa ver</text>
+  <text x="310" y="150" text-anchor="middle" font-size="12">Banker: Need ≤ Work</text>
+  <text x="310" y="174" text-anchor="middle" font-size="12" class="t-mut">bilgi: her thread'in Max'ı</text>
+  <text x="310" y="192" text-anchor="middle" font-size="12" class="t-mut">bedel: kötümser ret</text>
+
+  <rect class="box" x="430" y="90" width="180" height="120" rx="8"/>
+  <text x="520" y="112" text-anchor="middle" font-weight="600">Tespit + kurtarma</text>
+  <text x="520" y="132" text-anchor="middle" font-size="12">izin ver, bul, onar</text>
+  <text x="520" y="150" text-anchor="middle" font-size="12">Request ≤ Work, kurban</text>
+  <text x="520" y="174" text-anchor="middle" font-size="12" class="t-mut">bilgi: şu anki istekler</text>
+  <text x="520" y="192" text-anchor="middle" font-size="12" class="t-mut">bedel: izleme, kayıp iş</text>
+
+  <rect class="box-plain dash" x="630" y="90" width="110" height="120" rx="8"/>
+  <text x="685" y="112" text-anchor="middle" font-weight="600">Kabul et</text>
+  <text x="685" y="132" text-anchor="middle" font-size="12">mekanizma yok</text>
+  <text x="685" y="174" text-anchor="middle" font-size="12" class="t-mut">hatayı</text>
+  <text x="685" y="192" text-anchor="middle" font-size="12" class="t-mut">uygulama yönetir</text>
+
+  <line class="ln-acc dash" x1="110" y1="66" x2="110" y2="88" marker-end="url(#d04dy-b)"/>
+  <line class="ln dash" x1="310" y1="66" x2="310" y2="88" marker-end="url(#d04dy-a)"/>
+  <line class="ln dash" x1="520" y1="66" x2="520" y2="88" marker-end="url(#d04dy-a)"/>
+  <line class="ln dash" x1="650" y1="66" x2="670" y2="88" marker-end="url(#d04dy-a)"/>
+
+  <line class="faint" x1="30" y1="232" x2="400" y2="232"/>
+  <text x="215" y="252" text-anchor="middle" font-size="12">deadlock'a hiç girme</text>
+  <line class="faint" x1="430" y1="232" x2="740" y2="232"/>
+  <text x="585" y="252" text-anchor="middle" font-size="12">deadlock'a izin ver</text>
+  <text x="380" y="284" text-anchor="middle" font-size="12" class="t-mut">Hiçbiri tek başına adalet (bounded waiting) garanti etmez [sl. 15; Okuma §17].</text>
+</svg>
+</div><figcaption>Dört yaklaşım kararı ne zaman verir: önleme kuralı tasarımda koyar, kaçınma her istekte karar verir, tespit iş olduktan sonra devreye girer.</figcaption></figure>
+<p><strong>Dikkat (denetim D-03).</strong> "Önlemede çalışma anında karar yok" genellemesi yanlış. Kural tasarımda konur. Kilit sırasında çalışma anında ek bir karar yoktur. Ama bütün kümeyi baştan rezerve etmek ve bırakıp yeniden denemek, kuralı çalışma anında bir koordinatörle uygular <span class="src">sl. 29–30; Okuma §7</span>. Önlemeyi kaçınmadan ayıran şey karar anı değil, kullandığı bilgidir: önleme maksimum talep bilgisi istemez, yalnızca protokolü kısıtlar <span class="src">sl. 38; Okuma §17</span>.</p>
+<h3 id="42-paylasm-ya-da-rezervasyonla-onleme-sl-2829-okuma-7">4.2 Paylaşım ya da rezervasyonla önleme <span class="src">sl. 28–29; Okuma §7</span><a class="headerlink" href="#42-paylasm-ya-da-rezervasyonla-onleme-sl-2829-okuma-7" title="Permanent link">#</a></h3>
+<p><strong>Mutual exclusion'ı kırmak.</strong> Yalnızca paylaşımın gerçekten geçerli olduğu yerde: değişmez (immutable) veri ya da kaynak modelini değiştiren bir spooler <span class="src">sl. 28</span>. Spooler'da üreticiler yazıcıyı doğrudan tutmaz; işi kuyruğa yazar, yazıcıyı yalnız spooler tutar <span class="src">Okuma §7</span>. Mutex gibi doğası gereği paylaşılamaz kaynaklarda bu yol yoktur <span class="src">OSC ch8 sl. 13</span>. OSTEP'in kilitsiz (lock-free, compare-and-swap) veri yapıları da bu aileden: kilit yok, deadlock yok, ama livelock hâlâ mümkün <span class="src">OSTEP 32.3</span>.</p>
+<p><strong>Hold and wait'i kırmak.</strong> İki protokol <span class="src">sl. 28</span>:</p>
+<ol>
+<li>Başlamadan önce <strong>bütün kümeyi</strong> rezerve et.</li>
+<li>Yeni bir küme istemeden önce elindekilerin <strong>hepsini bırak</strong>.</li>
+</ol>
+<p>Bedeli <span class="src">sl. 28–29; Okuma §7</span>:</p>
+<ul>
+<li>Kaynaklar kullanılmadan çok önce ayrılır ve <strong>boşta kalır</strong> (düşük kullanım).</li>
+<li><strong>Büyük bir istek aç kalabilir</strong>: küçük istekler kapasiteyi sürekli tüketir.</li>
+<li>Sonradan gerekecek kaynaklar baştan <strong>bilinmeyebilir</strong>; bütün iş için maksimum kümeyi ayırmak ciddi eşzamanlılık kaybettirir <span class="src">sl. 29</span>.</li>
+<li>"Bir şartı kaldırmanın bedeli vardır" <span class="src">sl. 28</span>.</li>
+</ul>
+<p><strong>Rezervasyonun kendisi atomik olmalı</strong> <span class="src">sl. 29</span>. "X boş mu kontrol et; sonra Y'yi al; sonra X'i al" atomik bir bütün-küme rezervasyonu <strong>değildir</strong>. Okumanın tarayıcı ve yazıcı senaryosu <span class="src">Okuma §7</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>İş J1</th>
+<th>İş J2</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Listeye bakar: tarayıcı ve yazıcı boş</td>
+<td></td>
+<td>Hiçbir şey ayrılmadı</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td>Listeye bakar: ikisi de boş</td>
+<td>Hiçbir şey ayrılmadı</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Tarayıcıyı alır</td>
+<td></td>
+<td>J1: tarayıcı</td>
+</tr>
+<tr>
+<td>4</td>
+<td></td>
+<td>Yazıcıyı alır</td>
+<td>J2: yazıcı</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Yazıcıyı ister, bekler</td>
+<td></td>
+<td>J1 tutuyor ve bekliyor</td>
+</tr>
+<tr>
+<td>6</td>
+<td></td>
+<td>Tarayıcıyı ister, bekler</td>
+<td><strong>Döngü: deadlock</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Kontrol hiçbir şeyi ayırmadı. Bu bir TOCTOU (time-of-check to time-of-use) yarışıdır (terim ek bilgi). Düzeltme: tek bir koordinatör kararı verir ve iki tahsisi tek bir koordineli işlem olarak kaydeder; küme eksikse iş <strong>hiçbir parçayı tutmadan</strong> bekler <span class="src">Okuma §7; sl. 29</span>. Koordinatörü çağırırken tutulan başka kilitler de bağımlılık analizine girmelidir <span class="src">Okuma §7</span>.</p>
+<pre><code class="language-c">/* ek bilgi: okumadaki ilkenin C taslağı */
+pthread_mutex_lock(&amp;alloc_mtx);                 /* karar seri hâle gelir */
+while (!(scanner_free &amp;&amp; printer_free))
+    pthread_cond_wait(&amp;alloc_cv, &amp;alloc_mtx);   /* hiçbir parça tutulmadan beklenir */
+scanner_free = printer_free = 0;                /* iki tahsis tek adımda kaydedilir */
+pthread_mutex_unlock(&amp;alloc_mtx);
+</code></pre>
+<h3 id="43-brak-ve-geri-al-no-preemption-krmak-sl-30-okuma-7">4.3 Bırak ve geri al: no preemption'ı kırmak <span class="src">sl. 30; Okuma §7</span><a class="headerlink" href="#43-brak-ve-geri-al-no-preemption-krmak-sl-30-okuma-7" title="Permanent link">#</a></h3>
+<ul>
+<li>Yeni istek karşılanamıyorsa önceki kaynakları bırak; gereken küme alınabildiğinde yeniden dene <span class="src">sl. 30</span>. OSC aynı protokolü verir: iş eskileri <strong>ve</strong> yenileri birlikte alabildiğinde yeniden başlar <span class="src">OSC ch8 sl. 14</span>.</li>
+<li>Yalnızca kısmi iş <strong>geri alınabiliyorsa</strong> ya da henüz dışarıdan görünür olmamışsa çalışır. Gönderilmiş bir mesaj ya da fiziksel bir eylem geri alınamaz <span class="src">sl. 30</span>.</li>
+<li>Tekrarlanan geri alma starvation yaratır. Yeniden deneme maliyetini ve <strong>kimin sürekli kaybettiğini</strong> izle <span class="src">sl. 30</span>.</li>
+</ul>
+<h3 id="44-global-kilit-sras-circular-waiti-krmak-sl-3133-okuma-8">4.4 Global kilit sırası: circular wait'i kırmak <span class="src">sl. 31–33; Okuma §8</span><a class="headerlink" href="#44-global-kilit-sras-circular-waiti-krmak-sl-3133-okuma-8" title="Permanent link">#</a></h3>
+<p><strong>Kural</strong> <span class="src">sl. 31</span>: her ilgili kilide <strong>benzersiz bir rank</strong> ver. Başka kilitler tutarken yalnız <strong>artan rank</strong> ile edin. OSC bunu en yaygın önleme yöntemi sayar <span class="src">OSC ch8 sl. 14–15</span>; OSTEP en pratik teknik der <span class="src">OSTEP 32.3</span>.</p>
+<p><strong>İspat</strong> (hocanın hazırlık paketindeki dört parçadan biri) <span class="src">sl. 31; Okuma §8</span>:</p>
+<ol>
+<li>Varsay: bir dairesel bekleme var. T₀, …, T_{k−1} thread'leri ve L₀, …, L_{k−1} kilitleri öyle ki her i için (indisler mod k) Tᵢ, Lᵢ'yi <strong>tutuyor</strong> ve L_{i+1}'i <strong>bekliyor</strong>.</li>
+<li>Tᵢ, Lᵢ'yi tutarken L_{i+1}'i istedi. Kurala göre bu ancak rank(Lᵢ) &lt; rank(L_{i+1}) ise mümkün.</li>
+<li>Bu her i için geçerli: rank(L₀) &lt; rank(L₁) &lt; … &lt; rank(L_{k−1}) &lt; rank(L₀).</li>
+<li>"&lt;" geçişli olduğundan rank(L₀) &lt; rank(L₀) çıkar. Bu imkânsız. Dolayısıyla döngü yok; circular wait gerekli bir şart olduğundan bu kilitler üzerinden deadlock da yok. ∎</li>
+</ol>
+<p>Hocanın kısa yazımı: "Bir döngü rank(L1) &lt; rank(L2) &lt; … &lt; rank(Lk) &lt; rank(L1) gerektirir, ki bu imkânsızdır" <span class="src">sl. 31</span>.</p>
+<p>İspatın <strong>varsayımları</strong> ve <strong>sınırları</strong>:</p>
+<ul>
+<li><strong>Her yol aynı sırayı izlemeli</strong>, callback'ler ve hata yolları dahil <span class="src">sl. 31</span>. Tek bir yerel "istisna" global ispatı geçersiz kılar <span class="src">sl. 34</span>.</li>
+<li>İspat <strong>edinme</strong> sırasına dayanır, bırakma sırasına değil <span class="src">Okuma §8</span>.</li>
+<li><strong>Adaleti kanıtlamaz</strong> <span class="src">sl. 31</span>. Starvation hâlâ mümkün.</li>
+<li>Yalnızca <strong>modellenen kilitleri</strong> kapsar. Okumanın "kusuru bul" örneği: iki worker da L1 → L2 sırasına uyuyor, ama L1'i aldıktan sonra iki thread'lik bir buluşma noktasında (rendezvous) bekliyor. L1'i yalnız biri alabilir; o diğerini buluşmada bekler, diğeri L1'i bekler: deadlock <span class="src">Okuma §8</span>. Uzman bu varyantı macOS'ta çalıştırdı (<code>kod/variants.c</code>, <code>ordered-rv</code> modu); tek mesaj basıp askıda kaldı.</li>
+<li>Tam sıra şart değil, kısmi sıra (partial order) da yeter. Linux bellek eşleme kodu bir düzine kadar kilidin edinme sırasını yorum satırlarında belgeler <span class="src">OSTEP 32.3</span>.</li>
+</ul>
+<p><strong>Sl. 32: ortak edinme planı.</strong></p>
+<figure class="fig photo"><a href="img/hoca/d04-mg-s32-kilit-plani.png"><img src="img/hoca/d04-mg-s32-kilit-plani.png" alt="Ortak kilit sırası: iki worker da önce düşük rank&#x27;ı ister. Bunlar edinme planları, aynı anda sahiplik değil [sl. 32; Okuma §8]." loading="lazy"></a><figcaption>Ortak kilit sırası: iki worker da önce düşük rank'ı ister. Bunlar edinme planları, aynı anda sahiplik değil <span class="src">sl. 32; Okuma §8</span>.</figcaption></figure>
+<p>Tablodaki iki satır <strong>edinme planıdır</strong>; L1'in aynı anda iki sahibi olduğunu göstermez <span class="src">sl. 32</span>. Gerçek çalışmada biri L1'i alır, diğeri <strong>hiçbir şey tutmadan</strong> L1'de bekler. Bu yüzden döngü kurulamaz.</p>
+<p><strong>Sl. 33: ders kitabının çatışan sırası.</strong></p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s15-kilit-sirasi.png"><img src="img/hoca/d04-osc-ch8-s15-kilit-sirasi.png" alt="İkinci worker ortak sıra kuralını çiğniyor. OSC 10e, Ch.8 slayt 15 [sl. 33]." loading="lazy"></a><figcaption>İkinci worker ortak sıra kuralını çiğniyor. OSC 10e, Ch.8 slayt 15 <span class="src">sl. 33</span>.</figcaption></figure>
+<p><code>thread_one</code> önce <code>first_mutex</code>, sonra <code>second_mutex</code> alır; <code>thread_two</code> tersini yapar. İkisi de ilk kilidini tuttuğunda her biri diğerinde bloklanır <span class="src">sl. 33</span>. OSC'nin rank'ları <code>first_mutex = 1</code>, <code>second_mutex = 5</code> <span class="src">OSC ch8 sl. 15</span>. <strong>Düzeltme:</strong> ikinci worker'ın edinme sırasını ortak sıraya çek. Slayttaki parça hata kontrolünü atlıyor; çalıştırmak için kontrollü pratik programını kullan <span class="src">sl. 33</span>.</p>
+<h3 id="45-dinamik-secilen-kaynaklar-sl-34-okuma-8">4.5 Dinamik seçilen kaynaklar <span class="src">sl. 34; Okuma §8</span><a class="headerlink" href="#45-dinamik-secilen-kaynaklar-sl-34-okuma-8" title="Permanent link">#</a></h3>
+<p>Sorun: kilit çalışma anında argümana göre seçilir, sabit bir "önce L1" kuralı yazılamaz. <code>transfer(from, to)</code> ile <code>transfer(to, from)</code> aynı anda çalışırsa ikisi de "önce from" kuralına uyar ama ters sırada kilitler (OSC kitap metnindeki <code>transaction()</code> örneği, ek bilgi; slaytlarda yok).</p>
+<p><strong>Hocanın kuralı</strong> <span class="src">sl. 34</span>:</p>
+<ul>
+<li>Transfer yönünden bağımsız olarak <strong>küçük ve kararlı (stable) hesap kimliğinin</strong> kilidini önce al.</li>
+<li>Kaynak ve hedef aynı hesapsa bunu <strong>açıkça ele al</strong>; özyinelemesiz (nonrecursive) bir kilidi iki kez alma.</li>
+<li>Sıralama kuralını <strong>ortak yardımcı fonksiyonlarda</strong> tut. Tutarsız yerel istisnalar global ispatı geçersiz kılar.</li>
+</ul>
+<pre><code class="language-c">/* ek bilgi: hocanın kuralının C taslağı */
+int transfer(Account *from, Account *to, long amt) {
+    if (from-&gt;id == to-&gt;id) return handle_self_transfer(from, amt);
+    Account *lo = (from-&gt;id &lt; to-&gt;id) ? from : to;
+    Account *hi = (from-&gt;id &lt; to-&gt;id) ? to   : from;
+    pthread_mutex_lock(&amp;lo-&gt;lock);
+    pthread_mutex_lock(&amp;hi-&gt;lock);
+    from-&gt;balance -= amt; to-&gt;balance += amt;
+    pthread_mutex_unlock(&amp;hi-&gt;lock);
+    pthread_mutex_unlock(&amp;lo-&gt;lock);
+    return 0;
+}
+</code></pre>
+<p>OSTEP kilitleri <strong>adresle</strong> sıralar (<code>if (m1 &gt; m2)</code>) ve <code>m1 != m2</code> varsayar <span class="src">OSTEP 32.3</span>. Kararlı kimlik daha güçlüdür: adres yalnız nesne yaşadıkça sabittir <span class="ek">ek bilgi</span>.</p>
+<h3 id="46-try-lock-ve-backoff-sl-35-okuma-8">4.6 Try-lock ve backoff <span class="src">sl. 35; Okuma §8</span><a class="headerlink" href="#46-try-lock-ve-backoff-sl-35-okuma-8" title="Permanent link">#</a></h3>
+<ul>
+<li><code>pthread_mutex_trylock</code> sıradaki kilit müsait değilse <strong>bloklanmadan döner</strong>; POSIX bu durum için <code>EBUSY</code> tanımlar <span class="src">sl. 35; Okuma §8</span>.</li>
+<li>Başarısızlıkta <strong>ilk kilidi bırak</strong>, sonra yeniden dene. Bu, o denemedeki kalıcı hold-and-wait döngüsünü kaldırır, <strong>yeter ki bırakma gerçekten yapılsın</strong> <span class="src">sl. 35</span>.</li>
+<li>İlerleme için sınırlı deneme, asimetri ya da bir admission politikası gerekebilir. <strong>Sonsuza kadar yeniden denemek adalet garantisi değildir</strong> <span class="src">sl. 35</span>.</li>
+</ul>
+<p>OSTEP'in kalıbı <span class="src">OSTEP 32.3</span>:</p>
+<pre><code class="language-c">top:
+  pthread_mutex_lock(L1);
+  if (pthread_mutex_trylock(L2) != 0) {
+      pthread_mutex_unlock(L1);
+      goto top;
+  }
+</code></pre>
+<p>Diğer thread ters sırayla aynı kalıbı izlese bile deadlock olmaz. Ama ikisi aynı fazda dönerse: A L1'i alır, B L2'yi alır, ikisi de <code>EBUSY</code> alır, ikisi de bırakır, tekrar… Bu <strong>livelock</strong>'tur <span class="src">sl. 16</span>.</p>
+<p><strong>Sınıflandırma farkı.</strong> OSTEP trylock'u "No Preemption" başlığı altında anlatır ama kendisi bunun gerçek preemption olmadığını, thread'in sahipliğinden kendi isteğiyle vazgeçtiğini söyler <span class="src">OSTEP 32.3</span>. Hoca etkisini <strong>hold and wait</strong> üzerinden anlatır <span class="src">sl. 35</span>. Sınavda hocanın çerçevesini kullan.</p>
+<p><strong>Linux'ta nasıl görünür.</strong> Uzman deneyi (macOS'ta ölçüldü, <code>kod/backoff.c</code>): ters sırayla trylock kullanan iki thread hiçbir koşuda kilitlenmedi. Zorla senkronlanmış modelde 10 000 turda <strong>0 başarı</strong> oldu (saf livelock). Çarpışmadan sonra 1/2 olasılıkla bir tur pas geçen rastgele modelde başarı sayısı çarpışma sayısının yaklaşık yarısıydı (2867'ye 5723), ama deterministik bir üst sınır yok.</p>
+<h3 id="47-timeout-kanttr-teshis-degil-sl-36-okuma-16">4.7 Timeout kanıttır, teşhis değil <span class="src">sl. 36; Okuma §16</span><a class="headerlink" href="#47-timeout-kanttr-teshis-degil-sl-36-okuma-16" title="Permanent link">#</a></h3>
+<ul>
+<li>Bir timeout yalnızca işlemin <strong>seçilen bir son tarihe kadar bitmediğini</strong> kanıtlar. Yavaş hesaplama, starvation ve dış I/O da timeout'a düşer <span class="src">sl. 36</span>.</li>
+<li>Deadlock'u teşhis etmek için <strong>sahipleri, istekleri ve bırakma için gereken olayları</strong> yeniden kur <span class="src">sl. 36</span>.</li>
+<li>Bir watchdog gösterim sürecini durdurabilir; bu paylaşılan uygulama durumunu onarmanın genel yöntemi değildir <span class="src">sl. 36</span>.</li>
+<li>Ters yön de geçerli: bir çalıştırmanın başarıyla bitmesi protokolün deadlock'suz olduğunu kanıtlamaz <span class="src">Okuma §16</span>.</li>
+</ul>
+<h3 id="48-birinci-yar-kontrol-noktas-sl-37">4.8 Birinci yarı kontrol noktası <span class="src">sl. 37</span><a class="headerlink" href="#48-birinci-yar-kontrol-noktas-sl-37" title="Permanent link">#</a></h3>
+<p>Hocanın üç sorusu <span class="src">sl. 37</span>:</p>
+<ol>
+<li><strong>İki kilit durumunu her edinmeden sonra çiz; sahipliği ve istekleri işaretle.</strong> Adım 1: L1 → A. Adım 2: L1 → A, L2 → B. Adım 3: A → L2 eklenir; zincir A → L2 → B, döngü yok, B hâlâ ilerleyebilir. Adım 4: B → L1 eklenir; B → L1 → A → L2 → B kapalı döngü, tek instance → deadlock.</li>
+<li><strong>Döngü neden tek instance'ta deadlock'u kanıtlar ama iki instance'ta zararsız olabilir?</strong> Tek instance'ta beklenen kaynağın tek sahibi döngüde ve bloklu; bırakma yolu yok. İki instance'ta ikinci instance döngü dışındaki, bitebilecek bir thread'de olabilir; onun bırakması döngüyü çözer (sl. 20'de T2/T4, sl. 23'te C).</li>
+<li><strong>Bir global kilit sırası ver ve tam olarak hangi şartı kaldırdığını söyle.</strong> rank(L1) = 1 &lt; rank(L2) = 2; başka kilit tutarken yalnız artan rank ile edin. Kaldırdığı şart: <strong>circular wait</strong>. Mutual exclusion, hold and wait (A L1'i tutup L2'yi bekleyebilir) ve no preemption hâlâ geçerli olabilir; yalnız döngü kapanamaz.</li>
+</ol>
+<p><strong>Kontrol soruları (Bölüm 4)</strong></p>
+<ul>
+<li><strong>K4.1</strong> Bir worker kurala uyuyor: önce L1, sonra L2. Ama L1'i tuttuktan sonra bir koşul değişkeninde (condition variable) başka bir worker'ın sinyalini bekliyor; o worker'ın sinyal vermesi için L1'i alması gerekiyor. Kilit sırası ispatı burada neden işe yaramaz?</li>
+<li><strong>K4.2</strong> "Bütün kaynakları baştan rezerve et" kuralı hangi şartı kırar? Bedeli olan iki şeyi say.</li>
+</ul>
+<hr />
+<h2 id="5-kacnma-safe-state-ve-bankers-algorithm-sl-3856">5. Kaçınma: safe state ve Banker's algorithm <span class="src">sl. 38–56</span><a class="headerlink" href="#5-kacnma-safe-state-ve-bankers-algorithm-sl-3856" title="Permanent link">#</a></h2>
+<h3 id="51-kacnma-neden-ayr-bir-fikir-sl-38-okuma-9">5.1 Kaçınma neden ayrı bir fikir <span class="src">sl. 38; Okuma §9</span><a class="headerlink" href="#51-kacnma-neden-ayr-bir-fikir-sl-38-okuma-9" title="Permanent link">#</a></h3>
+<ul>
+<li>Önleme izin verilen <strong>protokolü</strong> değiştirir. Kaçınma her önerilen tahsisi <strong>beyan edilmiş maksimum talebe</strong> karşı denetler <span class="src">sl. 38</span>.</li>
+<li><strong>Available yetmez</strong>: müsait kaynakları vermek garanti edilmiş bir tamamlanma sırası bırakmayabilir <span class="src">sl. 38</span>.</li>
+<li>Varsayımlar <span class="src">sl. 38</span>: maksimum talepler <strong>doğru</strong>, bir tip içindeki instance'lar <strong>birbirinin yerine geçebilir</strong>, tamamlanan iş kaynaklarını <strong>sonlu sürede</strong> bırakır. OSC buna şunu ekler: istekte bulunan thread beklemek zorunda kalabilir <span class="src">OSC ch8 sl. 25</span>.</li>
+</ul>
+<h3 id="52-safe-unsafe-deadlocked-sl-39-osc-ch8-sl-1719-okuma-9">5.2 Safe, unsafe, deadlocked <span class="src">sl. 39; OSC ch8 sl. 17–19; Okuma §9</span><a class="headerlink" href="#52-safe-unsafe-deadlocked-sl-39-osc-ch8-sl-1719-okuma-9" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Safe:</strong> her thread'in kalan maksimum talebini karşılayıp hepsinin bitmesine izin veren <strong>en az bir sıra</strong> var <span class="src">sl. 39</span>. OSC tanımı: ⟨T₁, …, Tₙ⟩ sırasında her Tᵢ'nin hâlâ isteyebileceği kaynaklar, şu anki Available ile j &lt; i olan bütün Tⱼ'lerin tuttuklarının toplamıyla karşılanabilir <span class="src">OSC ch8 sl. 17</span>.</li>
+<li><strong>Unsafe:</strong> bu garanti yok. Gerçek gelecek daha az kaynak kullanıp yine bitebilir <span class="src">sl. 39</span>.</li>
+<li><strong>İlişki:</strong> her deadlocked durum unsafe'tir; unsafe bir durum henüz deadlocked olmak zorunda değildir <span class="src">sl. 39</span>.</li>
+</ul>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s19-safe-unsafe.jpeg"><img src="img/hoca/d04-osc-ch8-s19-safe-unsafe.jpeg" alt="Unsafe, tamamlanma garantisinin kaybolduğu demektir; her gelecek davranışın zaten bloklu olduğu değil. OSC 10e, Ch.8 slayt 19 [sl. 39]." loading="lazy"></a><figcaption>Unsafe, tamamlanma garantisinin kaybolduğu demektir; her gelecek davranışın zaten bloklu olduğu değil. OSC 10e, Ch.8 slayt 19 <span class="src">sl. 39</span>.</figcaption></figure>
+<ul>
+<li>Safe sıra bir <strong>tanıktır</strong> (witness): tamamlanmanın mümkün olduğunu gösterir. CPU zamanlayıcısına talimat ya da vaat edilmiş bir bitiş sırası değildir <span class="src">sl. 40</span>.</li>
+<li>Okumanın tahmin sorusu: safe sıra yoksa herkes zaten bloklu mu olmalı? <strong>Hayır.</strong> Safety olası gelecek maksimum talebe bakar; tespit şu anki istekleri kullanır <span class="src">Okuma §9</span>.</li>
+</ul>
+<h3 id="53-tek-tipli-10-birim-ornegi-sl-4043-okuma-9">5.3 Tek tipli 10 birim örneği <span class="src">sl. 40–43; Okuma §9</span><a class="headerlink" href="#53-tek-tipli-10-birim-ornegi-sl-4043-okuma-9" title="Permanent link">#</a></h3>
+<p>Tek tip, toplam 10 birim. A 4 tutuyor, en fazla 6 isteyebilir; B 3 tutuyor, en fazla 8 isteyebilir <span class="src">sl. 40</span>.</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Allocation</th>
+<th>Max</th>
+<th>Need = Max − Allocation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>8</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Available = 10 − (4 + 3) = <strong>3</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Aday</th>
+<th>Need ≤ Work?</th>
+<th>Work sonra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Başlangıç</td>
+<td>—</td>
+<td>—</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>A</td>
+<td>2 ≤ 3 ✓</td>
+<td>3 + 4 = 7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>B</td>
+<td>5 ≤ 7 ✓</td>
+<td>7 + 3 = 10</td>
+</tr>
+</tbody>
+</table>
+<p>⟨A, B⟩ bir safety tanığıdır <span class="src">sl. 40</span>. B ilk sıraya giremez (5 &gt; 3), bu durumda tek tanık budur <span class="ek">ek bilgi</span>.</p>
+<figure class="fig photo"><a href="img/hoca/d04-mg-s41-guvenli-havuz.png"><img src="img/hoca/d04-mg-s41-guvenli-havuz.png" alt="Üç birim boşken A kalan iki birimini alıp bitebilir; bırakınca havuzda yedi birim olur [sl. 41]." loading="lazy"></a><figcaption>Üç birim boşken A kalan iki birimini alıp bitebilir; bırakınca havuzda yedi birim olur <span class="src">sl. 41</span>.</figcaption></figure>
+<p>Sl. 41'in cümlesi: "A 2 ödünç alır, biter ve <strong>6 iade eder</strong>. Havuzda 7 olur" <span class="src">sl. 41</span>. Dikkat: 6, A'nın maksimumu, çünkü A önce 2 ödünç almıştı: 3 − 2 + 6 = 7 = 3 + 4. Work güncellemesi yine <strong>Work + Allocation</strong>'dır (§5.5).</p>
+<p><strong>Available her zaman safe demek değil</strong> <span class="src">sl. 42–43</span>. Aynı başlangıçtan B'ye geçici olarak 2 birim daha ver:</p>
+<table>
+<thead>
+<tr>
+<th>İş</th>
+<th>Allocation</th>
+<th>Max</th>
+<th>Need</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>B</td>
+<td>5</td>
+<td>8</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Available = 1. A 2 ister (2 &gt; 1 ✗), B 3 isteyebilir (3 &gt; 1 ✗). Kimse ilk sırada bitmeyi garanti edemez → <strong>unsafe</strong> <span class="src">sl. 42</span>.</p>
+<figure class="fig photo"><a href="img/hoca/d04-mg-s43-guvensiz-havuz.png"><img src="img/hoca/d04-mg-s43-guvensiz-havuz.png" alt="B&#x27;ye iki birim daha verildikten sonra bir boş birim iki kalan maksimum talebe de yetmez. Kimse bloklu olmasa da durum unsafe [sl. 43]." loading="lazy"></a><figcaption>B'ye iki birim daha verildikten sonra bir boş birim iki kalan maksimum talebe de yetmez. Kimse bloklu olmasa da durum unsafe <span class="src">sl. 43</span>.</figcaption></figure>
+<ul>
+<li>Bu durum <strong>henüz deadlocked değil</strong>: kimse şu an bloklu değil, B maksimumunu hiç istemeden bitebilir <span class="src">sl. 42</span>.</li>
+<li><strong>Banker yine de reddeder</strong> <span class="src">sl. 42</span>. Kuralı, izin verilen maksimum taleplere karşı garantiyi korumaktır; taleplerin küçük çıkacağını tahmin etmek değil <span class="src">Okuma §9</span>.</li>
+<li>Unsafe'in deadlock'a dönüşebileceği bir gelecek <span class="ek">ek bilgi</span>: A 2 ister (1 var, bekler), B 3 ister (bekler). İkisi de tutup bekliyor → deadlock.</li>
+</ul>
+<p>Okumanın jeton alıştırması <span class="src">Okuma §9</span>: B'ye 2 değil <strong>1</strong> birim verilirse? Available 2, A Need 2, B Need 4. A biter (2 ≤ 2) → Work 6; B biter (4 ≤ 6) → 10. <strong>Safe</strong>, ⟨A, B⟩ tanık kalır. Karar B'nin zaten çok tutmasına değil, ortaya çıkan sayılara bağlıdır.</p>
+<h3 id="54-claim-edgeli-graph-tek-instanceta-kacnma-sl-4445-okuma-10-osc-ch8-sl-2024">5.4 Claim edge'li graph: tek instance'ta kaçınma <span class="src">sl. 44–45; Okuma §10; OSC ch8 sl. 20–24</span><a class="headerlink" href="#54-claim-edgeli-graph-tek-instanceta-kacnma-sl-4445-okuma-10-osc-ch8-sl-2024" title="Permanent link">#</a></h3>
+<ul>
+<li>Tek instance'lı kaynaklarda kaçınma graph ile, çok instance'lıda Banker ile yapılır <span class="src">OSC ch8 sl. 20</span>.</li>
+<li><strong>Claim edge</strong> Tᵢ ⇢ Rⱼ (kesikli): Tᵢ, Rⱼ'yi ileride isteyebilir. İstek yapılınca request edge'e, verilince assignment edge'e dönüşür; bırakılınca yeniden claim edge olur. Claim'ler önceden (a priori) beyan edilmelidir <span class="src">OSC ch8 sl. 21; Okuma §10</span>. (OSC slaytı burada "process <strong>Tj</strong> may request" yazar; indis hatası, doğrusu Tᵢ. Okuma düzeltilmiş hâlini kullanır.)</li>
+<li><strong>Kural:</strong> istek, request edge'i assignment edge'e çevirmek (claim edge'ler dahil) bir döngü oluşturmuyorsa verilir <span class="src">OSC ch8 sl. 24</span>.</li>
+</ul>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s22-claim.jpeg"><img src="img/hoca/d04-osc-ch8-s22-claim.jpeg" alt="Kesikli kenarlar beyan edilmiş olasılıklar, şu anki bloklayan istekler değil. OSC 10e, Ch.8 slayt 22 [sl. 44]." loading="lazy"></a><figcaption>Kesikli kenarlar beyan edilmiş olasılıklar, şu anki bloklayan istekler değil. OSC 10e, Ch.8 slayt 22 <span class="src">sl. 44</span>.</figcaption></figure>
+<p>Sl. 44 durumu: R1 → T1 (atanmış); T2 → R1 (şu anki istek); T1 ⇢ R2 ve T2 ⇢ R2 (gelecek claim'ler). <strong>Kesikli kenar, thread'in şu an bloklu olduğunun kanıtı değildir</strong> <span class="src">sl. 44</span>.</p>
+<figure class="fig photo"><a href="img/hoca/d04-osc-ch8-s23-claim-unsafe.jpeg"><img src="img/hoca/d04-osc-ch8-s23-claim-unsafe.jpeg" alt="Yeni atama unsafe, çünkü gelecekteki bir istek bloklayan döngüyü tamamlayabilir. OSC 10e, Ch.8 slayt 23 [sl. 45]." loading="lazy"></a><figcaption>Yeni atama unsafe, çünkü gelecekteki bir istek bloklayan döngüyü tamamlayabilir. OSC 10e, Ch.8 slayt 23 <span class="src">sl. 45</span>.</figcaption></figure>
+<p>Sl. 45: R2'yi geçici olarak T2'ye ata (R2 → T2). Döngü: <strong>T1 ⇢ R2 → T2 → R1 → T1</strong>. T1 ileride R2'yi isterse T1 T2'nin R2'sini, T2 T1'in R1'ini bekler → deadlock. Kaçınma kuralı bu atamayı <strong>reddeder</strong> <span class="src">sl. 45</span>. Ama T1'i şu an bloklu saymak yanlış. Claim içeren <strong>olası</strong> bir döngüyü, şu anki isteklerin deadlock'undan ayır <span class="src">sl. 45; sl. 21</span>.</p>
+<h3 id="55-bankers-algorithm-anlk-goruntu-ve-need-sl-4648-okuma-11-osc-ch8-sl-2630">5.5 Banker's algorithm: anlık görüntü ve Need <span class="src">sl. 46–48; Okuma §11; OSC ch8 sl. 26–30</span><a class="headerlink" href="#55-bankers-algorithm-anlk-goruntu-ve-need-sl-4648-okuma-11-osc-ch8-sl-2630" title="Permanent link">#</a></h3>
+<p>Veri yapıları (n thread, m kaynak tipi) <span class="src">OSC ch8 sl. 26</span>:</p>
+<ul>
+<li><strong>Available[m]</strong>: her tipten boş instance sayısı.</li>
+<li><strong>Max[n][m]</strong>: Tᵢ'nin Rⱼ'den isteyebileceği en fazla instance.</li>
+<li><strong>Allocation[n][m]</strong>: Tᵢ'nin şu an tuttuğu.</li>
+<li><strong>Need[n][m] = Max − Allocation</strong>: Tᵢ'nin bitirmek için <strong>daha</strong> isteyebileceği.</li>
+</ul>
+<p><strong>Need maksimum ek taleptir; ne toplam claim ne de şu an bekleyen istektir</strong> <span class="src">sl. 47</span>. Değişmez (invariant): her tip için <strong>toplam = Available + Σ Allocation</strong> <span class="src">sl. 72; Okuma §11</span>.</p>
+<p><strong>Anlık görüntü</strong> <span class="src">sl. 46</span>: üç tip A, B, C. Toplam = (10, 5, 7); Available = (3, 3, 2). Bütün vektörler bu bileşen sırasını kullanır.</p>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Allocation (A B C)</th>
+<th>Max (A B C)</th>
+<th>Need = Max − Allocation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>0 1 0</td>
+<td>7 5 3</td>
+<td><strong>7 4 3</strong></td>
+</tr>
+<tr>
+<td>T1</td>
+<td>2 0 0</td>
+<td>3 2 2</td>
+<td><strong>1 2 2</strong></td>
+</tr>
+<tr>
+<td>T2</td>
+<td>3 0 2</td>
+<td>9 0 2</td>
+<td><strong>6 0 0</strong></td>
+</tr>
+<tr>
+<td>T3</td>
+<td>2 1 1</td>
+<td>2 2 2</td>
+<td><strong>0 1 1</strong></td>
+</tr>
+<tr>
+<td>T4</td>
+<td>0 0 2</td>
+<td>4 3 3</td>
+<td><strong>4 3 1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Need değerleri <span class="src">sl. 47</span> ile birebir aynı. Değişmez kontrolü: Σ Allocation = (0+2+3+2+0, 1+0+0+1+0, 0+0+2+1+2) = (7, 2, 5); Available ile toplamı (10, 5, 7) ✓.</p>
+<p><strong>Safety testi</strong> <span class="src">sl. 48; OSC ch8 sl. 27</span>:</p>
+<pre><code>Work = Available
+Finish[i] = false  (her i)
+tekrarla:
+    Finish[i] = false ve Need[i] &lt;= Work (her bileşende) olan bir i bul
+    yoksa dur
+    Work = Work + Allocation[i]      # tamamlanmayı modelle
+    Finish[i] = true
+safe  &lt;=&gt;  her Finish[i] = true
+</code></pre>
+<ul>
+<li>Karşılaştırma <strong>bileşen bileşen</strong>: A fazlası C eksiğini ödemez <span class="src">sl. 56</span>.</li>
+<li>Tam bir sıra safety'yi kanıtlar; takılmak unsafe demektir <span class="src">sl. 48</span>.</li>
+<li><strong>Work karalama verisidir</strong>: simülasyon ne thread çalıştırır ne canlı tahsisi değiştirir <span class="src">sl. 48</span>.</li>
+<li>Maliyet: en kötü durumda n tur × n aday × m bileşen = O(m·n²). Hocanın slaytı bu sınırı tespit algoritması için verir <span class="src">sl. 62</span>; safety testi aynı döngü yapısına sahip <span class="ek">ek bilgi; OSC kitap metni</span>.</li>
+</ul>
+<h3 id="56-tam-safety-izi-sl-4950-okuma-12">5.6 Tam safety izi <span class="src">sl. 49–50; Okuma §12</span><a class="headerlink" href="#56-tam-safety-izi-sl-4950-okuma-12" title="Permanent link">#</a></h3>
+<figure class="fig"><div class="svgwrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210" role="img" aria-label="Banker safety izi: Work (3,3,2) ile başlar; T1 biter ve Allocation'ı (2,0,0) eklenir, Work (5,3,2); T3 ile (7,4,3); T4 ile (7,4,5); T2 ile (10,4,7); T0 ile (10,5,7), yani toplam vektör." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04bw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600">Work (A, B, C) her bitişte bitenin Allocation'ı kadar büyür [sl. 49–50]</text>
+
+  <rect class="box-plain" x="14" y="80" width="96" height="46" rx="8"/>
+  <text x="62" y="101" text-anchor="middle" font-weight="600">3 3 2</text>
+  <text x="62" y="118" text-anchor="middle" font-size="11" class="t-mut">Available</text>
+
+  <rect class="box" x="140" y="80" width="96" height="46" rx="8"/>
+  <text x="188" y="108" text-anchor="middle" font-weight="600">5 3 2</text>
+  <rect class="box" x="266" y="80" width="96" height="46" rx="8"/>
+  <text x="314" y="108" text-anchor="middle" font-weight="600">7 4 3</text>
+  <rect class="box" x="392" y="80" width="96" height="46" rx="8"/>
+  <text x="440" y="108" text-anchor="middle" font-weight="600">7 4 5</text>
+  <rect class="box" x="518" y="80" width="96" height="46" rx="8"/>
+  <text x="566" y="108" text-anchor="middle" font-weight="600">10 4 7</text>
+  <rect class="box-acc" x="644" y="80" width="104" height="46" rx="8"/>
+  <text x="696" y="101" text-anchor="middle" font-weight="600" class="t-acc">10 5 7</text>
+  <text x="696" y="118" text-anchor="middle" font-size="11" class="t-acc">= toplam ✓</text>
+
+  <line class="ln" x1="110" y1="103" x2="138" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="236" y1="103" x2="264" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="362" y1="103" x2="390" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="488" y1="103" x2="516" y2="103" marker-end="url(#d04bw-a)"/>
+  <line class="ln" x1="614" y1="103" x2="642" y2="103" marker-end="url(#d04bw-a)"/>
+
+  <text x="124" y="52" text-anchor="middle" font-weight="600">T1</text>
+  <text x="124" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 1 2 2</text>
+  <text x="124" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 2 0 0</text>
+  <text x="250" y="52" text-anchor="middle" font-weight="600">T3</text>
+  <text x="250" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 0 1 1</text>
+  <text x="250" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 2 1 1</text>
+  <text x="376" y="52" text-anchor="middle" font-weight="600">T4</text>
+  <text x="376" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 4 3 1</text>
+  <text x="376" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 0 0 2</text>
+  <text x="502" y="52" text-anchor="middle" font-weight="600">T2</text>
+  <text x="502" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 6 0 0</text>
+  <text x="502" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 3 0 2</text>
+  <text x="628" y="52" text-anchor="middle" font-weight="600">T0</text>
+  <text x="628" y="68" text-anchor="middle" font-size="11" class="t-mut">Need 7 4 3</text>
+  <text x="628" y="150" text-anchor="middle" font-size="11" class="t-acc">+ 0 1 0</text>
+
+  <text x="380" y="182" text-anchor="middle" font-size="12">Üstte: karşılaştırılan Need (bileşen bileşen ≤ Work). Altta: Work'e eklenen Allocation, Max değil.</text>
+  <text x="380" y="200" text-anchor="middle" font-size="12" class="t-mut">Bu sıra 16 geçerli tanıktan biri; banker.c T1 T3 T4 T0 T2 basar [sl. 56].</text>
+</svg>
+</div><figcaption>Banker izi: her bitişte Work, bitenin Allocation'ı kadar büyür. Sıra T1, T3, T4, T2, T0; son Work toplam vektöre eşit <span class="src">sl. 49</span>.</figcaption></figure>
+<p>Başlangıç Work = (3, 3, 2). Her adımda bütün bitmemiş adaylar (✓ uyar, ✗ uymaz; uymayan bileşen parantezde):</p>
+<table>
+<thead>
+<tr>
+<th>Work</th>
+<th>T0 (7,4,3)</th>
+<th>T1 (1,2,2)</th>
+<th>T2 (6,0,0)</th>
+<th>T3 (0,1,1)</th>
+<th>T4 (4,3,1)</th>
+<th>Seçilen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(3,3,2)</td>
+<td>✗ (A,B,C)</td>
+<td>✓</td>
+<td>✗ (A)</td>
+<td>✓</td>
+<td>✗ (A)</td>
+<td>T1</td>
+</tr>
+<tr>
+<td>(5,3,2)</td>
+<td>✗ (A,B,C)</td>
+<td>—</td>
+<td>✗ (A: 6&gt;5)</td>
+<td>✓</td>
+<td>✓</td>
+<td>T3</td>
+</tr>
+<tr>
+<td>(7,4,3)</td>
+<td>✓ (tam eşit)</td>
+<td>—</td>
+<td>✓</td>
+<td>—</td>
+<td>✓</td>
+<td>T4</td>
+</tr>
+<tr>
+<td>(7,4,5)</td>
+<td>✓</td>
+<td>—</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+<td>T2</td>
+</tr>
+<tr>
+<td>(10,4,7)</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>T0</td>
+</tr>
+<tr>
+<td>(10,5,7)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>bitti</td>
+</tr>
+</tbody>
+</table>
+<p>Hocanın tablosu <span class="src">sl. 49</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Adım</th>
+<th>Thread ve kalan Need</th>
+<th>Work (bitişten sonra)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Başlangıç</td>
+<td>—</td>
+<td>3 3 2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>T1: 1 2 2</td>
+<td>5 3 2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T3: 0 1 1</td>
+<td>7 4 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>T4: 4 3 1</td>
+<td>7 4 5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>T2: 6 0 0</td>
+<td>10 4 7</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T0: 7 4 3</td>
+<td>10 5 7</td>
+</tr>
+</tbody>
+</table>
+<p>Sonuç <strong>safe</strong>. Son Work toplam vektöre eşit olmalı: (10, 5, 7) ✓ <span class="src">sl. 50</span>.</p>
+<p><strong>Başka tanıklar da geçerli</strong> <span class="src">sl. 56; Okuma §12</span>. Bu anlık görüntüde 120 permütasyondan <strong>16'sı</strong> geçerli safe sıradır ve hepsi T1 ya da T3 ile başlar <span class="ek">ek bilgi; uzmanlar ve denetçi betikle saydı</span>. Örnekler: ⟨T1, T3, T4, T0, T2⟩ (<code>banker.c</code>'nin bastığı), ⟨T3, T1, T2, T4, T0⟩. Geçersiz bir başlangıç: ⟨T1, T2, …⟩, çünkü T1'den sonra Work (5,3,2) ve T2'nin Need'i (6,0,0): A'da 6 &gt; 5.</p>
+<p>Work hiç azalmadığı için açgözlü (greedy) tarama güvenlidir: uygun herhangi bir adayı seçmek, safe bir sıranın varlığını bozmaz <span class="src">Okuma §12</span>. "Yanlış adayı seçip takılırım" korkusu yersiz.</p>
+<p><strong>Work neden Allocation kazanır, Max değil</strong> <span class="src">sl. 50; Okuma §11–12</span>. T1 için Work = (3,3,2), Need = (1,2,2), Allocation = (2,0,0):</p>
+<ol>
+<li><strong>Ödünç ver:</strong> kalan Need'i Work'ten ver → (2,1,0). T1 artık Max'ını, (3,2,2)'yi tutuyor.</li>
+<li><strong>Geri al:</strong> T1 bitince her şeyi bırakır → (2,1,0) + (3,2,2) = (5,3,2).</li>
+</ol>
+<p>Cebir: <strong>Work − Need + Max = Work + Allocation</strong> <span class="src">sl. 50</span>. Max'ı doğrudan eklemek (6,5,4) verir; az önce ödünç verilen (1,2,2)'yi <strong>iki kez sayar</strong> ve var olmayan birimler yaratır <span class="src">sl. 50; Okuma §12</span>. Sağlama: doğru hesapta son Work her zaman toplam vektöre eşit çıkar.</p>
+<h3 id="57-yeni-bir-istegi-kontrol-etmek-sl-51-okuma-13-osc-ch8-sl-28">5.7 Yeni bir isteği kontrol etmek <span class="src">sl. 51; Okuma §13; OSC ch8 sl. 28</span><a class="headerlink" href="#57-yeni-bir-istegi-kontrol-etmek-sl-51-okuma-13-osc-ch8-sl-28" title="Permanent link">#</a></h3>
+<figure class="fig"><div class="svgwrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 270" role="img" aria-label="Banker istek algoritması: Request Need'den büyükse hata, maksimum aşıldı. Available'dan büyükse bekle, durum aynı. Değilse geçici tahsis yap ve safety testini çalıştır. Safe ise kalıcı yap; unsafe ise eski durumu geri yükle ve beklet." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04bi-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d04bi-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-warn"/></marker>
+    <marker id="d04bi-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="380" y="20" text-anchor="middle" font-weight="600">Tᵢ'nin Request'i nasıl karara bağlanır [sl. 51]</text>
+
+  <rect class="box" x="14" y="50" width="130" height="56" rx="8"/>
+  <text x="79" y="74" text-anchor="middle" font-weight="600">1. Request ≤ Need?</text>
+  <text x="79" y="93" text-anchor="middle" font-size="11" class="t-mut">beyan edilen sınır</text>
+
+  <rect class="box" x="184" y="50" width="150" height="56" rx="8"/>
+  <text x="259" y="74" text-anchor="middle" font-weight="600">2. Request ≤ Available?</text>
+  <text x="259" y="93" text-anchor="middle" font-size="11" class="t-mut">şu an var mı</text>
+
+  <rect class="box" x="374" y="50" width="170" height="56" rx="8"/>
+  <text x="459" y="70" text-anchor="middle" font-weight="600">3. Geçici tahsis</text>
+  <text x="459" y="88" text-anchor="middle" font-size="11">Avail −= R; Alloc += R</text>
+  <text x="459" y="101" text-anchor="middle" font-size="11">Need −= R</text>
+
+  <rect class="box" x="584" y="50" width="162" height="56" rx="8"/>
+  <text x="665" y="74" text-anchor="middle" font-weight="600">4. Safety testi</text>
+  <text x="665" y="93" text-anchor="middle" font-size="11" class="t-mut">geçici durum üzerinde</text>
+
+  <line class="ln" x1="144" y1="78" x2="182" y2="78" marker-end="url(#d04bi-a)"/>
+  <text x="163" y="70" text-anchor="middle" font-size="11">evet</text>
+  <line class="ln" x1="334" y1="78" x2="372" y2="78" marker-end="url(#d04bi-a)"/>
+  <text x="353" y="70" text-anchor="middle" font-size="11">evet</text>
+  <line class="ln" x1="544" y1="78" x2="582" y2="78" marker-end="url(#d04bi-a)"/>
+
+  <rect class="box-plain" x="14" y="170" width="130" height="62" rx="8"/>
+  <text x="79" y="194" text-anchor="middle" font-weight="600" class="t-warn">Hata</text>
+  <text x="79" y="212" text-anchor="middle" font-size="11">maksimum aşıldı</text>
+  <text x="79" y="225" text-anchor="middle" font-size="11" class="t-mut">(above maximum)</text>
+  <line class="ln-warn" x1="79" y1="106" x2="79" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="86" y="140" font-size="11" class="t-warn">hayır</text>
+
+  <rect class="box-plain" x="184" y="170" width="150" height="62" rx="8"/>
+  <text x="259" y="194" text-anchor="middle" font-weight="600" class="t-warn">Bekle</text>
+  <text x="259" y="212" text-anchor="middle" font-size="11">durum aynı, simülasyon yok</text>
+  <text x="259" y="225" text-anchor="middle" font-size="11" class="t-mut">(unavailable)</text>
+  <line class="ln-warn" x1="259" y1="106" x2="259" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="266" y="140" font-size="11" class="t-warn">hayır</text>
+
+  <rect class="box-plain" x="414" y="170" width="170" height="62" rx="8"/>
+  <text x="499" y="194" text-anchor="middle" font-weight="600" class="t-warn">Geri yükle ve beklet</text>
+  <text x="499" y="212" text-anchor="middle" font-size="11">eski Available, Alloc, Need</text>
+  <text x="499" y="225" text-anchor="middle" font-size="11" class="t-mut">(unsafe)</text>
+  <line class="ln-warn" x1="640" y1="106" x2="560" y2="168" marker-end="url(#d04bi-b)"/>
+  <text x="610" y="142" font-size="11" class="t-warn">unsafe</text>
+
+  <rect class="box-acc" x="616" y="170" width="130" height="62" rx="8"/>
+  <text x="681" y="194" text-anchor="middle" font-weight="600" class="t-acc">Kalıcı yap</text>
+  <text x="681" y="212" text-anchor="middle" font-size="11">istek verildi</text>
+  <text x="681" y="225" text-anchor="middle" font-size="11" class="t-mut">(granted)</text>
+  <line class="ln-acc" x1="690" y1="106" x2="690" y2="168" marker-end="url(#d04bi-c)"/>
+  <text x="698" y="142" font-size="11" class="t-acc">safe</text>
+
+  <text x="380" y="260" text-anchor="middle" font-size="12" class="t-mut">Karar diğer tahsis kararlarıyla seri hâle getirilir. Reddedilen istek sonraki probleme taşınmaz [sl. 51, 54].</text>
+</svg>
+</div><figcaption>İstek algoritması: önce Need, sonra Available, sonra geçici tahsis ve safety testi. Unsafe ise eski durum geri yüklenir.</figcaption></figure>
+<p>Tᵢ'nin Request vektörü için <span class="src">sl. 51</span>:</p>
+<ol>
+<li><strong>Request ≤ Need[i]?</strong> Değilse <strong>hata</strong>: beyan edilen maksimumu aşıyor.</li>
+<li><strong>Request ≤ Available?</strong> Değilse Tᵢ <strong>bekler</strong>: kaynak yok.</li>
+<li><strong>Geçici tahsis:</strong> Available −= Request; Allocation[i] += Request; Need[i] −= Request.</li>
+<li><strong>Safety testini geçici durumda çalıştır.</strong> Safe ise kalıcı yap; değilse Tᵢ bekler ve <strong>eski durum geri yüklenir</strong>.</li>
+<li>Bu kararı diğer tahsis kararlarıyla <strong>seri hâle getir</strong>. İki karar aynı eski anlık görüntüyü kontrol edip ikisini de uygularsa güvenlik argümanı çöker <span class="src">sl. 51; Okuma §11</span>.</li>
+</ol>
+<p>Sıra önemli: 1. adım 2.'den önce gelir. Maksimumu aşan bir istek "bekle" değil "hata"dır.</p>
+<h3 id="58-uc-istek-sl-5255-okuma-13-osc-ch8-sl-31">5.8 Üç istek <span class="src">sl. 52–55; Okuma §13; OSC ch8 sl. 31</span><a class="headerlink" href="#58-uc-istek-sl-5255-okuma-13-osc-ch8-sl-31" title="Permanent link">#</a></h3>
+<p><strong>(i) T1 (1, 0, 2) ister, orijinal anlık görüntüden</strong> <span class="src">sl. 52–53</span>.</p>
+<ol>
+<li>(1,0,2) ≤ Need T1 (1,2,2) ✓.</li>
+<li>(1,0,2) ≤ Available (3,3,2) ✓.</li>
+<li>Geçici durum: Available = <strong>(2, 3, 0)</strong>; T1 Allocation = <strong>(3, 0, 2)</strong>; T1 Need = <strong>(0, 2, 0)</strong>. Diğer satırlar aynı <span class="src">sl. 52</span>. Değişmez: Σ Allocation (8, 2, 7) + (2, 3, 0) = (10, 5, 7) ✓.</li>
+<li>Safety testi <strong>geçici durum</strong> üzerinde <span class="src">sl. 52</span>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Work</th>
+<th>T0 (7,4,3)</th>
+<th>T1 (0,2,0)</th>
+<th>T2 (6,0,0)</th>
+<th>T3 (0,1,1)</th>
+<th>T4 (4,3,1)</th>
+<th>Seçilen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(2,3,0)</td>
+<td>✗</td>
+<td>✓</td>
+<td>✗ (A)</td>
+<td>✗ (C: 1&gt;0)</td>
+<td>✗ (A, C)</td>
+<td>T1</td>
+</tr>
+<tr>
+<td>(5,3,2)</td>
+<td>✗</td>
+<td>—</td>
+<td>✗ (A: 6&gt;5)</td>
+<td>✓</td>
+<td>✓</td>
+<td>T3</td>
+</tr>
+<tr>
+<td>(7,4,3)</td>
+<td>✓</td>
+<td>—</td>
+<td>✓</td>
+<td>—</td>
+<td>✓</td>
+<td>T4</td>
+</tr>
+<tr>
+<td>(7,4,5)</td>
+<td>✓</td>
+<td>—</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+<td>T0</td>
+</tr>
+<tr>
+<td>(7,5,5)</td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+<td>—</td>
+<td>—</td>
+<td>T2</td>
+</tr>
+<tr>
+<td>(10,5,7)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>bitti</td>
+</tr>
+</tbody>
+</table>
+<p>⟨T1, T3, T4, T0, T2⟩ safe → <strong>istek verilir</strong> <span class="src">sl. 53</span>. Bu geçici durumda yalnız 8 safe sıra kalır ve hepsi T1 ile başlar, çünkü C'den hiç boş yok ve C ihtiyacı sıfır olan tek uygun iş T1 <span class="ek">ek bilgi; betikle sayıldı</span>.</p>
+<p><strong>(ii) T4 (3, 3, 0) ister, T1 verildikten sonraki durumdan</strong> <span class="src">sl. 54</span>.</p>
+<ol>
+<li>(3,3,0) ≤ Need T4 (4,3,1) ✓.</li>
+<li>(3,3,0) ≤ Available (2,3,0)? <strong>A: 3 &gt; 2 ✗</strong>.</li>
+</ol>
+<p>→ T4 <strong>bekler</strong> ("unavailable"). Geçici tahsis ya da safety simülasyonu <strong>gerekmez</strong> <span class="src">sl. 54</span>. Hocanın uyarısı: <strong>hangi anlık görüntüyü kullandığını her zaman söyle</strong>; orijinal görüntüye dönmek farklı bir problemdir <span class="src">sl. 54</span>.</p>
+<p><strong>(iii) T0 (0, 2, 0) ister, yine T1 sonrası durumdan, T4'ün reddedilen isteği uygulanmadan</strong> <span class="src">sl. 55</span>.</p>
+<ol>
+<li>(0,2,0) ≤ Need T0 (7,4,3) ✓.</li>
+<li>(0,2,0) ≤ Available (2,3,0) ✓ → <strong>müsait</strong>.</li>
+<li>Geçici durum: Available = <strong>(2, 1, 0)</strong>; T0 Allocation = (0, 3, 0); T0 Need = <strong>(7, 2, 3)</strong>.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Need</th>
+<th>Work = (2,1,0) ile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>(7,2,3)</td>
+<td>✗ A, B, C</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>(0,2,0)</td>
+<td>✗ <strong>B: 2 &gt; 1</strong></td>
+</tr>
+<tr>
+<td>T2</td>
+<td>(6,0,0)</td>
+<td>✗ <strong>A: 6 &gt; 2</strong></td>
+</tr>
+<tr>
+<td>T3</td>
+<td>(0,1,1)</td>
+<td>✗ <strong>C: 1 &gt; 0</strong></td>
+</tr>
+<tr>
+<td>T4</td>
+<td>(4,3,1)</td>
+<td>✗ A, B, C</td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li>Safety testi <strong>ilk adımda bile başlayamıyor</strong> → <strong>unsafe</strong> → reddet, T0 bekler, durumu Available = (2, 3, 0) ile geri yükle <span class="src">sl. 55</span>. Hocanın gerekçesi: "T1'e B yetmiyor; T3'e C yetmiyor; T0, T2 ve T4'e A ya da başka kaynaklar yetmiyor" <span class="src">sl. 55</span>.</li>
+</ol>
+<p>Neden unsafe <span class="ek">ek bilgi, yapısal açıklama</span>: C'nin 7 instance'ının hepsi tahsisli. C ihtiyacı olmayanlar yalnız T1 ve T2. T2 6 A ister ve yalnız 2 A boş. Zinciri başlatabilecek <strong>tek aday T1</strong>, onun da 2 B'ye ihtiyacı var. T0'ın istediği 2 B, boş B'yi 1'e indirip o tek kapıyı kapatıyor. "Müsait" ≠ "safe" <span class="src">sl. 38</span>.</p>
+<p>Aynı istekler <strong>orijinal</strong> anlık görüntüden sorulsaydı sonuç başka olurdu <span class="ek">ek bilgi; kaynakta yok, betikle doğrulandı</span>: T0 (0,2,0) <strong>safe</strong> çıkar (tanık ⟨T3, T1, T0, T2, T4⟩), T4 (3,3,0) müsait ama <strong>unsafe</strong> çıkar (geçici Work (0,0,2) ile kimse uymaz). Hocanın "hangi anlık görüntü?" vurgusunun en net örneği.</p>
+<p><code>banker.c</code> dördüncü bir istek de dener: T1 sonrası durumda T1 (0, 3, 0). Need T1 = (0, 2, 0) ve B'de 3 &gt; 2 → <strong>maksimumu aşıyor</strong> (above maximum), durum değişmez <span class="src">sl. 72</span>.</p>
+<h3 id="59-safety-hesabndaki-sk-hatalar-sl-56-okuma-13">5.9 Safety hesabındaki sık hatalar <span class="src">sl. 56; Okuma §13</span><a class="headerlink" href="#59-safety-hesabndaki-sk-hatalar-sl-56-okuma-13" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>Bileşen bileşen karşılaştır.</strong> A fazlası C eksiğini ödemez. Örnek: (iii)'te T3 için Work (2,1,0), Need (0,1,1); "toplam 3 birim var, T3 2 istiyor" diye skaler düşünmek yanlış <span class="src">sl. 56</span>.</li>
+<li><strong>Kaçınmada kalan Need'i, tamamlanma güncellemesinde Allocation'ı kullan</strong> <span class="src">sl. 56</span>. Max ile karşılaştırmak fazla kötümser; Max eklemek fazla iyimser.</li>
+<li><strong>Unsafe bir tahsisi reddetmek, istekten önceki durumun deadlocked olduğu anlamına gelmez</strong> <span class="src">sl. 56</span>. Okumanın tahmin sorusu: T0'ı reddetmek istek öncesi durumun deadlocked olduğunu kanıtlar mı? Hayır; istek öncesi durumun safe sırası var: ⟨T1, T3, T4, T0, T2⟩ <span class="src">Okuma §13</span>.</li>
+<li><strong>Safe sıra bir tanıktır.</strong> Birden çok geçerli tanık olabilir; başka bir uygun thread seçmek hata değildir <span class="src">sl. 56</span>.</li>
+<li>Safety testini eski durum üzerinde değil, <strong>geçici durum</strong> üzerinde çalıştır <span class="src">sl. 52</span>.</li>
+<li>Reddedilen bir isteği sonraki probleme <strong>taşıma</strong> <span class="src">Okuma §13; sl. 55</span>.</li>
+</ol>
+<p><strong>Pratik sınırlar</strong> <span class="src">sl. 38; OSTEP 32.3</span>: maksimumlar önceden ve doğru bilinmeli, instance'lar birbirinin yerine geçmeli, kararlar seri hâle getirilmeli. OSTEP'e göre bu tür kaçınma yalnız bütün görevleri ve kilit ihtiyaçlarını bilen çok sınırlı ortamlarda (örneğin gömülü sistemler) işe yarar ve eşzamanlılığı kısıtlar <span class="src">OSTEP 32.3</span>.</p>
+<p><strong>Kontrol soruları (Bölüm 5)</strong></p>
+<ul>
+<li><strong>K5.1</strong> Orijinal anlık görüntüde T4 (0, 0, 1) isterse ne olur? Dört adımı yaz; safe ise bir tanık ver.</li>
+<li><strong>K5.2</strong> "T0'ın (0,2,0) isteği reddedildi, demek ki sistem deadlock'a girmek üzereydi." Bu cümledeki iki yanlışı söyle.</li>
+</ul>
+<hr />
+<h2 id="6-tespit-detection-sl-5762">6. Tespit (detection) <span class="src">sl. 57–62</span><a class="headerlink" href="#6-tespit-detection-sl-5762" title="Permanent link">#</a></h2>
+<h3 id="61-tespit-baska-bir-soru-sorar-sl-57-okuma-14">6.1 Tespit başka bir soru sorar <span class="src">sl. 57; Okuma §14</span><a class="headerlink" href="#61-tespit-baska-bir-soru-sorar-sl-57-okuma-14" title="Permanent link">#</a></h3>
+<ul>
+<li>Kaçınma: <strong>beyan edilmiş bütün gelecek talepler</strong> karşılanabilir mi? Tespit: <strong>şu an bekleyen istekler</strong> çözülebilir mi? <span class="src">sl. 57</span></li>
+<li>Tespit matrisindeki <strong>Request, Max − Allocation değildir</strong>. Bir thread şu an olası gelecek ihtiyacından daha azını istiyor olabilir <span class="src">sl. 57</span>. OSC: Request[i][j] = k ise Tᵢ şu an Rⱼ'nin k instance'ını daha istiyor <span class="src">OSC ch8 sl. 35</span>.</li>
+<li>Anlık görüntü <strong>tutarlı</strong> olmalı. Toplama sırasında sahiplik değişirse yanıltıcı bir graph ya da matris çıkar <span class="src">sl. 57</span>.</li>
+<li>Neden tespitte Need kullanılmaz? Need olası bir gelecek maksimumudur. Onu koymak safety sorusunu sorar ve unsafe ama <strong>şu an ilerleyen</strong> bir durumu deadlocked sanabilir <span class="src">Okuma §14</span>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Kaçınma (Banker safety)</th>
+<th>Tespit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Karşılaştırılan matris</td>
+<td>Need = Max − Allocation <span class="src">sl. 47</span></td>
+<td>Request = şu an bekleyen istek <span class="src">sl. 57</span></td>
+</tr>
+<tr>
+<td>Soru</td>
+<td>Her beyan edilmiş maksimum karşılanabilir mi?</td>
+<td>Şu anki beklemeler çözülebilir mi?</td>
+</tr>
+<tr>
+<td>Ne zaman</td>
+<td>Her tahsisten önce</td>
+<td>Sonradan: bloklanan istekte, periyodik ya da gecikmeyle <span class="src">sl. 62</span></td>
+</tr>
+<tr>
+<td>Başlangıçta Finish</td>
+<td>Hepsi false <span class="src">sl. 48</span></td>
+<td>Kaynak tutmayanlar true <span class="src">sl. 58</span></td>
+</tr>
+<tr>
+<td>Takılırsa</td>
+<td>Unsafe (henüz deadlock olmayabilir)</td>
+<td>Bitmemiş kaynak sahipleri deadlocked</td>
+</tr>
+</tbody>
+</table>
+<p>Ortak çekirdek aynı <span class="ek">ek bilgi</span>: ikisi de "uyan birini bul, Allocation'ını Work'e ekle" indirgemesi. Değişen, karşılaştırılan vektör ve başlangıç.</p>
+<h3 id="62-cok-instancel-tespit-algoritmas-sl-58-osc-ch8-sl-3537-okuma-14">6.2 Çok instance'lı tespit algoritması <span class="src">sl. 58; OSC ch8 sl. 35–37; Okuma §14</span><a class="headerlink" href="#62-cok-instancel-tespit-algoritmas-sl-58-osc-ch8-sl-3537-okuma-14" title="Permanent link">#</a></h3>
+<pre><code>Work = Available
+Finish[i] = (Allocation[i] == 0)      # kaynak tutmayanlar baştan &quot;bitti&quot;
+tekrarla:
+    Finish[i] = false ve Request[i] &lt;= Work olan bir i bul
+    yoksa dur
+    Work = Work + Allocation[i]
+    Finish[i] = true
+deadlocked = { i : Finish[i] == false }
+</code></pre>
+<ul>
+<li>Kaynak tutmayan thread'ler baştan bitmiş sayılır: kümenin ihtiyaç duyduğu bir instance'ı tutamazlar <span class="src">sl. 58</span>.</li>
+<li>Aday kalmayınca <strong>bitmemiş kaynak sahipleri</strong>, modelin tamamlanma varsayımı altında deadlocked kümeyi oluşturur <span class="src">sl. 58</span>.</li>
+<li><strong>Hocanın eklediği nüans:</strong> kaynak tutmayan bir bekleyen o kümenin arkasında yine bloklu olabilir. <strong>Etkilenen bekleyenleri kaynak tutan sahiplerden ayrı raporla</strong> <span class="src">sl. 58</span>.</li>
+<li>İyimser varsayım: indirgeme, isteği karşılanan thread'in eninde sonunda bitip her şeyini bırakacağını varsayar. Hemen yeni, modellenmemiş istekler yapan bir program yeni bir anlık görüntü ister <span class="src">Okuma §14</span>.</li>
+<li>Maliyet: basit tekrar taramalı matris algoritması <strong>O(m·n²)</strong> <span class="src">sl. 62</span>.</li>
+</ul>
+<h3 id="63-tespit-anlk-goruntusu-sl-5961-osc-ch8-sl-3839">6.3 Tespit anlık görüntüsü <span class="src">sl. 59–61; OSC ch8 sl. 38–39</span><a class="headerlink" href="#63-tespit-anlk-goruntusu-sl-5961-osc-ch8-sl-3839" title="Permanent link">#</a></h3>
+<p>"<strong>Bu farklı bir sistem</strong>": toplam (7, 2, 6), Available (0, 0, 0). Request şu an bekleyen talep demek <span class="src">sl. 59</span>. Banker'ın (10, 5, 7) sistemiyle karıştırma: T2'nin Allocation'ı burada (3, 0, <strong>3</strong>), orada (3, 0, <strong>2</strong>).</p>
+<table>
+<thead>
+<tr>
+<th>Thread</th>
+<th>Allocation (A B C)</th>
+<th>Request (A B C)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>0 1 0</td>
+<td>0 0 0</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>2 0 0</td>
+<td>2 0 2</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>3 0 3</td>
+<td>0 0 0</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>2 1 1</td>
+<td>1 0 0</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>0 0 2</td>
+<td>0 0 2</td>
+</tr>
+</tbody>
+</table>
+<p>Değişmez: Σ Allocation = (0+2+3+2+0, 1+0+0+1+0, 0+0+3+1+2) = (7, 2, 6); Available (0,0,0) ile toplam ✓.</p>
+<p>Başlangıçta Allocation'ı sıfır olan thread <strong>yok</strong> (T0 bile (0,1,0) tutuyor). T0 ilk sırada bitiyorsa bunun sebebi kaynak tutmaması değil, <strong>Request'inin sıfır olması</strong>dır.</p>
+<p><strong>Available sıfır olması deadlock kanıtı değil</strong> <span class="src">sl. 60</span>. T0 ve T2'nin bekleyen isteği yok; bitişlerini modelle ve bırakma zincirini izle:</p>
+<table>
+<thead>
+<tr>
+<th>Biten</th>
+<th>Request ≤ Work?</th>
+<th>Work önce</th>
+<th>+ Allocation</th>
+<th>Work sonra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T0</td>
+<td>(0,0,0) ≤ (0,0,0) ✓</td>
+<td>0 0 0</td>
+<td>0 1 0</td>
+<td>0 1 0</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>(0,0,0) ≤ (0,1,0) ✓</td>
+<td>0 1 0</td>
+<td>3 0 3</td>
+<td>3 1 3</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>(1,0,0) ≤ (3,1,3) ✓</td>
+<td>3 1 3</td>
+<td>2 1 1</td>
+<td>5 2 4</td>
+</tr>
+<tr>
+<td>T1</td>
+<td>(2,0,2) ≤ (5,2,4) ✓</td>
+<td>5 2 4</td>
+<td>2 0 0</td>
+<td>7 2 4</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>(0,0,2) ≤ (7,2,4) ✓</td>
+<td>7 2 4</td>
+<td>0 0 2</td>
+<td>7 2 6</td>
+</tr>
+</tbody>
+</table>
+<p>Son Work = toplam → herkes bitti, <strong>deadlock yok</strong> <span class="src">sl. 60</span>. Sıra OSC'ninkiyle aynı: ⟨T0, T2, T3, T1, T4⟩ <span class="src">OSC ch8 sl. 38</span>. Her adımda en küçük indeksli uygun thread'i seçen tarama ⟨T0, T2, T1, T3, T4⟩ verir, o da geçerli. Bu anlık görüntüde 30 geçerli sıra var ve hepsi T0 <strong>ya da</strong> T2 ile başlar <span class="ek">ek bilgi; betikle sayıldı</span>. Work hiç azalmadığı için sonuç (Finish kümesi) tarama sırasına bağlı değildir <span class="ek">ek bilgi</span>.</p>
+<p><strong>Tek bir ek istek sonucu değiştirir</strong> <span class="src">sl. 61</span>. Yalnız T2'nin Request'ini (0,0,0)'dan <strong>(0,0,1)</strong>'e çevir; Allocation ve Available aynı.</p>
+<table>
+<thead>
+<tr>
+<th>Work</th>
+<th>T0 (0,0,0)</th>
+<th>T1 (2,0,2)</th>
+<th>T2 (0,0,1)</th>
+<th>T3 (1,0,0)</th>
+<th>T4 (0,0,2)</th>
+<th>Seçilen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(0,0,0)</td>
+<td>✓</td>
+<td>✗ (A, C)</td>
+<td>✗ (C)</td>
+<td>✗ (A)</td>
+<td>✗ (C)</td>
+<td>T0</td>
+</tr>
+<tr>
+<td>(0,1,0)</td>
+<td>—</td>
+<td>✗ (A, C)</td>
+<td>✗ (C)</td>
+<td>✗ (A)</td>
+<td>✗ (C)</td>
+<td>yok</td>
+</tr>
+</tbody>
+</table>
+<p>T0 biter, Work = (0,1,0). Kalan her sahip elde edilemeyen A ya da C istiyor. <strong>T1, T2, T3, T4 bitmemiş kalır; deadlocked kaynak tutan küme bunlar</strong> <span class="src">sl. 61</span>. Değişiklik <strong>şu anki bloklu bir istektir</strong>, yalnız artmış bir maksimum claim değil <span class="src">sl. 61</span>. T2'nin Max'ı artsaydı tespit sonucu değişmezdi <span class="ek">ek bilgi; sl. 57'den çıkarım</span>.</p>
+<p>Kurtarmaya köprü <span class="ek">ek bilgi</span>: T3'ü sonlandırmak Work'e (2,1,1) ekler → (2,2,1). T2 (0,0,1) sığar → (5,2,4); T1 (2,0,2) → (7,2,4); T4 (0,0,2) → (7,2,6). Tek kurban yetiyor, ama her müdahaleden sonra <strong>yeniden kontrol</strong> gerekir <span class="src">sl. 63, 66</span>.</p>
+<h3 id="64-tespitin-maliyeti-ve-kapsam-sl-62-okuma-15-osc-ch8-sl-40">6.4 Tespitin maliyeti ve kapsamı <span class="src">sl. 62; Okuma §15; OSC ch8 sl. 40</span><a class="headerlink" href="#64-tespitin-maliyeti-ve-kapsam-sl-62-okuma-15-osc-ch8-sl-40" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>Ne zaman çalıştırılır:</strong> bloklanan bir istekte, periyodik olarak ya da bir gecikmeden sonra. Sıklık, ek yük ile birikmiş kayıp iş arasında bir takastır <span class="src">sl. 62</span>. Rastgele zamanlarda çalıştırılırsa graph'ta çok döngü birikir ve deadlock'u hangi thread'in "başlattığı" anlaşılmaz <span class="src">OSC ch8 sl. 40</span>.</li>
+<li><strong>Maliyet:</strong> matris algoritması O(m·n²); graph'ta döngü arama adjacency list ile O(V + E) <span class="src">sl. 62</span>.</li>
+<li><strong>Kapsam:</strong> detektör yalnız <strong>modellenen</strong> bağımlılıkları görür. Görüş alanı dışında kalan bir veritabanı kilidi, callback ya da uzak bekleme gerçek döngüyü gizler <span class="src">sl. 62</span>. Pratikte tutarlı anlık görüntü ve tam bağımlılık kapsamı asimptotik maliyetten daha önemli olabilir <span class="src">Okuma §15</span>.</li>
+<li><strong>Döngüler örtüşebilir.</strong> Seçilen bir döngüyü kurtarmak bütün döngülerin kalktığını garanti etmez <span class="src">sl. 62</span>. "Döngü başına bir kurban" tam bir kurtarma algoritması değil <span class="src">Okuma §15</span>. OSC "her ayrık (disjoint) döngü için bir" der <span class="src">OSC ch8 sl. 40</span>; ayrık döngüler için doğru, genel durumda hocanın uyarısı geçerli. Sl. 24 örneğinde T3'ü sonlandırmak yalnız ikinci döngüyü kırar; T1, T2 ya da T4'ten birini sonlandırmak ikisini birden kırar <span class="ek">ek bilgi</span>.</li>
+<li>Veritabanları periyodik bir detektörle resource graph kurup döngü arar, bulunca işlem yeniden başlatılır <span class="src">OSTEP 32.3</span>. OSTEP'in "döngü = deadlock" basitleştirmesi yalnız tek instance'lı kilitlerde doğrudur.</li>
+</ul>
+<p><strong>Kontrol soruları (Bölüm 6)</strong></p>
+<ul>
+<li><strong>K6.1</strong> Tespit snapshot'ında Available (0, 0, 0). Bir arkadaşın "boş kaynak yok, demek ki deadlock" diyor. Ona hangi iki satırı gösterirsin?</li>
+<li><strong>K6.2</strong> Tespit algoritmasına Request yerine Need koyarsan hangi yanlış sonuca varabilirsin? Sl. 42'deki 10 birim durumuyla örnekle.</li>
+</ul>
+<hr />
+<h2 id="7-kurtarma-recovery-sl-6366">7. Kurtarma (recovery) <span class="src">sl. 63–66</span><a class="headerlink" href="#7-kurtarma-recovery-sl-6366" title="Permanent link">#</a></h2>
+<p>Tespit ve kurtarma birlikte tam bir politikadır: ne zaman tespit, kim kurban, nasıl onarım, nasıl yeniden başlatma <span class="src">Okuma §15</span>.</p>
+<h3 id="71-isi-sonlandrarak-sl-63-osc-ch8-sl-41">7.1 İşi sonlandırarak <span class="src">sl. 63; OSC ch8 sl. 41</span><a class="headerlink" href="#71-isi-sonlandrarak-sl-63-osc-ch8-sl-41" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Seçenek</th>
+<th>Artı</th>
+<th>Eksi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deadlocked kümenin <strong>tamamını</strong> sonlandır</td>
+<td>Basit, döngü kesin kırılır</td>
+<td>En çok işi atar <span class="src">sl. 63</span></td>
+</tr>
+<tr>
+<td><strong>Seçilen</strong> katılımcıları sonlandır</td>
+<td>Daha az iş kaybı</td>
+<td>Her sonlandırmadan sonra <strong>yeniden kontrol</strong> gerekir <span class="src">sl. 63</span></td>
+</tr>
+</tbody>
+</table>
+<p>Kurban seçimi <span class="src">sl. 63</span>: öncelik, yapılmış iş, yeniden başlatma maliyeti, tutulan kaynaklar, kullanıcılara etkisi. Okuma buna <strong>önceki geri alma geçmişini</strong> ekler <span class="src">Okuma §15</span>. OSC'nin listesi benzer: öncelik, ne kadar çalıştığı ve ne kadar kaldığı, kullandığı ve daha gerekecek kaynaklar, kaç thread'in sonlandırılması gerekeceği, etkileşimli mi toplu iş mi <span class="src">OSC ch8 sl. 41</span>.</p>
+<p>Tuzaklar:</p>
+<ul>
+<li><strong>Keyfi bir thread'i durdurmak</strong> süreç içi paylaşılan durumu tutarsız bırakabilir. Kurtarmayı destekleyen, uygulamanın tanımladığı bir işlem (transaction) ya da görev sınırını tercih et <span class="src">sl. 63</span>.</li>
+<li><strong>Bekleyen bir thread'i öldürmek otomatik olarak kurtarma değildir</strong> <span class="src">Okuma §17</span>. Seçilen thread her döngüyü kıracak kaynakları bırakmayabilir; paylaşılan durumu bozabilir; diğer sahipler deadlocked kalabilir. Kurtarma durumu onarmalı, uygun kaynakları bırakmalı, bağımlılıkları yeniden kontrol etmeli ve yeniden başlatma davranışını tanımlamalı.</li>
+<li>Okumanın örneği <span class="src">Okuma §14</span>: P tek X'i tutup Y bekliyor, Q tek Y'yi tutup X bekliyor, Z hiçbir şey tutmuyor ve X bekliyor. Z <strong>etkilenen bir bekleyen</strong>; onu öldürmek hiçbir kaynak bırakmaz, P–Q döngüsünü kırmaz.</li>
+</ul>
+<h3 id="72-preemption-ve-rollback-sl-6465-osc-ch8-sl-42">7.2 Preemption ve rollback <span class="src">sl. 64–65; OSC ch8 sl. 42</span><a class="headerlink" href="#72-preemption-ve-rollback-sl-6465-osc-ch8-sl-42" title="Permanent link">#</a></h3>
+<ul>
+<li>Güvenle geri alınabilecek bir kaynak ya da görev seç. Tutarlı bir checkpoint'i geri yükle ve tanımlı bir protokolle yeniden başlat <span class="src">sl. 64</span>.</li>
+<li><strong>Sahipliği bırakmak yetmez</strong>: kısmen tamamlanmış güncellemeler görünür kalıyorsa durum onarımını bırakmayla koordine et <span class="src">sl. 64</span>.</li>
+<li>Veritabanı işlem iptali (transaction abort) iyi bir karşılaştırmadır, ama <strong>sıradan mutex'ler korudukları uygulama işlemini otomatik olarak geri almaz</strong> <span class="src">sl. 64</span>.</li>
+<li>OSC'nin üç konusu: kurban seçimi (maliyeti en aza indir), rollback (safe bir duruma dön ve oradan yeniden başlat), starvation (aynı thread hep kurban seçilebilir; geri alma sayısını maliyete kat) <span class="src">OSC ch8 sl. 42</span>.</li>
+</ul>
+<figure class="fig photo"><a href="img/hoca/d04-mg-s65-rollback.png"><img src="img/hoca/d04-mg-s65-rollback.png" alt="Örnek transfer geri alması: yeniden denemeden önce durumu onarır. Yalnız kilidi bırakmak bakiyeleri geri getiremez [sl. 65; Okuma §15]." loading="lazy"></a><figcaption>Örnek transfer geri alması: yeniden denemeden önce durumu onarır. Yalnız kilidi bırakmak bakiyeleri geri getiremez <span class="src">sl. 65; Okuma §15</span>.</figcaption></figure>
+<p>A'dan B'ye 10 birimlik transfer <span class="src">sl. 65</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Aşama</th>
+<th>A</th>
+<th>B</th>
+<th>A + B</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Checkpoint</td>
+<td>100</td>
+<td>50</td>
+<td>150</td>
+<td>tutarlı</td>
+</tr>
+<tr>
+<td>Transfer yarıda kesildi: 10 düşüldü, henüz eklenmedi</td>
+<td>90</td>
+<td>50</td>
+<td>140</td>
+<td><strong>değişmez bozuk</strong></td>
+</tr>
+<tr>
+<td>Rollback sonrası</td>
+<td>100</td>
+<td>50</td>
+<td>150</td>
+<td>tutarlı, sonra kontrollü yeniden deneme</td>
+</tr>
+</tbody>
+</table>
+<p>Kurban yalnızca kilitlerini bırakarak öldürülseydi diğer işler 90/50'yi görürdü. Önce durumu geri yükle, sonra kilitleri bırak, sonra transferi baştan dene <span class="ek">ek bilgi; sl. 64'teki "onarımı bırakmayla koordine et" kuralının uygulanışı</span>.</p>
+<h3 id="73-bir-gorevi-tekrar-tekrar-cezalandrma-sl-66-okuma-15">7.3 Bir görevi tekrar tekrar cezalandırma <span class="src">sl. 66; Okuma §15</span><a class="headerlink" href="#73-bir-gorevi-tekrar-tekrar-cezalandrma-sl-66-okuma-15" title="Permanent link">#</a></h3>
+<ul>
+<li>"En ucuz kurban" kuralı hep aynı katılımcıyı seçip onu <strong>aç bırakabilir</strong>. Yeniden deneme ya da geri alma <strong>geçmişini</strong> politikaya kat <span class="src">sl. 66</span>.</li>
+<li>Her müdahaleden sonra durumu yeniden kur ve gereken beklemelerin artık çözülebildiğini doğrula <span class="src">sl. 66</span>.</li>
+<li>Yeniden denerken <strong>yinelenen dış etkileri önle</strong>. Kaybolan bir yanıt, önceki işlemin etkisiz olduğu anlamına gelmez <span class="src">sl. 66</span>. Örnek <span class="ek">ek bilgi</span>: transfer commit edildi ama yanıt kayboldu; körü körüne yeniden deneme parayı iki kez düşer. Çözüm: işlem kimliğiyle tekrar-güvenli (idempotent) deneme.</li>
+</ul>
+<p><strong>Kontrol soruları (Bölüm 7)</strong></p>
+<ul>
+<li><strong>K7.1</strong> Tespit, sl. 61'deki {T1, T2, T3, T4} kümesini buldu. Hangi tek kurban döngüyü kırar? Kurbandan sonra ne yapman gerekir?</li>
+<li><strong>K7.2</strong> Bir transfer işini öldürüp mutex'lerini bırakmak neden kurtarma sayılmaz? Sl. 65'teki sayılarla açıkla.</li>
+</ul>
+<hr />
+<h2 id="8-laboratuvar-lock-orderc-lockdep-bankerc-sl-6774">8. Laboratuvar: <code>lock-order.c</code>, lockdep, <code>banker.c</code> <span class="src">sl. 67–74</span><a class="headerlink" href="#8-laboratuvar-lock-orderc-lockdep-bankerc-sl-6774" title="Permanent link">#</a></h2>
+<h3 id="81-kilit-deneyi-uc-mod-sl-6769-okuma-16">8.1 Kilit deneyi: üç mod <span class="src">sl. 67–69; Okuma §16</span><a class="headerlink" href="#81-kilit-deneyi-uc-mod-sl-6769-okuma-16" title="Permanent link">#</a></h3>
+<p><code>lock-order.c</code>'nin üç modu <span class="src">sl. 67</span>:</p>
+<ul>
+<li><strong>deadlock:</strong> iki worker farklı ilk kilitleri alır, <strong>buluşur</strong> (rendezvous), sonra diğer kilitte bloklanır. Dış bir timeout altında çalıştır.</li>
+<li><strong>ordered:</strong> ikisi de önce L1, sonra L2. Bir worker ilk kilidi beklerken buluşma yoktur.</li>
+<li><strong>try:</strong> ilk sahiplikleri senkronla, ikinci kilidi <strong>bir kez</strong> dene, <code>EBUSY</code> raporla, sonra bırak. Kalıcı bloklama olmadan başarısız admission'ı gösterir.</li>
+</ul>
+<p>Kodun önemli parçaları (uzmanın satır satır okuması):</p>
+<ul>
+<li><code>rendezvous(phase)</code>: mutex ve koşul değişkeniyle yazılmış iki thread'lik bir bariyer. Amaç kötü serpiştirmeyi <strong><code>sleep</code> kullanmadan deterministik</strong> üretmek: buluşmadan çıkıldığında iki ilk kilit de tutuluyor <span class="src">sl. 69</span>.</li>
+<li>deadlock modunda kilitler yalnız fonksiyonun sonunda bırakılıyor ve oraya varmak için diğerinin kilidi gerekiyor. <strong>Programın içinde bırakma yolu yok</strong> <span class="src">sl. 70</span>. Kaynaktaki yorum: "Unreachable under this protocol without external intervention".</li>
+<li>try modunda <code>rendezvous(1)</code> iki deneme bitmeden kimsenin ilk kilidini bırakmamasını sağlar; bu yüzden iki deneme de <strong>mutlaka</strong> <code>EBUSY</code> alır <span class="src">sl. 69</span>. <code>EBUSY</code> dışında bir şey dönerse program 3 ile çıkar.</li>
+<li><code>setvbuf(stdout, NULL, _IONBF, 0)</code>: stdout tamponsuz. Uzman bu satırı silip çıktıyı dosyaya yönlendirdi; öldürülen süreç <strong>0 bayt</strong> bıraktı, yani kanıtın tamamı kayboldu (macOS'ta ölçüldü).</li>
+</ul>
+<p>Derleme ve çalıştırma <span class="src">sl. 68</span>:</p>
+<pre><code class="language-bash">cc -std=c11 -Wall -Wextra -O2 -pthread lock-order.c -o lock-order
+</code></pre>
+<pre><code class="language-bash">timeout 3s ./lock-order deadlock; echo $?
+</code></pre>
+<pre><code class="language-bash">./lock-order ordered
+</code></pre>
+<pre><code class="language-bash">./lock-order try
+</code></pre>
+<p>İlk komut sınırlı olmalı, diğer ikisi bitmeli. Çalıştırmadan önce beklenen sahiplik ve istek durumunu çiz. <strong>Doğruluğu yalnız çıkış durumundan çıkarma</strong> <span class="src">sl. 68</span>.</p>
+<p>Beklenen tahmin <span class="src">sl. 69; Okuma §16</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Mod</th>
+<th>Tahmin</th>
+<th>Saklanacak kanıt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deadlock</td>
+<td>Her worker farklı bir ilk kilidi tutar ve diğerini bekler; kendiliğinden bitmez</td>
+<td>iki "holds", iki "requests" mesajı, son tarihle sonlanma (124)</td>
+</tr>
+<tr>
+<td>ordered</td>
+<td>Ortak sıra ikisinin de bitmesine izin verir</td>
+<td><code>completed</code>, çıkış 0, kaynaktaki edinme kuralı</td>
+</tr>
+<tr>
+<td>try</td>
+<td>İlk kilitler tutulurken iki ikinci edinim de başarısız olur, sonra temizlik biter</td>
+<td>iki <code>EBUSY</code>, çıkış 0</td>
+</tr>
+</tbody>
+</table>
+<p>macOS'taki gerçek çıktı (uzman ölçtü; GNU <code>timeout</code> olmadığı için <code>perl -e 'alarm 3; exec @ARGV'</code> kullanıldı, bu yüzden çıkış 124 değil 142):</p>
+<pre><code>$ ./lock-order deadlock          (3 s sonra SIGALRM)
+worker 0 holds L1
+worker 1 holds L2
+worker 1 requests L1 while holding L2
+worker 0 requests L2 while holding L1
+exit=142
+
+$ ./lock-order ordered
+worker 0 owns L1 and L2
+worker 1 owns L1 and L2
+completed
+
+$ ./lock-order try
+worker 0 holds L1
+worker 1 holds L2
+worker 1: second lock EBUSY
+worker 0: second lock EBUSY
+completed
+</code></pre>
+<p>Mesaj sırası koşudan koşuya değişebilir (try modunda 300 koşunun 6'sında farklı çıktı). Karşılaştırmayı <strong>bağımlılık olgularıyla</strong> yap <span class="src">Okuma §16</span>.</p>
+<p>Yorum <span class="src">sl. 69</span>:</p>
+<ul>
+<li>Kasıtlı buluşma, ikinci istekler gelmeden iki ilk kilidin de tutulmasını garanti eder; kötü durumu <code>sleep</code>'e dayanmadan üretir.</li>
+<li>ordered modu biter, çünkü bütün edinme kenarları L1'den L2'ye gider. Başarılı bir koşu bu argümanı <strong>örnekler</strong>, kanıt ispattır.</li>
+<li>try modu <strong>bir</strong> deneme yapar, sonsuz bir yeniden deneme döngüsü değildir. Keyfi yeniden denemeler için starvation'sızlığı göstermez.</li>
+</ul>
+<p>Okumanın düşünme sorusu <span class="src">Okuma §16</span>: deadlock modundan buluşmayı kaldırırsan ne doğru kalır? Ters sıra hâlâ deadlock'a izin verir, ama artık iki ilk kilidin aynı anda tutulması garanti değil; bazı koşular biter. Uzman ölçümü (macOS): buluşmasız ters sıra (<code>kod/variants.c</code>, <code>norv</code> modu) <strong>2500 koşunun yalnız 3'ünde</strong> kilitlendi. Başarılı koşular kötü serpiştirmenin o koşularda olmadığını gösterir, protokolün güvenli olduğunu değil.</p>
+<h3 id="82-saklanacak-kant-sl-70-okuma-16">8.2 Saklanacak kanıt <span class="src">sl. 70; Okuma §16</span><a class="headerlink" href="#82-saklanacak-kant-sl-70-okuma-16" title="Permanent link">#</a></h3>
+<ol>
+<li>İşletim sistemi ve derleyici sürümleri.</li>
+<li>Tam komutlar, derleme bayrakları dahil.</li>
+<li>Çıktı (dört mesajın tamamı).</li>
+<li>Çıkış durumu. GNU <code>timeout</code> süresi dolunca normalde <strong>124</strong> döndürür. <strong>Bu bir son tarih sonucudur, deadlock dedektörü değildir</strong> <span class="src">sl. 70</span>.</li>
+<li>Sahiplik ve istek graph'ı: önce tahmin, sonra gözlemle karşılaştırma.</li>
+<li>İki açıklama: deadlock modunda <strong>neden içeride bir bırakma yolu yok</strong>; ordered program <strong>neden bir kilit sırası döngüsü kapatamaz</strong> <span class="src">sl. 70</span>.</li>
+<li>YZ yardımı serbest: graph'ını ve varsayımlarını sorgulamak için kullan, sonra iddiaları kaynağa ve gözleme karşı kontrol et <span class="src">sl. 70</span>.</li>
+</ol>
+<p>Okumaya göre şunlar <strong>farklı kanıttır</strong>: mesaj basılmaması, derleme hatası, çok kısa bir son tarih <span class="src">Okuma §16</span>.</p>
+<h3 id="83-askdaki-deadlocku-gozlemlemek">8.3 Askıdaki deadlock'u gözlemlemek<a class="headerlink" href="#83-askdaki-deadlocku-gozlemlemek" title="Permanent link">#</a></h3>
+<p><strong>macOS'ta ölçüldü:</strong> <code>sample &lt;pid&gt;</code> iki worker'ın da <code>lock-order.c:38</code>'de, yani ikinci <code>pthread_mutex_lock</code>'ta, çekirdekte <code>__psynch_mutexwait</code> içinde uyuduğunu gösterdi; 881 örneğin 881'i aynı yerdeydi. <code>lldb -p</code> ile id=0 olan thread'in <code>locks[1]</code>'i (L2), id=1 olanın <code>locks[0]</code>'ı (L1) istediği okundu. <code>ps</code> iki worker'ı da <code>S</code> durumunda ve %0 CPU'da gösterdi. Sahiplik kenarları "holds" mesajlarından ve protokolden geldi. Birleşince W0 → L2 → W1 → L1 → W0 döngüsü çıkar: sl. 36'nın istediği "sahipleri, istekleri ve bırakma olaylarını yeniden kur" işi budur.</p>
+<p><strong>Linux karşılıkları <span class="ek">ek bilgi; kaynakta yok, Linux'ta doğrulanmadı</span>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Araç</th>
+<th>Komut</th>
+<th>Beklenen gözlem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ps</code></td>
+<td><code>ps -L -o pid,lwp,stat,wchan:32,comm -p $P</code></td>
+<td>3 LWP, hepsi <code>S</code>; <code>wchan</code> bir futex bekleme fonksiyonu</td>
+</tr>
+<tr>
+<td><code>/proc</code></td>
+<td><code>cat /proc/$P/task/*/wchan</code> ve <code>/proc/$P/task/*/syscall</code></td>
+<td>futex sistem çağrısı; iki worker'da farklı bekleme adresi (biri <code>&amp;locks[0]</code>, diğeri <code>&amp;locks[1]</code>)</td>
+</tr>
+<tr>
+<td><code>gdb</code></td>
+<td><code>gdb -p $P -batch -ex 'thread apply all bt' -ex 'p locks[0].__data.__owner'</code></td>
+<td>worker'lar 38. satırda; glibc'nin <code>__owner</code> alanı sahip LWP'yi verir (glibc'ye özgü iç alan)</td>
+</tr>
+<tr>
+<td><code>strace</code></td>
+<td><code>strace -f -e trace=futex ./lock-order deadlock</code></td>
+<td>iki thread'de <code>FUTEX_WAIT_PRIVATE … &lt;unfinished …&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ubuntu'da <code>ptrace_scope</code> varsayılanı yüzünden <code>gdb -p</code> için <code>sudo</code> gerekebilir <span class="ek">ek bilgi</span>. Çekişmesiz <code>pthread_mutex_lock</code> sistem çağrısı yapmaz, kullanıcı alanında atomik işlemle biter; strace yalnız çekişmeli edinimi gösterir <span class="ek">ek bilgi</span>.</p>
+<h3 id="84-linuxta-lockdep-sl-71-okuma-15">8.4 Linux'ta lockdep <span class="src">sl. 71; Okuma §15</span><a class="headerlink" href="#84-linuxta-lockdep-sl-71-okuma-15" title="Permanent link">#</a></h3>
+<p>Kaynağın söyledikleri <span class="src">sl. 71</span>:</p>
+<ul>
+<li>Çekirdek <strong>lockdep</strong>, <strong>kilit sınıfları</strong> (lock classes) arasındaki bağımlılıkları izler ve kendi enstrümantasyonunun gördüğü tutarsız kilitleme kalıplarını raporlar.</li>
+<li>Gözlenen bir sıra bağımlılığı, <strong>belirli bir koşu donmamış olsa bile</strong> olası bir deadlock'u gösterebilir.</li>
+<li>Bir çekirdek hata ayıklama aracıdır; sıradan pthread mutex'lerinin her uygulama döngüsünü teşhis edeceği vaadi değildir. <strong>Kapsam ve yapılandırma önemli.</strong></li>
+</ul>
+<p>Mekanizma (ek bilgi; okumanın verdiği <a href="https://docs.kernel.org/locking/lockdep-design.html">lockdep tasarım belgesi</a>, Linux'ta doğrulanmadı):</p>
+<ul>
+<li><strong>Kilit sınıfı:</strong> kurallar açısından aynı olan kilitlerin grubu (örneğin bütün inode'ların aynı kilidi). Binlerce örneği olsa da tek sınıftır.</li>
+<li>Bir görev A sınıfından bir kilidi tutarken B sınıfından birini alırsa graph'a A → B kenarı eklenir. Her yeni kenarda ters yönde bir yol var mı diye bakılır; varsa <code>possible circular locking dependency detected</code> raporu çıkar.</li>
+<li>Neden donmadan uyarır: kenarlar sınıf düzeyinde ve <strong>zamandan bağımsız</strong> birikir. Sabah bir yolda A → B, akşam başka bir yolda B → A görülmüşse döngü potansiyeli ortaya çıkmıştır. Bu, sl. 31'deki rank ispatının, <strong>gözlenen</strong> kenarlar üzerinde çalışma anında yapılan sürümüdür.</li>
+<li>Sınırlar: yalnız <strong>çalıştırılan</strong> yolları görür; ilk rapordan sonra kendini kapatır; ek yükü yüksektir, <code>CONFIG_PROVE_LOCKING</code> ile derlenmiş bir hata ayıklama çekirdeği ister; kullanıcı alanı pthread'lerini ve uzak bağımlılıkları görmez; starvation ve livelock kapsamında değildir.</li>
+</ul>
+<p>Kullanıcı alanı benzerleri <span class="ek">ek bilgi</span>: ThreadSanitizer (<code>-fsanitize=thread</code>) ve Valgrind Helgrind, kilit sırası ters dönünce rapor verir. Uzman macOS'ta (Apple clang 21) TSan'dan lock-order-inversion raporu alamadı (data race raporu ise çalıştı); Linux'ta denenecek (Ek, deney 7). <code>PTHREAD_MUTEX_ERRORCHECK</code> yalnız <strong>aynı thread'in</strong> kendi kilidini yeniden istemesini <code>EDEADLK</code> ile yakalar; iki thread'lik döngüyü görmez (macOS'ta ölçüldü). Okuma bunu açıkça uyarır: error-checking mutex genel bir çok-thread'li döngü dedektörü sanılmamalı <span class="src">Okuma §8</span>.</p>
+<h3 id="85-safety-pratigi-bankerc-sl-72-okuma-16">8.5 Safety pratiği: <code>banker.c</code> <span class="src">sl. 72; Okuma §16</span><a class="headerlink" href="#85-safety-pratigi-bankerc-sl-72-okuma-16" title="Permanent link">#</a></h3>
+<p>Hocanın görevi <span class="src">sl. 72</span>:</p>
+<ul>
+<li><code>banker.c</code>'yi tam beş thread'lik anlık görüntü üzerinde çalıştır. Sırasını gösterilen vektörlerle eşleştir.</li>
+<li>Bir Available bileşenini değiştir ya da bir istek yap; <strong>çalıştırmadan önce</strong> sonucu tahmin et.</li>
+<li><strong>Toplam = Available + tahsisli instance'lar</strong> değişmezini koru.</li>
+<li>Safe, unsafe, unavailable ve above-maximum istekleri <strong>ayrı ayrı</strong> kontrol et.</li>
+<li>Reddedilen bir isteğin orijinal durumu <strong>değiştirmediğini</strong> doğrula.</li>
+</ul>
+<p>Programın yapısı: <code>safe()</code> her geçişte thread'leri indeks sırasıyla tarar ve aynı geçişte uyan her işi bitirir. <code>request()</code> kaynaktaki sırayı izler: önce Need (1 = above maximum), sonra Available (2 = unavailable), sonra bir kopya üzerinde geçici tahsis ve safety (3 = unsafe). Reddedilen istekte asıl duruma hiç dokunulmaz; <code>main</code> bunu <code>memcmp</code> ile ve sonunda değişmezle doğrular.</p>
+<p>macOS'taki gerçek çıktı (uzman ölçtü):</p>
+<pre><code>initial: safe sequence: T1 T3 T4 T0 T2
+after T1 (1,0,2): safe sequence: T1 T3 T4 T0 T2
+T4 (3,3,0): unavailable; unchanged
+T0 (0,2,0): unsafe; unchanged
+T1 (0,3,0): above maximum; unchanged
+all checks passed
+</code></pre>
+<ul>
+<li>Başlangıç sırası slayttakinden (T1, T3, T4, <strong>T2, T0</strong>) farklı. İkisi de geçerli tanık; program indis sırasıyla taradığı için T4'ten sonra T0'ı seçiyor <span class="src">sl. 56; Okuma §16</span>.</li>
+<li>T1 sonrası sıra slaytla birebir aynı <span class="src">sl. 53</span>.</li>
+<li><strong>Tuzak</strong> (uzmanlar ölçtü): <code>request()</code> çağrıları <code>assert(...)</code>'in <strong>içinde</strong>. Program <code>-DNDEBUG</code> ile derlenirse çağrılar hiç yapılmaz, ama çıktı birebir aynı kalır ve "all checks passed" basılır. Ders komutunda NDEBUG yok, sorun çıkmaz. Ders: "çıktı doğru göründü" ≠ "test çalıştı"; doğruluğu yalnız çıktıdan çıkarma <span class="src">sl. 68</span>.</li>
+</ul>
+<h3 id="86-review-modeli-ve-careyi-ackla-sl-73">8.6 Review: modeli ve çareyi açıkla <span class="src">sl. 73</span><a class="headerlink" href="#86-review-modeli-ve-careyi-ackla-sl-73" title="Permanent link">#</a></h3>
+<p>Hocanın üç sorusu ve her cevabın taşıması gerekenler: <strong>varsayımlar, bir graph ya da vektör izi, yöntemin neyi garanti etmediği</strong> <span class="src">sl. 73</span>.</p>
+<ol>
+<li><strong>Kullanılmayan R4 instance'ları R1, R2, R3 üzerindeki deadlock ile neden bir arada olabilir? İkinci bir instance döngü testini neden zayıflatır?</strong> Tipler birbirinin yerine geçmez; deadlock tip tip (bileşen bileşen) değerlendirilir. Sl. 19'da kapalı küme {T1, T2, T3} yalnız R1, R2, R3 bekliyor; R4'ün boş instance'ları hiçbir eksik bileşeni karşılamaz. İkinci instance döngü <strong>dışındaki</strong>, bitebilecek bir thread'de olabilir; onun bırakması döngüyü çözer. Bu yüzden çok instance'ta döngü yalnız olasılık gösterir; sayılar ve indirgeme gerekir. Garanti etmediği: modellenmemiş beklemeleri (koşul değişkeni, uzak çağrı) görmez.</li>
+<li><strong>Şu an deadlocked olmayan unsafe bir durum ver. Banker riskli tahsisi neden yine reddeder?</strong> Sl. 42: 10 birim, A 4 tutuyor (Max 6), B 5 tutuyor (Max 8), Available 1. Need'ler 2 ve 3, ikisi de 1'den büyük → unsafe; ama kimse bloklu değil, B maksimumunu istemeden bitebilir. Banker reddeder, çünkü kuralı beyan edilen maksimumlara karşı garantiyi korumak; işler kalan Need'lerinin tamamını isterse deadlock olur ve tahsis bir kez yapıldıktan sonra kaçınma bunu artık engelleyemez. Garanti etmediği: adalet; Max yanlış beyan edilirse garanti de biter.</li>
+<li><strong>Circular wait'i kaldırmayı, unsafe bir isteği reddetmeyi ve deadlocked bir işlemi iptal etmeyi karşılaştır.</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Circular wait'i kaldır (kilit sırası)</th>
+<th>Unsafe isteği reddet (Banker)</th>
+<th>Deadlocked işlemi iptal et</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sınıf</td>
+<td>Önleme</td>
+<td>Kaçınma</td>
+<td>Tespit + kurtarma</td>
+</tr>
+<tr>
+<td>Gereken bilgi</td>
+<td>Kilitlerin global rank'ı; thread başına sayı gerekmez</td>
+<td>Her thread'in Max'ı, Allocation, Available</td>
+<td>Şu anki Request ve Allocation, tutarlı anlık görüntü, geri alınabilir bir sınır</td>
+</tr>
+<tr>
+<td>Karar anı</td>
+<td>Tasarım ve kod yazımı</td>
+<td>Her istekte, tahsisten önce</td>
+<td>Deadlock olduktan sonra</td>
+</tr>
+<tr>
+<td>Maliyet</td>
+<td>Esneklik kaybı, her yolun denetimi</td>
+<td>Her istekte O(m·n²), kötümser retler, beyan yükü</td>
+<td>İzleme yükü, kurbanın kaybolan işi, rollback altyapısı</td>
+</tr>
+<tr>
+<td>Garanti etmediği</td>
+<td>Adalet; modellenmemiş bağımlılıklar</td>
+<td>Adalet; yanlış Max'a karşı koruma</td>
+<td>Tek kurbanın her döngüyü kırması; dış etkilerin geri alınması</td>
+</tr>
+</tbody>
+</table>
+<p>Kaynak: <span class="src">sl. 27; sl. 31; sl. 51; sl. 57–66; Okuma §17</span>. Okumanın son karşılaştırma alıştırması (bağlantı havuzu) aynı üçlüyü sorar ve şunu ekler: hiçbiri adaleti kendiliğinden çözmez; havuz dışındaki uygulama kilitleri analizi geçersiz kılabilir <span class="src">Okuma §17</span>.</p>
+<p><strong>Sonraki ders</strong> <span class="src">sl. 74</span>: bellek yönetimi ve adres çevirisi. Kaynak muhasebesi devam ediyor, ama merkezdeki nesne sürecin adres alanı oluyor.</p>
+<p><strong>Kontrol soruları (Bölüm 8)</strong></p>
+<ul>
+<li><strong>K8.1</strong> <code>timeout 3s ./lock-order deadlock</code> 124 döndürdü. Bunu bir deadlock kanıtına çevirmek için başka hangi kanıtlar gerekir?</li>
+<li><strong>K8.2</strong> <code>banker.c</code>'de Available'ı (3,3,2) yerine (3,3,1) yaparsan başlangıç durumu safe kalır mı? Önce tahmin et, sonra izini çıkar.</li>
+</ul>
+<hr />
+<h2 id="ek-ubuntuda-denenecek-kucuk-deneyler-once-tahmin-et-sonra-calstr">Ek: Ubuntu'da denenecek küçük deneyler (önce tahmin et, sonra çalıştır)<a class="headerlink" href="#ek-ubuntuda-denenecek-kucuk-deneyler-once-tahmin-et-sonra-calstr" title="Permanent link">#</a></h2>
+<p>Kodlar macOS'ta derlendi ve çalıştırıldı. Linux'a özgü sonuçlar "beklenen" diye yazıldı ve doğrulanmadı. Ders kodları <code>materyaller/Ders-04_Deadlocks/kod/</code> altında; uzmanların yazdığı ek programlar <code>notlar/ders-04/kod/</code> altında (<code>variants.c</code>, <code>backoff.c</code>, <code>banker-x.c</code> + <code>banker-core.c</code>, <code>tsan-inversion.c</code>, <code>runlimit.c</code>). Her deneyden sonra <code>pgrep -x lock-order</code> ile askıda süreç kalmadığını kontrol et.</p>
+<ol>
+<li><strong>Ortam kanıtı</strong> <span class="src">sl. 70</span>: <code>lsb_release -a; uname -r; cc --version | head -1; ldd --version | head -1; timeout --version | head -1</code>.</li>
+<li><strong>Hocanın deneyi</strong> <span class="src">sl. 68</span>: üç mod. Beklenen: deadlock modunda dört mesaj ve <strong>124</strong>; ordered ve try modlarında <code>completed</code> ve 0. Okumaya göre bu Ubuntu ölçümü henüz yapılmadı <span class="src">Okuma §16</span>.</li>
+<li><strong>Sinyal farkı:</strong> <code>timeout -s KILL 3s ./lock-order deadlock; echo $?</code>. Beklenen 137 (128 + 9), 124 değil <span class="ek">ek bilgi</span>. Çıkış kodunun bir son tarih sonucu olduğunu gösterir.</li>
+<li><strong>Askıdaki thread'ler:</strong> <code>./lock-order deadlock &amp; P=$!; sleep 1; ps -L -o pid,lwp,stat,wchan:32,comm -p $P; cat /proc/$P/task/*/wchan; kill $P</code>. Beklenen: 3 LWP, hepsi <code>S</code>, futex beklemesi.</li>
+<li><strong>Sahipliği okumak:</strong> <code>-g -O0</code> ile derle, <code>sudo gdb -p $P -batch -ex 'thread apply all bt' -ex 'p locks[0].__data.__owner' -ex 'p locks[1].__data.__owner'</code>. Sahip LWP'leri 4. deneyle eşleştir ve wait-for döngüsünü kur <span class="src">sl. 36</span>.</li>
+<li><strong>Error-checking mutex:</strong> <code>./variants self-errcheck</code> (aynı thread kendi kilidini tekrar ister: <code>EDEADLK</code>, glibc'de 35 beklenir), <code>timeout 2s ./variants errcheck; echo $?</code> (iki thread'lik döngü: yine 124) <span class="src">Okuma §8</span>.</li>
+<li><strong>TSan:</strong> <code>cc -O1 -g -fsanitize=thread -pthread tsan-inversion.c -o ti &amp;&amp; ./ti</code>. Program asla kilitlenmez ama sırayı tersine çevirir. Beklenen: <code>lock-order-inversion (potential deadlock)</code> uyarısı. macOS'taki boş sonuçla karşılaştır.</li>
+<li><strong>Başarı kanıt değildir:</strong> buluşmasız ters sırayı (<code>./variants norv</code>) 2000 kez 0,3 saniyelik sınırla çalıştır, kaç kez kilitlendiğini say (macOS: 2500'de 3).</li>
+<li><strong>Livelock:</strong> <code>./backoff lockstep 10000</code> (beklenen 0 başarı) ve <code>./backoff lockstep-random 10000 0 1</code> (başarı ≈ çarpışma / 2) <span class="src">sl. 16</span>.</li>
+<li><strong>Banker</strong> <span class="src">sl. 72</span>: <code>./banker</code>; sonra orijinal görüntüden tek istek deneyen <code>./banker-x 0 0 2 0</code> (beklenen granted, 0) ve <code>./banker-x 4 3 3 0</code> (beklenen unsafe, 3). Sonra <code>-DNDEBUG</code> ile derleyip çıktının değişmediğini gör.</li>
+</ol></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

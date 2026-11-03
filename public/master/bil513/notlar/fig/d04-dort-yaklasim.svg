@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-label="Dört yaklaşımın karar anı: önleme tasarım anında protokolü kısıtlar; kaçınma her istekte tahsisten önce safety testi yapar; tespit ve kurtarma deadlock oluştuktan sonra şu anki istekleri inceler ve onarır; riski kabul etmek genel bir mekanizma kurmaz." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <defs>
+    <marker id="d04dy-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-cur"/></marker>
+    <marker id="d04dy-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" class="f-acc"/></marker>
+  </defs>
+  <text x="380" y="22" text-anchor="middle" font-weight="600">Karar ne zaman verilir? [sl. 27]</text>
+  <line class="ln" x1="30" y1="60" x2="730" y2="60" marker-end="url(#d04dy-a)"/>
+  <text x="732" y="50" text-anchor="end" class="t-mut" font-size="12">zaman</text>
+  <circle cx="110" cy="60" r="5" class="f-cur"/>
+  <text x="110" y="45" text-anchor="middle" font-size="12">tasarım / kod yazımı</text>
+  <circle cx="310" cy="60" r="5" class="f-cur"/>
+  <text x="310" y="45" text-anchor="middle" font-size="12">her istek, tahsisten önce</text>
+  <circle cx="520" cy="60" r="5" class="f-warn"/>
+  <text x="520" y="45" text-anchor="middle" font-size="12" class="t-warn">deadlock oluştu</text>
+  <circle cx="650" cy="60" r="5" class="f-cur"/>
+  <text x="650" y="45" text-anchor="middle" font-size="12">sonra</text>
+
+  <rect class="box-acc" x="30" y="90" width="160" height="120" rx="8"/>
+  <text x="110" y="112" text-anchor="middle" font-weight="600">Önleme</text>
+  <text x="110" y="132" text-anchor="middle" font-size="12">bir şartı yasakla</text>
+  <text x="110" y="150" text-anchor="middle" font-size="12">kural tasarımda konur</text>
+  <text x="110" y="168" text-anchor="middle" font-size="11" class="t-mut">rezervasyon, bırak-dene:</text>
+  <text x="110" y="182" text-anchor="middle" font-size="11" class="t-mut">çalışma anında uygulanır</text>
+  <text x="110" y="200" text-anchor="middle" font-size="12" class="t-mut">bedel: erişim kısıtı</text>
+
+  <rect class="box" x="220" y="90" width="180" height="120" rx="8"/>
+  <text x="310" y="112" text-anchor="middle" font-weight="600">Kaçınma</text>
+  <text x="310" y="132" text-anchor="middle" font-size="12">safe kalırsa ver</text>
+  <text x="310" y="150" text-anchor="middle" font-size="12">Banker: Need ≤ Work</text>
+  <text x="310" y="174" text-anchor="middle" font-size="12" class="t-mut">bilgi: her thread'in Max'ı</text>
+  <text x="310" y="192" text-anchor="middle" font-size="12" class="t-mut">bedel: kötümser ret</text>
+
+  <rect class="box" x="430" y="90" width="180" height="120" rx="8"/>
+  <text x="520" y="112" text-anchor="middle" font-weight="600">Tespit + kurtarma</text>
+  <text x="520" y="132" text-anchor="middle" font-size="12">izin ver, bul, onar</text>
+  <text x="520" y="150" text-anchor="middle" font-size="12">Request ≤ Work, kurban</text>
+  <text x="520" y="174" text-anchor="middle" font-size="12" class="t-mut">bilgi: şu anki istekler</text>
+  <text x="520" y="192" text-anchor="middle" font-size="12" class="t-mut">bedel: izleme, kayıp iş</text>
+
+  <rect class="box-plain dash" x="630" y="90" width="110" height="120" rx="8"/>
+  <text x="685" y="112" text-anchor="middle" font-weight="600">Kabul et</text>
+  <text x="685" y="132" text-anchor="middle" font-size="12">mekanizma yok</text>
+  <text x="685" y="174" text-anchor="middle" font-size="12" class="t-mut">hatayı</text>
+  <text x="685" y="192" text-anchor="middle" font-size="12" class="t-mut">uygulama yönetir</text>
+
+  <line class="ln-acc dash" x1="110" y1="66" x2="110" y2="88" marker-end="url(#d04dy-b)"/>
+  <line class="ln dash" x1="310" y1="66" x2="310" y2="88" marker-end="url(#d04dy-a)"/>
+  <line class="ln dash" x1="520" y1="66" x2="520" y2="88" marker-end="url(#d04dy-a)"/>
+  <line class="ln dash" x1="650" y1="66" x2="670" y2="88" marker-end="url(#d04dy-a)"/>
+
+  <line class="faint" x1="30" y1="232" x2="400" y2="232"/>
+  <text x="215" y="252" text-anchor="middle" font-size="12">deadlock'a hiç girme</text>
+  <line class="faint" x1="430" y1="232" x2="740" y2="232"/>
+  <text x="585" y="252" text-anchor="middle" font-size="12">deadlock'a izin ver</text>
+  <text x="380" y="284" text-anchor="middle" font-size="12" class="t-mut">Hiçbiri tek başına adalet (bounded waiting) garanti etmez [sl. 15; Okuma §17].</text>
+</svg>

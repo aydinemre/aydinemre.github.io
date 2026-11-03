@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ders 5 ilerleme</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: Ders 5 ilerleme">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-05-ilerleme.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-05.html">Anlatım</a> <a href="ders-05-ozet.html">Özet</a> <a href="ders-05-sorular.html">Soru bankası</a> <a href="ders-05-deneme.html">Deneme sınavı</a> <a href="ders-05-ilerleme.html" aria-current="page">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></aside>
+  <main><h1 id="ders-5-ilerleme">Ders 5 ilerleme<a class="headerlink" href="#ders-5-ilerleme" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#2026-11-03-oturum-1">2026-11-03 · Oturum 1</a></li></ul></details>
+<h2 id="2026-11-03-oturum-1">2026-11-03 · Oturum 1<a class="headerlink" href="#2026-11-03-oturum-1" title="Permanent link">#</a></h2>
+<p><strong>Hazırlık tamam.</strong> Dört uzman ajan paralel çalıştı: adres uzayı ve tahsis, paging ve çeviri, Linux ve C pratiği, sınav ve pedagoji. Denetçi dördünü kaynaklara karşı kontrol etti ve bütün sayıları bağımsız olarak yeniden hesapladı (hex çevirileri, PTE adresleri, tablo boyutları, EAT, LRU ve FIFO izleri, fit adımları, 962 bayt, x86-64 bölmesi). Kritik bulgu yok; 6 orta, 14 düşük bulgu (D-01…D-20) çıktı ve hepsi <code>anlatim.md</code>, <code>soru-bankasi.md</code> ve <code>deneme-sinavi.md</code>'de düzeltildi. Hocanın slaytlarında sayısal hata yok. Kaynak çelişkileri anlatımda işaretli: OSC'nin "IA-64" hatası, OSC'nin EAT modeli (TLB süresini saymaz), "avoids external fragmentation", ARM TLB etiketleri.</p>
+<p>Ham ajan notları oturumun geçici klasöründeydi, kalıcı değil. Kalıcı olanlar bu klasördeki beş dosya.</p>
+<p><strong>Bu makinede ölçülenler (macOS, Apple M4):</strong> sayfa boyutu 16384 (Rosetta altındaki x86-64 programı 4096 görüyor); <code>translate.c</code> çıktısı slaytlarla birebir; ASLR, <code>vmmap</code>, <code>fork</code> sonrası aynı adres farklı değer, <code>mprotect</code> ve <code>mincore</code> deneyleri. <code>/proc</code> ile ilgili her şey (maps, pagemap, <code>pmap</code>, <code>setarch -R</code>) Linux'a özgü, burada <strong>doğrulanmadı</strong>.</p>
+<p><strong>Yerel site:</strong> <code>notlar/site/ders-05.html</code>. Üç kendi şeklim (<code>d05-fit-politikalari.svg</code>, <code>d05-tlb-karar.svg</code>, <code>d05-iki-seviye.svg</code>) ve okumadan 26 şekil (<code>img/hoca/osc-ch9-*</code>, <code>img/hoca/hoca-d05-*</code>). Şablon isteği yok.</p>
+<p><strong>Canlı site karşılaştırması (2026-11-03):</strong> <code>lecture-05.html</code>, <code>lecture-05-reading.html</code>, <code>CSE513-Lecture05.pdf</code>, okumanın bağlandığı 41 dosya (39 şekil, <code>address-view.c</code>, <code>translate.c</code>) ve üç OSTEP bölümü (<code>vm-paging</code>, <code>vm-tlbs</code>, <code>vm-smalltables</code>) indirildi. Hepsi yerel kopyayla bayt bayt aynı, güncelleme gerekmedi. OSC 10e <code>ch9.pptx</code> kontrol edilemedi: os-book.com hem IPv4'te hem IPv6'da TLS bağlantısını kesiyor (<code>SSL_ERROR_SYSCALL</code>). Yerel kopya 2026-11-02 tarihli.</p>
+<p><strong>Bölüm planı</strong> (hocanın slayt sırası, <code>CSE513-Lecture05.pdf</code>, 81 slayt):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Bölüm</th>
+<th>Slayt</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Neden bellek yönetimi: base ve limit ile sınırlı adres uzayı</td>
+<td>2–5</td>
+<td>anlatılıyor</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Adres bağlama (address binding): derleme, link, yükleme; logical ve physical adres, MMU, relocation; dynamic loading ve linking</td>
+<td>6–11</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Contiguous allocation: first, best ve worst fit; iç ve dış parçalanma; compaction</td>
+<td>12–17</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Segmentation ve segment tablosu hesabı</td>
+<td>18–19</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Paging: page ve frame, sayfa numarası ve offset, hex ile çeviri, sayfa sınırı, geçersiz referans, son sayfanın israfı</td>
+<td>20–31</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bellekteki sayfa tablosu ve TLB: PTBR, PTE adresi, TLB izi, EAT, ASID</td>
+<td>32–40</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Koruma ve paylaşım: valid bit, izinler, paylaşılan sayfalar, alias</td>
+<td>41–44</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Tablo yapıları: lineer tablo boyutu, çok seviyeli, 64 bit, hashed, inverted, sayfa boyutu takası</td>
+<td>45–56</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Linux ve tarihsel mimariler: PGD…PTE, IA-32, PAE, x86-64, ARM</td>
+<td>57–58, 70–81</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Swapping ve 6. haftaya köprü</td>
+<td>59–60</td>
+<td>bekliyor</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Ubuntu'da deney: address-view.c, /proc maps, translate.c, entegre problem</td>
+<td>61–68</td>
+<td>bekliyor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kontrol soruları ve cevaplar</strong></p>
+<p>Henüz yok.</p>
+<p><strong>Soru bankası çalıştırması</strong></p>
+<p>Henüz başlamadı. Soru bankası 56 soru (seviye 1: Q1–Q12, 2: Q13–Q26, 3: Q27–Q42, 4: Q43–Q56). Deneme sınavı 15 soru.</p>
+<p><strong>Bonus sorular</strong> (hocanın sormadığı tür ya da yalnız OSC/OSTEP kaynaklı)</p>
+<p>Hocanın slayt ve okumasında doğrudan karşılığı olmayan sorular. Önce çekirdeği bitir.</p>
+<table>
+<thead>
+<tr>
+<th>Soru</th>
+<th>Neden bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q26</td>
+<td>50-percent rule yalnız OSC'de <span class="src">OSC ch9 sl. 21</span></td>
+</tr>
+<tr>
+<td>Q34 (b)</td>
+<td>FIFO TLB değiştirme hocada yok (hoca yalnız LRU kullanıyor); (a) çekirdek</td>
+</tr>
+<tr>
+<td>Q35 (b)–(c)</td>
+<td>FIFO karşılaştırması; LRU kısmı çekirdek</td>
+</tr>
+<tr>
+<td>Q40</td>
+<td>OSTEP iki seviyeli örneği (4/4/6 bölünme)</td>
+</tr>
+<tr>
+<td>Q41</td>
+<td>OSTEP dizi taraması %70</td>
+</tr>
+<tr>
+<td>Q48</td>
+<td>Inverted tablo için sayısal boyut hocada yok (entry boyutu varsayımı ek bilgi)</td>
+</tr>
+<tr>
+<td>Q54 (b)–(c)</td>
+<td>Double buffering ve swap süre hesabı OSC'den <span class="src">OSC ch9 sl. 22, 54–55</span></td>
+</tr>
+<tr>
+<td>Q21 (c)</td>
+<td>OSC'nin TLB'siz EAT modeli; (a)–(b), (d) çekirdek</td>
+</tr>
+<tr>
+<td>Q38 (c), (d), (f) parantez içleri</td>
+<td>ASLR, glibc mmap eşiği, macOS sayfa boyutu: ek bilgi</td>
+</tr>
+<tr>
+<td>Q47 (b)</td>
+<td>PTE genişliği gerekçesi OSC'den</td>
+</tr>
+</tbody>
+</table>
+<p>Geri kalan sorular çekirdek: hocanın slaytında ya da okumasında aynı türde çalışılmış örnek var (yeni sayılarla yazılanlar dahil: Q13, Q14 (seg. 2–4), Q28, Q29, Q30, Q31(b), Q32, Q33, Q39, Q52).</p>
+<p><strong>Zayıf noktalar</strong></p>
+<p>Henüz yok.</p>
+<p><strong>Yeni oturum için</strong></p>
+<p>Anlatım 1. bölümde. Kontrol soruları anlatımda K1, K2… diye numaralı. Beş dosya: <code>anlatim.md</code>, <code>ozet.md</code>, <code>soru-bankasi.md</code>, <code>deneme-sinavi.md</code>, <code>ilerleme.md</code>. Şekil dosyaları <code>d05-</code> önekiyle.</p></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

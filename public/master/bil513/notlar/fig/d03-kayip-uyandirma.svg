@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 296" role="img" aria-label="sl. 47 kayıp uyandırma: tüketici count == 0 kontrolünü kilitsiz yapar ve uyumaya karar verir, sonra kesilir. Üretici öğe ekler, count 1 olur, signal gönderir ama bekleyen olmadığı için sinyal etkisizdir. Tüketici ancak sonra cond_wait'e girer ve iş olduğu halde sonsuza dek uyur." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <text x="380" y="20" text-anchor="middle" font-weight="600" font-size="12.5">sl. 47: tüketici “boş mu?” kontrolünü kilitsiz yapar; sinyal saklanmaz</text>
+  <text x="138" y="42" text-anchor="middle" font-size="11.5" class="t-mut">1</text>
+  <text x="250" y="42" text-anchor="middle" font-size="11.5" class="t-mut">2</text>
+  <text x="362" y="42" text-anchor="middle" font-size="11.5" class="t-mut">3</text>
+  <text x="474" y="42" text-anchor="middle" font-size="11.5" class="t-mut">4</text>
+  <text x="586" y="42" text-anchor="middle" font-size="11.5" class="t-mut">5</text>
+  <text x="698" y="42" text-anchor="middle" font-size="11.5" class="t-mut">6</text>
+  <text x="20" y="77" font-weight="600">Tüketici</text>
+  <text x="20" y="131" font-weight="600">Üretici</text>
+
+  <rect class="box-plain" x="86" y="52" width="104" height="40" rx="6"/>
+  <text x="138" y="69" text-anchor="middle" font-size="11.5">count == 0 ?</text>
+  <text x="138" y="85" text-anchor="middle" font-size="11.5">evet (kilitsiz)</text>
+  <rect class="f-warn" x="198" y="52" width="328" height="40" rx="6" fill-opacity="0.12"/>
+  <rect class="ln-warn dash" x="198" y="52" width="328" height="40" rx="6"/>
+  <text x="362" y="69" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">BOŞLUK: uyuma kararı verildi, henüz uyumadı</text>
+  <text x="362" y="85" text-anchor="middle" font-size="11.5" class="t-warn">(kesildi, preempted)</text>
+  <rect class="box-plain dash" x="534" y="52" width="104" height="40" rx="6"/>
+  <text x="586" y="69" text-anchor="middle" font-size="11.5">lock;</text>
+  <text x="586" y="85" text-anchor="middle" font-size="11.5">cond_wait → uyur</text>
+  <rect class="f-warn" x="646" y="52" width="104" height="40" rx="6" fill-opacity="0.12"/>
+  <rect class="ln-warn dash" x="646" y="52" width="104" height="40" rx="6"/>
+  <text x="698" y="69" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">sonsuza dek</text>
+  <text x="698" y="85" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">uyur</text>
+  <rect class="box" x="198" y="106" width="104" height="40" rx="6"/>
+  <text x="250" y="123" text-anchor="middle" font-size="11.5">lock; ekle;</text>
+  <text x="250" y="139" text-anchor="middle" font-size="11.5">count = 1</text>
+  <rect class="box" x="310" y="106" width="104" height="40" rx="6"/>
+  <text x="362" y="123" text-anchor="middle" font-size="11.5">signal(not_empty)</text>
+  <text x="362" y="139" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">boşa gider</text>
+  <rect class="box" x="422" y="106" width="104" height="40" rx="6"/>
+  <text x="474" y="131" text-anchor="middle" font-size="11.5">unlock; biter</text>
+
+  <line class="faint" x1="20" y1="160" x2="740" y2="160"/>
+  <text x="20" y="182" font-family="ui-monospace, Menlo, monospace" font-size="12">count</text>
+  <text x="20" y="204" font-family="ui-monospace, Menlo, monospace" font-size="12">wait set</text>
+  <text x="138" y="182" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="138" y="204" text-anchor="middle" font-size="12">–</text>
+  <text x="250" y="182" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">1</text>
+  <text x="250" y="204" text-anchor="middle" font-size="12">–</text>
+  <text x="362" y="182" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">1</text>
+  <text x="362" y="204" text-anchor="middle" font-size="12">–</text>
+  <text x="474" y="182" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">1</text>
+  <text x="474" y="204" text-anchor="middle" font-size="12">–</text>
+  <text x="586" y="182" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">1</text>
+  <text x="586" y="204" text-anchor="middle" font-size="12">{Tüketici}</text>
+  <text x="698" y="182" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">1</text>
+  <text x="698" y="204" text-anchor="middle" font-size="12">{Tüketici}</text>
+
+  <text x="20" y="236" font-size="12">Düzeltme: yüklemi aynı mutex altında test et; cond_wait mutex'i bırakıp uyur (bırak-ve-bekle), arada boşluk kalmaz:</text>
+  <text x="40" y="256" font-family="ui-monospace, Menlo, monospace" font-size="12">lock(&amp;m);  while (count == 0) cond_wait(&amp;not_empty, &amp;m);  /* çıkar */  unlock(&amp;m);</text>
+  <text x="20" y="284" font-weight="600" font-size="12" class="t-acc">“The state, not a remembered signal, decides whether to sleep.” [sl. 47]</text>
+</svg>

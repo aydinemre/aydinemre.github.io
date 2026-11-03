@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE 513 · Ders 4: Son gün özeti (English cheat sheet)</title>
+<meta name="description" content="CSE 513 kişisel çalışma notu: CSE 513 · Ders 4: Son gün özeti (English cheat sheet)">
+<link rel="canonical" href="https://aydinemre.github.io/master/bil513/notlar/ders-04-ozet.html">
+<link rel="stylesheet" href="style.css">
+<script data-theme-init>try{var t=localStorage.getItem('tema');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html">CSE 513</a>
+  <nav><a href="/master/bil513/">BİL513</a> <a href="index.html">Dersler</a> <a href="ders-04.html">Anlatım</a> <a href="ders-04-ozet.html" aria-current="page">Özet</a> <a href="ders-04-sorular.html">Soru bankası</a> <a href="ders-04-deneme.html">Deneme sınavı</a> <a href="ders-04-ilerleme.html">İlerleme</a></nav>
+  <button class="tema" data-theme-controls type="button" aria-label="Açık/koyu tema">◐</button>
+</header>
+<div class="layout">
+  <aside class="toc"><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#key-definitions">Key definitions</a></li><li><a href="#the-four-approaches-sl-27">The four approaches</a></li><li><a href="#formulas-and-steps">Formulas and steps</a></li><li><a href="#the-worked-numbers">The worked numbers</a></li></ul></aside>
+  <main><h1 id="cse-513-ders-4-son-gun-ozeti-english-cheat-sheet">CSE 513 · Ders 4: Son gün özeti (English cheat sheet)<a class="headerlink" href="#cse-513-ders-4-son-gun-ozeti-english-cheat-sheet" title="Permanent link">#</a></h1><details class="toc-mini"><summary>Bölümler</summary><ul><li><a href="#answer-pattern">Answer pattern</a></li><li><a href="#x-does-not-prove-y">"X does not prove Y"</a></li><li><a href="#key-definitions">Key definitions</a></li><li><a href="#the-four-approaches-sl-27">The four approaches</a></li><li><a href="#formulas-and-steps">Formulas and steps</a></li><li><a href="#the-worked-numbers">The worked numbers</a></li></ul></details>
+<p>Sınav İngilizce. Bu sayfa hocanın kalıp cümleleriyle bir sayfalık tekrar. Her satırın gerekçesi anlatımda.</p>
+<h2 id="answer-pattern">Answer pattern<a class="headerlink" href="#answer-pattern" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>State the resource model first:</strong> types and instance counts, current allocations, outstanding requests, release assumptions. Then pick the question <span class="src">Okuma §17</span>.</li>
+<li>Pick the right test: a current <strong>single-instance cycle</strong> supports a deadlock diagnosis; a <strong>multi-instance</strong> state needs counts and reduction; a <strong>maximum-demand</strong> grant question needs a safety test <span class="src">Okuma §17</span>.</li>
+<li>For every answer: <strong>state the assumptions, show a graph or vector trace, and say what the method does not guarantee</strong> <span class="src">sl. 73</span>.</li>
+<li>When you say "it depends", name the exact model assumption that changes the result <span class="src">Okuma §17</span>.</li>
+<li>Separate a <strong>proof about a protocol</strong> from <strong>evidence from one execution</strong> <span class="src">sl. 2</span>.</li>
+</ul>
+<h2 id="x-does-not-prove-y">"X does not prove Y"<a class="headerlink" href="#x-does-not-prove-y" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Observation</th>
+<th>Does not prove</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A perfectly exclusive lock</td>
+<td>progress</td>
+<td>"Exclusion does not guarantee progress"; ask who must act before a waiter can proceed <span class="src">sl. 3</span></td>
+</tr>
+<tr>
+<td>A cycle in the graph</td>
+<td>deadlock</td>
+<td>with several instances a cycle only indicates possible deadlock; a thread outside the cycle may finish <span class="src">sl. 20–21</span></td>
+</tr>
+<tr>
+<td>Free instances exist (R4)</td>
+<td>no deadlock</td>
+<td>types are not interchangeable; find the closed dependency set <span class="src">sl. 18–19</span></td>
+</tr>
+<tr>
+<td>A design permits all four conditions</td>
+<td>every run deadlocks</td>
+<td>the conditions are necessary; permitting them is a vulnerability <span class="src">sl. 13</span></td>
+</tr>
+<tr>
+<td>The CPU scheduler is preemptive</td>
+<td>the resource is preemptible</td>
+<td>processor preemption does not release a mutex or repair half-updated data <span class="src">sl. 12</span></td>
+</tr>
+<tr>
+<td>A timeout (exit 124)</td>
+<td>deadlock</td>
+<td>slow work, starvation and external I/O also time out; reconstruct owners and requests <span class="src">sl. 36, 70</span></td>
+</tr>
+<tr>
+<td>A successful run</td>
+<td>a deadlock-free protocol</td>
+<td>only that the bad interleaving did not occur this time <span class="src">Okuma §16</span></td>
+</tr>
+<tr>
+<td>Available = (0,0,0)</td>
+<td>deadlock</td>
+<td>holders with zero requests can finish and start a release chain <span class="src">sl. 60</span></td>
+</tr>
+<tr>
+<td>Unsafe state</td>
+<td>deadlocked state</td>
+<td>"Every deadlocked state is unsafe; an unsafe state need not already be deadlocked" <span class="src">sl. 39, 42</span></td>
+</tr>
+<tr>
+<td>Request ≤ Available</td>
+<td>the request is safe</td>
+<td>granting it may leave no completion sequence <span class="src">sl. 38, 55</span></td>
+</tr>
+<tr>
+<td>An unsafe grant was refused</td>
+<td>the pre-request state was deadlocked</td>
+<td>the old state still has a safe sequence <span class="src">sl. 56</span></td>
+</tr>
+<tr>
+<td>Breaking circular wait</td>
+<td>fairness</td>
+<td>it does not provide bounded waiting <span class="src">sl. 15, 31</span></td>
+</tr>
+<tr>
+<td>A safe sequence</td>
+<td>a CPU schedule or fairness</td>
+<td>it is a witness, a possible completion order <span class="src">sl. 40; Okuma §17</span></td>
+</tr>
+<tr>
+<td>Killing a waiting thread</td>
+<td>recovery</td>
+<td>it may hold nothing the cycle needs and may leave state inconsistent <span class="src">Okuma §17</span></td>
+</tr>
+<tr>
+<td>Releasing a lock</td>
+<td>restored data</td>
+<td>ordinary mutexes do not undo the protected operation <span class="src">sl. 64–65</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-definitions">Key definitions<a class="headerlink" href="#key-definitions" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Four necessary conditions</strong> <span class="src">sl. 9</span>: mutual exclusion, hold and wait, no preemption, circular wait.</li>
+<li><strong>Deadlock:</strong> a set cannot progress because the events they need depend on blocked members of that set. <strong>Starvation:</strong> one waits indefinitely while other work continues. <strong>Livelock:</strong> states change, useful work never completes <span class="src">sl. 15–16</span>.</li>
+<li><strong>RAG</strong> <span class="src">sl. 17</span>: T → R is a current request; R → T is an allocated instance. Dashed T ⇢ R is a future claim, not a blocked request <span class="src">sl. 21, 44</span>.</li>
+<li><strong>Wait-for graph</strong> (single instance only): replace Ti → R → Tj with Ti → Tj <span class="src">sl. 24</span>.</li>
+<li><strong>Safe:</strong> at least one order satisfies every remaining maximum demand <span class="src">sl. 39</span>.</li>
+</ul>
+<h2 id="the-four-approaches-sl-27">The four approaches <span class="src">sl. 27</span><a class="headerlink" href="#the-four-approaches-sl-27" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Decision</th>
+<th>Information</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prevention</td>
+<td>forbid a necessary condition (lock order, whole-set reservation)</td>
+<td>the protocol; no per-thread maxima</td>
+<td>restrictions on access</td>
+</tr>
+<tr>
+<td>Avoidance</td>
+<td>grant only if the state stays safe</td>
+<td>declared Max, Allocation, Available</td>
+<td>maximum-demand information, conservative refusals</td>
+</tr>
+<tr>
+<td>Detection + recovery</td>
+<td>allow, detect, repair</td>
+<td>current Request, consistent snapshot, rollback boundary</td>
+<td>monitoring and lost work</td>
+</tr>
+<tr>
+<td>Accept the risk</td>
+<td>no general mechanism</td>
+<td>—</td>
+<td>the application handles failures</td>
+</tr>
+</tbody>
+</table>
+<h2 id="formulas-and-steps">Formulas and steps<a class="headerlink" href="#formulas-and-steps" title="Permanent link">#</a></h2>
+<p><strong>Banker's safety test</strong> <span class="src">sl. 47–50</span>:</p>
+<ol>
+<li>Need = Max − Allocation (maximum <em>additional</em> demand).</li>
+<li>Work = Available; all Finish = false.</li>
+<li>Find unfinished i with <strong>Need[i] ≤ Work in every component</strong>. Work = Work + <strong>Allocation[i]</strong> (not Max: Work − Need + Max = Work + Allocation). Repeat.</li>
+<li>All finished → safe. Stuck → unsafe. Final Work must equal the total vector.</li>
+</ol>
+<p><strong>Request check</strong> <span class="src">sl. 51</span>:</p>
+<ol>
+<li>Request ≤ Need? else error (exceeds declared maximum).</li>
+<li>Request ≤ Available? else wait (unavailable).</li>
+<li>Tentatively: Available −= R; Allocation += R; Need −= R.</li>
+<li>Safety test on the <strong>tentative</strong> state: commit if safe, else restore and wait. Serialize decisions.</li>
+</ol>
+<p><strong>Detection</strong> <span class="src">sl. 57–58</span>: same reduction with <strong>Request</strong> instead of Need; threads with zero Allocation start finished; unfinished holders = deadlocked set; report zero-allocation waiters separately.</p>
+<p><strong>Invariant</strong> <span class="src">sl. 72</span>: total = Available + Σ Allocation in every component.</p>
+<p><strong>Cost</strong> <span class="src">sl. 62</span>: matrix detection O(m·n²); graph cycle detection O(V + E) with adjacency lists.</p>
+<p><strong>Lock-order proof</strong> <span class="src">sl. 31</span>: a cycle would need rank(L1) &lt; rank(L2) &lt; … &lt; rank(Lk) &lt; rank(L1), which is impossible. Assumes every path follows the order (callbacks, error paths); does not prove fairness.</p>
+<h2 id="the-worked-numbers">The worked numbers<a class="headerlink" href="#the-worked-numbers" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Exercise</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 units; A 4/6, B 3/8; Available 3</td>
+<td>safe, witness ⟨A, B⟩: 3 → 7 → 10 <span class="src">sl. 40</span></td>
+</tr>
+<tr>
+<td>Same, give B 2 more</td>
+<td>Available 1, Needs 2 and 3 → unsafe, not deadlocked <span class="src">sl. 42</span></td>
+</tr>
+<tr>
+<td>Banker snapshot (10,5,7), Available (3,3,2)</td>
+<td>Need T0 743, T1 122, T2 600, T3 011, T4 431; safe ⟨T1,T3,T4,T2,T0⟩: 332 → 532 → 743 → 745 → 10 4 7 → 10 5 7 <span class="src">sl. 47–49</span></td>
+</tr>
+<tr>
+<td>T1 requests (1,0,2)</td>
+<td>granted; Available (2,3,0); ⟨T1,T3,T4,T0,T2⟩ <span class="src">sl. 52–53</span></td>
+</tr>
+<tr>
+<td>Then T4 requests (3,3,0)</td>
+<td>unavailable (A: 3 &gt; 2); wait, no simulation <span class="src">sl. 54</span></td>
+</tr>
+<tr>
+<td>Then T0 requests (0,2,0)</td>
+<td>available but unsafe: Work (2,1,0), nobody fits; restore <span class="src">sl. 55</span></td>
+</tr>
+<tr>
+<td>Detection snapshot (7,2,6), Available 0</td>
+<td>no deadlock: ⟨T0,T2,T3,T1,T4⟩ → (7,2,6) <span class="src">sl. 59–60</span></td>
+</tr>
+<tr>
+<td>T2 Request becomes (0,0,1)</td>
+<td>only T0 finishes; deadlocked {T1, T2, T3, T4} <span class="src">sl. 61</span></td>
+</tr>
+</tbody>
+</table></main>
+</div>
+<script>
+document.querySelector('.tema').addEventListener('click',function(){
+  var r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('tema',r.dataset.theme);}catch(e){}
+});
+</script>
+</body>
+</html>

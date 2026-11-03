@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 414" role="img" aria-label="sl. 46 izi: kuyruk boş, C1 ve C2 cond_wait ile bekliyor. Üretici bir öğe ekler, count 1 olur ve signal ile C1'i uyandırır; C1 mutex'i bekler. Bu arada yeni gelen C3 mutex'i önce alır, öğeyi çıkarır, count 0 olur. C1 mutex'i aldığında if kullanıyorsa boş kuyruktan çıkarır ve count −1 olur; while kullanıyorsa count'u yeniden test edip tekrar bekler." font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="13">
+  <text x="380" y="18" text-anchor="middle" font-weight="600" font-size="12.5">sl. 46: C1 uyandırılır, ama mutex'i yeniden almadan önce başka bir tüketici öğeyi alır</text>
+  <text x="125" y="40" text-anchor="middle" font-size="11.5" class="t-mut">1</text>
+  <text x="235" y="40" text-anchor="middle" font-size="11.5" class="t-mut">2</text>
+  <text x="345" y="40" text-anchor="middle" font-size="11.5" class="t-mut">3</text>
+  <text x="455" y="40" text-anchor="middle" font-size="11.5" class="t-mut">4</text>
+  <text x="565" y="40" text-anchor="middle" font-size="11.5" class="t-mut">5</text>
+  <text x="675" y="40" text-anchor="middle" font-size="11.5" class="t-mut">6</text>
+  <text x="20" y="71" font-weight="600">C1</text>
+  <text x="20" y="115" font-weight="600">C2</text>
+  <text x="20" y="159" font-weight="600">Ü</text>
+  <text x="20" y="203" font-weight="600">C3</text>
+
+  <rect class="box-plain dash" x="74" y="48" width="102" height="36" rx="6"/>
+  <text x="125" y="63" text-anchor="middle" font-size="11.5">count == 0 →</text>
+  <text x="125" y="78" text-anchor="middle" font-size="11.5">cond_wait, uyur</text>
+  <rect class="box-acc" x="294" y="48" width="322" height="36" rx="6"/>
+  <text x="455" y="71" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">signal ile uyandı · mutex'i bekliyor</text>
+  <rect class="box" x="624" y="48" width="102" height="36" rx="6"/>
+  <text x="675" y="63" text-anchor="middle" font-size="11.5">mutex'i alır,</text>
+  <text x="675" y="78" text-anchor="middle" font-size="11.5">cond_wait döner</text>
+  <rect class="box-plain dash" x="184" y="92" width="102" height="36" rx="6"/>
+  <text x="235" y="107" text-anchor="middle" font-size="11.5">count == 0 →</text>
+  <text x="235" y="122" text-anchor="middle" font-size="11.5">cond_wait, uyur</text>
+  <line class="faint" x1="294" y1="110" x2="735" y2="110"/>
+  <text x="455" y="105" text-anchor="middle" font-size="11" class="t-mut">wait set'te uyuyor</text>
+  <rect class="box" x="294" y="136" width="102" height="36" rx="6"/>
+  <text x="345" y="151" text-anchor="middle" font-size="11.5">ekle, count = 1</text>
+  <text x="345" y="166" text-anchor="middle" font-size="11.5">signal(not_empty)</text>
+  <rect class="box" x="404" y="136" width="102" height="36" rx="6"/>
+  <text x="455" y="159" text-anchor="middle" font-size="11.5">unlock</text>
+  <text x="565" y="166" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">C3 araya girer</text>
+  <rect class="f-warn" x="514" y="180" width="102" height="36" rx="6" fill-opacity="0.12"/>
+  <rect class="ln-warn dash" x="514" y="180" width="102" height="36" rx="6"/>
+  <text x="565" y="195" text-anchor="middle" font-size="11.5">lock, count = 1:</text>
+  <text x="565" y="210" text-anchor="middle" font-weight="600" font-size="11.5" class="t-warn">çıkarır, count = 0</text>
+
+  <line class="faint" x1="20" y1="226" x2="740" y2="226"/>
+  <text x="20" y="246" font-family="ui-monospace, Menlo, monospace" font-size="12">count</text>
+  <text x="20" y="268" font-family="ui-monospace, Menlo, monospace" font-size="12">mutex</text>
+  <text x="125" y="246" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="125" y="268" text-anchor="middle" font-size="12">–</text>
+  <text x="235" y="246" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="235" y="268" text-anchor="middle" font-size="12">–</text>
+  <text x="345" y="246" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">1</text>
+  <text x="345" y="268" text-anchor="middle" font-size="12">Ü</text>
+  <text x="455" y="246" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">1</text>
+  <text x="455" y="268" text-anchor="middle" font-size="12">–</text>
+  <text x="565" y="246" text-anchor="middle" font-weight="600" font-family="ui-monospace, Menlo, monospace" font-size="12" class="t-acc">0</text>
+  <text x="565" y="268" text-anchor="middle" font-size="12">C3</text>
+  <text x="675" y="246" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">0</text>
+  <text x="675" y="268" text-anchor="middle" font-size="12">C1</text>
+
+  <text x="20" y="300" font-weight="600" font-size="12.5">7. adım: C1 cond_wait'ten döner, count = 0</text>
+  <rect class="f-warn" x="20" y="310" width="350" height="50" rx="8" fill-opacity="0.12"/>
+  <rect class="ln-warn dash" x="20" y="310" width="350" height="50" rx="8"/>
+  <text x="195" y="330" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">if (count == 0) cond_wait(...);</text>
+  <text x="195" y="350" text-anchor="middle" font-weight="600" font-size="12" class="t-warn">C1 doğrudan çıkarır: var olmayan öğe, count = −1</text>
+  <rect class="box-acc" x="390" y="310" width="350" height="50" rx="8"/>
+  <text x="565" y="330" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12">while (count == 0) cond_wait(...);</text>
+  <text x="565" y="350" text-anchor="middle" font-weight="600" font-size="12" class="t-acc">count == 0 yeniden görülür → tekrar bekler (güvenli)</text>
+  <text x="20" y="384" font-size="12" class="t-mut">Slayt araya gireni adlandırmaz: burada yeni gelen C3; sahte uyanan C2 de aynı rolü oynayabilir.</text>
+  <text x="20" y="402" font-size="12" class="t-mut">Sahte uyanma (spurious wakeup) while için ikinci, bağımsız bir nedendir [sl. 44, 46].</text>
+</svg>
