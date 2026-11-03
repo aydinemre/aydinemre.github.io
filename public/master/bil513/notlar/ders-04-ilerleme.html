@@ -117,7 +117,7 @@
 <td>4</td>
 <td>Dört yaklaşım ve önleme (kilit sırası ispatı, trylock, timeout)</td>
 <td>27–37</td>
-<td>bekliyor</td>
+<td>tamam (kontrol soruları uzmanlarca cevaplandı)</td>
 </tr>
 <tr>
 <td>5</td>
@@ -159,6 +159,10 @@
 <li>K3.1: tipler birbirinin yerine geçmez, karşılaştırma bileşen bileşen. Work = (0,0,0,3) iken T1 (R1), T2 (R3), T3 (R2) isteklerinden hiçbiri sığmaz. R2'nin iki sahibi de (T1, T2) kümede, dışarıdan bırakma yolu yok → {T1, T2, T3} kapalı küme <span class="src">sl. 19</span>. Yarım puan: "R4'ü kimse istemiyor" deyip R2'nin iki instance'ının neden kurtarmadığını göstermemek. Varyant: R4'e instance eklemek hiçbir şeyi değiştirmez; bir R2 eklenirse sıra T3, T2, T1; bir R1 eklenirse T1, T3, T2.</li>
 <li>K3.2: C → Y eklenince Available (0,0); A (0,1), B (1,0), C (0,1) isteklerinden hiçbiri sığmaz → {A, B, C} deadlocked. C bir X tuttuğu için tespitte baştan bitmiş sayılmaz <span class="src">sl. 58</span>. Sl. 23'teki kurtuluş C'nin tamamlanma yoluna dayanıyordu <span class="src">Okuma §5</span>; yol kapanınca ikinci X'in sahibi de kümede kalır (sl. 19'daki R2 durumunun aynısı). Yarım puan: "yeni döngü oluştu, o yüzden deadlock" (orijinal State B'de de döngü vardı). Varyant: C, Y yerine Z beklerse sonuç Z'nin sahibine bağlı; "duruma bağlı" deyince sonucu değiştiren varsayımı adıyla söyle <span class="src">Okuma §17</span>. Bu varyant kaynakta yok, okumadaki "completion path" cümlesinden türetildi.</li>
 <li>İlişkili sorular: Q10, Q11, Q12, Q13, Q27, Q29, Q52(c).</li>
+<li><strong>K4.1, K4.2 (2026-11-03, uzmanlar):</strong></li>
+<li>K4.1: ispat, döngüdeki her bekleme kenarının sıralanmış bir kilit edinimi olduğunu varsayar; her kenar bir rank eşitsizliği üretir <span class="src">sl. 31</span>. Koşul değişkeninde ya da buluşmada beklemek bir olaya bağlı beklemedir, rank üretmez. Döngü: W1 L1'i tutar → W2'nin sinyalini bekler → W2 L1'i ister → W1. Kural çiğnenmedi; bozulan, modelin bütün beklemeleri kapsadığı varsayımı [Okuma §8 "find the flaw"; <code>kod/variants.c</code> ordered-rv]. Düzeltme <span class="ek">ek bilgi</span>: beklemeden önce L1'i bırak, buluşmayı kilitlerden önce yap ya da <code>pthread_cond_wait(&amp;cv, &amp;L1)</code> kullan (yalnız verilen mutex'i atomik bırakır). Yarım puan: döngüyü bulup ispatın neden kör kaldığını söylememek. Varyant: <code>lock(L2); notify(listeners)</code> içinde listener'ın L1 alması → gizli ters sıra; <code>transfer(A, A)</code> → self-deadlock <span class="src">sl. 34</span>.</li>
+<li>K4.2: <strong>hold and wait</strong>'i kırar; bekleyen iş hiçbir parça tutmaz <span class="src">sl. 28</span>. Rezervasyonun kendisi atomik olmalı (tarayıcı-yazıcı TOCTOU senaryosu) <span class="src">sl. 29; Okuma §7</span>. Bedeller: kullanılmadan önce ayrılan kaynak boşta kalır (kullanım ve eşzamanlılık kaybı); büyük istek aç kalabilir; gelecek ihtiyaç bilinmeyebilir. Kırmadıkları: mutual exclusion, no preemption; circular wait doğrudan hedeflenmez, döngü hold-and-wait olmadığı için kurulamaz. Yanlış: "circular wait'i kırar", "önce bakıp sonra almak atomik rezervasyondur".</li>
+<li>İlişkili sorular: Q3, Q15, Q17(c), Q30, Q31(b), Q32(b), Q33, Q44, Q47; yanılgılar 17, 18, 20, 21.</li>
 </ul>
 <p><strong>Soru bankası çalıştırması:</strong> (henüz başlamadı)</p>
 <p><strong>Zayıf noktalar:</strong> (henüz yok)</p>

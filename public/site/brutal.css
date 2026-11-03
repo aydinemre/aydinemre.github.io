@@ -1,0 +1,103 @@
+/* Neo-brutalist yapı katmanı: CSE513 CPU Scheduling Simulator ile aynı dil.
+   Renkler theme.css'teki tokenlardan gelir; bu dosya blog.css ve study.css'ten SONRA yüklenir.
+   body.site = blog sayfaları (Layout), body.study = BİL513 çalışma sayfaları (StudyShell). */
+
+body{font-family:var(--sans);color:var(--text)}
+h1,h2,h3,.site-brand,.brand{font-family:var(--display);font-weight:800;letter-spacing:-.02em}
+a{color:var(--text);text-decoration-color:var(--hot);text-decoration-thickness:2px;text-underline-offset:4px}
+a:hover{text-decoration-thickness:3px}
+.lead{color:var(--muted)}
+.eyebrow,.meta,.section-label,.course-code,.course-status,.count,.small{font-family:var(--mono)}
+.eyebrow,.section-label{display:inline-block;padding:3px 8px;border:2px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.skip{background:var(--sky);color:var(--on-fill);border:var(--b);font-weight:700}
+
+/* Çip görünümlü bağlantı ve düğmeler */
+.read-link,.back{display:inline-flex;align-items:center;min-height:40px;padding:6px 14px;border:var(--b);background:var(--hot);color:var(--on-fill);box-shadow:3px 3px 0 var(--shadow-c);font-weight:800;text-decoration:none;transition:transform .1s,box-shadow .1s}
+.back{background:var(--surface);color:var(--text);border-style:dashed;box-shadow:none}
+.read-link:hover,.back:hover{text-decoration:none;transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--shadow-c)}
+.read-link:active{transform:translate(3px,3px);box-shadow:none}
+
+/* Üst bant + başlık = scheduler'ın tek siyah topbar'ı (blog.css'teki 1064px'lik dar bandı ezer) */
+.matrix-masthead{max-width:none;height:30px;margin:0;border-bottom:0;background:var(--bar)}
+.matrix-masthead::before{content:none}
+.matrix-glyphs{max-width:1064px;margin:auto;align-items:center;gap:18px}
+.matrix-glyphs span,.matrix-glyphs span:nth-child(2n),.matrix-glyphs span:nth-child(3n){writing-mode:horizontal-tb;transform:none;font:700 11px/1 var(--mono);letter-spacing:2px;color:var(--on-bar)}
+.matrix-glyphs span:nth-child(2n){color:var(--hot)}
+.back{margin:0 12px 16px 0}
+
+/* ---------- Blog (Layout) ---------- */
+body.site header{max-width:none;padding:14px max(48px,calc(50% - 532px)) 18px;background:var(--bar);color:var(--on-bar);border-bottom:var(--b)}
+body.site .brand{font-size:26px;line-height:1.1;color:var(--on-bar)}
+body.site .brand span{font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--on-bar);opacity:.75;margin-top:6px}
+body.site header nav{gap:8px;font:700 14px var(--mono)}
+body.site header nav a{min-height:40px;padding:6px 12px;border:2px solid transparent;color:var(--on-bar);text-decoration:none}
+body.site header nav a:hover{border-color:var(--on-bar);text-decoration:none}
+body.site header nav a[aria-current]{background:var(--sky);color:var(--on-fill);border-color:var(--on-bar);text-decoration:none}
+body.site header .theme-control{color:var(--on-bar)}
+body.site header .theme-control select{background:var(--on-bar);color:var(--bar);border:2px solid var(--on-bar);box-shadow:none}
+p.section-label{margin:0;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:800px){body.site header{padding:14px 28px 16px}}
+@media(max-width:480px){body.site header{padding:12px 22px 14px}}
+body.site h1{font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.05}
+body.site h1 mark,.portal h1 mark{display:inline-block;padding:0 .12em;line-height:.98;border:var(--b);background:var(--sky);color:var(--on-fill);box-shadow:var(--shadow-sm)}
+body.site .intro h1{font-size:clamp(2.4rem,5vw,3.8rem);margin-bottom:14px}
+body.site .intro .occupation{display:inline-block;padding:3px 10px;border:var(--b);background:var(--hot);color:var(--on-fill);font:800 15px var(--display)}
+.essay-feature,.course-index,.note-entry,.empty{border:var(--b);background:var(--surface);box-shadow:var(--shadow);padding:26px 28px}
+.course-index{border-left:var(--b)}
+.essay-feature h2 a,.note-entry h2 a{color:var(--text)}
+.essay-feature p,.note-entry p,.article p,.article li{font-family:var(--sans)}
+.course-row{border-top:2px dashed var(--border);padding:18px 0}
+.course-row:first-of-type{border-top:0}
+.course-row h3{font-size:21px}
+.course-code{display:inline-block;padding:2px 8px;border:2px solid var(--border);background:var(--sky);color:var(--on-fill);font-weight:700}
+.notes-list{display:grid;gap:28px}
+.note-entry{padding:24px 28px}
+.article .source{border-top:var(--b)}
+body.site footer{border-top:var(--b);font-family:var(--mono);font-size:13px}
+
+/* ---------- BİL513 çalışma sayfaları (StudyShell) ---------- */
+body.study header{background:var(--bar);color:var(--on-bar);border-bottom:var(--b)}
+body.study header a,body.study header label,body.study header .small{color:var(--on-bar)}
+body.study header select,body.study header .theme-control select{background:var(--on-bar);color:var(--bar);border:2px solid var(--on-bar);box-shadow:none}
+body.study header .theme-control{color:var(--on-bar)}
+body.study .site-brand{font-size:22px;color:var(--on-bar)}
+body.study .header-controls{font-weight:700}
+.portal h1,#study-title,.slide>h2{font-family:var(--display);font-weight:800;letter-spacing:-.02em}
+.week-row{border:var(--b);background:var(--surface);box-shadow:var(--shadow);padding:22px 24px;margin:0 0 24px}
+.week-number{display:flex;align-items:center;justify-content:center;align-self:start;min-height:72px;border:var(--b);background:var(--hot);color:var(--on-fill);font-family:var(--display);font-weight:800}
+.week-number.course-code{background:var(--sky);padding:0}
+.week-row h2 a{color:var(--text)}
+.portal-footer{border-top:var(--b);padding-top:24px}
+aside{border-right:var(--b)}
+aside nav a{border:2px solid transparent;border-radius:0}
+aside nav a:hover{border-color:var(--border)}
+nav a[aria-current=true]{background:var(--sky);color:var(--on-fill);border:2px solid var(--border);font-weight:800}
+nav a[aria-current=true] span{color:var(--on-fill)}
+nav span{color:var(--text);font-family:var(--mono);font-weight:700}
+.slide{border-top:var(--b)}
+button{border:var(--b);border-radius:0;background:var(--hot);color:var(--on-fill);box-shadow:3px 3px 0 var(--shadow-c);font-weight:800;transition:transform .1s,box-shadow .1s}
+button:active{transform:translate(3px,3px);box-shadow:none}
+.subtle{background:var(--surface);color:var(--text);border-color:var(--border)}
+.experiment,.practice,.lab,.animation-card,.col,.racecol{border:var(--b);border-radius:0;background:var(--surface);box-shadow:var(--shadow)}
+.col{border-top:var(--b)}
+.realworld{border-top:var(--b)}
+.realworld h3,summary,.answer summary{color:var(--text)}
+.boundary{border:var(--b);background:var(--warning-bg);color:var(--warning-text)}
+figure img,.diagram img{border:var(--b);border-radius:0}
+.animation-card img{border:0}
+pre{border:var(--b);border-radius:0;box-shadow:var(--shadow-sm)}
+p code,li code{border:1.5px solid var(--border);background:var(--surface-soft)}
+.tablewrap{border:var(--b);box-shadow:var(--shadow-sm)}
+.tablewrap table{margin:0}
+th,td{border-bottom:2px solid var(--border)}
+textarea,input,select{border:var(--b);border-radius:0}
+.badge,.timeline span{border:2px solid var(--border);border-radius:0;background:var(--surface-soft)}
+.timeline span{border-bottom-width:4px}
+.value,.animation-number{color:var(--text);font-family:var(--display)}
+.progress{height:5px;background:var(--hot)}
+.bottomnav{border:var(--b);border-bottom:0;border-radius:0;background:var(--surface);box-shadow:var(--shadow-sm)}
+details{border-top:2px dashed var(--border)}
+footer{border-top:var(--b)}
+
+@media(max-width:760px){.week-number{min-height:52px}.essay-feature,.course-index,.note-entry,.empty{padding:20px}}
+@media print{.essay-feature,.course-index,.note-entry,.week-row,.experiment,.practice,.lab,.animation-card,pre,.tablewrap{box-shadow:none}}
