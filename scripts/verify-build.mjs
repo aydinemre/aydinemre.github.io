@@ -27,6 +27,7 @@ for (const file of html) {
     assert.ok(text.includes(`rel="canonical" href="${expected}"`),`Wrong redirect canonical: ${file}`);
   }
   assert.match(text, /rel="canonical"/, `Missing canonical: ${file}`);
+  if (!text.includes('data-legacy-redirect')) assert.match(text,/static\.cloudflareinsights\.com\/beacon\.min\.js[^>]*9b02a5cca2ec426f83e8a2a293a55522/,`Analytics beacon missing: ${file}`);
   for (const match of text.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const pathname = decodeURIComponent(match[1]);
     const target = resolve(root, '.' + pathname);
@@ -58,7 +59,7 @@ assert.match(home, /matrix-masthead[^>]*aria-hidden="true"/, 'Accessible static 
 assert.match(home, /Data Science &amp; AI Leader/, 'Current profession missing');
 assert.doesNotMatch(home, /Yüksek lisansa başladım/, 'Removed announcement returned');
 assert.doesNotMatch(home, /<canvas/, 'Homepage must remain free of decorative scripts and canvas');
-assert.equal((home.match(/<script\b/g)||[]).length,2,'Only functional theme scripts belong on homepage');
+assert.equal((home.match(/<script\b/g)||[]).length,3,'Only the theme scripts and the analytics beacon belong on homepage');
 assert.match(home,/src="\/site\/theme.js/,'Theme script missing');
 for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/master/${code}/`), `Course link missing: ${code}`);
 assert.match(home,/class="assignment-callout"[^]*?href="https:\/\/aydinemre\.github\.io\/cse513-cpu-scheduler\/"/,'Assignment link missing from homepage');
