@@ -99,5 +99,14 @@ textarea,input,select{border:var(--b);border-radius:0}
 details{border-top:2px dashed var(--border)}
 footer{border-top:var(--b)}
 
+/* Ödev kutusu: anasayfa ve BİL513 sayfasında ilk ekranda görünen bağlantı */
+.assignment-callout{display:flex;align-items:center;justify-content:space-between;gap:20px 32px;flex-wrap:wrap;margin:8px 0 36px;padding:22px 26px;border:var(--b);background:var(--sky);color:var(--on-fill);box-shadow:var(--shadow)}
+.assignment-callout .assignment-text{flex:1 1 320px;min-width:0}
+.assignment-callout h2{margin:10px 0 6px;font-size:clamp(1.5rem,3vw,2rem);line-height:1.1;color:var(--on-fill)}
+.assignment-callout p:not(.section-label){margin:0;color:var(--on-fill);font-family:var(--sans)}
+.assignment-callout .section-label{background:var(--on-fill);color:var(--sky);border-color:var(--on-fill)}
+.assignment-callout .assignment-cta{flex:0 0 auto;min-height:52px;padding:10px 22px;font-size:18px;box-shadow:4px 4px 0 var(--on-fill)}
+.assignment-callout .assignment-cta:hover{box-shadow:6px 6px 0 var(--on-fill)}
+
 @media(max-width:760px){.week-number{min-height:52px}.essay-feature,.course-index,.note-entry,.empty{padding:20px}}
 @media print{.essay-feature,.course-index,.note-entry,.week-row,.experiment,.practice,.lab,.animation-card,pre,.tablewrap{box-shadow:none}}

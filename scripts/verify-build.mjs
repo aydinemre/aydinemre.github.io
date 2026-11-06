@@ -54,6 +54,7 @@ assert.doesNotMatch(home, /<canvas/, 'Homepage must remain free of decorative sc
 assert.equal((home.match(/<script\b/g)||[]).length,2,'Only functional theme scripts belong on homepage');
 assert.match(home,/src="\/site\/theme.js/,'Theme script missing');
 for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/master/${code}/`), `Course link missing: ${code}`);
+assert.match(home,/class="assignment-callout"[^]*?href="https:\/\/aydinemre\.github\.io\/cse513-cpu-scheduler\/"/,'Assignment link missing from homepage');
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
 for (const code of ['bil511']) {
@@ -76,6 +77,7 @@ for(let week=1;week<=14;week++){
 }
 const course=await readFile(join(root,'master/bil513/index.html'),'utf8');
 for(let week=1;week<=14;week++)assert.ok(course.includes(`/master/bil513/hafta-${week}/`),`Missing week ${week}`);
+assert.match(course,/class="assignment-callout"[^]*?href="https:\/\/aydinemre\.github\.io\/cse513-cpu-scheduler\/"/,'Assignment link missing from BİL513 page');
 const sourceText=await readFile(join(root,"master/bil513/ders-1-kaynak/index.html"),"utf8");
 for(let i=1;i<=65;i++) assert.ok(sourceText.includes(`id="slayt-${i}"`),`Missing slide ${i}`);
 
