@@ -45,6 +45,13 @@ for (const f of built.filter(f => /\.(js|css|html)$/.test(f))) {
 const home = await readFile(join(root, 'index.html'), 'utf8');
 assert.equal(html.filter(f=>f.includes('/yuksek-lisans/')).length,19,'All 19 legacy routes must redirect');
 const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');
+for (const f of html.filter(f=>f.includes('/master/bil513/notlar/'))) {
+  const text=await readFile(f,'utf8');
+  assert.match(text,/rel="icon"/,`Lecture note without favicon: ${f}`);
+  const loc='https://aydinemre.github.io'+f.slice(root.length).replace(/index\.html$/,'');
+  assert.ok(sitemap.includes(`<loc>${loc}</loc>`),`Lecture note missing from sitemap: ${loc}`);
+}
+assert.doesNotMatch(sitemap,/bil513\/ders-1\/</,'Sitemap must not list the ders-1 duplicate of hafta-1');
 assert.doesNotMatch(sitemap,/yuksek-lisans/,'Sitemap must list canonical master routes');
 assert.match(home, /Kendini tanımak üzerine notlarım/, 'Published essay missing from homepage');
 assert.match(home, /matrix-masthead[^>]*aria-hidden="true"/, 'Accessible static Matrix motif missing');
@@ -57,6 +64,8 @@ for (const code of ['bil511', 'bil513']) assert.ok(home.includes(`/master/${code
 assert.match(home,/class="assignment-callout"[^]*?href="https:\/\/aydinemre\.github\.io\/cse513-cpu-scheduler\/"/,'Assignment link missing from homepage');
 const article = await readFile(join(root, 'kisisel-notlarim/kendini-tanimak-uzerine-notlarim/index.html'), 'utf8');
 assert.match(article, /Bu yazının da bir amacı var\./, 'Migrated article is incomplete');
+assert.match(article,/<title>Kendini tanımak üzerine notlarım — Emre Aydın<\/title>/,'Article must use its own title, not the homepage title');
+assert.match(article,/name="description" content="Kendini tanımak, yazmak/,'Article must use its own description');
 for (const code of ['bil511']) {
   const course = await readFile(join(root, `master/${code}/index.html`), 'utf8');
   assert.match(course, /henüz yayımlanmış bir not yok/, `Missing truthful empty state: ${code}`);
@@ -65,6 +74,7 @@ for (const name of ['rss.xml', 'sitemap.xml', 'robots.txt', '404.html']) await s
 console.log(`Verified ${html.length} pages: links, assets, metadata, migrated content and size budgets.`);
 
 const lesson = await readFile(join(root, "master/bil513/ders-1/index.html"), "utf8");
+assert.match(lesson,/rel="canonical" href="https:\/\/aydinemre\.github\.io\/master\/bil513\/hafta-1\/"/,'ders-1 must point its canonical at hafta-1');
 assert.equal((lesson.match(/class="slide"/g)||[]).length,28,'First week must retain 28 study sections');
 assert.match(lesson,/id="language"/,'Bilingual control missing');
 assert.doesNotMatch(lesson,/MatrixIntro|data-reader="step-play"|WebGL/,'Old lesson design must not load');
